@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit EggSupplier{% endblock %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {% trans %}egg_supplier.edit.title{% endtrans %}
+            </h5>
+            <div class="card-body">
+                {{ include('egg_supplier/_form.html.twig', {'button_label': 'Update'}) }}
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="{{ path('egg_supplier_index') }}">
+        {% trans %}egg_supplier.edit.button.back{% endtrans %}
+    </a>
+    {{ include('egg_supplier/_delete_form.html.twig') }}
+{% endblock %}

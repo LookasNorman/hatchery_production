@@ -1,0 +1,93 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\EggSupplierRepository;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+/**
+ * @ORM\Entity(repositoryClass=EggSupplierRepository::class)
+ */
+class EggSupplier
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 50,
+     *      minMessage = "egg_supplier.name.min",
+     *      maxMessage = "egg_supplier.name.max"
+     * )
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Email(
+     *     message = "egg_supplier.email",
+     *     checkMX = true
+     * )
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=30, nullable=true)
+     * @Assert\Length(
+     *      min = 9,
+     *      max = 30,
+     *      minMessage = "egg_supplier.phone_number.min",
+     *      maxMessage = "egg_supplier.phone_number.max"
+     * )
+     */
+    private $phoneNumber;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+}

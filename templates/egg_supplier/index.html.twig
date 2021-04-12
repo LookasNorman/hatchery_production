@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>
+        {% trans %}egg_supplier.index.title{% endtrans %}
+    </h1>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a class="btn btn-success" href="{{ path('egg_supplier_new') }}">
+        {% trans %}egg_supplier.index.button.new{% endtrans %}
+    </a>
+    {% endif %}
+
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    {% trans %}egg_supplier.index.table.id{% endtrans %}
+                </th>
+                <th>
+                    {% trans %}egg_supplier.index.table.name{% endtrans %}
+                </th>
+                <th>
+                    {% trans %}egg_supplier.index.table.email{% endtrans %}
+                </th>
+                <th>
+                    {% trans %}egg_supplier.index.table.phone_number{% endtrans %}
+                </th>
+                <th>
+                    {% trans %}egg_supplier.index.table.actions{% endtrans %}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for egg_supplier in egg_suppliers %}
+            <tr>
+                <td>{{ egg_supplier.id }}</td>
+                <td>{{ egg_supplier.name }}</td>
+                <td>{{ egg_supplier.email }}</td>
+                <td>{{ egg_supplier.phoneNumber }}</td>
+                <td>
+                    <a class="badge badge-info" href="{{ path('egg_supplier_show', {'id': egg_supplier.id}) }}">
+                        {% trans %}egg_supplier.index.table.badge.show{% endtrans %}
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a class="badge badge-warning" href="{{ path('egg_supplier_edit', {'id': egg_supplier.id}) }}">
+                        {% trans %}egg_supplier.index.table.badge.edit{% endtrans %}
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">
+                    {% trans %}egg_supplier.index.table.no_records{% endtrans %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

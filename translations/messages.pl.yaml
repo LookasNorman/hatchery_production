@@ -1,8 +1,37 @@
+egg_supplier:
+  delete:
+    title: Jesteś pewien, że chcesz usunąć dostawcę jaj?
+    button:
+      delete: Usuń dostawcę
+  edit:
+    title: Edycja dostawcy
+    button:
+      back: Lista dostawców jaj
+  index:
+    title: Dostawcy jaj
+    table:
+      id: Indeks
+      name: Nazwa
+      email: Adres email
+      phone_number: Numer telefonu
+      actions: Akcje
+      badge:
+        show: Szczegóły
+        edit: Edytuj
+      no_records: Brak dostawców jaj
+    button:
+      new: Dodaj nowego dostawcę
+  new:
+    title: Dodawanie nowego dostawcy
+    button:
+      back: Lista dostawców jaj
 menu:
   menu_top:
     registration: Nowy użytkownik
     logout: Wyloguj
     login: Zaloguj
+    eggs_supplier:
+      index: Dostawcy jaj
 security:
   login:
     form:
