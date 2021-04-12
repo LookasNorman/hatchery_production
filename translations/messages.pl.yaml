@@ -1,0 +1,21 @@
+menu:
+  menu_top:
+    registration: Nowy użytkownik
+    logout: Wyloguj
+    login: Zaloguj
+security:
+  login:
+    form:
+      header: Proszę się zalogować
+      logged: Jesteś zalogowany jako
+      logout: Wyloguj
+      email: Adres email
+      password: Hasło
+      remember: Zapamiętaj mnie!
+      placeholder:
+        email: Wpisz email
+        password: Wpisz hasło
+      button:
+        send: Zaloguj
+      help:
+        email: Nigdy nie pokazujemy Twojego adresu email innym.

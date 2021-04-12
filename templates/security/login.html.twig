@@ -16,16 +16,23 @@
             <div class="card-header bg-success text-white">
                 {% if app.user %}
                     <h1 class="h3 mb-3 font-weight-normal">
-                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        {% trans %}security.login.form.logged{% endtrans%} {{ app.user.username }},
+                        <a class="btn btn-warning" href="{{ path('app_logout') }}">
+                            {% trans %}security.login.form.logout{% endtrans %}
+                        </a>
                     </h1>
                 {% else %}
-                    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                    <h1 class="h3 mb-3 font-weight-normal">
+                        {% trans %}security.login.form.header{% endtrans %}
+                    </h1>
                 {% endif %}
 
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label for="inputEmail">Email</label>
+                    <label for="inputEmail">
+                        {% trans %}security.login.form.email{% endtrans %}
+                    </label>
                     <input
                             type="email"
                             class="form-control"
@@ -35,19 +42,22 @@
                             required
                             autofocus
                             aria-describedby="emailHelp"
-                            placeholder="Enter email"
+                            placeholder="{% trans %}security.login.form.placeholder.email{% endtrans %}"
                     >
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                        else.</small>
+                    <small id="emailHelp" class="form-text text-muted">
+                        {% trans %}security.login.form.help.email{% endtrans %}
+                    </small>
                 </div>
                 <div class="form-group">
-                    <label for="inputPassword">Password</label>
+                    <label for="inputPassword">
+                        {% trans %}security.login.form.password{% endtrans %}
+                    </label>
                     <input
                             type="password"
                             class="form-control"
                             name="password"
                             id="inputPassword"
-                            placeholder="Password"
+                            placeholder="{% trans %}security.login.form.placeholder.password{% endtrans %}"
                             required
                     >
                 </div>
@@ -70,11 +80,11 @@
 {#                            class="form-check-label"#}
 {#                            for="exampleCheck1"#}
 {#                    >#}
-{#                        Remember me#}
+{#                {% trans %}security.login.form.remember{% endtrans %}#}
 {#                    </label>#}
 {#                </div>#}
                 <button class="btn btn-lg btn-primary" type="submit">
-                    Sign in
+                    {% trans %}security.login.form.button.send{% endtrans %}
                 </button>
             </div>
             {% if error %}
