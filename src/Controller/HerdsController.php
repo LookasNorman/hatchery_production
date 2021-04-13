@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/herds")
@@ -18,6 +19,7 @@ class HerdsController extends AbstractController
 {
     /**
      * @Route("/", name="herds_index", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function index(HerdsRepository $herdsRepository): Response
     {
@@ -40,6 +42,7 @@ class HerdsController extends AbstractController
 
     /**
      * @Route("/new", name="herds_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function new(Request $request): Response
     {
@@ -73,6 +76,7 @@ class HerdsController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="herds_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, Herds $herd): Response
     {
@@ -93,6 +97,7 @@ class HerdsController extends AbstractController
 
     /**
      * @Route("/{id}", name="herds_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Herds $herd): Response
     {
