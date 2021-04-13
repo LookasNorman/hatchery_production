@@ -6,3 +6,11 @@ egg_supplier:
   phone_number:
     min: Numer telefonu musi zawierać conajmniej 9 znaków lub być pusty
     max: Numer telefonu musi zawierać mniej niż 30 znaków lub być pusty
+breed:
+  name:
+    min: Nazwa rasy musi być dłuższa niż 4 znaki
+    max: Nazwa rasy musi być krótsza niż 20 znaków
+  type:
+    min: Typ musi być dłuższa niż 4 znaków
+    max: Typ musi być krótsza niż 20 znaków
+
