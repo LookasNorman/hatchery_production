@@ -1,3 +1,6 @@
+base:
+  site:
+    title: Zarządzanie produkcją
 breed:
   delete:
     confirm: Jesteś pewien, że chcesz usunąć rasę kur?
