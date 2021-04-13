@@ -1,4 +1,7 @@
-<form method="post" action="{{ path('breed_delete', {'id': breed.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('breed_delete', {'id': breed.id}) }}"
+      onsubmit="return confirm('{% trans %}breed.delete.confirm{% endtrans %}');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ breed.id) }}">
-    <button class="btn">Delete</button>
+    <button class="btn btn-danger">
+        {% trans %}breed.delete.button.delete{% endtrans %}
+    </button>
 </form>

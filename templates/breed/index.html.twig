@@ -1,17 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Breed index{% endblock %}
-
 {% block body %}
-    <h1>Breed index</h1>
+    <h1>
+        {% trans %}breed.index.title{% endtrans %}
+    </h1>
+    <a class="btn btn-success" href="{{ path('breed_new') }}">
+        {% trans %}breed.index.button.new{% endtrans %}
+    </a>
 
-    <table class="table">
-        <thead>
+    <table class="table table-sm">
+        <thead class="thead-light">
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>actions</th>
+                <th>
+                    {% trans %}breed.index.table.id{% endtrans %}
+                </th>
+                <th>
+                    {% trans %}breed.index.table.name{% endtrans %}
+                </th>
+                <th>
+                    {% trans %}breed.index.table.type{% endtrans %}
+                </th>
+                <th>
+                    {% trans %}breed.index.table.actions{% endtrans %}
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -21,17 +32,24 @@
                 <td>{{ breed.name }}</td>
                 <td>{{ breed.type }}</td>
                 <td>
-                    <a href="{{ path('breed_show', {'id': breed.id}) }}">show</a>
-                    <a href="{{ path('breed_edit', {'id': breed.id}) }}">edit</a>
+                    <a class="badge badge-info" href="{{ path('breed_show', {'id': breed.id}) }}">
+                        {% trans %}breed.index.table.badge.show{% endtrans %}
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a class="badge badge-info" href="{{ path('breed_edit', {'id': breed.id}) }}">
+                        {% trans %}breed.index.table.badge.edit{% endtrans %}
+                    </a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">
+                    {% trans %}breed.index.table.no_found{% endtrans %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('breed_new') }}">Create new</a>
 {% endblock %}

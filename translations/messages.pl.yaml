@@ -1,3 +1,34 @@
+breed:
+  delete:
+    confirm: Jesteś pewien, że chcesz usunąć rasę kur?
+    button:
+      delete: Usuń rasę
+  edit:
+    title: Edycja rasy kur
+    button:
+      back: Lista ras kur
+  index:
+    title: Rasy kur
+    button:
+      new: Utwórz nową rasę
+    table:
+      id: Indeks
+      name: Nazwa
+      type: Typ
+      actions: Akcje
+      no_found: Brak ras kur
+      badge:
+        show: Szczegóły
+        edit: Edycja
+  new:
+    title: Dodawanie nowej rasy kur
+    button:
+      back: Lista ras kur
+  show:
+    title: Rasa kur
+    button:
+      edit: Edytuj rasę
+      back: Lista ras kur
 egg_supplier:
   delete:
     title: Jesteś pewien, że chcesz usunąć dostawcę jaj?
@@ -24,6 +55,13 @@ egg_supplier:
   new:
     title: Dodawanie nowego dostawcy
     button:
+      back: Lista dostawców jaj
+  show:
+    title: Dostawca jaj
+    email: Email
+    phone_number: Telefon
+    button:
+      edit: Edytuj
       back: Lista dostawców jaj
 menu:
   menu_top:

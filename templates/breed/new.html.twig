@@ -3,9 +3,26 @@
 {% block title %}New Breed{% endblock %}
 
 {% block body %}
-    <h1>Create new Breed</h1>
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {% trans %}breed.new.title{% endtrans %}
+            </h5>
+            <div class="card-body">
 
-    {{ include('breed/_form.html.twig') }}
+                {{ include('breed/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('breed_index') }}">back to list</a>
+    <a class="btn btn-primary" href="{{ path('breed_index') }}">
+        {% trans %}breed.new.button.back{% endtrans %}
+    </a>
 {% endblock %}
