@@ -1,32 +1,39 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>EggSupplier</h1>
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {% trans %}egg_supplier.show.title{% endtrans %}
+            </h5>
+            <div class="card-body">
+                <h5 class="card-title">{{ egg_supplier.name }}</h5>
+                <p class="card-text">
+                    {% trans %}egg_supplier.show.email{% endtrans %}: {{ egg_supplier.email }}
+                </p>
+                <p class="card-text">
+                    {% trans %}egg_supplier.show.phone_number{% endtrans %}: {{ egg_supplier.phoneNumber }}
+                </p>
+            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+            <div class="card-footer bg-transparent border-success d-flex">
+                {{ include('egg_supplier/_delete_form.html.twig') }}
+                <a class="btn btn-warning" href="{{ path('egg_supplier_edit', {'id': egg_supplier.id}) }}">
+                    {% trans %}egg_supplier.show.button.edit{% endtrans %}
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ egg_supplier.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ egg_supplier.name }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ egg_supplier.email }}</td>
-            </tr>
-            <tr>
-                <th>PhoneNumber</th>
-                <td>{{ egg_supplier.phoneNumber }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('egg_supplier_index') }}">back to list</a>
-
-    <a href="{{ path('egg_supplier_edit', {'id': egg_supplier.id}) }}">edit</a>
-
-    {{ include('egg_supplier/_delete_form.html.twig') }}
+    <a class="btn btn-primary" href="{{ path('egg_supplier_index') }}">
+        {% trans %}egg_supplier.show.button.back{% endtrans %}
+    </a>
 {% endblock %}
