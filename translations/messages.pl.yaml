@@ -29,6 +29,46 @@ breed:
     button:
       edit: Edytuj rasę
       back: Lista ras kur
+eggs_delivery:
+  delete:
+    confirm: Jesteś pewien, że chcesz usunąć dostawę?
+    button:
+      delete: Usuń
+  form:
+    placeholder:
+      herd: Wybierz stado
+  edit:
+    title: Edycja dostawy jaj
+    button:
+      back: Lista dostaw jaj
+  index:
+    title: Dostawy jaj
+    table:
+      id: Indeks
+      breeder: Hodowca
+      herds: Stado
+      delivery_date: Data dostawy
+      eggs_number: Ilość jaj
+      first_laying_date: Data zniesienia od
+      last_laying_date: Data zniesienia do
+      actions: Akcje
+      no_found: Brak dostaw
+      badge:
+        show: Szczegóły
+        edit: Edytuj
+  new:
+    title: Dodawanie dostawy
+    button:
+      back: Lista dostaw
+  show:
+    title: Szczegóły dostawy
+    delivery_date: Data dostawy
+    eggs_number: Ilość jaj
+    first_laying_date: Data zniesienia od
+    last_laying_date: Data zniesienia do
+    button:
+      edit: Edytuj dostawę
+      back: Lista dostaw jaj
 egg_supplier:
   delete:
     title: Jesteś pewien, że chcesz usunąć dostawcę jaj?

@@ -1,11 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New EggsDelivery{% endblock %}
-
 {% block body %}
-    <h1>Create new EggsDelivery</h1>
-
-    {{ include('eggs_delivery/_form.html.twig') }}
-
-    <a href="{{ path('eggs_delivery_index') }}">back to list</a>
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {% trans %}eggs_delivery.new.title{% endtrans %}
+            </h5>
+            <div class="card-body">
+                {{ include('eggs_delivery/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="{{ path('eggs_delivery_index') }}">
+        {% trans %}eggs_delivery.new.button.back{% endtrans %}
+    </a>
 {% endblock %}

@@ -1,4 +1,43 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="form-group">
+    <label>{{ form_label(form.deliveryDate) }}</label>
+    {{ form_widget(form.deliveryDate) }}
+    <small>{{ form_help(form.deliveryDate) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.deliveryDate) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.eggsNumber) }}</label>
+    {{ form_widget(form.eggsNumber) }}
+    <small>{{ form_help(form.eggsNumber) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.eggsNumber) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.firstLayingDate) }}</label>
+    {{ form_widget(form.firstLayingDate) }}
+    <small>{{ form_help(form.firstLayingDate) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.firstLayingDate) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.lastLayingDate) }}</label>
+    {{ form_widget(form.lastLayingDate) }}
+    <small>{{ form_help(form.lastLayingDate) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.lastLayingDate) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.herd) }}</label>
+    {{ form_widget(form.herd) }}
+    <small>{{ form_help(form.herd) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.herd) }}
+    </div>
+</div>
+<button class="btn btn-danger">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
