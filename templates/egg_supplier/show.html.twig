@@ -23,17 +23,18 @@
                 </p>
             </div>
             {% if is_granted('ROLE_ADMIN') %}
-            <div class="card-footer bg-transparent border-success d-flex">
-                {{ include('egg_supplier/_delete_form.html.twig') }}
-                <a class="btn btn-warning" href="{{ path('egg_supplier_edit', {'id': egg_supplier.id}) }}">
-                    {% trans %}egg_supplier.show.button.edit{% endtrans %}
-                </a>
-            </div>
+                <div class="card-footer bg-transparent border-success d-flex">
+                    {{ include('egg_supplier/_delete_form.html.twig') }}
+                    <a class="btn btn-warning" href="{{ path('egg_supplier_edit', {'id': egg_supplier.id}) }}">
+                        {% trans %}egg_supplier.show.button.edit{% endtrans %}
+                    </a>
+                </div>
             {% endif %}
         </div>
     </div>
-
     <a class="btn btn-primary" href="{{ path('egg_supplier_index') }}">
         {% trans %}egg_supplier.show.button.back{% endtrans %}
     </a>
+    <h3>{% trans %}egg_supplier.show.herds.list{% endtrans %}</h3>
+    {% include 'herds/list.html.twig' with {'herds': egg_supplier.herds, 'breeder': egg_supplier} %}
 {% endblock %}

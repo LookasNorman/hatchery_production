@@ -63,6 +63,8 @@ egg_supplier:
     button:
       edit: Edytuj
       back: Lista dostawców jaj
+    herds:
+      list: Stada dostawcy
 herds:
   delete:
     confirm: Na pewno chcesz usunąć stado?
