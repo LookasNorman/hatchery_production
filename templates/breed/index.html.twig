@@ -36,7 +36,7 @@
                         {% trans %}breed.index.table.badge.show{% endtrans %}
                     </a>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <a class="badge badge-info" href="{{ path('breed_edit', {'id': breed.id}) }}">
+                    <a class="badge badge-warning" href="{{ path('breed_edit', {'id': breed.id}) }}">
                         {% trans %}breed.index.table.badge.edit{% endtrans %}
                     </a>
                     {% endif %}
