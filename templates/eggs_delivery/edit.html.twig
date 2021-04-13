@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit EggsDelivery{% endblock %}
+
+{% block body %}
+    <h1>Edit EggsDelivery</h1>
+
+    {{ include('eggs_delivery/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('eggs_delivery_index') }}">back to list</a>
+
+    {{ include('eggs_delivery/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EggsDelivery index{% endblock %}
+
+{% block body %}
+    <h1>EggsDelivery index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DeliveryDate</th>
+                <th>EggsNumber</th>
+                <th>FirstLayingDate</th>
+                <th>LastLayingDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for eggs_delivery in eggs_deliveries %}
+            <tr>
+                <td>{{ eggs_delivery.id }}</td>
+                <td>{{ eggs_delivery.deliveryDate ? eggs_delivery.deliveryDate|date('Y-m-d') : '' }}</td>
+                <td>{{ eggs_delivery.eggsNumber }}</td>
+                <td>{{ eggs_delivery.firstLayingDate ? eggs_delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
+                <td>{{ eggs_delivery.lastLayingDate ? eggs_delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('eggs_delivery_show', {'id': eggs_delivery.id}) }}">show</a>
+                    <a href="{{ path('eggs_delivery_edit', {'id': eggs_delivery.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('eggs_delivery_new') }}">Create new</a>
+{% endblock %}

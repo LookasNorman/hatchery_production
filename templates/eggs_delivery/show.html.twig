@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EggsDelivery{% endblock %}
+
+{% block body %}
+    <h1>EggsDelivery</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ eggs_delivery.id }}</td>
+            </tr>
+            <tr>
+                <th>DeliveryDate</th>
+                <td>{{ eggs_delivery.deliveryDate ? eggs_delivery.deliveryDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EggsNumber</th>
+                <td>{{ eggs_delivery.eggsNumber }}</td>
+            </tr>
+            <tr>
+                <th>FirstLayingDate</th>
+                <td>{{ eggs_delivery.firstLayingDate ? eggs_delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>LastLayingDate</th>
+                <td>{{ eggs_delivery.lastLayingDate ? eggs_delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('eggs_delivery_index') }}">back to list</a>
+
+    <a href="{{ path('eggs_delivery_edit', {'id': eggs_delivery.id}) }}">edit</a>
+
+    {{ include('eggs_delivery/_delete_form.html.twig') }}
+{% endblock %}

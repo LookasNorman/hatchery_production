@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EggsDelivery{% endblock %}
+
+{% block body %}
+    <h1>Create new EggsDelivery</h1>
+
+    {{ include('eggs_delivery/_form.html.twig') }}
+
+    <a href="{{ path('eggs_delivery_index') }}">back to list</a>
+{% endblock %}
