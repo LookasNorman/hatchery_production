@@ -11,6 +11,21 @@
                         {% trans %}menu.menu_top.eggs_supplier.index{% endtrans %}
                     </a>
                 </li>
+                <li>
+                    <a class="nav-link" href={{ path('breed_index') }}>
+                        {% trans %}menu.menu_top.breed.index{% endtrans %}
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href={{ path('herds_index') }}>
+                        {% trans %}menu.menu_top.herds.index{% endtrans %}
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href={{ path('eggs_delivery_index') }}>
+                        {% trans %}menu.menu_top.eggs_delivery.index{% endtrans %}
+                    </a>
+                </li>
 {#                {% if is_granted('ROLE_ADMIN') %}#}
 {#                    <li class="nav-item">#}
 {#                        <a class="nav-link" href={{ path('registration') }}>{% trans %}menu.menu_top.registration{% endtrans %}</a>#}

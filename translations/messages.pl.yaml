@@ -151,6 +151,12 @@ menu:
     login: Zaloguj
     eggs_supplier:
       index: Dostawcy jaj
+    breed:
+      index: Rasy kur
+    herds:
+      index: Stada
+    eggs_delivery:
+      index: Dostawy jaj
 security:
   login:
     form:
