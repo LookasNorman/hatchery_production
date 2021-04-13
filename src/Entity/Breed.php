@@ -21,8 +21,8 @@ class Breed
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\Length(
-     *      min = 5,
-     *      max = 50,
+     *      min = 4,
+     *      max = 20,
      *      minMessage = "breed.name.min",
      *      maxMessage = "breed.name.max"
      * )
@@ -32,8 +32,8 @@ class Breed
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\Length(
-     *      min = 5,
-     *      max = 50,
+     *      min = 3,
+     *      max = 20,
      *      minMessage = "breed.type.min",
      *      maxMessage = "breed.type.max"
      * )
