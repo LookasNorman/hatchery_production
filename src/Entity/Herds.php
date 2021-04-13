@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\HerdsRepository;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -49,6 +51,16 @@ class Herds
      * @ORM\JoinColumn(nullable=false)
      */
     private $breed;
+
+    /**
+     * @ORM\OneToMany(targetEntity=EggsDelivery::class, mappedBy="herd")
+     */
+    private $eggsDeliveries;
+
+    public function __construct()
+    {
+        $this->eggsDeliveries = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -99,6 +111,36 @@ class Herds
     public function setBreed(?Breed $breed): self
     {
         $this->breed = $breed;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EggsDelivery[]
+     */
+    public function getEggsDeliveries(): Collection
+    {
+        return $this->eggsDeliveries;
+    }
+
+    public function addEggsDelivery(EggsDelivery $eggsDelivery): self
+    {
+        if (!$this->eggsDeliveries->contains($eggsDelivery)) {
+            $this->eggsDeliveries[] = $eggsDelivery;
+            $eggsDelivery->setHerd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEggsDelivery(EggsDelivery $eggsDelivery): self
+    {
+        if ($this->eggsDeliveries->removeElement($eggsDelivery)) {
+            // set the owning side to null (unless already changed)
+            if ($eggsDelivery->getHerd() === $this) {
+                $eggsDelivery->setHerd(null);
+            }
+        }
 
         return $this;
     }
