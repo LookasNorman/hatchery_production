@@ -9,9 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/breed")
+ * @IsGranted('ROLE_USER')
  */
 class BreedController extends AbstractController
 {
@@ -27,6 +29,7 @@ class BreedController extends AbstractController
 
     /**
      * @Route("/new", name="breed_new", methods={"GET","POST"})
+     * @IsGranted('ROLE_ADMIN')
      */
     public function new(Request $request): Response
     {
@@ -60,6 +63,7 @@ class BreedController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="breed_edit", methods={"GET","POST"})
+     * @IsGranted('ROLE_ADMIN')
      */
     public function edit(Request $request, Breed $breed): Response
     {
@@ -80,6 +84,7 @@ class BreedController extends AbstractController
 
     /**
      * @Route("/{id}", name="breed_delete", methods={"POST"})
+     * @IsGranted('ROLE_ADMIN')
      */
     public function delete(Request $request, Breed $breed): Response
     {
