@@ -1,0 +1,35 @@
+{{ form_start(form) }}
+<div class="form-group">
+    <label>{{ form_label(form.name) }}</label>
+    {{ form_widget(form.name) }}
+    <small>{{ form_help(form.name) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.name) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.hatchingDate) }}</label>
+    {{ form_widget(form.hatchingDate) }}
+    <small>{{ form_help(form.hatchingDate) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.hatchingDate) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.breeder) }}</label>
+    {{ form_widget(form.breeder) }}
+    <small>{{ form_help(form.breeder) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.breeder) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.breed) }}</label>
+    {{ form_widget(form.breed) }}
+    <small>{{ form_help(form.breed) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.breed) }}
+    </div>
+</div>
+<button class="btn btn-danger">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

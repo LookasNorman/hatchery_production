@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Breed;
+use App\Entity\EggSupplier;
+use App\Entity\Herds;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class HerdsType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('hatchingDate', DateType::class, [
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('breeder', EntityType::class, [
+                'class' => EggSupplier::class,
+                'choice_label' => 'name',
+                'placeholder' => 'herds.form.placeholder.breeder',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('breed', EntityType::class, [
+                'class' => Breed::class,
+                'choice_label' => function(Breed $breed) {
+                return $breed->getName() . ' ' . $breed->getType();
+                },
+                'placeholder' => 'herds.form.placeholder.breed',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Herds::class,
+        ]);
+    }
+}

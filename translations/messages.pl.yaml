@@ -63,6 +63,45 @@ egg_supplier:
     button:
       edit: Edytuj
       back: Lista dostawców jaj
+herds:
+  delete:
+    confirm: Na pewno chcesz usunąć stado?
+    button:
+      delete: Usuń stado
+  form:
+    placeholder:
+      breeder: Wybierz hodowcę z listy
+      breed: Wybierz rasę z listy
+  edit:
+    title: Edytuj stado
+    button:
+      back: Lista stad
+  index:
+    title: Lista stad
+    table:
+      id: Indeks
+      name: Nazwa
+      hatching_date: Data wylęgu
+      breed: Rasa
+      breeders: Dostawca jaj / hodowca
+      actions: Akcje
+      no_found: Brak stad
+      badge:
+        show: Szczegóły
+        edit: Edycja
+    button:
+      new: Utwórz stado
+  new:
+    title: Dodawanie nowego stada
+    button:
+      back: Lista stad
+  show:
+    title: Szczegóły stada
+    hatching_date: Data wylęgu
+    button:
+      edit: Edytuj
+      back: Lista stad
+      breeder_herds: Stada dostawcy / hodowcy
 menu:
   menu_top:
     registration: Nowy użytkownik

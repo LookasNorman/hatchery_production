@@ -1,3 +1,10 @@
+breed:
+  name:
+    min: Nazwa rasy musi zawierać conajmniej 4 znaki
+    max: Nazwa rasy musi być krótsza niż 20 znaków
+  type:
+    min: Typ musi musi zawierać conajmniej 3 znaków
+    max: Typ musi być krótsza niż 20 znaków
 egg_supplier:
   name:
     min: Nazwa musi być dłuższa niż 5 znaków
@@ -6,11 +13,7 @@ egg_supplier:
   phone_number:
     min: Numer telefonu musi zawierać conajmniej 9 znaków lub być pusty
     max: Numer telefonu musi zawierać mniej niż 30 znaków lub być pusty
-breed:
+herds:
   name:
-    min: Nazwa rasy musi być dłuższa niż 3 znaki
-    max: Nazwa rasy musi być krótsza niż 20 znaków
-  type:
-    min: Typ musi być dłuższa niż 2 znaków
-    max: Typ musi być krótsza niż 20 znaków
-
+    min: Nazwa musi zawierać conajmniej 3 znaki
+    max: Nazwa nie może być dłuższa niż 20 znaków

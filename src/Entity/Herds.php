@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\HerdsRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=HerdsRepository::class)
@@ -19,6 +21,13 @@ class Herds
 
     /**
      * @ORM\Column(type="string", length=20)
+     *
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 20,
+     *      minMessage = "herds.name.min",
+     *      maxMessage = "herds.name.max"
+     * )
      */
     private $name;
 
@@ -30,6 +39,8 @@ class Herds
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Date(
+     * )
      */
     private $hatchingDate;
 
@@ -68,12 +79,12 @@ class Herds
         return $this;
     }
 
-    public function getHatchingDate(): ?\DateTimeInterface
+    public function getHatchingDate(): ?DateTimeInterface
     {
         return $this->hatchingDate;
     }
 
-    public function setHatchingDate(\DateTimeInterface $hatchingDate): self
+    public function setHatchingDate(DateTimeInterface $hatchingDate): self
     {
         $this->hatchingDate = $hatchingDate;
 
