@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EggSupplierRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -50,6 +52,16 @@ class EggSupplier
      */
     private $phoneNumber;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Herds::class, mappedBy="breeder")
+     */
+    private $herds;
+
+    public function __construct()
+    {
+        $this->herds = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +99,36 @@ class EggSupplier
     public function setPhoneNumber(?string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Herds[]
+     */
+    public function getHerds(): Collection
+    {
+        return $this->herds;
+    }
+
+    public function addHerd(Herds $herd): self
+    {
+        if (!$this->herds->contains($herd)) {
+            $this->herds[] = $herd;
+            $herd->setBreeder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHerd(Herds $herd): self
+    {
+        if ($this->herds->removeElement($herd)) {
+            // set the owning side to null (unless already changed)
+            if ($herd->getBreeder() === $this) {
+                $herd->setBreeder(null);
+            }
+        }
 
         return $this;
     }

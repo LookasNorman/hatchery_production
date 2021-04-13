@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BreedRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -40,6 +42,16 @@ class Breed
      */
     private $type;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Herds::class, mappedBy="breed")
+     */
+    private $herds;
+
+    public function __construct()
+    {
+        $this->herds = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -65,6 +77,36 @@ class Breed
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Herds[]
+     */
+    public function getHerds(): Collection
+    {
+        return $this->herds;
+    }
+
+    public function addHerd(Herds $herd): self
+    {
+        if (!$this->herds->contains($herd)) {
+            $this->herds[] = $herd;
+            $herd->setBreed($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHerd(Herds $herd): self
+    {
+        if ($this->herds->removeElement($herd)) {
+            // set the owning side to null (unless already changed)
+            if ($herd->getBreed() === $this) {
+                $herd->setBreed(null);
+            }
+        }
 
         return $this;
     }
