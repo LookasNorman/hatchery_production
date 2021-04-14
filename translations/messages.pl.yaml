@@ -32,6 +32,42 @@ breed:
     button:
       edit: Edytuj rasę
       back: Lista ras kur
+egg_supplier:
+  delete:
+    title: Jesteś pewien, że chcesz usunąć dostawcę jaj?
+    button:
+      delete: Usuń dostawcę
+  edit:
+    title: Edycja dostawcy
+    button:
+      back: Lista dostawców jaj
+  index:
+    title: Dostawcy jaj
+    table:
+      id: Indeks
+      name: Nazwa
+      email: Adres email
+      phone_number: Numer telefonu
+      actions: Akcje
+      badge:
+        show: Szczegóły
+        edit: Edytuj
+      no_records: Brak dostawców jaj
+    button:
+      new: Dodaj nowego dostawcę
+  new:
+    title: Dodawanie nowego dostawcy
+    button:
+      back: Lista dostawców jaj
+  show:
+    title: Dostawca jaj
+    email: Email
+    phone_number: Telefon
+    button:
+      edit: Edytuj
+      back: Lista dostawców jaj
+    herds:
+      list: Stada dostawcy
 eggs_delivery:
   delete:
     confirm: Jesteś pewien, że chcesz usunąć dostawę?
@@ -72,42 +108,38 @@ eggs_delivery:
     button:
       edit: Edytuj dostawę
       back: Lista dostaw jaj
-egg_supplier:
+eggs_inputs:
   delete:
-    title: Jesteś pewien, że chcesz usunąć dostawcę jaj?
+    confirm: Na pewno chcesz usunąć nakład?
     button:
-      delete: Usuń dostawcę
+      delete: Usuń nakład
   edit:
-    title: Edycja dostawcy
+    title: Tworzenie nowego nakładu
     button:
-      back: Lista dostawców jaj
+      back: Lista nakładów
   index:
-    title: Dostawcy jaj
+    title: Wykaz nakładów
+    button:
+      new: Utwórz nakład
     table:
       id: Indeks
       name: Nazwa
-      email: Adres email
-      phone_number: Numer telefonu
+      input_date: Data nałożenia
       actions: Akcje
+      no_found: Brak nakładów
       badge:
         show: Szczegóły
-        edit: Edytuj
-      no_records: Brak dostawców jaj
-    button:
-      new: Dodaj nowego dostawcę
+        edit: Edycja
   new:
-    title: Dodawanie nowego dostawcy
+    title: Dodawanie nakładu
     button:
-      back: Lista dostawców jaj
+      back: Lista nakładów
   show:
-    title: Dostawca jaj
-    email: Email
-    phone_number: Telefon
+    title: Szczegóły nakładu
+    input_date: Data nakładu
     button:
-      edit: Edytuj
-      back: Lista dostawców jaj
-    herds:
-      list: Stada dostawcy
+      back: Lista nakładów
+      edit: Edytuj nakład
 herds:
   delete:
     confirm: Na pewno chcesz usunąć stado?
@@ -160,6 +192,8 @@ menu:
       index: Stada
     eggs_delivery:
       index: Dostawy jaj
+    eggs_inputs:
+      index: Nakłady
 security:
   login:
     form:

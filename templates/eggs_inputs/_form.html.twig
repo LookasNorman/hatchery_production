@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+<div class="form-group">
+    <label>{{ form_label(form.name) }}</label>
+    {{ form_widget(form.name) }}
+    <small>{{ form_help(form.name) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.name) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.inputDate) }}</label>
+    {{ form_widget(form.inputDate) }}
+    <small>{{ form_help(form.inputDate) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.inputDate) }}
+    </div>
+</div>
+<button class="btn btn-danger">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
