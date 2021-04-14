@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\EggsDeliveryRepository;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -45,6 +47,16 @@ class EggsDelivery
      * @ORM\Column(type="date")
      */
     private $lastLayingDate;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=EggsInputsDetails::class, mappedBy="eggDelivery")
+     */
+    private $eggsInputsDetails;
+
+    public function __construct()
+    {
+        $this->eggsInputsDetails = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -107,6 +119,33 @@ class EggsDelivery
     public function setLastLayingDate(DateTimeInterface $lastLayingDate): self
     {
         $this->lastLayingDate = $lastLayingDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EggsInputsDetails[]
+     */
+    public function getEggsInputsDetails(): Collection
+    {
+        return $this->eggsInputsDetails;
+    }
+
+    public function addEggsInputsDetail(EggsInputsDetails $eggsInputsDetail): self
+    {
+        if (!$this->eggsInputsDetails->contains($eggsInputsDetail)) {
+            $this->eggsInputsDetails[] = $eggsInputsDetail;
+            $eggsInputsDetail->addEggDelivery($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEggsInputsDetail(EggsInputsDetails $eggsInputsDetail): self
+    {
+        if ($this->eggsInputsDetails->removeElement($eggsInputsDetail)) {
+            $eggsInputsDetail->removeEggDelivery($this);
+        }
 
         return $this;
     }
