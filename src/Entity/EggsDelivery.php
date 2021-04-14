@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\EggsDeliveryRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EggsDeliveryRepository::class)
@@ -25,6 +27,7 @@ class EggsDelivery
     /**
      * @ORM\ManyToOne(targetEntity=Herds::class, inversedBy="eggsDeliveries")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $herd;
 
@@ -48,12 +51,12 @@ class EggsDelivery
         return $this->id;
     }
 
-    public function getDeliveryDate(): ?\DateTimeInterface
+    public function getDeliveryDate(): ?DateTimeInterface
     {
         return $this->deliveryDate;
     }
 
-    public function setDeliveryDate(\DateTimeInterface $deliveryDate): self
+    public function setDeliveryDate(DateTimeInterface $deliveryDate): self
     {
         $this->deliveryDate = $deliveryDate;
 
@@ -84,24 +87,24 @@ class EggsDelivery
         return $this;
     }
 
-    public function getFirstLayingDate(): ?\DateTimeInterface
+    public function getFirstLayingDate(): ?DateTimeInterface
     {
         return $this->firstLayingDate;
     }
 
-    public function setFirstLayingDate(\DateTimeInterface $firstLayingDate): self
+    public function setFirstLayingDate(DateTimeInterface $firstLayingDate): self
     {
         $this->firstLayingDate = $firstLayingDate;
 
         return $this;
     }
 
-    public function getLastLayingDate(): ?\DateTimeInterface
+    public function getLastLayingDate(): ?DateTimeInterface
     {
         return $this->lastLayingDate;
     }
 
-    public function setLastLayingDate(\DateTimeInterface $lastLayingDate): self
+    public function setLastLayingDate(DateTimeInterface $lastLayingDate): self
     {
         $this->lastLayingDate = $lastLayingDate;
 
