@@ -35,17 +35,7 @@
                 <td>{{ eggs_inputs_detail.id }}</td>
                 <td>{{ eggs_inputs_detail.eggInput.name }}</td>
                 <td>
-                    <ul>
-                        {% for delivery in eggs_inputs_detail.eggDelivery %}
-                            <li>
-                                {{ delivery.herd.breeder.name }}
-                                -
-                                {{ delivery.herd.name }}
-                                -
-                                {{ delivery.deliveryDate ? delivery.deliveryDate|date('Y-m-d') : '' }}
-                            </li>
-                        {% endfor %}
-                    </ul>
+
                 </td>
                 <td>{{ eggs_inputs_detail.eggsNumber }}</td>
                 <td>

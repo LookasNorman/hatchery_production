@@ -24,17 +24,6 @@ class EggsInputsDetailsType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('eggDelivery', EntityType::class, [
-                'class' => EggsDelivery::class,
-                'choice_label' => function(EggsDelivery $eggsDelivery) {
-                return $eggsDelivery->getHerd()->getBreeder()->getName() . ' - ' . $eggsDelivery->getHerd()->getName() . ' - ' . $eggsDelivery->getEggsNumber();
-                },
-                'placeholder' => "eggs_inputs_details.form.egg_delivery",
-                'multiple' => true,
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
             ->add('eggsNumber', IntegerType::class, [
                 'attr' => [
                     'class' => 'form-control'

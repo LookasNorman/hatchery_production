@@ -28,20 +28,9 @@ class EggsInputsDetails
     private $eggInput;
 
     /**
-     * @ORM\ManyToMany(targetEntity=EggsDelivery::class, inversedBy="eggsInputsDetails")
-     * @Assert\NotNull()
-     */
-    private $eggDelivery;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $eggsNumber;
-
-    public function __construct()
-    {
-        $this->eggDelivery = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -56,30 +45,6 @@ class EggsInputsDetails
     public function setEggInput(?EggsInputs $eggInput): self
     {
         $this->eggInput = $eggInput;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|EggsDelivery[]
-     */
-    public function getEggDelivery(): Collection
-    {
-        return $this->eggDelivery;
-    }
-
-    public function addEggDelivery(EggsDelivery $eggDelivery): self
-    {
-        if (!$this->eggDelivery->contains($eggDelivery)) {
-            $this->eggDelivery[] = $eggDelivery;
-        }
-
-        return $this;
-    }
-
-    public function removeEggDelivery(EggsDelivery $eggDelivery): self
-    {
-        $this->eggDelivery->removeElement($eggDelivery);
 
         return $this;
     }

@@ -19,15 +19,7 @@
                 {{ eggs_inputs_detail.eggsNumber }} {% trans %}eggs_inputs_details.show.egg{% endtrans %}
             </h5>
             <div class="card-body">
-                {% for delivery in eggs_inputs_detail.eggDelivery %}
-                <p class="card-text">
-                    {{ delivery.herd.breeder.name }}
-                    -
-                    {{ delivery.herd.name }}
-                    -
-                    {{ delivery.deliveryDate ? delivery.deliveryDate|date('Y-m-d') : '' }}
-                </p>
-                {% endfor %}
+                
             </div>
             <div class="card-footer bg-transparent border-success d-flex">
                 {% if is_granted('ROLE_ADMIN') %}
