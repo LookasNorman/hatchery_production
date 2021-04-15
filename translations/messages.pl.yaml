@@ -181,19 +181,21 @@ herds:
       breeder_herds: Stada dostawcy / hodowcy
 menu:
   menu_top:
-    registration: Nowy użytkownik
-    logout: Wyloguj
-    login: Zaloguj
-    eggs_supplier:
-      index: Dostawcy jaj
     breed:
       index: Rasy kur
-    herds:
-      index: Stada
     eggs_delivery:
       index: Dostawy jaj
     eggs_inputs:
       index: Nakłady
+    eggs_inputs_details:
+      index: Dostawy nakładu
+    eggs_supplier:
+      index: Dostawcy jaj
+    herds:
+      index: Stada
+    logout: Wyloguj
+    login: Zaloguj
+    registration: Nowy użytkownik
 security:
   login:
     form:
