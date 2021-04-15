@@ -53,9 +53,15 @@ class EggsDelivery
      */
     private $eggsInputsDetails;
 
+    /**
+     * @ORM\OneToMany(targetEntity=EggsInputsDetailsEggsDelivery::class, mappedBy="EggsDeliveries")
+     */
+    private $eggsInputsDetailsEggsDeliveries;
+
     public function __construct()
     {
         $this->eggsInputsDetails = new ArrayCollection();
+        $this->eggsInputsDetailsEggsDeliveries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -145,6 +151,36 @@ class EggsDelivery
     {
         if ($this->eggsInputsDetails->removeElement($eggsInputsDetail)) {
             $eggsInputsDetail->removeEggDelivery($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EggsInputsDetailsEggsDelivery[]
+     */
+    public function getEggsInputsDetailsEggsDeliveries(): Collection
+    {
+        return $this->eggsInputsDetailsEggsDeliveries;
+    }
+
+    public function addEggsInputsDetailsEggsDelivery(EggsInputsDetailsEggsDelivery $eggsInputsDetailsEggsDelivery): self
+    {
+        if (!$this->eggsInputsDetailsEggsDeliveries->contains($eggsInputsDetailsEggsDelivery)) {
+            $this->eggsInputsDetailsEggsDeliveries[] = $eggsInputsDetailsEggsDelivery;
+            $eggsInputsDetailsEggsDelivery->setEggsDeliveries($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEggsInputsDetailsEggsDelivery(EggsInputsDetailsEggsDelivery $eggsInputsDetailsEggsDelivery): self
+    {
+        if ($this->eggsInputsDetailsEggsDeliveries->removeElement($eggsInputsDetailsEggsDelivery)) {
+            // set the owning side to null (unless already changed)
+            if ($eggsInputsDetailsEggsDelivery->getEggsDeliveries() === $this) {
+                $eggsInputsDetailsEggsDelivery->setEggsDeliveries(null);
+            }
         }
 
         return $this;

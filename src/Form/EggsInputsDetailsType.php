@@ -24,7 +24,7 @@ class EggsInputsDetailsType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('eggsNumber', IntegerType::class, [
+            ->add('chickNumber', IntegerType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ]

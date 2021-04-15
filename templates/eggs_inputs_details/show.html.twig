@@ -16,10 +16,10 @@
                 -
                 {{ eggs_inputs_detail.eggInput.inputDate ? eggs_inputs_detail.eggInput.inputDate|date('Y-m-d') : '' }}
                 -
-                {{ eggs_inputs_detail.eggsNumber }} {% trans %}eggs_inputs_details.show.egg{% endtrans %}
+                {{ eggs_inputs_detail.chickNumber }} {% trans %}eggs_inputs_details.show.chick{% endtrans %}
             </h5>
             <div class="card-body">
-                
+
             </div>
             <div class="card-footer bg-transparent border-success d-flex">
                 {% if is_granted('ROLE_ADMIN') %}

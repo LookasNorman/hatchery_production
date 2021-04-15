@@ -173,6 +173,7 @@ eggs_inputs_details:
   show:
     title: Szczegóły nakładu
     egg: jaj
+    chick: piskląt
     button:
       edit: Edytuj
       back: Lista dostaw w nakładach

@@ -30,7 +30,17 @@ class EggsInputsDetails
     /**
      * @ORM\Column(type="integer")
      */
-    private $eggsNumber;
+    private $chickNumber;
+
+    /**
+     * @ORM\OneToMany(targetEntity=EggsInputsDetailsEggsDelivery::class, mappedBy="eggsInputDetails")
+     */
+    private $eggsInputsDetailsEggsDeliveries;
+
+    public function __construct()
+    {
+        $this->eggsInputsDetailsEggsDeliveries = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -49,14 +59,44 @@ class EggsInputsDetails
         return $this;
     }
 
-    public function getEggsNumber(): ?int
+    public function getChickNumber(): ?int
     {
-        return $this->eggsNumber;
+        return $this->chickNumber;
     }
 
-    public function setEggsNumber(int $eggsNumber): self
+    public function setChickNumber(int $chickNumber): self
     {
-        $this->eggsNumber = $eggsNumber;
+        $this->chickNumber = $chickNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EggsInputsDetailsEggsDelivery[]
+     */
+    public function getEggsInputsDetailsEggsDeliveries(): Collection
+    {
+        return $this->eggsInputsDetailsEggsDeliveries;
+    }
+
+    public function addEggsInputsDetailsEggsDelivery(EggsInputsDetailsEggsDelivery $eggsInputsDetailsEggsDelivery): self
+    {
+        if (!$this->eggsInputsDetailsEggsDeliveries->contains($eggsInputsDetailsEggsDelivery)) {
+            $this->eggsInputsDetailsEggsDeliveries[] = $eggsInputsDetailsEggsDelivery;
+            $eggsInputsDetailsEggsDelivery->setEggsInputDetails($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEggsInputsDetailsEggsDelivery(EggsInputsDetailsEggsDelivery $eggsInputsDetailsEggsDelivery): self
+    {
+        if ($this->eggsInputsDetailsEggsDeliveries->removeElement($eggsInputsDetailsEggsDelivery)) {
+            // set the owning side to null (unless already changed)
+            if ($eggsInputsDetailsEggsDelivery->getEggsInputDetails() === $this) {
+                $eggsInputsDetailsEggsDelivery->setEggsInputDetails(null);
+            }
+        }
 
         return $this;
     }
