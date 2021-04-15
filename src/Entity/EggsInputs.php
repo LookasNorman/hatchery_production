@@ -24,7 +24,9 @@ class EggsInputs
      * @ORM\Column(type="string", length=50)
      * @Assert\Length(
      *     min=3,
-     *     max=50
+     *     max=50,
+     *     minMessage = "eggs_inputs.name.min",
+     *     maxMessage = "eggs_inputs.name.max"
      * )
      * @Assert\NotNull()
      */

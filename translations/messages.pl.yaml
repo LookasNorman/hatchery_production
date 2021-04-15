@@ -140,6 +140,42 @@ eggs_inputs:
     button:
       back: Lista nakładów
       edit: Edytuj nakład
+eggs_inputs_details:
+  delete:
+    confirm: Na pewno chcesz usunąć dostawy z nakładu?
+    button:
+      delete: Usuń dostawy w nakładzie
+  form:
+    egg_input: Wybierz nakład
+    egg_delivery: Wybierz dostawę
+  edit:
+    title: Edycja nakładu
+    button:
+      back: Lista dostaw w nakładach
+  index:
+    title: Dostawy w nakładzie
+    table:
+      id: Indeks
+      eggs_input: Nakład
+      deliveries: Lista dostaw
+      eggsNumber: Ilość jaj
+      actions: Akcje
+      no_found: Brak nakładów z dostawami
+      badge:
+        show: Szczegóły
+        edit: Edytuj
+    button:
+      new: Dodaj dostawy do nakładu
+  new:
+    title: Dodawanie dostaw do nakładu
+    button:
+      back: Lista dostaw w nakładach
+  show:
+    title: Szczegóły nakładu
+    egg: jaj
+    button:
+      edit: Edytuj
+      back: Lista dostaw w nakładach
 herds:
   delete:
     confirm: Na pewno chcesz usunąć stado?

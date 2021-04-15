@@ -6,6 +6,7 @@ use App\Repository\EggsInputsDetailsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EggsInputsDetailsRepository::class)
@@ -22,13 +23,20 @@ class EggsInputsDetails
     /**
      * @ORM\ManyToOne(targetEntity=EggsInputs::class, inversedBy="eggsInputsDetails")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $eggInput;
 
     /**
      * @ORM\ManyToMany(targetEntity=EggsDelivery::class, inversedBy="eggsInputsDetails")
+     * @Assert\NotNull()
      */
     private $eggDelivery;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $eggsNumber;
 
     public function __construct()
     {
@@ -72,6 +80,18 @@ class EggsInputsDetails
     public function removeEggDelivery(EggsDelivery $eggDelivery): self
     {
         $this->eggDelivery->removeElement($eggDelivery);
+
+        return $this;
+    }
+
+    public function getEggsNumber(): ?int
+    {
+        return $this->eggsNumber;
+    }
+
+    public function setEggsNumber(int $eggsNumber): self
+    {
+        $this->eggsNumber = $eggsNumber;
 
         return $this;
     }
