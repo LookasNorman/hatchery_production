@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\EggsDelivery;
 use App\Entity\EggsInputsDetails;
+use App\Entity\EggsInputsDetailsEggsDelivery;
+use App\Entity\Herds;
 use App\Form\EggsInputsDetailsType;
 use App\Repository\EggsInputsDetailsRepository;
+use App\Repository\HerdsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +43,34 @@ class EggsInputsDetailsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $breeder = $form['breeder']->getData();
+            $totalEggs = $form['eggsNumber']->getData();
+            $herds = $entityManager->getRepository(Herds::class)->findBy(['breeder' => $breeder]);
             $entityManager->persist($eggsInputsDetail);
+            foreach ($herds as $herd) {
+                $deliveries = $entityManager->getRepository(EggsDelivery::class)->findBy(['herd' => $herd]);
+                foreach ($deliveries as $delivery) {
+                    $eggsNumber = $delivery->getEggsNumber();
+                    if($eggsNumber > 0){
+                        if($eggsNumber > $totalEggs){
+                            $eggsInputsDetailEggsDeliveries = new EggsInputsDetailsEggsDelivery();
+                            $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
+                            $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
+                            $eggsInputsDetailEggsDeliveries->setEggsNumber($totalEggs);
+                        } else {
+                            $eggsInputsDetailEggsDeliveries = new EggsInputsDetailsEggsDelivery();
+                            $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
+                            $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
+                            $eggsInputsDetailEggsDeliveries->setEggsNumber($eggsNumber);
+                            $totalEggs = $totalEggs - $eggsNumber;
+                        }
+                        $entityManager->persist($eggsInputsDetailEggsDeliveries);
+                    }
+                }
+            }
+//            dd($eggsInputsDetail);
+            
+
             $entityManager->flush();
 
             return $this->redirectToRoute('eggs_inputs_details_index');
@@ -88,7 +119,7 @@ class EggsInputsDetailsController extends AbstractController
      */
     public function delete(Request $request, EggsInputsDetails $eggsInputsDetail): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$eggsInputsDetail->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $eggsInputsDetail->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($eggsInputsDetail);
             $entityManager->flush();

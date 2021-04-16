@@ -159,6 +159,7 @@ eggs_inputs_details:
       eggs_input: Nakład
       deliveries: Lista dostaw
       eggsNumber: Ilość jaj
+      chicksNumber: Ilość piskląt
       actions: Akcje
       no_found: Brak nakładów z dostawami
       badge:
