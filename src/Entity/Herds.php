@@ -55,11 +55,12 @@ class Herds
     /**
      * @ORM\OneToMany(targetEntity=EggsDelivery::class, mappedBy="herd")
      */
-    private $eggsDeliveries;
+    public $eggsDeliveries;
 
     public function __construct()
     {
         $this->eggsDeliveries = new ArrayCollection();
+        $this->deliveries = new ArrayCollection();
     }
 
     public function getId(): ?int

@@ -36,7 +36,7 @@ class EggsDelivery
     /**
      * @ORM\Column(type="integer")
      */
-    private $eggsNumber;
+    public $eggsNumber;
 
     /**
      * @ORM\Column(type="date")
@@ -182,6 +182,18 @@ class EggsDelivery
                 $eggsInputsDetailsEggsDelivery->setEggsDeliveries(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getHerds(): ?Herds
+    {
+        return $this->herds;
+    }
+
+    public function setHerds(?Herds $herds): self
+    {
+        $this->herds = $herds;
 
         return $this;
     }
