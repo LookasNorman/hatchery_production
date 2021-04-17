@@ -186,15 +186,4 @@ class EggsDelivery
         return $this;
     }
 
-    public function getHerds(): ?Herds
-    {
-        return $this->herds;
-    }
-
-    public function setHerds(?Herds $herds): self
-    {
-        $this->herds = $herds;
-
-        return $this;
-    }
 }

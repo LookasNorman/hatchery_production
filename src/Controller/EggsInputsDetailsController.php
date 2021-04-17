@@ -7,6 +7,7 @@ use App\Entity\EggsInputsDetails;
 use App\Entity\EggsInputsDetailsEggsDelivery;
 use App\Entity\Herds;
 use App\Form\EggsInputsDetailsType;
+use App\Repository\EggsDeliveryRepository;
 use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\HerdsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,45 +36,52 @@ class EggsInputsDetailsController extends AbstractController
      * @Route("/new", name="eggs_inputs_details_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EggsDeliveryRepository $deliveryRepository): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $eggsInputsDetail = new EggsInputsDetails();
         $form = $this->createForm(EggsInputsDetailsType::class, $eggsInputsDetail);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $breeder = $form['breeder']->getData();
             $totalEggs = $form['eggsNumber']->getData();
-            $herds = $entityManager->getRepository(Herds::class)->findBy(['breeder' => $breeder]);
-            $entityManager->persist($eggsInputsDetail);
-            foreach ($herds as $herd) {
-                $deliveries = $entityManager->getRepository(EggsDelivery::class)->findBy(['herd' => $herd]);
-                foreach ($deliveries as $delivery) {
-                    $eggsNumber = $delivery->getEggsNumber();
-                    if($eggsNumber > 0){
-                        if($eggsNumber > $totalEggs){
-                            $eggsInputsDetailEggsDeliveries = new EggsInputsDetailsEggsDelivery();
-                            $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
-                            $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
-                            $eggsInputsDetailEggsDeliveries->setEggsNumber($totalEggs);
-                        } else {
-                            $eggsInputsDetailEggsDeliveries = new EggsInputsDetailsEggsDelivery();
-                            $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
-                            $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
-                            $eggsInputsDetailEggsDeliveries->setEggsNumber($eggsNumber);
-                            $totalEggs = $totalEggs - $eggsNumber;
+            $eggs = $deliveryRepository->eggsOnWarehouse($breeder);
+            if($eggs['eggsInputs']){
+                $eggsOnWarehouse = $eggs['eggsDeliveries'] - $eggs['eggsInputs'];
+            } else {
+                $eggsOnWarehouse = $eggs['eggsDeliveries'];
+            }
+            if ($eggsOnWarehouse > $totalEggs) {
+
+                $herds = $entityManager->getRepository(Herds::class)->findBy(['breeder' => $breeder]);
+                $entityManager->persist($eggsInputsDetail);
+                foreach ($herds as $herd) {
+                    $deliveries = $entityManager->getRepository(EggsDelivery::class)->findBy(['herd' => $herd]);
+                    foreach ($deliveries as $delivery) {
+                        $eggsNumber = $delivery->getEggsNumber();
+                        if ($eggsNumber > 0) {
+                            if ($eggsNumber > $totalEggs) {
+                                $eggsInputsDetailEggsDeliveries = new EggsInputsDetailsEggsDelivery();
+                                $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
+                                $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
+                                $eggsInputsDetailEggsDeliveries->setEggsNumber($totalEggs);
+                            } else {
+                                $eggsInputsDetailEggsDeliveries = new EggsInputsDetailsEggsDelivery();
+                                $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
+                                $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
+                                $eggsInputsDetailEggsDeliveries->setEggsNumber($eggsNumber);
+                                $totalEggs = $totalEggs - $eggsNumber;
+                            }
+                            $entityManager->persist($eggsInputsDetailEggsDeliveries);
                         }
-                        $entityManager->persist($eggsInputsDetailEggsDeliveries);
                     }
                 }
+
+                $entityManager->flush();
+
+                return $this->redirectToRoute('eggs_inputs_details_index');
             }
-//            dd($eggsInputsDetail);
-            
 
-            $entityManager->flush();
-
-            return $this->redirectToRoute('eggs_inputs_details_index');
         }
 
         return $this->render('eggs_inputs_details/new.html.twig', [
