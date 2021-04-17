@@ -29,6 +29,7 @@ class EggsInputsDetails
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotNull()
      */
     private $chickNumber;
 

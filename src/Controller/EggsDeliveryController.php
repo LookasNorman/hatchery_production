@@ -39,6 +39,7 @@ class EggsDeliveryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $eggsDelivery->setEggsOnWarehouse($eggsDelivery->getEggsNumber());
             $entityManager->persist($eggsDelivery);
             $entityManager->flush();
 

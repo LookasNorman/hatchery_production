@@ -52,8 +52,6 @@ class EggsDeliveryType extends AbstractType
                 ]
             ]);
 
-
-
         $builder->get('breeder')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) {

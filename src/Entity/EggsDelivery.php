@@ -49,18 +49,17 @@ class EggsDelivery
     private $lastLayingDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity=EggsInputsDetails::class, mappedBy="eggDelivery")
-     */
-    private $eggsInputsDetails;
-
-    /**
      * @ORM\OneToMany(targetEntity=EggsInputsDetailsEggsDelivery::class, mappedBy="EggsDeliveries")
      */
     private $eggsInputsDetailsEggsDeliveries;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $eggsOnWarehouse;
+
     public function __construct()
     {
-        $this->eggsInputsDetails = new ArrayCollection();
         $this->eggsInputsDetailsEggsDeliveries = new ArrayCollection();
     }
 
@@ -130,33 +129,6 @@ class EggsDelivery
     }
 
     /**
-     * @return Collection|EggsInputsDetails[]
-     */
-    public function getEggsInputsDetails(): Collection
-    {
-        return $this->eggsInputsDetails;
-    }
-
-    public function addEggsInputsDetail(EggsInputsDetails $eggsInputsDetail): self
-    {
-        if (!$this->eggsInputsDetails->contains($eggsInputsDetail)) {
-            $this->eggsInputsDetails[] = $eggsInputsDetail;
-            $eggsInputsDetail->addEggDelivery($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEggsInputsDetail(EggsInputsDetails $eggsInputsDetail): self
-    {
-        if ($this->eggsInputsDetails->removeElement($eggsInputsDetail)) {
-            $eggsInputsDetail->removeEggDelivery($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|EggsInputsDetailsEggsDelivery[]
      */
     public function getEggsInputsDetailsEggsDeliveries(): Collection
@@ -182,6 +154,18 @@ class EggsDelivery
                 $eggsInputsDetailsEggsDelivery->setEggsDeliveries(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEggsOnWarehouse(): ?int
+    {
+        return $this->eggsOnWarehouse;
+    }
+
+    public function setEggsOnWarehouse(?int $eggsOnWarehouse): self
+    {
+        $this->eggsOnWarehouse = $eggsOnWarehouse;
 
         return $this;
     }

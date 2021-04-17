@@ -43,37 +43,31 @@ class EggsInputsDetailsController extends AbstractController
         $form = $this->createForm(EggsInputsDetailsType::class, $eggsInputsDetail);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $breeder = $form['breeder']->getData();
+            $herd = $form['herd']->getData();
             $totalEggs = $form['eggsNumber']->getData();
-            $eggs = $deliveryRepository->eggsOnWarehouse($breeder);
-            if($eggs['eggsInputs']){
-                $eggsOnWarehouse = $eggs['eggsDeliveries'] - $eggs['eggsInputs'];
-            } else {
-                $eggsOnWarehouse = $eggs['eggsDeliveries'];
+            $deliveries = $deliveryRepository->eggsOnWarehouse($herd);
+            $eggsNumber = 0;
+            foreach ($deliveries as $delivery) {
+                $eggsNumber = $eggsNumber + $delivery->getEggsNumber();
             }
-            if ($eggsOnWarehouse > $totalEggs) {
-
-                $herds = $entityManager->getRepository(Herds::class)->findBy(['breeder' => $breeder]);
+            if ($eggsNumber > $totalEggs) {
                 $entityManager->persist($eggsInputsDetail);
-                foreach ($herds as $herd) {
-                    $deliveries = $entityManager->getRepository(EggsDelivery::class)->findBy(['herd' => $herd]);
-                    foreach ($deliveries as $delivery) {
-                        $eggsNumber = $delivery->getEggsNumber();
-                        if ($eggsNumber > 0) {
-                            if ($eggsNumber > $totalEggs) {
-                                $eggsInputsDetailEggsDeliveries = new EggsInputsDetailsEggsDelivery();
-                                $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
-                                $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
-                                $eggsInputsDetailEggsDeliveries->setEggsNumber($totalEggs);
-                            } else {
-                                $eggsInputsDetailEggsDeliveries = new EggsInputsDetailsEggsDelivery();
-                                $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
-                                $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
-                                $eggsInputsDetailEggsDeliveries->setEggsNumber($eggsNumber);
-                                $totalEggs = $totalEggs - $eggsNumber;
-                            }
-                            $entityManager->persist($eggsInputsDetailEggsDeliveries);
+                foreach ($deliveries as $delivery) {
+                    $eggsNumber = $delivery->getEggsOnWarehouse();
+                    if ($totalEggs > 0 && $eggsNumber > 0) {
+                        $eggsInputsDetailEggsDeliveries = new EggsInputsDetailsEggsDelivery();
+                        $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
+                        $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
+                        if ($eggsNumber > $totalEggs) {
+                            $eggsInputsDetailEggsDeliveries->setEggsNumber($totalEggs);
+                            $delivery->setEggsOnWarehouse($eggsNumber - $totalEggs);
+                            $totalEggs = 0;
+                        } else {
+                            $eggsInputsDetailEggsDeliveries->setEggsNumber($eggsNumber);
+                            $delivery->setEggsOnWarehouse(0);
+                            $totalEggs = $totalEggs - $eggsNumber;
                         }
+                        $entityManager->persist($eggsInputsDetailEggsDeliveries);
                     }
                 }
 
@@ -93,7 +87,8 @@ class EggsInputsDetailsController extends AbstractController
     /**
      * @Route("/{id}", name="eggs_inputs_details_show", methods={"GET"})
      */
-    public function show(EggsInputsDetails $eggsInputsDetail): Response
+    public
+    function show(EggsInputsDetails $eggsInputsDetail): Response
     {
         return $this->render('eggs_inputs_details/show.html.twig', [
             'eggs_inputs_detail' => $eggsInputsDetail,
@@ -104,7 +99,8 @@ class EggsInputsDetailsController extends AbstractController
      * @Route("/{id}/edit", name="eggs_inputs_details_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, EggsInputsDetails $eggsInputsDetail): Response
+    public
+    function edit(Request $request, EggsInputsDetails $eggsInputsDetail): Response
     {
         $form = $this->createForm(EggsInputsDetailsType::class, $eggsInputsDetail);
         $form->handleRequest($request);
@@ -125,7 +121,8 @@ class EggsInputsDetailsController extends AbstractController
      * @Route("/{id}", name="eggs_inputs_details_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, EggsInputsDetails $eggsInputsDetail): Response
+    public
+    function delete(Request $request, EggsInputsDetails $eggsInputsDetail): Response
     {
         if ($this->isCsrfTokenValid('delete' . $eggsInputsDetail->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

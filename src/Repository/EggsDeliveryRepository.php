@@ -20,34 +20,18 @@ class EggsDeliveryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $breeder
+     * @param $herd
      * @return int|mixed|string
      */
-    public function eggsOnWarehouse($breeder)
+    public function eggsOnWarehouse($herd)
     {
         return $this->createQueryBuilder('ed')
-            ->select('SUM(ed.eggsNumber) as eggsDeliveries', 'SUM(eid.eggsNumber) as eggsInputs')
-            ->join('ed.herd', 'h')
-            ->leftJoin('ed.eggsInputsDetailsEggsDeliveries', 'eid')
-            ->where('h.breeder = :breeder')
-            ->setParameter('breeder', $breeder)
+            ->where('ed.herd = :herd')
+            ->andWhere('ed.eggsOnWarehouse > 0')
+            ->setParameter('herd', $herd)
             ->getQuery()
-            ->getSingleResult()
+            ->getResult()
             ;
-    }
-
-     /**
-      * @return EggsDelivery[] Returns an array of EggsDelivery objects
-      */
-    public function findByExampleField($value): array
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult();
     }
 
     /*

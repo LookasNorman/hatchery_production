@@ -8,14 +8,6 @@
     </div>
 </div>
 <div class="form-group">
-    <label>{{ form_label(form.chickNumber) }}</label>
-    {{ form_widget(form.chickNumber) }}
-    <small>{{ form_help(form.chickNumber) }}</small>
-    <div class="form-text text-danger">
-        {{ form_errors(form.chickNumber) }}
-    </div>
-</div>
-<div class="form-group">
     <label>{{ form_label(form.breeder) }}</label>
     {{ form_widget(form.breeder) }}
     <small>{{ form_help(form.breeder) }}</small>
@@ -31,5 +23,36 @@
         {{ form_errors(form.eggsNumber) }}
     </div>
 </div>
+{% if form.herd is defined %}
+<div class="form-group">
+    <label>{{ form_label(form.herd) }}</label>
+    {{ form_widget(form.herd) }}
+    <small>{{ form_help(form.herd) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.herd) }}
+    </div>
+</div>
+{% endif %}
+{% if form.chickNumber is defined %}
+    <div class="form-group">
+        <label>{{ form_label(form.chickNumber) }}</label>
+        {{ form_widget(form.chickNumber) }}
+        <small>{{ form_help(form.chickNumber) }}</small>
+        <div class="form-text text-danger">
+            {{ form_errors(form.chickNumber) }}
+        </div>
+    </div>
+{% endif %}
 <button class="btn btn-danger">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+<script>
+    let breeder = $('#eggs_inputs_details_breeder')
+    let herds = $('#eggs_inputs_details_herd')
+    let chicks = $('#eggs_inputs_details_chickNumber')
+    breeder.change(function (){
+        console.log(herds.closest('div'))
+        herds.closest('div').remove()
+        chicks.closest('div').remove()
+    })
+</script>
