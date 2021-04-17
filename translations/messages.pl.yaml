@@ -87,7 +87,8 @@ eggs_delivery:
       breeder: Hodowca
       herds: Stado
       delivery_date: Data dostawy
-      eggs_number: Ilość jaj
+      eggs_number: Jaja dostarczone
+      eggs_warehouse: Jaja magazyn
       first_laying_date: Data zniesienia od
       last_laying_date: Data zniesienia do
       actions: Akcje
@@ -102,7 +103,8 @@ eggs_delivery:
   show:
     title: Szczegóły dostawy
     delivery_date: Data dostawy
-    eggs_number: Ilość jaj
+    eggs_number: Jaja dostarczone
+    eggs_warehouse: Jaja magazyn
     first_laying_date: Data zniesienia od
     last_laying_date: Data zniesienia do
     button:

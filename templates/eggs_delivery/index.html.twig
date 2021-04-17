@@ -26,6 +26,9 @@
                 {% trans %}eggs_delivery.index.table.eggs_number{% endtrans %}
             </th>
             <th>
+                {% trans %}eggs_delivery.index.table.eggs_warehouse{% endtrans %}
+            </th>
+            <th>
                 {% trans %}eggs_delivery.index.table.first_laying_date{% endtrans %}
             </th>
             <th>
@@ -44,6 +47,7 @@
                 <td>{{ eggs_delivery.herd.name }}</td>
                 <td>{{ eggs_delivery.deliveryDate ? eggs_delivery.deliveryDate|date('Y-m-d') : '' }}</td>
                 <td>{{ eggs_delivery.eggsNumber }}</td>
+                <td>{{ eggs_delivery.eggsOnWarehouse }}</td>
                 <td>{{ eggs_delivery.firstLayingDate ? eggs_delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
                 <td>{{ eggs_delivery.lastLayingDate ? eggs_delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
                 <td>

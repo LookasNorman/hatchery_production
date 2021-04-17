@@ -24,6 +24,10 @@
                     : {{ eggs_delivery.eggsNumber }}
                 </p>
                 <p class="card-text">
+                    {% trans %}eggs_delivery.show.eggs_warehouse{% endtrans %}
+                    : {{ eggs_delivery.eggsOnWarehouse }}
+                </p>
+                <p class="card-text">
                     {% trans %}eggs_delivery.show.first_laying_date{% endtrans %}
                     : {{ eggs_delivery.firstLayingDate ? eggs_delivery.firstLayingDate|date('Y-m-d') : '' }}
                 </p>
