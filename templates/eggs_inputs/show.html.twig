@@ -39,6 +39,8 @@
             {% trans %}eggs_inputs.show.table.id{% endtrans %}
         </th>
         <th>
+            {% trans %}eggs_inputs.show.table.chicks_recipient{% endtrans %}
+        </th><th>
             {% trans %}eggs_inputs.show.table.chick{% endtrans %}
         </th>
         <th>
@@ -49,6 +51,7 @@
     {% for input_detail in details_input %}
     <tr>
         <td>{{ input_detail.id }}</td>
+        <td>{{ input_detail.chicksRecipient.name }}</td>
         <td>{{ input_detail.chickNumber|number_format(0, ',', ' ') }}</td>
         <td>{{ render(controller('App\\Controller\\EggsDeliveryController::deliveriesInput', {'inputDetails': input_detail})) }}</td>
     </tr>

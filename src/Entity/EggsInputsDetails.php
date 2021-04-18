@@ -38,6 +38,12 @@ class EggsInputsDetails
      */
     private $eggsInputsDetailsEggsDeliveries;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ChicksRecipient::class, inversedBy="eggsInputsDetails")
+     * @Assert\NotNull()
+     */
+    private $chicksRecipient;
+
     public function __construct()
     {
         $this->eggsInputsDetailsEggsDeliveries = new ArrayCollection();
@@ -98,6 +104,18 @@ class EggsInputsDetails
                 $eggsInputsDetailsEggsDelivery->setEggsInputDetails(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getChicksRecipient(): ?ChicksRecipient
+    {
+        return $this->chicksRecipient;
+    }
+
+    public function setChicksRecipient(?ChicksRecipient $chicksRecipient): self
+    {
+        $this->chicksRecipient = $chicksRecipient;
 
         return $this;
     }

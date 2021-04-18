@@ -33,6 +33,17 @@
     </div>
 </div>
 {% endif %}
+{% if form.chicksRecipient is defined %}
+    <div class="form-group">
+        <label>{{ form_label(form.chicksRecipient) }}</label>
+        {{ form_widget(form.chicksRecipient) }}
+        <small>{{ form_help(form.chicksRecipient) }}</small>
+        <div class="form-text text-danger">
+            {{ form_errors(form.chicksRecipient) }}
+        </div>
+    </div>
+{% endif %}
+
 {% if form.chickNumber is defined %}
     <div class="form-group">
         <label>{{ form_label(form.chickNumber) }}</label>
@@ -50,9 +61,11 @@
     let breeder = $('#eggs_inputs_details_breeder')
     let herds = $('#eggs_inputs_details_herd')
     let chicks = $('#eggs_inputs_details_chickNumber')
+    let recipient = $('#eggs_inputs_details_chicksRecipient')
     breeder.change(function (){
         console.log(herds.closest('div'))
         herds.closest('div').remove()
         chicks.closest('div').remove()
+        recipient.closest('div').remove()
     })
 </script>

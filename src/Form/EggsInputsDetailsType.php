@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\ChicksRecipient;
 use App\Entity\EggsDelivery;
 use App\Entity\EggsInputs;
 use App\Entity\EggsInputsDetails;
@@ -29,11 +30,6 @@ class EggsInputsDetailsType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-//            ->add('chickNumber', IntegerType::class, [
-//                'attr' => [
-//                    'class' => 'form-control'
-//                ]
-//            ])
             ->add('breeder', EntityType::class, [
                 'class' => EggSupplier::class,
                 'choice_label' => function (EggSupplier $eggSupplier) {
@@ -64,6 +60,16 @@ class EggsInputsDetailsType extends AbstractType
                     'choice_label' => 'name',
                     'required' => true,
                     'mapped' => false,
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
+                ]);
+
+                $form->getParent()->add('chicksRecipient', EntityType::class, [
+                    'class' => ChicksRecipient::class,
+                    'placeholder' => 'wybierz odbiorcę piskląt',
+                    'choice_label' => 'name',
+                    'required' => true,
                     'attr' => [
                         'class' => 'form-control'
                     ]

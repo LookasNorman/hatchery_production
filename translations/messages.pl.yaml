@@ -184,6 +184,7 @@ eggs_inputs:
       id: Indeks
       chick: Ilość piskląt
       deliveries: Wykaz dostaw
+      chicks_recipient: Odbiorca piskląt
 eggs_inputs_details:
   delete:
     confirm: Na pewno chcesz usunąć dostawy z nakładu?
@@ -197,13 +198,14 @@ eggs_inputs_details:
     button:
       back: Lista dostaw w nakładach
   index:
-    title: Dostawy w nakładzie
+    title: Dostawy w nakładach
     table:
       id: Indeks
       eggs_input: Nakład
       deliveries: Lista dostaw
-      eggsNumber: Ilość jaj
-      chicksNumber: Ilość piskląt
+      eggs_number: Ilość jaj
+      chicks_recipient: Odbiorca piskląt
+      chicks_number: Ilość piskląt
       actions: Akcje
       no_found: Brak nakładów z dostawami
       badge:

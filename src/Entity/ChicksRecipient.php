@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ChicksRecipientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -49,6 +51,16 @@ class ChicksRecipient
      */
     private $phoneNumber;
 
+    /**
+     * @ORM\OneToMany(targetEntity=EggsInputsDetails::class, mappedBy="chcicksRecipient")
+     */
+    private $eggsInputsDetails;
+
+    public function __construct()
+    {
+        $this->eggsInputsDetails = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +98,36 @@ class ChicksRecipient
     public function setPhoneNumber(?string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EggsInputsDetails[]
+     */
+    public function getEggsInputsDetails(): Collection
+    {
+        return $this->eggsInputsDetails;
+    }
+
+    public function addEggsInputsDetail(EggsInputsDetails $eggsInputsDetail): self
+    {
+        if (!$this->eggsInputsDetails->contains($eggsInputsDetail)) {
+            $this->eggsInputsDetails[] = $eggsInputsDetail;
+            $eggsInputsDetail->setChicksRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEggsInputsDetail(EggsInputsDetails $eggsInputsDetail): self
+    {
+        if ($this->eggsInputsDetails->removeElement($eggsInputsDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($eggsInputsDetail->getChicksRecipient() === $this) {
+                $eggsInputsDetail->setChicksRecipient(null);
+            }
+        }
 
         return $this;
     }
