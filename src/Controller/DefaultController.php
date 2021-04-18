@@ -13,12 +13,7 @@ class DefaultController extends AbstractController
      */
     public function index(): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $entities = $em->getMetadataFactory()->getAllMetadata();
-//        dd($entities);
         return $this->render('main_page/index.html.twig', [
-            'controller_name' => 'DefaultController',
-            'entities' => $entities,
         ]);
     }
 }

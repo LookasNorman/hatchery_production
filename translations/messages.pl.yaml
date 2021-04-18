@@ -325,6 +325,8 @@ menu:
       index: Dostawcy jaj
     herds:
       index: Stada
+    main_page:
+      index: Strona główna
     logout: Wyloguj
     login: Zaloguj
     registration: Nowy użytkownik
