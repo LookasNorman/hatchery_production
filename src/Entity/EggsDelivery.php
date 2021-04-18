@@ -36,7 +36,7 @@ class EggsDelivery
     /**
      * @ORM\Column(type="integer")
      */
-    public $eggsNumber;
+    private $eggsNumber;
 
     /**
      * @ORM\Column(type="date")

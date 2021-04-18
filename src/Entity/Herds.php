@@ -55,7 +55,7 @@ class Herds
     /**
      * @ORM\OneToMany(targetEntity=EggsDelivery::class, mappedBy="herd")
      */
-    public $eggsDeliveries;
+    private $eggsDeliveries;
 
     public function __construct()
     {
