@@ -265,6 +265,8 @@ menu:
   menu_top:
     breed:
       index: Rasy kur
+    chicks_recipient:
+      index: Odbiorcy piskląt
     eggs_delivery:
       index: Dostawy jaj
     eggs_inputs:
