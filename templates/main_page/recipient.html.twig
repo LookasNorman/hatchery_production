@@ -1,0 +1,48 @@
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 400px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="card ">
+        <h4 class="card-header">
+            {% trans %}main_page.recipient.title{% endtrans %}
+        </h4>
+        <div class="card-horizontal">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th scope="row">{% trans %}main_page.recipient.body.recipient_number{% endtrans %}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{% trans %}main_page.recipient.body.eggs_number{% endtrans %}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{% trans %}main_page.recipient.body.chicks_number{% endtrans %}</th>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="{{ path('chicks_recipient_index') }}">
+                <span class="badge badge-info">
+                    {% trans %}main_page.recipient.list{% endtrans %}
+                </span>
+            </a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('chicks_recipient_new') }}">
+                    <span class="badge badge-success">
+                        {% trans %}main_page.recipient.new{% endtrans %}
+                    </span>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

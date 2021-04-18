@@ -263,6 +263,52 @@ herds:
       edit: Edytuj
       back: Lista stad
       breeder_herds: Stada dostawcy / hodowcy
+main_page:
+  eggs_transfer:
+    title: Przekłady
+    list: Wykaz
+    table:
+      first: Pierwsze
+      second: Drugie
+      third: Trzecie
+      date: Data
+      eggs_number: Ilość jaj
+  index:
+    title: Zarządzanie produkcją na wylęgarni
+  inputs:
+    title: Nakłady
+    list: Wykaz
+    new: Dodaj
+    body:
+      recipient_number: Liczba nakładów
+      eggs_number: Nałożonych jaj
+      chicks_number: Piskląt w nakładach
+      inputs_number: Ilość nakładów
+  picking:
+    title: Wybierania
+    list: Wykaz
+    table:
+      first: Pierwsze
+      second: Drugie
+      third: Trzecie
+      date: Data
+      chicks_number: Ilość kurcząt
+  supplier:
+    title: Dostawcy jaj
+    list: Wykaz
+    new: Dodaj
+    body:
+      supplier_number: Liczba dostawców
+      eggs_number: Jaja magazyn
+      eggs_machines: Jaja w aparatach
+  recipient:
+    title: Odbiorcy piskląt
+    list: Wykaz
+    new: Dodaj
+    body:
+      recipient_number: Liczba odbiorców
+      eggs_number: Nałożonych jaj
+      chicks_number: Piskląt w nakładach
 menu:
   menu_top:
     breed:
