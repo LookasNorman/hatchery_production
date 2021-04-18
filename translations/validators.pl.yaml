@@ -5,9 +5,17 @@ breed:
   type:
     min: Typ musi musi zawierać conajmniej 3 znaków
     max: Typ musi być krótsza niż 20 znaków
+chicks_recipient:
+  name:
+    min: Nazwa musi zawierać conajmniej 5 znaków
+    max: Nazwa musi być krótsza niż 50 znaków
+  email: Wpisany adres nie jest właściwym formatem adresu email
+  phone_number:
+    min: Numer telefonu musi zawierać conajmniej 9 znaków
+    max: Numer telefonu musi być krótszy niż 30 znaków
 egg_supplier:
   name:
-    min: Nazwa musi być dłuższa niż 5 znaków
+    min: Nazwa musi zawierać conajmniej 5 znaków
     max: Nazwa musi być krótsza niż 50 znaków
   email: Wpisany adres nie jest właściwym formatem adresu email
   phone_number:

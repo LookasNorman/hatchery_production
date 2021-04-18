@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {% trans %}chicks_recipient.new.title{% endtrans %}
+            </h5>
+            <div class="card-body">
+
+                {{ include('chicks_recipient/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="{{ path('chicks_recipient_index') }}">
+        {% trans %}chicks_recipient.new.button.back{% endtrans %}
+    </a>
+
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ChicksRecipientRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ChicksRecipientRepository::class)
@@ -19,16 +20,32 @@ class ChicksRecipient
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Length(
+     *     min=5,
+     *     max=50,
+     *     minMessage = "chicks_recipient.name.min",
+     *     maxMessage = "chicks_recipient.name.max"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Email(
+     *     message = "chicks_recipient.email",
+     *     checkMX = true
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
+     * @Assert\Length(
+     *     min=9,
+     *     max=30,
+     *     minMessage = "chicks_recipient.phone_number.min",
+     *     maxMessage = "chicks_recipient.phone_number.max"
+     * )
      */
     private $phoneNumber;
 

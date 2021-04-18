@@ -1,0 +1,7 @@
+<form method="post" action="{{ path('chicks_recipient_delete', {'id': chicks_recipient.id}) }}"
+      onsubmit="return confirm('{% trans %}chicks_recipient.delete.confirm{% endtrans %}');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ chicks_recipient.id) }}">
+    <button class="btn btn-danger">
+        {% trans %}chicks_recipient.delete.button.delete{% endtrans %}
+    </button>
+</form>
