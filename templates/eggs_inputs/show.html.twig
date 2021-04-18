@@ -9,6 +9,9 @@
         }
     </style>
     <h1>{% trans %}eggs_inputs.show.title{% endtrans %}</h1>
+    <a class="btn btn-primary" href="{{ path('eggs_inputs_index') }}">
+        {% trans %}eggs_inputs.show.button.back{% endtrans %}
+    </a>
     <div class="d-flex justify-content-center card-group">
         <div class="card">
             <h5 class="card-header">
@@ -30,8 +33,27 @@
             </div>
         </div>
     </div>
+<table class="table table-sm">
+    <thead class="thead-light">
+        <th>
+            {% trans %}eggs_inputs.show.table.id{% endtrans %}
+        </th>
+        <th>
+            {% trans %}eggs_inputs.show.table.chick{% endtrans %}
+        </th>
+        <th>
+            {% trans %}eggs_inputs.show.table.deliveries{% endtrans %}
+        </th>
+    </thead>
+    <tbody>
+    {% for input_detail in details_input %}
+    <tr>
+        <td>{{ input_detail.id }}</td>
+        <td>{{ input_detail.chickNumber|number_format(0, ',', ' ') }}</td>
+        <td>{{ render(controller('App\\Controller\\EggsDeliveryController::deliveriesInput', {'inputDetails': input_detail})) }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
-    <a class="btn btn-primary" href="{{ path('eggs_inputs_index') }}">
-        {% trans %}eggs_inputs.show.button.back{% endtrans %}
-    </a>
 {% endblock %}

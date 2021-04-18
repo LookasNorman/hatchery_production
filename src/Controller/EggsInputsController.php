@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\EggsInputs;
 use App\Form\EggsInputsType;
+use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,10 +56,12 @@ class EggsInputsController extends AbstractController
     /**
      * @Route("/{id}", name="eggs_inputs_show", methods={"GET"})
      */
-    public function show(EggsInputs $eggsInput): Response
+    public function show(EggsInputs $eggsInput, EggsInputsDetailsRepository $detailsRepository): Response
     {
+        $details = $detailsRepository->findBy(['eggInput' => $eggsInput]);
         return $this->render('eggs_inputs/show.html.twig', [
             'eggs_input' => $eggsInput,
+            'details_input' => $details,
         ]);
     }
 

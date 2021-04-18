@@ -96,6 +96,12 @@ eggs_delivery:
       badge:
         show: Szczegóły
         edit: Edytuj
+  list:
+    breeder: Hodowca
+    herd: Stado
+    delivery: Data dostawy
+    eggs: Ilość jaj
+    laying: Data zniesienia
   new:
     title: Dodawanie dostawy
     button:
@@ -142,6 +148,10 @@ eggs_inputs:
     button:
       back: Lista nakładów
       edit: Edytuj nakład
+    table:
+      id: Indeks
+      chick: Ilość piskląt
+      deliveries: Wykaz dostaw
 eggs_inputs_details:
   delete:
     confirm: Na pewno chcesz usunąć dostawy z nakładu?

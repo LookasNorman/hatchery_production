@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\EggsDelivery;
 use App\Form\EggsDeliveryType;
 use App\Repository\EggsDeliveryRepository;
+use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -96,5 +97,14 @@ class EggsDeliveryController extends AbstractController
         }
 
         return $this->redirectToRoute('eggs_delivery_index');
+    }
+
+    public function deliveriesInput($inputDetails, EggsInputsDetailsEggsDeliveryRepository $deliveryRepository)
+    {
+        $deliveries = $deliveryRepository->findBy(['eggsInputDetails' => $inputDetails]);
+
+        return $this->render('eggs_delivery/list.html.twig', [
+            'deliveries' => $deliveries,
+    ]);
     }
 }
