@@ -34,9 +34,7 @@
             <tr>
                 <td>{{ eggs_inputs_detail.id }}</td>
                 <td>{{ eggs_inputs_detail.eggInput.name }}</td>
-                <td>
-
-                </td>
+                <td>{{ render(controller('App\\Controller\\EggsDeliveryController::deliveriesInput', {'inputDetails': eggs_inputs_detail})) }}</td>
                 <td>{{ eggs_inputs_detail.chickNumber }}</td>
                 <td>
                     <a class="badge badge-info"
