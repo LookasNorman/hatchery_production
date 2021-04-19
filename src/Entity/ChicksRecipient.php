@@ -52,7 +52,7 @@ class ChicksRecipient
     private $phoneNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity=EggsInputsDetails::class, mappedBy="chcicksRecipient")
+     * @ORM\OneToMany(targetEntity=EggsInputsDetails::class, mappedBy="chicksRecipient")
      */
     private $eggsInputsDetails;
 
