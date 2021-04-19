@@ -6,10 +6,14 @@ breed:
     confirm: Jesteś pewien, że chcesz usunąć rasę kur?
     button:
       delete: Usuń rasę
+  form:
+    button:
+      save: Zapisz
   edit:
     title: Edycja rasy kur
     button:
       back: Lista ras kur
+      update: Zaktualizuj
   index:
     title: Rasy kur
     button:
@@ -37,10 +41,14 @@ chicks_recipient:
     confirm: Czy na pewno chcesz usunąć odbiorcę piskląt?
     button:
       delete: Usuń
+  form:
+    button:
+      save: Zapisz
   edit:
     title: Edycja odbiorcy
     button:
       back: Lista odbiorców
+      update: Zaktualizuj
   index:
     title: Odbiorcy piskląt
     table:
@@ -69,10 +77,14 @@ egg_supplier:
     title: Jesteś pewien, że chcesz usunąć dostawcę jaj?
     button:
       delete: Usuń dostawcę
+  form:
+    button:
+      save: Zapisz
   edit:
     title: Edycja dostawcy
     button:
       back: Lista dostawców jaj
+      update: Zaktualizuj
   index:
     title: Dostawcy jaj
     table:
@@ -106,12 +118,15 @@ eggs_delivery:
     button:
       delete: Usuń
   form:
+    button:
+      save: Zapisz
     placeholder:
       herd: Wybierz stado
   edit:
     title: Edycja dostawy jaj
     button:
       back: Lista dostaw jaj
+      update: Zaktualizuj
   index:
     title: Dostawy jaj
     table:
@@ -153,10 +168,14 @@ eggs_inputs:
     confirm: Na pewno chcesz usunąć nakład?
     button:
       delete: Usuń nakład
+  form:
+    button:
+      save: Zapisz
   edit:
     title: Tworzenie nowego nakładu
     button:
       back: Lista nakładów
+      update: Zaktualizuj
   index:
     title: Wykaz nakładów
     button:
@@ -193,10 +212,13 @@ eggs_inputs_details:
   form:
     egg_input: Wybierz nakład
     egg_delivery: Wybierz dostawę
+    button:
+      save: Zapisz
   edit:
     title: Edycja nakładu
     button:
       back: Lista dostaw w nakładach
+      update: Zaktualizuj
   index:
     title: Dostawy w nakładach
     table:
@@ -233,10 +255,13 @@ herds:
     placeholder:
       breeder: Wybierz hodowcę z listy
       breed: Wybierz rasę z listy
+    button:
+      save: Zapisz
   edit:
     title: Edytuj stado
     button:
       back: Lista stad
+      update: Zaktualizuj
   index:
     title: Lista stad
     table:
