@@ -388,6 +388,8 @@ menu:
       index: Nakłady
     eggs_inputs_details:
       index: Dostawy nakładu
+    eggs_inputs_lighting:
+      index: Świetlenie
     eggs_supplier:
       index: Dostawcy jaj
     herds:
