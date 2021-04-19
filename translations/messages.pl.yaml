@@ -283,6 +283,48 @@ eggs_inputs_details:
     button:
       edit: Edytuj
       back: Lista dostaw w nakładach
+eggs_inputs_lighting:
+  delete:
+    confirm: Jesteś pewien, że chcesz usunąć świetlenie?
+    button:
+      delete: Usuń
+  form:
+    label:
+      waste_eggs: Odpad jaj
+      lighting_date: Data świetlenia
+      eggs_inputs_details: Szczegóły nakładu
+    button:
+      save: Zapisz
+    placeholder:
+      eggs_inputs_details: Wybierz nakład
+  edit:
+    title: Edycja świetlenia
+    button:
+      update: Aktualizuj
+      back: Lista świetleń
+  index:
+    title: Wykaz świetleń
+    table:
+      id: Indeks
+      waste_eggs: Odpad jaj
+      lighting_date: Data świetlenia
+      actions: Akcje
+      no_found: Brak świetleń
+      badge:
+        show: Szczegóły
+        edit: Edytuj
+    button:
+      new: Dodaj świetlenie
+  new:
+    title: Dodawanie świetlenia
+    button:
+      back: Lista świetleń
+  show:
+    title: Szczegóły świetlenia
+    waste_eggs: Odpad jaj
+    button:
+      edit: Edytuj
+      back: Lista świetleń
 herds:
   delete:
     confirm: Na pewno chcesz usunąć stado?

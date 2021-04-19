@@ -1,0 +1,27 @@
+{{ form_start(form) }}
+<div class="form-group">
+    <label>{{ form_label(form.lightingDate) }}</label>
+    {{ form_widget(form.lightingDate) }}
+    <small>{{ form_help(form.lightingDate) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.lightingDate) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.wasteEggs) }}</label>
+    {{ form_widget(form.wasteEggs) }}
+    <small>{{ form_help(form.wasteEggs) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.wasteEggs) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.eggsInputsDetail) }}</label>
+    {{ form_widget(form.eggsInputsDetail) }}
+    <small>{{ form_help(form.eggsInputsDetail) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.eggsInputsDetail) }}
+    </div>
+</div>
+<button class="btn btn-danger">{{ button_label|default('eggs_inputs_lighting.form.button.save')|trans }}</button>
+{{ form_end(form) }}

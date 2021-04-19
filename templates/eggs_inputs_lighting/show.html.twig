@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <h1>{% trans %}eggs_inputs_lighting.show.title{% endtrans %}</h1>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {{ eggs_inputs_lighting.eggsInputsDetail.eggInput.name }}:
+                {{ eggs_inputs_lighting.lightingDate ? eggs_inputs_lighting.lightingDate|date('Y-m-d') : '' }}
+            </h5>
+            <div class="card-body">
+                <p class="card-text">
+                    {% trans %}eggs_inputs_lighting.show.waste_eggs{% endtrans %}
+                    {{ eggs_inputs_lighting.wasteEggs }}
+                </p>
+            </div>
+            <div class="card-footer bg-transparent border-success d-flex">
+                {% if is_granted('ROLE_ADMIN') %}
+                    {{ include('eggs_inputs_lighting/_delete_form.html.twig') }}
+                    <a class="btn btn-warning"
+                       href="{{ path('eggs_inputs_lighting_edit', {'id': eggs_inputs_lighting.id}) }}"
+                    >
+                        {% trans %}eggs_inputs_lighting.show.button.edit{% endtrans %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('eggs_inputs_lighting_index') }}">
+        {% trans %}eggs_inputs_lighting.show.button.back{% endtrans %}
+    </a>
+
+{% endblock %}
