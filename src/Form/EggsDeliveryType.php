@@ -20,32 +20,37 @@ class EggsDeliveryType extends AbstractType
     {
         $builder
             ->add('deliveryDate', DateType::class, [
+                'label' => 'eggs_delivery.form.label.delivery_date',
                 'widget' => 'single_text',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('eggsNumber', IntegerType::class, [
+                'label' => 'eggs_delivery.form.label.eggs_number',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('firstLayingDate', DateType::class, [
+                'label' => 'eggs_delivery.form.label.first_laying_date',
                 'widget' => 'single_text',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('lastLayingDate', DateType::class, [
+                'label' => 'eggs_delivery.form.label.last_laying_date',
                 'widget' => 'single_text',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('breeder', EntityType::class, [
+                'label' => 'eggs_delivery.form.label.breeder',
                 'class' => EggSupplier::class,
                 'choice_label' => 'name',
-                'placeholder' => 'eggs_delivery.form.placeholder.herd',
+                'placeholder' => 'eggs_delivery.form.placeholder.breeder',
                 'mapped' => false,
                 'attr' => [
                     'class' => 'form-control'
@@ -59,9 +64,10 @@ class EggsDeliveryType extends AbstractType
 
                 $form->getParent()->add('herd', EntityType::class, [
                     'class' => Herds::class,
-                    'placeholder' => 'wybierz stado',
+                    'placeholder' => 'eggs_delivery.form.placeholder.herd',
                     'choices' => $form->getData()->getHerds(),
                     'choice_label' => 'name',
+                    'label' => 'eggs_delivery.form.label.herd',
                     'attr' => [
                         'class' => 'form-control'
                     ]

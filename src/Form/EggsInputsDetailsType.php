@@ -24,8 +24,9 @@ class EggsInputsDetailsType extends AbstractType
         $builder
             ->add('eggInput', EntityType::class, [
                 'class' => EggsInputs::class,
+                'label' => 'eggs_inputs_details.form.label.egg_input',
                 'choice_label' => 'name',
-                'placeholder' => "eggs_inputs_details.form.egg_input",
+                'placeholder' => "eggs_inputs_details.form.placeholder.egg_input",
                 'attr' => [
                     'class' => 'form-control'
                 ]
@@ -35,7 +36,8 @@ class EggsInputsDetailsType extends AbstractType
                 'choice_label' => function (EggSupplier $eggSupplier) {
                     return $eggSupplier->getName();
                 },
-                'placeholder' => 'wybierz hodowcę',
+                'label' => 'eggs_inputs_details.form.label.breeder',
+                'placeholder' => 'eggs_inputs_details.form.placeholder.breeder',
                 'mapped' => false,
                 'attr' => [
                     'class' => 'form-control'
@@ -43,6 +45,7 @@ class EggsInputsDetailsType extends AbstractType
             ])
             ->add('eggsNumber', IntegerType::class, [
                 'mapped' => false,
+                'label' => 'eggs_inputs_details.form.label.eggs_number',
                 'attr' => [
                     'class' => 'form-control'
                 ]
@@ -55,7 +58,8 @@ class EggsInputsDetailsType extends AbstractType
 
                 $form->getParent()->add('herd', EntityType::class, [
                     'class' => Herds::class,
-                    'placeholder' => 'wybierz stado',
+                    'label' => 'eggs_inputs_details.form.label.herd',
+                    'placeholder' => 'eggs_inputs_details.form.placeholder.herd',
                     'choices' => $form->getData()->getHerds(),
                     'choice_label' => 'name',
                     'required' => true,
@@ -67,7 +71,8 @@ class EggsInputsDetailsType extends AbstractType
 
                 $form->getParent()->add('chicksRecipient', EntityType::class, [
                     'class' => ChicksRecipient::class,
-                    'placeholder' => 'wybierz odbiorcę piskląt',
+                    'label' => 'eggs_inputs_details.form.label.chicks_recipient',
+                    'placeholder' => 'eggs_inputs_details.form.placeholder.chicks_recipient',
                     'choice_label' => 'name',
                     'required' => true,
                     'attr' => [
@@ -76,6 +81,7 @@ class EggsInputsDetailsType extends AbstractType
                 ]);
 
                 $form->getParent()->add('chickNumber', IntegerType::class, [
+                    'label' => 'eggs_inputs_details.form.label.chick_number',
                     'attr' => [
                         'class' => 'form-control'
                     ]

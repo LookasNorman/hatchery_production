@@ -18,12 +18,14 @@ class HerdsType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
+                'label' => 'herds.form.label.name',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('hatchingDate', DateType::class, [
                 'widget' => 'single_text',
+                'label' => 'herds.form.label.hatching_date',
                 'attr' => [
                     'class' => 'form-control'
                 ]
@@ -32,6 +34,7 @@ class HerdsType extends AbstractType
                 'class' => EggSupplier::class,
                 'choice_label' => 'name',
                 'placeholder' => 'herds.form.placeholder.breeder',
+                'label' => 'herds.form.label.breeder',
                 'attr' => [
                     'class' => 'form-control'
                 ]
@@ -42,6 +45,7 @@ class HerdsType extends AbstractType
                 return $breed->getName() . ' ' . $breed->getType();
                 },
                 'placeholder' => 'herds.form.placeholder.breed',
+                'label' => 'herds.form.label.breed',
                 'attr' => [
                     'class' => 'form-control'
                 ]

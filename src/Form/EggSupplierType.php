@@ -15,18 +15,21 @@ class EggSupplierType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
+                'label' => 'egg_supplier.form.label.name',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('email', EmailType::class, [
                 'required' => false,
+                'label' => 'egg_supplier.form.label.email',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('phoneNumber', TextType::class, [
                 'required' => false,
+                'label' => 'egg_supplier.form.label.phone_number',
                 'attr' => [
                     'class' => 'form-control'
                 ]

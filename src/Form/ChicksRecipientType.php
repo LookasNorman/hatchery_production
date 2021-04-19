@@ -14,16 +14,19 @@ class ChicksRecipientType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
+                'label' => 'chicks_recipient.form.label.name',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('email', TextType::class, [
+                'label' => 'chicks_recipient.form.label.email',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('phoneNumber', TextType::class, [
+                'label' => 'chicks_recipient.form.label.phone_number',
                 'attr' => [
                     'class' => 'form-control'
                 ],

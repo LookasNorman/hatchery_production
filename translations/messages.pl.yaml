@@ -1,3 +1,8 @@
+form:
+  breed:
+  chicks_recipient:
+  eggs_delivery:
+
 base:
   site:
     title: Zarządzanie produkcją
@@ -9,6 +14,9 @@ breed:
   form:
     button:
       save: Zapisz
+    label:
+      name: Rasa kur
+      type: Typ
   edit:
     title: Edycja rasy kur
     button:
@@ -44,6 +52,10 @@ chicks_recipient:
   form:
     button:
       save: Zapisz
+    label:
+      name: Nazwa odbiorcy
+      email: Adres email
+      phone_number: Numer telefonu
   edit:
     title: Edycja odbiorcy
     button:
@@ -80,6 +92,10 @@ egg_supplier:
   form:
     button:
       save: Zapisz
+    label:
+      name: Nazwa dostawcy jaj
+      email: Adres email
+      phone_number: Numer telefonu
   edit:
     title: Edycja dostawcy
     button:
@@ -121,7 +137,15 @@ eggs_delivery:
     button:
       save: Zapisz
     placeholder:
+      breeder: Wybierz hodowcę
       herd: Wybierz stado
+    label:
+      delivery_date: Data dostawy
+      eggs_number: Ilość jaj
+      first_laying_date: Data zniesienia od
+      last_laying_date: Data zniesienia do
+      breeder: Dostawca jaj
+      herd: Stado
   edit:
     title: Edycja dostawy jaj
     button:
@@ -171,6 +195,9 @@ eggs_inputs:
   form:
     button:
       save: Zapisz
+    label:
+      name: Nazwa nakładu
+      input_date: Data nakładu
   edit:
     title: Tworzenie nowego nakładu
     button:
@@ -210,10 +237,20 @@ eggs_inputs_details:
     button:
       delete: Usuń dostawy w nakładzie
   form:
-    egg_input: Wybierz nakład
-    egg_delivery: Wybierz dostawę
+    placeholder:
+      egg_input: Wybierz nakład
+      breeder: Wybierz hodowcę
+      herd: Wybierz stado
+      chicks_recipient: Wybierz hodowcę
     button:
       save: Zapisz
+    label:
+      egg_input: Nakład
+      breeder: Dostawca jaj
+      eggs_number: Ilość jaj do nakładu
+      herd: Stado
+      chicks_recipient: Odbiorca piskląt
+      chick_number: Ilość piskląt
   edit:
     title: Edycja nakładu
     button:
@@ -257,6 +294,11 @@ herds:
       breed: Wybierz rasę z listy
     button:
       save: Zapisz
+    label:
+      name: Nazwa stada
+      hatching_date: Data wylęgu
+      breeder: Hodowca
+      breed: Rasa
   edit:
     title: Edytuj stado
     button:

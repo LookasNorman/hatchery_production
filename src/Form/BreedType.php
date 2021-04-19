@@ -14,11 +14,13 @@ class BreedType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
+                'label' => 'breed.form.label.name',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('type', TextType::class, [
+                'label' => 'breed.form.label.type',
                 'attr' => [
                     'class' => 'form-control'
                 ]

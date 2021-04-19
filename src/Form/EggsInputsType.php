@@ -15,12 +15,14 @@ class EggsInputsType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
+                'label' => 'eggs_inputs.form.label.name',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('inputDate', DateType::class, [
                 'widget' => 'single_text',
+                'label' => 'eggs_inputs.form.label.input_date',
                 'attr' => [
                     'class' => 'form-control'
                 ]
