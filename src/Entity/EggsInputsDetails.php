@@ -44,9 +44,15 @@ class EggsInputsDetails
      */
     private $chicksRecipient;
 
+    /**
+     * @ORM\OneToMany(targetEntity=EggsInputsLighting::class, mappedBy="eggsInputsDetail")
+     */
+    private $eggsInputsLightings;
+
     public function __construct()
     {
         $this->eggsInputsDetailsEggsDeliveries = new ArrayCollection();
+        $this->eggsInputsLightings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,6 +122,36 @@ class EggsInputsDetails
     public function setChicksRecipient(?ChicksRecipient $chicksRecipient): self
     {
         $this->chicksRecipient = $chicksRecipient;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EggsInputsLighting[]
+     */
+    public function getEggsInputsLightings(): Collection
+    {
+        return $this->eggsInputsLightings;
+    }
+
+    public function addEggsInputsLighting(EggsInputsLighting $eggsInputsLighting): self
+    {
+        if (!$this->eggsInputsLightings->contains($eggsInputsLighting)) {
+            $this->eggsInputsLightings[] = $eggsInputsLighting;
+            $eggsInputsLighting->setEggsInputsDetail($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEggsInputsLighting(EggsInputsLighting $eggsInputsLighting): self
+    {
+        if ($this->eggsInputsLightings->removeElement($eggsInputsLighting)) {
+            // set the owning side to null (unless already changed)
+            if ($eggsInputsLighting->getEggsInputsDetail() === $this) {
+                $eggsInputsLighting->setEggsInputsDetail(null);
+            }
+        }
 
         return $this;
     }
