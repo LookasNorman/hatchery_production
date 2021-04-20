@@ -98,13 +98,4 @@ class EggsDeliveryController extends AbstractController
 
         return $this->redirectToRoute('eggs_delivery_index');
     }
-
-    public function deliveriesInput($inputDetails, EggsInputsDetailsEggsDeliveryRepository $deliveryRepository)
-    {
-        $deliveries = $deliveryRepository->findBy(['eggsInputDetails' => $inputDetails]);
-
-        return $this->render('eggs_delivery/list.html.twig', [
-            'deliveries' => $deliveries,
-    ]);
-    }
 }

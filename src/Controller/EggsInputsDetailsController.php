@@ -8,6 +8,7 @@ use App\Entity\EggsInputsDetailsEggsDelivery;
 use App\Entity\Herds;
 use App\Form\EggsInputsDetailsType;
 use App\Repository\EggsDeliveryRepository;
+use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
 use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\HerdsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,10 +26,11 @@ class EggsInputsDetailsController extends AbstractController
     /**
      * @Route("/", name="eggs_inputs_details_index", methods={"GET"})
      */
-    public function index(EggsInputsDetailsRepository $eggsInputsDetailsRepository): Response
+    public function index(EggsInputsDetailsRepository $eggsInputsDetailsRepository, EggsInputsDetailsEggsDeliveryRepository $repository): Response
     {
+        $eggsInputsDetails = $eggsInputsDetailsRepository->deliveries();
         return $this->render('eggs_inputs_details/index.html.twig', [
-            'eggs_inputs_details' => $eggsInputsDetailsRepository->findAll(),
+            'eggs_inputs_details' => $eggsInputsDetails,
         ]);
     }
 

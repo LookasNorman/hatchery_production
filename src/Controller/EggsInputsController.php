@@ -58,7 +58,7 @@ class EggsInputsController extends AbstractController
      */
     public function show(EggsInputs $eggsInput, EggsInputsDetailsRepository $detailsRepository): Response
     {
-        $details = $detailsRepository->findBy(['eggInput' => $eggsInput]);
+        $details = $detailsRepository->deliveriesInput($eggsInput);
         return $this->render('eggs_inputs/show.html.twig', [
             'eggs_input' => $eggsInput,
             'details_input' => $details,

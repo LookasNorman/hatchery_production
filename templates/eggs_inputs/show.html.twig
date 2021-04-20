@@ -33,30 +33,60 @@
             </div>
         </div>
     </div>
-<table class="table table-sm">
-    <thead class="thead-light">
+    <table class="table table-sm">
+        <thead class="thead-light">
         <th>
             {% trans %}eggs_inputs.show.table.id{% endtrans %}
         </th>
         <th>
             {% trans %}eggs_inputs.show.table.chicks_recipient{% endtrans %}
-        </th><th>
+        </th>
+        <th>
             {% trans %}eggs_inputs.show.table.chick{% endtrans %}
         </th>
         <th>
             {% trans %}eggs_inputs.show.table.deliveries{% endtrans %}
         </th>
-    </thead>
-    <tbody>
-    {% for input_detail in details_input %}
-    <tr>
-        <td>{{ input_detail.id }}</td>
-        <td>{{ input_detail.chicksRecipient.name }}</td>
-        <td>{{ input_detail.chickNumber|number_format(0, ',', ' ') }}</td>
-        <td>{{ render(controller('App\\Controller\\EggsDeliveryController::deliveriesInput', {'inputDetails': input_detail})) }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for input_detail in details_input %}
+            <tr>
+                <td>{{ input_detail.id }}</td>
+                <td>{{ input_detail.chicksRecipient.name }}</td>
+                <td>{{ input_detail.chickNumber|number_format(0, ',', ' ') }}</td>
+                <td>
+                    {% for delivery in input_detail.eggsInputsDetailsEggsDeliveries %}
+                        <li>
+                            <a href="{{ path('eggs_delivery_show', {'id': delivery.eggsDeliveries.id}) }}">
+                                <span class="badge badge-pill badge-info">
+                                    {% trans %}eggs_delivery.list.breeder{% endtrans %}
+                                </span>
+                                {{ delivery.eggsDeliveries.herd.breeder.name }}
+                                <span class="badge badge-pill badge-info">
+                                    {% trans %}eggs_delivery.list.herd{% endtrans %}
+                                </span>
+                                {{ delivery.eggsDeliveries.herd.name }}
+                                <span class="badge badge-pill badge-info">
+                                    {% trans %}eggs_delivery.list.delivery{% endtrans %}
+                                </span>
+                                {{ delivery.eggsDeliveries.deliveryDate ? delivery.eggsDeliveries.deliveryDate|date('Y-m-d') : '' }}
+                                <span class="badge badge-pill badge-info">
+                                    {% trans %}eggs_delivery.list.laying{% endtrans %}
+                                </span>
+                                {{ delivery.eggsDeliveries.firstLayingDate ? delivery.eggsDeliveries.firstLayingDate|date('Y-m-d') : '' }}
+                                -
+                                {{ delivery.eggsDeliveries.lastLayingDate ? delivery.eggsDeliveries.lastLayingDate|date('Y-m-d') : '' }}
+                                <span class="badge badge-pill badge-info">
+                                    {% trans %}eggs_delivery.list.eggs{% endtrans %}
+                                </span>
+                                {{ delivery.eggsNumber|number_format(0, ',', ' ') }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}
