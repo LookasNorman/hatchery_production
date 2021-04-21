@@ -339,10 +339,14 @@ eggs_inputs_transfer:
       waste_eggs: Odpad jaj
       transfer_date: Data przekładu
       eggs_inputs_detail: Szczegóły nakładu
+      eggs_inputs: Nakład
+      breeder: Dostawca jaj
     help:
-      waste_eggs: Wpisz ilość wyrzuconych jaj
+      waste_eggs: Wpisz ilość wyrzuconych jaj dla wybranego nakładu i hodowcy
     placeholder:
       eggs_inputs_detail: Wybierz nakład
+      eggs_inputs: Wybierz nakład
+      breeder: Wybierz hodowcę
     button:
       save: Zapisz
   edit:

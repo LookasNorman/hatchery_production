@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EggsInputsTransfersRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,7 +22,6 @@ class EggsInputsTransfers
     /**
      * @ORM\ManyToOne(targetEntity=EggsInputsDetails::class, inversedBy="eggsInputsTransfers")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotNull()
      */
     private $eggsInputsDetail;
 
@@ -66,12 +66,12 @@ class EggsInputsTransfers
         return $this;
     }
 
-    public function getTransferDate(): ?\DateTimeInterface
+    public function getTransferDate(): ?DateTimeInterface
     {
         return $this->transferDate;
     }
 
-    public function setTransferDate(\DateTimeInterface $transferDate): self
+    public function setTransferDate(DateTimeInterface $transferDate): self
     {
         $this->transferDate = $transferDate;
 

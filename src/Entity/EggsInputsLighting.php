@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EggsInputsLightingRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,7 +22,6 @@ class EggsInputsLighting
     /**
      * @ORM\ManyToOne(targetEntity=EggsInputsDetails::class, inversedBy="eggsInputsLightings")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotNull()
      */
     private $eggsInputsDetail;
 
@@ -66,12 +66,12 @@ class EggsInputsLighting
         return $this;
     }
 
-    public function getLightingDate(): ?\DateTimeInterface
+    public function getLightingDate(): ?DateTimeInterface
     {
         return $this->lightingDate;
     }
 
-    public function setLightingDate(\DateTimeInterface $lightingDate): self
+    public function setLightingDate(DateTimeInterface $lightingDate): self
     {
         $this->lightingDate = $lightingDate;
 
