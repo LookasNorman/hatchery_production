@@ -13,8 +13,8 @@
         {% trans %}eggs_inputs.show.button.back{% endtrans %}
     </a>
     <div class="d-flex justify-content-center card-group">
-        <div class="card">
-            <h5 class="card-header">
+        <div class="card text-white bg-secondary">
+            <h5 class="card-header text-white bg-info">
                 {{ eggs_input.name }}
             </h5>
             <div class="card-body">
@@ -33,20 +33,41 @@
             </div>
         </div>
     </div>
-    <table class="table table-sm">
+    <hr>
+    <table class="table table-sm table-bordered table-hover">
         <thead class="thead-light">
-        <th>
-            {% trans %}eggs_inputs.show.table.id{% endtrans %}
-        </th>
-        <th>
-            {% trans %}eggs_inputs.show.table.chicks_recipient{% endtrans %}
-        </th>
-        <th>
-            {% trans %}eggs_inputs.show.table.chick{% endtrans %}
-        </th>
-        <th>
-            {% trans %}eggs_inputs.show.table.deliveries{% endtrans %}
-        </th>
+        <tr>
+            <th rowspan="2">
+                {% trans %}eggs_inputs.show.table.id{% endtrans %}
+            </th>
+            <th rowspan="2">
+                {% trans %}eggs_inputs.show.table.chicks_recipient{% endtrans %}
+            </th>
+            <th rowspan="2">
+                {% trans %}eggs_inputs.show.table.chick{% endtrans %}
+            </th>
+            <th rowspan="2">
+                {% trans %}eggs_inputs.show.table.deliveries{% endtrans %}
+            </th>
+            <th colspan="2">
+                {% trans %}eggs_inputs.show.table.lighting.title{% endtrans %}
+            </th>
+            <th colspan="2">
+                {% trans %}eggs_inputs.show.table.transfer.title{% endtrans %}
+            </th>
+            <th colspan="3">
+                {% trans %}eggs_inputs.show.table.selection.title{% endtrans %}
+            </th>
+        </tr>
+        <tr>
+            <th>{% trans %}eggs_inputs.show.table.lighting.date{% endtrans %}</th>
+            <th>{% trans %}eggs_inputs.show.table.lighting.waste_eggs{% endtrans %}</th>
+            <th>{% trans %}eggs_inputs.show.table.transfer.date{% endtrans %}</th>
+            <th>{% trans %}eggs_inputs.show.table.transfer.waste_eggs{% endtrans %}</th>
+            <th>{% trans %}eggs_inputs.show.table.selection.date{% endtrans %}</th>
+            <th>{% trans %}eggs_inputs.show.table.selection.waste_eggs{% endtrans %}</th>
+            <th>{% trans %}eggs_inputs.show.table.selection.chicks{% endtrans %}</th>
+        </tr>
         </thead>
         <tbody>
         {% for input_detail in details_input %}
@@ -55,33 +76,58 @@
                 <td>{{ input_detail.chicksRecipient.name }}</td>
                 <td>{{ input_detail.chickNumber|number_format(0, ',', ' ') }}</td>
                 <td>
-                    {% for delivery in input_detail.eggsInputsDetailsEggsDeliveries %}
-                        <li>
-                            <a href="{{ path('eggs_delivery_show', {'id': delivery.eggsDeliveries.id}) }}">
-                                <span class="badge badge-pill badge-info">
-                                    {% trans %}eggs_delivery.list.breeder{% endtrans %}
-                                </span>
-                                {{ delivery.eggsDeliveries.herd.breeder.name }}
-                                <span class="badge badge-pill badge-info">
-                                    {% trans %}eggs_delivery.list.herd{% endtrans %}
-                                </span>
-                                {{ delivery.eggsDeliveries.herd.name }}
-                                <span class="badge badge-pill badge-info">
-                                    {% trans %}eggs_delivery.list.delivery{% endtrans %}
-                                </span>
-                                {{ delivery.eggsDeliveries.deliveryDate ? delivery.eggsDeliveries.deliveryDate|date('Y-m-d') : '' }}
-                                <span class="badge badge-pill badge-info">
-                                    {% trans %}eggs_delivery.list.laying{% endtrans %}
-                                </span>
-                                {{ delivery.eggsDeliveries.firstLayingDate ? delivery.eggsDeliveries.firstLayingDate|date('Y-m-d') : '' }}
-                                -
-                                {{ delivery.eggsDeliveries.lastLayingDate ? delivery.eggsDeliveries.lastLayingDate|date('Y-m-d') : '' }}
-                                <span class="badge badge-pill badge-info">
-                                    {% trans %}eggs_delivery.list.eggs{% endtrans %}
-                                </span>
-                                {{ delivery.eggsNumber|number_format(0, ',', ' ') }}
-                            </a>
-                        </li>
+                    <table class="table table-sm table-hover table-bordered">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Hodowca</th>
+                            <th>Stado</th>
+                            <th>Data dostawy</th>
+                            <th>Data zniesienia</th>
+                            <th>Ilość jaj</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for delivery in input_detail.eggsInputsDetailsEggsDeliveries %}
+                            <tr>
+                                <td>
+                                    {{ delivery.eggsDeliveries.herd.breeder.name }}
+                                </td>
+                                <td>
+                                    {{ delivery.eggsDeliveries.herd.name }}
+                                </td>
+                                <td>
+                                    {{ delivery.eggsDeliveries.deliveryDate ? delivery.eggsDeliveries.deliveryDate|date('Y-m-d') : '' }}
+                                </td>
+                                <td>
+                                    {{ delivery.eggsDeliveries.firstLayingDate ? delivery.eggsDeliveries.firstLayingDate|date('Y-m-d') : '' }}
+                                    -
+                                    {{ delivery.eggsDeliveries.lastLayingDate ? delivery.eggsDeliveries.lastLayingDate|date('Y-m-d') : '' }}
+                                </td>
+                                <td>
+                                    {{ delivery.eggsNumber|number_format(0, ',', ' ') }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+                    {% for lighting in input_detail.eggsInputsLightings %}
+                        {{ lighting.lightingDate ? lighting.lightingDate|date('Y-m-d') : '' }}
+                    {% endfor %}
+                    {% dump(input_detail) %}
+                </td>
+                <td>{% for lighting in input_detail.eggsInputsLightings %}
+                        {{ lighting.wasteEggs|number_format(0, ',', ' ') }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for transfer in input_detail.eggsInputsTransfers %}
+                        {{ transfer.transferDate ? transfer.transferDate|date('Y-m-d') : '' }}
+                    {% endfor %}
+                </td>
+                <td>{% for transfer in input_detail.eggsInputsTransfers %}
+                        {{ transfer.wasteEggs|number_format(0, ',', ' ') }}
                     {% endfor %}
                 </td>
             </tr>
