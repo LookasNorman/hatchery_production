@@ -14,12 +14,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/herds")
+ * @IsGranted("ROLE_USER")
  */
 class HerdsController extends AbstractController
 {
     /**
      * @Route("/", name="herds_index", methods={"GET"})
-     * @IsGranted("ROLE_USER")
      */
     public function index(HerdsRepository $herdsRepository): Response
     {
