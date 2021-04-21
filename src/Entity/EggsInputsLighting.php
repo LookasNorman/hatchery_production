@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EggsInputsLightingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EggsInputsLightingRepository::class)
@@ -25,6 +26,7 @@ class EggsInputsLighting
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotNull()
      */
     private $wasteEggs;
 

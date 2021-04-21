@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\EggsInputs;
 use App\Entity\EggsInputsLighting;
+use App\Entity\EggSupplier;
 use App\Form\EggsInputsLightingType;
+use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsLightingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,22 +34,50 @@ class EggsInputsLightingController extends AbstractController
      * @Route("/new", name="eggs_inputs_lighting_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EggsInputsDetailsRepository $detailsRepository): Response
     {
-        $eggsInputsLighting = new EggsInputsLighting();
-        $form = $this->createForm(EggsInputsLightingType::class, $eggsInputsLighting);
+        $form = $this->createForm(EggsInputsLightingType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (
+            $form->isSubmitted() &&
+            $form->isValid() &&
+            $form['breeder']->getData() instanceof EggSupplier &&
+            $form['eggsInputs']->getData() instanceof EggsInputs
+        ) {
+            $totalEggs = 0;
+            $inputs = $form['eggsInputs']->getData();
+            $breeder = $form['breeder']->getData();
+            $wasteEggs = $form['wasteEggs']->getData();
+            $lightingDate = $form['lightingDate']->getData();
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($eggsInputsLighting);
+            $inputsDetails = $detailsRepository->inputBreederDetails($inputs, $breeder);
+
+            /** @var  $inputDetail
+             * Get sum eggs for breeder in eggs input
+             */
+            foreach ($inputsDetails as $inputDetail){
+                $totalEggs = $totalEggs + $inputDetail[1];
+            }
+
+            /** @var  $inputDetail
+             * Added eggs lighting to eggs input details
+             */
+            foreach ($inputsDetails as $inputDetail) {
+                $eggsInputsLighting = new EggsInputsLighting();
+                $eggsInputsLighting->setEggsInputsDetail($inputDetail[0]);
+                $eggsInputsLighting->setWasteEggs($inputDetail[1] / $totalEggs * $wasteEggs);
+                $eggsInputsLighting->setLightingDate($lightingDate);
+                $entityManager->persist($eggsInputsLighting);
+
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('eggs_inputs_lighting_index');
         }
 
         return $this->render('eggs_inputs_lighting/new.html.twig', [
-            'eggs_inputs_lighting' => $eggsInputsLighting,
             'form' => $form->createView(),
         ]);
     }
@@ -88,7 +119,7 @@ class EggsInputsLightingController extends AbstractController
      */
     public function delete(Request $request, EggsInputsLighting $eggsInputsLighting): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$eggsInputsLighting->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $eggsInputsLighting->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($eggsInputsLighting);
             $entityManager->flush();

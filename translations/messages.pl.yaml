@@ -292,11 +292,15 @@ eggs_inputs_lighting:
     label:
       waste_eggs: Odpad jaj
       lighting_date: Data świetlenia
-      eggs_inputs_details: Szczegóły nakładu
+      eggs_inputs: Nakład
+      breeder: Dostawca jaj
     button:
       save: Zapisz
     placeholder:
-      eggs_inputs_details: Wybierz nakład
+      eggs_inputs: Wybierz nakład
+      breeder: Wybierz hodowcę
+    help:
+      waste_eggs: Wpisz odpad jaj dla wybranego nakładu i hodowcy
   edit:
     title: Edycja świetlenia
     button:

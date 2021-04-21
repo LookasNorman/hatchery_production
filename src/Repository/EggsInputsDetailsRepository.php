@@ -39,6 +39,22 @@ class EggsInputsDetailsRepository extends ServiceEntityRepository
             ->execute();
     }
 
+    public function inputBreederDetails($input, $breeder)
+    {
+        return $this->createQueryBuilder('eid')
+            ->addSelect('SUM(edd.eggsNumber)')
+            ->join('eid.eggsInputsDetailsEggsDeliveries', 'edd')
+            ->join('edd.EggsDeliveries', 'ed')
+            ->join('ed.herd', 'h')
+            ->where('eid.eggInput = :input')
+            ->andWhere('h.breeder = :breeder')
+            ->groupBy('eid')
+            ->setParameters(['input' => $input, 'breeder' => $breeder])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return EggsInputsDetails[] Returns an array of EggsInputsDetails objects
     //  */
