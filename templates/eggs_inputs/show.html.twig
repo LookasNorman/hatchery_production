@@ -132,7 +132,6 @@
                     {% for lighting in input_detail.eggsInputsLightings %}
                         {{ lighting.lightingDate ? lighting.lightingDate|date('Y-m-d') : '' }}
                     {% endfor %}
-                    {% dump(input_detail) %}
                 </td>
                 <td>{% for lighting in input_detail.eggsInputsLightings %}
                         {{ lighting.wasteEggs|number_format(0, ',', ' ') }}
