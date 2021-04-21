@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EggsInputsTransfersRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Asserts;
 
 /**
  * @ORM\Entity(repositoryClass=EggsInputsTransfersRepository::class)
@@ -20,16 +21,19 @@ class EggsInputsTransfers
     /**
      * @ORM\ManyToOne(targetEntity=EggsInputsDetails::class, inversedBy="eggsInputsTransfers")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $eggsInputsDetail;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotNull()
      */
     private $wasteEggs;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Date()
      */
     private $transferDate;
 

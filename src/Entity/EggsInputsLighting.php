@@ -21,6 +21,7 @@ class EggsInputsLighting
     /**
      * @ORM\ManyToOne(targetEntity=EggsInputsDetails::class, inversedBy="eggsInputsLightings")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $eggsInputsDetail;
 
@@ -32,6 +33,7 @@ class EggsInputsLighting
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Date()
      */
     private $lightingDate;
 
