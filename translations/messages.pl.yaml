@@ -226,11 +226,30 @@ eggs_inputs:
     button:
       back: Lista nakładów
       edit: Edytuj nakład
+      lighting: Świetlenie
+      transfer: Przekład
+      selection: Wybieranie
+    card:
+      footer:
+        add: Dodaj
     table:
       id: Indeks
       chick: Ilość piskląt
       deliveries: Wykaz dostaw
       chicks_recipient: Odbiorca piskląt
+      lighting:
+        title: Świetlenie
+        date: Data
+        waste_eggs: Odpad jaj
+      transfer:
+        title: Przekład
+        date: Data
+        waste_eggs: Odpad jaj
+      selection:
+        title: Wybieranie
+        date: Data
+        waste_eggs: Odpad jaj
+        chicks: Pisklęta
 eggs_inputs_details:
   delete:
     confirm: Na pewno chcesz usunąć dostawy z nakładu?
