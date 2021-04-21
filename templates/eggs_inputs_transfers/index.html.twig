@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>
+        {% trans %}eggs_inputs_transfer.index.title{% endtrans %}
+    </h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-success" href="{{ path('eggs_inputs_transfers_new') }}">
+            {% trans %}eggs_inputs_transfer.index.button.new{% endtrans %}
+        </a>
+    {% endif %}
+    <table class="table table-sm">
+        <thead class="thead-light">
+        <tr>
+            <th>
+                {% trans %}eggs_inputs_transfer.index.table.id{% endtrans %}
+            </th>
+            <th>
+                {% trans %}eggs_inputs_transfer.index.table.waste_eggs{% endtrans %}
+            </th>
+            <th>
+                {% trans %}eggs_inputs_transfer.index.table.transfer_date{% endtrans %}
+            </th>
+            <th>
+                {% trans %}eggs_inputs_transfer.index.table.action{% endtrans %}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for eggs_inputs_transfer in eggs_inputs_transfers %}
+            <tr>
+                <td>{{ eggs_inputs_transfer.id }}</td>
+                <td>{{ eggs_inputs_transfer.wasteEggs }}</td>
+                <td>{{ eggs_inputs_transfer.transferDate ? eggs_inputs_transfer.transferDate|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a class="badge badge-info"
+                       href="{{ path('eggs_inputs_transfers_show', {'id': eggs_inputs_transfer.id}) }}">
+                        {% trans %}eggs_inputs_transfer.index.table.badge.show{% endtrans %}
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="badge badge-warning"
+                           href="{{ path('eggs_inputs_transfers_edit', {'id': eggs_inputs_transfer.id}) }}">
+                            {% trans %}eggs_inputs_transfer.index.table.badge.edit{% endtrans %}
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">
+                    {% trans %}eggs_inputs_transfer.index.table.no_found{% endtrans %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

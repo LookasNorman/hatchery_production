@@ -329,6 +329,50 @@ eggs_inputs_lighting:
     button:
       edit: Edytuj
       back: Lista świetleń
+eggs_inputs_transfer:
+  delete:
+    confirm: Na pewno chcesz usunąć dane o przekładzie
+    button:
+      delete: Usuń
+  form:
+    label:
+      waste_eggs: Odpad jaj
+      transfer_date: Data przekładu
+      eggs_inputs_detail: Szczegóły nakładu
+    help:
+      waste_eggs: Wpisz ilość wyrzuconych jaj
+    placeholder:
+      eggs_inputs_detail: Wybierz nakład
+    button:
+      save: Zapisz
+  edit:
+    title: Edycja danych przekładu
+    button:
+      update: Zaktualizuj
+      back: Lista przekładów
+  index:
+    title: Przekłady jaj
+    table:
+      id: Indeks
+      waste_eggs: Odpad jaj
+      transfer_date: Data przekładu
+      action: Akcje
+      no_found: Brak danych o przekładach
+      badge:
+        show: Szczegóły
+        edit: Edytuj
+    button:
+      new: Wpisz dane przekładu
+  new:
+    title: Dodawanie danych z przekładu
+    button:
+      back: Lista przekładów
+  show:
+    title: Szczegóły przekładu
+    waste_eggs: Odpad jaj
+    button:
+      edit: Edytuj
+      back: Lista przekładów
 herds:
   delete:
     confirm: Na pewno chcesz usunąć stado?
@@ -436,6 +480,8 @@ menu:
       index: Dostawy nakładu
     eggs_inputs_lighting:
       index: Świetlenie
+    eggs_inputs_transfers:
+      index: Przekład
     eggs_supplier:
       index: Dostawcy jaj
     herds:

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {% trans %}eggs_inputs_transfer.edit.title{% endtrans %}
+            </h5>
+            <div class="card-body">
+                {{ include('eggs_inputs_transfers/_form.html.twig', {'button_label': 'eggs_inputs_transfer.edit.button.update'}) }}
+            </div>
+            <div class="card-footer bg-transparent border-success d-flex">
+                {{ include('eggs_inputs_transfers/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="{{ path('eggs_inputs_transfers_index') }}">
+        {% trans %}eggs_inputs_transfer.edit.button.back{% endtrans %}
+    </a>
+
+{% endblock %}
