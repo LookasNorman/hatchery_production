@@ -1,11 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New EggsSelections{% endblock %}
-
 {% block body %}
-    <h1>Create new EggsSelections</h1>
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {% trans %}eggs_inputs_selections.new.title{% endtrans %}
+            </h5>
+            <div class="card-body">
+                {{ include('eggs_selections/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="{{ path('eggs_selections_index') }}">
+        {% trans %}eggs_inputs_selections.new.button.back{% endtrans %}
+    </a>
 
-    {{ include('eggs_selections/_form.html.twig') }}
-
-    <a href="{{ path('eggs_selections_index') }}">back to list</a>
 {% endblock %}

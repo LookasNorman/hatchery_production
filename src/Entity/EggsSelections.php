@@ -21,7 +21,7 @@ class EggsSelections
      * @ORM\ManyToOne(targetEntity=EggsInputsDetails::class, inversedBy="eggsSelections")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $EggsInputsDetail;
+    private $eggsInputsDetail;
 
     /**
      * @ORM\Column(type="integer")
@@ -45,12 +45,12 @@ class EggsSelections
 
     public function getEggsInputsDetail(): ?EggsInputsDetails
     {
-        return $this->EggsInputsDetail;
+        return $this->eggsInputsDetail;
     }
 
-    public function setEggsInputsDetail(?EggsInputsDetails $EggsInputsDetail): self
+    public function setEggsInputsDetail(?EggsInputsDetails $eggsInputsDetail): self
     {
-        $this->EggsInputsDetail = $EggsInputsDetail;
+        $this->eggsInputsDetail = $eggsInputsDetail;
 
         return $this;
     }

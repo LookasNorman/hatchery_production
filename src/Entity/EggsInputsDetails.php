@@ -55,7 +55,7 @@ class EggsInputsDetails
     private $eggsInputsTransfers;
 
     /**
-     * @ORM\OneToMany(targetEntity=EggsSelections::class, mappedBy="EggsInputsDetail")
+     * @ORM\OneToMany(targetEntity=EggsSelections::class, mappedBy="eggsInputsDetail")
      */
     private $eggsSelections;
 

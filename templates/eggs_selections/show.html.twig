@@ -1,34 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}EggsSelections{% endblock %}
-
 {% block body %}
-    <h1>EggsSelections</h1>
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <h1>{% trans %}eggs_inputs_selections.show.title{% endtrans %}</h1>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {{ eggs_selection.eggsInputsDetail.eggInput.name }}
+            </h5>
+            <div class="card-body">
+                <p class="card-text">
+                    {% trans %}eggs_inputs_selections.show.selection_date{% endtrans %}
+                    : {{ eggs_selection.selectionDate ? eggs_selection.selectionDate|date('Y-m-d') : '' }}
+                </p>
+                <p class="card-text">
+                    {% trans %}eggs_inputs_selections.show.chick_number{% endtrans %}
+                    : {{ eggs_selection.chickNumber }}
+                </p>
+                <p class="card-text">
+                    {% trans %}eggs_inputs_selections.show.cull_chick{% endtrans %}
+                    : {{ eggs_selection.cullChicken }}
+                </p>
+            </div>
+            <div class="card-footer bg-transparent border-success d-flex">
+                {% if is_granted('ROLE_ADMIN') %}
+                    {{ include('eggs_selections/_delete_form.html.twig') }}
+                    <a class="btn btn-warning" href="{{ path('eggs_selections_edit', {'id': eggs_selection.id}) }}">
+                        {% trans %}eggs_inputs_selections.show.button.edit{% endtrans %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ eggs_selection.id }}</td>
-            </tr>
-            <tr>
-                <th>ChickNumber</th>
-                <td>{{ eggs_selection.chickNumber }}</td>
-            </tr>
-            <tr>
-                <th>CullChicken</th>
-                <td>{{ eggs_selection.cullChicken }}</td>
-            </tr>
-            <tr>
-                <th>SelectionDate</th>
-                <td>{{ eggs_selection.selectionDate ? eggs_selection.selectionDate|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <a class="btn btn-primary" href="{{ path('eggs_selections_index') }}">
+        {% trans %}eggs_inputs_selections.show.button.back{% endtrans %}
+    </a>
 
-    <a href="{{ path('eggs_selections_index') }}">back to list</a>
-
-    <a href="{{ path('eggs_selections_edit', {'id': eggs_selection.id}) }}">edit</a>
-
-    {{ include('eggs_selections/_delete_form.html.twig') }}
 {% endblock %}
