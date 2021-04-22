@@ -82,8 +82,8 @@
             <th>{% trans %}eggs_inputs.show.table.transfer.date{% endtrans %}</th>
             <th>{% trans %}eggs_inputs.show.table.transfer.waste_eggs{% endtrans %}</th>
             <th>{% trans %}eggs_inputs.show.table.selection.date{% endtrans %}</th>
-            <th>{% trans %}eggs_inputs.show.table.selection.waste_eggs{% endtrans %}</th>
             <th>{% trans %}eggs_inputs.show.table.selection.chicks{% endtrans %}</th>
+            <th>{% trans %}eggs_inputs.show.table.selection.cull_chicks{% endtrans %}</th>
         </tr>
         </thead>
         <tbody>
@@ -144,6 +144,19 @@
                 </td>
                 <td>{% for transfer in input_detail.eggsInputsTransfers %}
                         {{ transfer.wasteEggs|number_format(0, ',', ' ') }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for selection in input_detail.eggsSelections %}
+                        {{ selection.selectionDate ? selection.selectionDate|date('Y-m-d') : '' }}
+                    {% endfor %}
+                </td>
+                <td>{% for selection in input_detail.eggsSelections %}
+                        {{ selection.chickNumber|number_format(0, ',', ' ') }}
+                    {% endfor %}
+                </td>
+                <td>{% for selection in input_detail.eggsSelections %}
+                        {{ selection.cullChicken|number_format(0, ',', ' ') }}
                     {% endfor %}
                 </td>
             </tr>

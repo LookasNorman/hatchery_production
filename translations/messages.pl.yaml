@@ -248,7 +248,7 @@ eggs_inputs:
       selection:
         title: Wybieranie
         date: Data
-        waste_eggs: Odpad jaj
+        cull_chicks: Wybrakowane
         chicks: Pisklęta
       delivery:
         breeder: Hodowca
