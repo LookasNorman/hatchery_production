@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\EggsInputs;
 use App\Entity\EggsInputsDetails;
 use App\Entity\EggsSelections;
+use App\Entity\EggSupplier;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -37,11 +39,22 @@ class EggsSelectionsType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('eggsInputsDetail', EntityType::class, [
-                'class' => EggsInputsDetails::class,
-                'choice_label' => 'eggInput.name',
-                'placeholder' => 'eggs_inputs_selections.form.placeholder.eggs_inputs_detail',
-                'label' => 'eggs_inputs_selections.form.label.eggs_inputs_detail',
+            ->add('eggsInputs', EntityType::class, [
+                'class' => EggsInputs::class,
+                'choice_label' => 'name',
+                'label' => 'eggs_inputs_selections.form.label.eggs_inputs',
+                'mapped' => false,
+                'placeholder' => 'eggs_inputs_selections.form.placeholder.eggs_inputs',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('breeder', EntityType::class, [
+                'class' => EggSupplier::class,
+                'choice_label' => 'name',
+                'label' => 'eggs_inputs_selections.form.label.breeder',
+                'mapped' => false,
+                'placeholder' => 'eggs_inputs_selections.form.placeholder.breeder',
                 'attr' => [
                     'class' => 'form-control'
                 ]

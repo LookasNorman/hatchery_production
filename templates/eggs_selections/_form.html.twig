@@ -24,11 +24,19 @@
     </div>
 </div>
 <div class="form-group">
-    <label>{{ form_label(form.eggsInputsDetail) }}</label>
-    {{ form_widget(form.eggsInputsDetail) }}
-    <small>{{ form_help(form.eggsInputsDetail) }}</small>
+    <label>{{ form_label(form.eggsInputs) }}</label>
+    {{ form_widget(form.eggsInputs) }}
+    <small>{{ form_help(form.eggsInputs) }}</small>
     <div class="form-text text-danger">
-        {{ form_errors(form.eggsInputsDetail) }}
+        {{ form_errors(form.eggsInputs) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.breeder) }}</label>
+    {{ form_widget(form.breeder) }}
+    <small>{{ form_help(form.breeder) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.breeder) }}
     </div>
 </div>
 <button class="btn btn-danger">{{ button_label|default('eggs_inputs_transfer.form.button.save')|trans }}</button>

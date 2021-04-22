@@ -410,6 +410,8 @@ eggs_inputs_selections:
   form:
     placeholder:
       eggs_inputs_detail: Wybierz nakład
+      eggs_inputs: Wybierz nakład
+      breeder: Wybierz hodowcę
     help:
       cull_chick: Wpisz ilość wybrakowanych piskląt
       chick_number: Wpisz ilość piskląt
@@ -418,6 +420,8 @@ eggs_inputs_selections:
       cull_chick: Wybrakowane
       selection_date: Data wybierania
       eggs_inputs_detail: Nakład
+      eggs_inputs: Nakład
+      breeder: Dostawca jaj
   edit:
     title: Edycja wybierania
     button:
