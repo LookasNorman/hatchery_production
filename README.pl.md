@@ -16,4 +16,4 @@ Zapisujemy tutaj informację o świetleniu wg dostawców jaj. System automatyczn
 Zapisujemy tutaj informację o przekładzie wg dostawców jaj. System automatycznie rozpisuje te informacje do danych dostaw z uwzględnieniem odbiorcy piskląt.
 
 ## Wybieranie:
-W trakcie przygotowania.
+Zapisujemy tutaj informację o wybieraniu wg dostawców jaj. System automatycznie rozpisuje te informacje do danych dostaw z uwzględnieniem odbiorcy piskląt.
