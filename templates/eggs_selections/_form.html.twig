@@ -1,0 +1,35 @@
+{{ form_start(form) }}
+<div class="form-group">
+    <label>{{ form_label(form.chickNumber) }}</label>
+    {{ form_widget(form.chickNumber) }}
+    <small>{{ form_help(form.chickNumber) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.chickNumber) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.cullChicken) }}</label>
+    {{ form_widget(form.cullChicken) }}
+    <small>{{ form_help(form.cullChicken) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.cullChicken) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.selectionDate) }}</label>
+    {{ form_widget(form.selectionDate) }}
+    <small>{{ form_help(form.selectionDate) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.selectionDate) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.eggsInputsDetail) }}</label>
+    {{ form_widget(form.eggsInputsDetail) }}
+    <small>{{ form_help(form.eggsInputsDetail) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.eggsInputsDetail) }}
+    </div>
+</div>
+<button class="btn btn-danger">{{ button_label|default('eggs_inputs_transfer.form.button.save')|trans }}</button>
+{{ form_end(form) }}

@@ -54,11 +54,17 @@ class EggsInputsDetails
      */
     private $eggsInputsTransfers;
 
+    /**
+     * @ORM\OneToMany(targetEntity=EggsSelections::class, mappedBy="eggsInputsDetail")
+     */
+    private $eggsSelections;
+
     public function __construct()
     {
         $this->eggsInputsDetailsEggsDeliveries = new ArrayCollection();
         $this->eggsInputsLightings = new ArrayCollection();
         $this->eggsInputsTransfers = new ArrayCollection();
+        $this->eggsSelections = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -186,6 +192,36 @@ class EggsInputsDetails
             // set the owning side to null (unless already changed)
             if ($eggsInputsTransfer->getEggsInputsDetail() === $this) {
                 $eggsInputsTransfer->setEggsInputsDetail(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EggsSelections[]
+     */
+    public function getEggsSelections(): Collection
+    {
+        return $this->eggsSelections;
+    }
+
+    public function addEggsSelection(EggsSelections $eggsSelection): self
+    {
+        if (!$this->eggsSelections->contains($eggsSelection)) {
+            $this->eggsSelections[] = $eggsSelection;
+            $eggsSelection->setEggsInputsDetail($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEggsSelection(EggsSelections $eggsSelection): self
+    {
+        if ($this->eggsSelections->removeElement($eggsSelection)) {
+            // set the owning side to null (unless already changed)
+            if ($eggsSelection->getEggsInputsDetail() === $this) {
+                $eggsSelection->setEggsInputsDetail(null);
             }
         }
 

@@ -250,6 +250,12 @@ eggs_inputs:
         date: Data
         waste_eggs: Odpad jaj
         chicks: Pisklęta
+      delivery:
+        breeder: Hodowca
+        herd: Stado
+        delivery_date: Data dostawy
+        laying_date: Data zniesienia
+        eggs_number: Ilość jaj
 eggs_inputs_details:
   delete:
     confirm: Na pewno chcesz usunąć dostawy z nakładu?
@@ -396,6 +402,53 @@ eggs_inputs_transfer:
     button:
       edit: Edytuj
       back: Lista przekładów
+eggs_inputs_selections:
+  delete:
+    confirm: Jesteś pewien, że chcesz usunąć wybieranie?
+    button:
+      delete: Usuń
+  form:
+    placeholder:
+      eggs_inputs_detail: Wybierz nakład
+    help:
+      cull_chick: Wpisz ilość wybrakowanych piskląt
+      chick_number: Wpisz ilość piskląt
+    label:
+      chick_number: Pisklęta
+      cull_chick: Wybrakowane
+      selection_date: Data wybierania
+      eggs_inputs_detail: Nakład
+  edit:
+    title: Edycja wybierania
+    button:
+      update: Aktualizuj
+      back: Lista wybierań
+  index:
+    title: Wykaz wybierań
+    table:
+      id: Indeks
+      chick_number: Ilość piskląt
+      cull_chick: Pisklęta wybrakowane
+      selection_date: Data wybierania
+      actions: Akcje
+      badge:
+        show: Szczegóły
+        edit: Edytuj
+      no_found: Brak wybierań
+    button:
+      new: Wpisz wybieranie
+  new:
+    title: Dodawanie danych z wybierania
+    button:
+      back: Lista wybierań
+  show:
+    title: Szczegóły wybierania
+    button:
+      edit: Edytuj
+      back: Lista wybierań
+    selection_date: Data wybierania
+    chick_number: Ilość piskląt
+    cull_chick: Wybrakowane pisklęta
 herds:
   delete:
     confirm: Na pewno chcesz usunąć stado?
@@ -505,6 +558,8 @@ menu:
       index: Świetlenie
     eggs_inputs_transfers:
       index: Przekład
+    eggs_inputs_selections:
+      index: Wybieranie
     eggs_supplier:
       index: Dostawcy jaj
     herds:

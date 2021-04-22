@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <h1>{% trans %}eggs_inputs_selections.show.title{% endtrans %}</h1>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {{ eggs_selection.eggsInputsDetail.eggInput.name }}
+            </h5>
+            <div class="card-body">
+                <p class="card-text">
+                    {% trans %}eggs_inputs_selections.show.selection_date{% endtrans %}
+                    : {{ eggs_selection.selectionDate ? eggs_selection.selectionDate|date('Y-m-d') : '' }}
+                </p>
+                <p class="card-text">
+                    {% trans %}eggs_inputs_selections.show.chick_number{% endtrans %}
+                    : {{ eggs_selection.chickNumber }}
+                </p>
+                <p class="card-text">
+                    {% trans %}eggs_inputs_selections.show.cull_chick{% endtrans %}
+                    : {{ eggs_selection.cullChicken }}
+                </p>
+            </div>
+            <div class="card-footer bg-transparent border-success d-flex">
+                {% if is_granted('ROLE_ADMIN') %}
+                    {{ include('eggs_selections/_delete_form.html.twig') }}
+                    <a class="btn btn-warning" href="{{ path('eggs_selections_edit', {'id': eggs_selection.id}) }}">
+                        {% trans %}eggs_inputs_selections.show.button.edit{% endtrans %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('eggs_selections_index') }}">
+        {% trans %}eggs_inputs_selections.show.button.back{% endtrans %}
+    </a>
+
+{% endblock %}
