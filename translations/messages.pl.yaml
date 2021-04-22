@@ -402,6 +402,8 @@ eggs_inputs_transfer:
     button:
       edit: Edytuj
       back: Lista przekładów
+eggs_inputs_selections:
+
 herds:
   delete:
     confirm: Na pewno chcesz usunąć stado?
@@ -511,6 +513,8 @@ menu:
       index: Świetlenie
     eggs_inputs_transfers:
       index: Przekład
+    eggs_inputs_selections:
+      index: Wybieranie
     eggs_supplier:
       index: Dostawcy jaj
     herds:

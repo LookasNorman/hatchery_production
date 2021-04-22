@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit EggsSelections{% endblock %}
+
+{% block body %}
+    <h1>Edit EggsSelections</h1>
+
+    {{ include('eggs_selections/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('eggs_selections_index') }}">back to list</a>
+
+    {{ include('eggs_selections/_delete_form.html.twig') }}
+{% endblock %}

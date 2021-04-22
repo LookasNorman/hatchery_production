@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EggsSelections index{% endblock %}
+
+{% block body %}
+    <h1>EggsSelections index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>ChickNumber</th>
+                <th>CullChicken</th>
+                <th>SelectionDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for eggs_selection in eggs_selections %}
+            <tr>
+                <td>{{ eggs_selection.id }}</td>
+                <td>{{ eggs_selection.chickNumber }}</td>
+                <td>{{ eggs_selection.cullChicken }}</td>
+                <td>{{ eggs_selection.selectionDate ? eggs_selection.selectionDate|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('eggs_selections_show', {'id': eggs_selection.id}) }}">show</a>
+                    <a href="{{ path('eggs_selections_edit', {'id': eggs_selection.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('eggs_selections_new') }}">Create new</a>
+{% endblock %}
