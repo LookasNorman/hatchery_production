@@ -250,6 +250,12 @@ eggs_inputs:
         date: Data
         waste_eggs: Odpad jaj
         chicks: Pisklęta
+      delivery:
+        breeder: Hodowca
+        herd: Stado
+        delivery_date: Data dostawy
+        laying_date: Data zniesienia
+        eggs_number: Ilość jaj
 eggs_inputs_details:
   delete:
     confirm: Na pewno chcesz usunąć dostawy z nakładu?
