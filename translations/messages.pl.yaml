@@ -84,6 +84,12 @@ chicks_recipient:
     button:
       edit: Edytuj
       back: Lista odbiorców
+    table:
+      inputs: Nakład
+      chicks: Pisklęta
+      deliveries: Dostawy
+      chicks_plan: Planowane
+      chicks_real: Rzeczywiste
 egg_supplier:
   delete:
     title: Jesteś pewien, że chcesz usunąć dostawcę jaj?

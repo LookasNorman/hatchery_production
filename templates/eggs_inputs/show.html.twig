@@ -54,108 +54,93 @@
     <table class="table table-sm table-bordered table-hover">
         <thead class="thead-light">
         <tr>
-            <th rowspan="2">
+            <th rowspan="2" class="align-middle">
                 {% trans %}eggs_inputs.show.table.id{% endtrans %}
             </th>
-            <th rowspan="2">
+            <th rowspan="2" class="align-middle">
                 {% trans %}eggs_inputs.show.table.chicks_recipient{% endtrans %}
             </th>
-            <th rowspan="2">
+            <th rowspan="2" class="text-center align-middle">
                 {% trans %}eggs_inputs.show.table.chick{% endtrans %}
             </th>
-            <th rowspan="2">
+            <th rowspan="2" class="text-center align-middle">
                 {% trans %}eggs_inputs.show.table.deliveries{% endtrans %}
             </th>
-            <th colspan="2">
+            <th colspan="2" class="text-center align-middle">
                 {% trans %}eggs_inputs.show.table.lighting.title{% endtrans %}
             </th>
-            <th colspan="2">
+            <th colspan="2" class="text-center align-middle">
                 {% trans %}eggs_inputs.show.table.transfer.title{% endtrans %}
             </th>
-            <th colspan="3">
+            <th colspan="3" class="text-center align-middle">
                 {% trans %}eggs_inputs.show.table.selection.title{% endtrans %}
             </th>
         </tr>
         <tr>
-            <th>{% trans %}eggs_inputs.show.table.lighting.date{% endtrans %}</th>
-            <th>{% trans %}eggs_inputs.show.table.lighting.waste_eggs{% endtrans %}</th>
-            <th>{% trans %}eggs_inputs.show.table.transfer.date{% endtrans %}</th>
-            <th>{% trans %}eggs_inputs.show.table.transfer.waste_eggs{% endtrans %}</th>
-            <th>{% trans %}eggs_inputs.show.table.selection.date{% endtrans %}</th>
-            <th>{% trans %}eggs_inputs.show.table.selection.chicks{% endtrans %}</th>
-            <th>{% trans %}eggs_inputs.show.table.selection.cull_chicks{% endtrans %}</th>
+            <th class="text-center align-middle">
+                {% trans %}eggs_inputs.show.table.lighting.date{% endtrans %}
+            </th>
+            <th class="text-center align-middle">
+                {% trans %}eggs_inputs.show.table.lighting.waste_eggs{% endtrans %}
+            </th>
+            <th class="text-center align-middle">
+                {% trans %}eggs_inputs.show.table.transfer.date{% endtrans %}
+            </th>
+            <th class="text-center align-middle">
+                {% trans %}eggs_inputs.show.table.transfer.waste_eggs{% endtrans %}
+            </th>
+            <th class="text-center align-middle">
+                {% trans %}eggs_inputs.show.table.selection.date{% endtrans %}
+            </th>
+            <th class="text-center align-middle">
+                {% trans %}eggs_inputs.show.table.selection.chicks{% endtrans %}
+            </th>
+            <th class="text-center align-middle">
+                {% trans %}eggs_inputs.show.table.selection.cull_chicks{% endtrans %}
+            </th>
         </tr>
         </thead>
         <tbody>
-        {% for input_detail in details_input %}
+        {% for detail in details_input %}
             <tr>
-                <td>{{ input_detail.id }}</td>
-                <td>{{ input_detail.chicksRecipient.name }}</td>
-                <td>{{ input_detail.chickNumber|number_format(0, ',', ' ') }}</td>
-                <td>
-                    <table class="table table-sm table-hover table-bordered">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>{% trans %}eggs_inputs.show.table.delivery.breeder{% endtrans %}</th>
-                            <th>{% trans %}eggs_inputs.show.table.delivery.herd{% endtrans %}</th>
-                            <th>{% trans %}eggs_inputs.show.table.delivery.delivery_date{% endtrans %}</th>
-                            <th>{% trans %}eggs_inputs.show.table.delivery.laying_date{% endtrans %}</th>
-                            <th>{% trans %}eggs_inputs.show.table.delivery.eggs_number{% endtrans %}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for delivery in input_detail.eggsInputsDetailsEggsDeliveries %}
-                            <tr>
-                                <td>
-                                    {{ delivery.eggsDeliveries.herd.breeder.name }}
-                                </td>
-                                <td>
-                                    {{ delivery.eggsDeliveries.herd.name }}
-                                </td>
-                                <td>
-                                    {{ delivery.eggsDeliveries.deliveryDate ? delivery.eggsDeliveries.deliveryDate|date('Y-m-d') : '' }}
-                                </td>
-                                <td>
-                                    {{ delivery.eggsDeliveries.firstLayingDate ? delivery.eggsDeliveries.firstLayingDate|date('Y-m-d') : '' }}
-                                    -
-                                    {{ delivery.eggsDeliveries.lastLayingDate ? delivery.eggsDeliveries.lastLayingDate|date('Y-m-d') : '' }}
-                                </td>
-                                <td>
-                                    {{ delivery.eggsNumber|number_format(0, ',', ' ') }}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                <td class="align-middle">
+                    {{ detail.id }}
                 </td>
+                <td class="align-middle">
+                    {{ detail.chicksRecipient.name }}
+                </td>
+                <td class="text-center align-middle">{{ detail.chickNumber|number_format(0, ',', ' ') }}</td>
                 <td>
-                    {% for lighting in input_detail.eggsInputsLightings %}
+                    {% include('eggs_delivery/inputs_delivery.html.twig') %}
+                </td>
+                <td class="text-center align-middle">
+                    {% for lighting in detail.eggsInputsLightings %}
                         {{ lighting.lightingDate ? lighting.lightingDate|date('Y-m-d') : '' }}
                     {% endfor %}
                 </td>
-                <td>{% for lighting in input_detail.eggsInputsLightings %}
+                <td class="text-center align-middle">{% for lighting in detail.eggsInputsLightings %}
                         {{ lighting.wasteEggs|number_format(0, ',', ' ') }}
                     {% endfor %}
                 </td>
-                <td>
-                    {% for transfer in input_detail.eggsInputsTransfers %}
+                <td class="text-center align-middle">
+                    {% for transfer in detail.eggsInputsTransfers %}
                         {{ transfer.transferDate ? transfer.transferDate|date('Y-m-d') : '' }}
                     {% endfor %}
                 </td>
-                <td>{% for transfer in input_detail.eggsInputsTransfers %}
+                <td class="text-center align-middle">{% for transfer in detail.eggsInputsTransfers %}
                         {{ transfer.wasteEggs|number_format(0, ',', ' ') }}
                     {% endfor %}
                 </td>
-                <td>
-                    {% for selection in input_detail.eggsSelections %}
+                <td class="text-center align-middle">
+                    {% for selection in detail.eggsSelections %}
                         {{ selection.selectionDate ? selection.selectionDate|date('Y-m-d') : '' }}
                     {% endfor %}
                 </td>
-                <td>{% for selection in input_detail.eggsSelections %}
+                <td class="text-center align-middle">{% for selection in detail.eggsSelections %}
                         {{ selection.chickNumber|number_format(0, ',', ' ') }}
                     {% endfor %}
                 </td>
-                <td>{% for selection in input_detail.eggsSelections %}
+                <td class="text-center align-middle">{% for selection in detail.eggsSelections %}
                         {{ selection.cullChicken|number_format(0, ',', ' ') }}
                     {% endfor %}
                 </td>

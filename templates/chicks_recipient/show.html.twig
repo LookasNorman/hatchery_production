@@ -8,6 +8,9 @@
             padding: 6px 6px;
         }
     </style>
+    <a class="btn btn-primary" href="{{ path('chicks_recipient_index') }}">
+        {% trans %}chicks_recipient.show.button.back{% endtrans %}
+    </a>
     <div class="d-flex justify-content-center card-group">
         <div class="card">
             <h5 class="card-header">
@@ -32,8 +35,48 @@
             {% endif %}
         </div>
     </div>
-    <a class="btn btn-primary" href="{{ path('chicks_recipient_index') }}">
-        {% trans %}chicks_recipient.show.button.back{% endtrans %}
-    </a>
-
+    <hr>
+    <table class="table table-sm table-hover table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th rowspan="2" class="align-middle">
+                {% trans %}chicks_recipient.show.table.inputs{% endtrans %}
+            </th>
+            <th colspan="2" class="text-center align-middle">
+                {% trans %}chicks_recipient.show.table.chicks{% endtrans %}
+            </th>
+            <th rowspan="2" class="text-center align-middle">
+                {% trans %}chicks_recipient.show.table.deliveries{% endtrans %}
+            </th>
+        </tr>
+        <tr>
+            <th class="text-center">
+                {% trans %}chicks_recipient.show.table.chicks_plan{% endtrans %}
+            </th>
+            <th class="text-center">
+                {% trans %}chicks_recipient.show.table.chicks_real{% endtrans %}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for detail in inputsDetail.eggsInputsDetails %}
+            <tr>
+                <td class="align-middle">
+                    <a href="{{ path('eggs_inputs_show', {'id': detail.eggInput.id}) }}">
+                        {{ detail.eggInput.name }}
+                    </a>
+                </td>
+                <td class="text-center align-middle">{{ detail.chickNumber }}</td>
+                <td class="text-center align-middle">
+                    {% for selection in detail.eggsSelections %}
+                        {{ selection.chickNumber }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% include('eggs_delivery/inputs_delivery.html.twig') %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

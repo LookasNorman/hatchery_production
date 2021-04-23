@@ -54,10 +54,13 @@ class ChicksRecipientController extends AbstractController
     /**
      * @Route("/{id}", name="chicks_recipient_show", methods={"GET"})
      */
-    public function show(ChicksRecipient $chicksRecipient): Response
+    public function show(ChicksRecipient $chicksRecipient, ChicksRecipientRepository $repository): Response
     {
+        $inputsDetail = $repository->inputsDelicery($chicksRecipient->getId());
+
         return $this->render('chicks_recipient/show.html.twig', [
             'chicks_recipient' => $chicksRecipient,
+            'inputsDetail' => $inputsDetail,
         ]);
     }
 
