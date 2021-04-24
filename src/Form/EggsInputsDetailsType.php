@@ -8,6 +8,8 @@ use App\Entity\EggsInputs;
 use App\Entity\EggsInputsDetails;
 use App\Entity\EggSupplier;
 use App\Entity\Herds;
+use App\Repository\EggsDeliveryRepository;
+use App\Repository\HerdsRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -34,7 +36,16 @@ class EggsInputsDetailsType extends AbstractType
             ->add('breeder', EntityType::class, [
                 'class' => EggSupplier::class,
                 'choice_label' => function (EggSupplier $eggSupplier) {
-                    return $eggSupplier->getName();
+                    $eggs = 0;
+                    $herds = $eggSupplier->getHerds();
+                    foreach($herds as $herd){
+                        $deliveries = $herd->getEggsDeliveries();
+                        foreach ($deliveries as $delivery) {
+                            $eggs = $eggs + $delivery->getEggsOnWarehouse();
+                        }
+                    }
+
+                    return $eggSupplier->getName() . ' - stan jaj: ' . $eggs;
                 },
                 'label' => 'eggs_inputs_details.form.label.breeder',
                 'placeholder' => 'eggs_inputs_details.form.placeholder.breeder',
@@ -61,7 +72,14 @@ class EggsInputsDetailsType extends AbstractType
                     'label' => 'eggs_inputs_details.form.label.herd',
                     'placeholder' => 'eggs_inputs_details.form.placeholder.herd',
                     'choices' => $form->getData()->getHerds(),
-                    'choice_label' => 'name',
+                    'choice_label' => function (Herds $herds) {
+                        $eggs = 0;
+                        $deliveries = $herds->getEggsDeliveries();
+                        foreach ($deliveries as $delivery) {
+                            $eggs = $eggs + $delivery->getEggsOnWarehouse();
+                        }
+                        return $herds->getName() . ' - stan jaj: ' . $eggs;
+                    },
                     'required' => true,
                     'mapped' => false,
                     'attr' => [
