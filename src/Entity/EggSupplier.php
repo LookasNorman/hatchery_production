@@ -52,8 +52,6 @@ class EggSupplier
      */
     private $phoneNumber;
 
-    private $eggsOnWorehouse;
-
     /**
      * @ORM\OneToMany(targetEntity=Herds::class, mappedBy="breeder")
      */
@@ -135,17 +133,4 @@ class EggSupplier
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEggsOnWorehouse()
-    {
-        $total = 0;
-        foreach ($this->herds as $herd){
-            foreach ($herd->eggsDeliveries as $delivery){
-                $total += $delivery->eggsNumber;
-            };
-        }
-        return $total;
-    }
 }
