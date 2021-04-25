@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 /**
  * @Route("/eggs_inputs")
@@ -57,6 +59,37 @@ class EggsInputsController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/pdf", name="eggs_inputs_pdf")
+     */
+    public function pdf(EggsInputsRepository $eggsInputsRepository)
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('eggs_inputs/index.html.twig', [
+            'eggs_inputs' => $eggsInputsRepository->findAll(),
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+    }
     /**
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      * @throws \PhpOffice\PhpSpreadsheet\Exception
