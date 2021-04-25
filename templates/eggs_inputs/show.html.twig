@@ -12,6 +12,9 @@
     <a class="btn btn-primary" href="{{ path('eggs_inputs_index') }}">
         {% trans %}eggs_inputs.show.button.back{% endtrans %}
     </a>
+    <a class="btn btn-success" href="{{ path('eggs_inputs_xls', {'id': eggs_input.id}) }}">
+        {% trans %}eggs_inputs.show.button.xls{% endtrans %}
+    </a>
     <div class="d-flex justify-content-center card-group">
         <div class="card text-white bg-secondary">
             <h5 class="card-header text-white bg-info">

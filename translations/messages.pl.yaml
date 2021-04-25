@@ -232,6 +232,7 @@ eggs_inputs:
     button:
       back: Lista nakładów
       edit: Edytuj nakład
+      xls: Pobierz .xls
       lighting: Świetlenie
       transfer: Przekład
       selection: Wybieranie
