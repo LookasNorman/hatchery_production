@@ -28,27 +28,27 @@
             </div>
             <div class="card-footer bg-transparent border-success d-flex">
                 <ul>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <li class="d-flex">
-                    {{ include('eggs_inputs/_delete_form.html.twig') }}
-                    <a class="btn btn-warning" href="{{ path('eggs_inputs_edit', {'id': eggs_input.id}) }}">
-                        {% trans %}eggs_inputs.show.button.edit{% endtrans %}
-                    </a>
-                    </li>
-                    <hr>
-                    <li class="d-flex">{% trans %}eggs_inputs.show.card.footer.add{% endtrans %}</li>
-                    <li class="d-flex">
-                    <a class="btn btn-success disabled" href="" disabled>
-                        {% trans %}eggs_inputs.show.button.lighting{% endtrans %}
-                    </a>
-                    <a class="btn btn-success disabled" href="" disabled>
-                        {% trans %}eggs_inputs.show.button.transfer{% endtrans %}
-                    </a>
-                    <a class="btn btn-success disabled" href="" disabled>
-                        {% trans %}eggs_inputs.show.button.selection{% endtrans %}
-                    </a>
-                    </li>
-                {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="d-flex">
+                            {{ include('eggs_inputs/_delete_form.html.twig') }}
+                            <a class="btn btn-warning" href="{{ path('eggs_inputs_edit', {'id': eggs_input.id}) }}">
+                                {% trans %}eggs_inputs.show.button.edit{% endtrans %}
+                            </a>
+                        </li>
+                        <hr>
+                        <li class="d-flex">{% trans %}eggs_inputs.show.card.footer.add{% endtrans %}</li>
+                        <li class="d-flex">
+                            <a class="btn btn-success disabled" href="" disabled>
+                                {% trans %}eggs_inputs.show.button.lighting{% endtrans %}
+                            </a>
+                            <a class="btn btn-success disabled" href="" disabled>
+                                {% trans %}eggs_inputs.show.button.transfer{% endtrans %}
+                            </a>
+                            <a class="btn btn-success disabled" href="" disabled>
+                                {% trans %}eggs_inputs.show.button.selection{% endtrans %}
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -75,7 +75,7 @@
             <th colspan="2" class="text-center align-middle">
                 {% trans %}eggs_inputs.show.table.transfer.title{% endtrans %}
             </th>
-            <th colspan="3" class="text-center align-middle">
+            <th colspan="4" class="text-center align-middle">
                 {% trans %}eggs_inputs.show.table.selection.title{% endtrans %}
             </th>
         </tr>
@@ -101,19 +101,23 @@
             <th class="text-center align-middle">
                 {% trans %}eggs_inputs.show.table.selection.cull_chicks{% endtrans %}
             </th>
+            <th class="text-center align-middle">
+                {% trans %}eggs_inputs.show.table.selection.unhatched{% endtrans %}
+            </th>
         </tr>
         </thead>
         <tbody>
         {% for detail in details_input %}
             <tr>
-                <td class="align-middle">
+                <td rowspan="2" class="align-middle">
                     {{ detail.id }}
                 </td>
-                <td class="align-middle">
+                <td rowspan="2" class="align-middle">
                     {{ detail.chicksRecipient.name }}
                 </td>
-                <td class="text-center align-middle">{{ detail.chickNumber|number_format(0, ',', ' ') }}</td>
-                <td>
+                <td rowspan="2"
+                    class="text-center align-middle">{{ detail.chickNumber|number_format(0, ',', ' ') }}</td>
+                <td rowspan="2">
                     {% include('eggs_delivery/inputs_delivery.html.twig') %}
                 </td>
                 <td class="text-center align-middle">
@@ -143,9 +147,33 @@
                         {{ selection.chickNumber|number_format(0, ',', ' ') }}
                     {% endfor %}
                 </td>
-                <td class="text-center align-middle">{% for selection in detail.eggsSelections %}
+                <td class="text-center align-middle">
+                    {% for selection in detail.eggsSelections %}
                         {{ selection.cullChicken|number_format(0, ',', ' ') }}
                     {% endfor %}
+                </td>
+                <td class="text-center align-middle">
+                        {{ detail.unhatched ? detail.unhatched|number_format(0, ',', ' ') : '' }}
+                </td>
+            </tr>
+            <tr>
+                <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.badge.fertilization{% endtrans %}</th>
+                <td class="text-center align-middle">
+                    {{ detail.fertilization ? detail.fertilization|number_format(2, ',', ' ') : '' }}%
+                </td>
+                <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.badge.fertilization{% endtrans %}</th>
+                <td class="text-center align-middle">
+                    {{ detail.fertilizationTransfer ? detail.fertilizationTransfer|number_format(2, ',', ' ') : ''}}%
+                </td>
+                <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.badge.hatchability{% endtrans %}</th>
+                <td class="text-center align-middle">
+                    {{ detail.hatchability ? detail.hatchability|number_format(2, ',', ' ') : ''}}%
+                </td>
+                <td class="text-center align-middle">
+                    {{ detail.cullChick ? detail.cullChick|number_format(2, ',', ' ') : ''}}%
+                </td>
+                <td>
+
                 </td>
             </tr>
         {% endfor %}

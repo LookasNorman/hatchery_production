@@ -257,12 +257,17 @@ eggs_inputs:
         date: Data
         cull_chicks: Wybrakowane
         chicks: Pisklęta
+        unhatched: Niewyklute
       delivery:
         breeder: Hodowca
         herd: Stado
         delivery_date: Data dostawy
         laying_date: Data zniesienia
         eggs_number: Ilość jaj
+      badge:
+        fertilization: Zapłodnienie
+        hatchability: Wylęgowość
+
 eggs_inputs_details:
   delete:
     confirm: Na pewno chcesz usunąć dostawy z nakładu?

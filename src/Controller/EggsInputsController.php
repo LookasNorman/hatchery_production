@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\EggsInputs;
 use App\Form\EggsInputsType;
+use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
 use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsRepository;
 use DateTime;
@@ -200,9 +201,57 @@ class EggsInputsController extends AbstractController
     /**
      * @Route("/{id}", name="eggs_inputs_show", methods={"GET"})
      */
-    public function show(EggsInputs $eggsInput, EggsInputsDetailsRepository $detailsRepository): Response
+    public function show(EggsInputs $eggsInput, EggsInputsDetailsRepository $detailsRepository, EggsInputsDetailsEggsDeliveryRepository $deliveryRepository): Response
     {
-        $details = $detailsRepository->deliveriesInput($eggsInput);
+        $inputDetails = $detailsRepository->deliveriesInput($eggsInput);
+        foreach ($inputDetails as $detail){
+            $eggs = 0;
+            $wasteLighting = 0;
+            $wasteTransfer = 0;
+            $deliveries = $deliveryRepository->findBy(['eggsInputDetails' => $detail]);
+            foreach ($deliveries as $delivery){
+                $eggs = $eggs + $delivery->getEggsNumber();
+            }
+            $detail->eggsNumber = $eggs;
+            foreach ($detail->getEggsInputsLightings() as $lighting){
+                $wasteLighting = $wasteLighting + $lighting->getWasteEggs();
+            }
+            if($wasteLighting > 0){
+                $detail->fertilization = ($eggs - $wasteLighting) / $eggs * 100;
+            } else {
+                $detail->fertilization = null;
+            }
+            foreach ($detail->getEggsInputsTransfers() as $transfers){
+                $wasteTransfer = $wasteTransfer + $transfers->getWasteEggs();
+            }
+            if($wasteTransfer > 0){
+                $detail->fertilizationTransfer = ($eggs - $wasteLighting - $wasteTransfer) / $eggs * 100;
+            } else {
+                $detail->fertilizationTransfer = null;
+            }
+            $chickNumber = 0;
+            $cullChick = 0;
+            foreach ($detail->getEggsSelections() as $selections){
+                $chickNumber = $chickNumber + $selections->getChickNumber();
+                $cullChick = $cullChick + $selections->getCullChicken();
+            }
+            if($chickNumber > 0){
+                $detail->hatchability = $chickNumber / $eggs * 100;
+                $detail->cullChick = $cullChick / $eggs * 100;
+            } else {
+                $detail->hatchability = null;
+                $detail->cullChick = null;
+            }
+            $unhatched = $eggs - $wasteLighting - $wasteTransfer - $cullChick - $chickNumber;
+            if($unhatched <> $eggs){
+                $detail->unhatched = $unhatched;
+            } else {
+                $detail->unhatched = null;
+            }
+//            dump($detail);
+            $details [] = $detail;
+        }
+//        die();
         return $this->render('eggs_inputs/show.html.twig', [
             'eggs_input' => $eggsInput,
             'details_input' => $details,
