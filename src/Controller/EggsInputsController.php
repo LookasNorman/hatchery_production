@@ -9,6 +9,9 @@ use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsRepository;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -90,6 +93,7 @@ class EggsInputsController extends AbstractController
             "Attachment" => true
         ]);
     }
+
     /**
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      * @throws \PhpOffice\PhpSpreadsheet\Exception
@@ -100,10 +104,20 @@ class EggsInputsController extends AbstractController
         $details = $detailsRepository->deliveriesInput($eggsInput);
 
         $spreadsheet = new Spreadsheet();
-
+        $spreadsheet->getActiveSheet()->getPageSetup()
+            ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $spreadsheet->getActiveSheet()->getPageSetup()
+            ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
+        $spreadsheet->getActiveSheet()->getPageSetup()->setFitToWidth(1);
+        $spreadsheet->getActiveSheet()->getHeaderFooter()
+            ->setOddHeader('Zarządzanie produkcją');
         $sheet = $spreadsheet->getActiveSheet();
-
         $sheet->setTitle($eggsInput->getName());
+        $spreadsheet->getProperties()->setTitle($eggsInput->getName());
+        $spreadsheet->getActiveSheet()->getHeaderFooter()
+            ->setOddFooter('&Lhttps://lookaskonieczny.com' . '&C' . $spreadsheet->getProperties()->getTitle() . '&RPage &P of &N');
+
+
 
         $sheet->getCell('A1')->setValue('Odbiorca piskląt');
         $sheet->getCell('B1')->setValue('ilość piskląt');
@@ -165,25 +179,25 @@ class EggsInputsController extends AbstractController
                 if ($key == 0) {
                     $data [] = [
                         $recipientName,
-                        $chickNumber,
+                        number_format($chickNumber, 0, ',', ' '),
                         'KL',
                         $breederName,
                         $herdName,
                         $deliveryDate->format('Y-m-d'),
                         'OD',
                         $age,
-                        $eggsNumber,
-                        $wasteLightingsEggs,
-                        $lightingFertilization,
-                        $wasteTransferEggs,
-                        $transfersFertilization,
-                        $chicksSelections,
-                        $cullChick,
-                        $wasteSelectionsEggs,
-                        $hatchability,
-                        $hatchabilityFertilized,
-                        $cullPercent,
-                        $diff,
+                        number_format($eggsNumber, 0, ',' , ' '),
+                        number_format($wasteLightingsEggs, 0, ',' , ' '),
+                        number_format($lightingFertilization, 2, ',', ' '),
+                        number_format($wasteTransferEggs, 0, ',', ' '),
+                        number_format($transfersFertilization, 2, ',', ' '),
+                        number_format($chicksSelections, 0, ',', ' '),
+                        number_format($cullChick, 0, ',', ' '),
+                        number_format($wasteSelectionsEggs, 0, ',', ' '),
+                        number_format($hatchability, 2, ',', ' '),
+                        number_format($hatchabilityFertilized, 2, ',', ' '),
+                        number_format($cullPercent, 2, ',', ' '),
+                        number_format($diff, 2, ',', ' '),
                         'KK'
                     ];
                 } else {
@@ -196,7 +210,7 @@ class EggsInputsController extends AbstractController
                         $deliveryDate->format('Y-m-d'),
                         'OD',
                         $age,
-                        $eggsNumber,
+                        number_format($eggsNumber, 0, ',' , ' '),
                         '',
                         '',
                         '',
@@ -211,11 +225,71 @@ class EggsInputsController extends AbstractController
                         'KK'
                     ];
                 }
-
             }
         }
+        $rowsNumber = count($data)+1;
         $sheet->fromArray($data, null, 'A2', true);
-
+        $spreadsheet->getActiveSheet()->getStyle('A1:U'.$rowsNumber)->getAlignment()->setWrapText(true);
+        $spreadsheet->getActiveSheet()->getStyle('A1:U'.$rowsNumber)
+            ->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+        $spreadsheet->getActiveSheet()->getStyle('A1:U'.$rowsNumber)
+            ->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(80);
+        $styleArray = [
+            'font' => [
+                'bold' => true,
+            ],
+            'borders' => [
+                'bottom' => [
+                    'borderStyle' => Border::BORDER_DOUBLE,
+                ],
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_GRADIENT_LINEAR,
+                'startColor' => [
+                    'rgb' => 'EEEEEE'
+                ]
+            ],
+        ];
+        $styleBorders = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                ],
+            ],
+        ];
+        $spreadsheet->getActiveSheet()->getStyle('A1:U'.$rowsNumber)->applyFromArray($styleBorders);
+        $spreadsheet->getActiveSheet()->getStyle('A1:U1')->applyFromArray($styleArray);
+        $columnsDimensions = [
+            'A' => 'auto',
+            'B' => 25,
+            'C' => 20,
+            'D' => 'auto',
+            'E' => 20,
+            'F' => 'auto',
+            'G' => 22,
+            'H' => 20,
+            'I' => 29,
+            'J' => 29,
+            'K' => 34,
+            'L' => 29,
+            'M' => 34,
+            'N' => 25,
+            'O' => 29,
+            'P' => 34,
+            'Q' => 20,
+            'R' => 36,
+            'S' => 29,
+            'T' => 20,
+            'U' => 29
+        ];
+        foreach ($columnsDimensions as $key => $column) {
+            if ($column == 'auto') {
+                $spreadsheet->getActiveSheet()->getColumnDimension($key)->setAutoSize(true);
+            } else {
+                $spreadsheet->getActiveSheet()->getColumnDimension($key)->setWidth($column / 2.5);
+            }
+        }
 
         $writer = new Xlsx($spreadsheet);
 
@@ -226,7 +300,7 @@ class EggsInputsController extends AbstractController
         );
         $filename = $eggsInput->getName() . '.xls';
         $response->headers->set('Content-Type', 'application/vnd.ms-excel');
-        $response->headers->set('Content-Disposition', 'attachment;filename='. $filename);
+        $response->headers->set('Content-Disposition', 'attachment;filename=' . $filename);
         $response->headers->set('Cache-Control', 'max-age=0');
         return $response;
     }
@@ -237,38 +311,38 @@ class EggsInputsController extends AbstractController
     public function show(EggsInputs $eggsInput, EggsInputsDetailsRepository $detailsRepository, EggsInputsDetailsEggsDeliveryRepository $deliveryRepository): Response
     {
         $inputDetails = $detailsRepository->deliveriesInput($eggsInput);
-        foreach ($inputDetails as $detail){
+        foreach ($inputDetails as $detail) {
             $eggs = 0;
             $wasteLighting = 0;
             $wasteTransfer = 0;
             $deliveries = $deliveryRepository->findBy(['eggsInputDetails' => $detail]);
-            foreach ($deliveries as $delivery){
+            foreach ($deliveries as $delivery) {
                 $eggs = $eggs + $delivery->getEggsNumber();
             }
             $detail->eggsNumber = $eggs;
-            foreach ($detail->getEggsInputsLightings() as $lighting){
+            foreach ($detail->getEggsInputsLightings() as $lighting) {
                 $wasteLighting = $wasteLighting + $lighting->getWasteEggs();
             }
-            if($wasteLighting > 0){
+            if ($wasteLighting > 0) {
                 $detail->fertilization = ($eggs - $wasteLighting) / $eggs * 100;
             } else {
                 $detail->fertilization = null;
             }
-            foreach ($detail->getEggsInputsTransfers() as $transfers){
+            foreach ($detail->getEggsInputsTransfers() as $transfers) {
                 $wasteTransfer = $wasteTransfer + $transfers->getWasteEggs();
             }
-            if($wasteTransfer > 0){
+            if ($wasteTransfer > 0) {
                 $detail->fertilizationTransfer = ($eggs - $wasteLighting - $wasteTransfer) / $eggs * 100;
             } else {
                 $detail->fertilizationTransfer = null;
             }
             $chickNumber = 0;
             $cullChick = 0;
-            foreach ($detail->getEggsSelections() as $selections){
+            foreach ($detail->getEggsSelections() as $selections) {
                 $chickNumber = $chickNumber + $selections->getChickNumber();
                 $cullChick = $cullChick + $selections->getCullChicken();
             }
-            if($chickNumber > 0){
+            if ($chickNumber > 0) {
                 $detail->hatchability = $chickNumber / $eggs * 100;
                 $detail->cullChick = $cullChick / $eggs * 100;
             } else {
@@ -276,7 +350,7 @@ class EggsInputsController extends AbstractController
                 $detail->cullChick = null;
             }
             $unhatched = $eggs - $wasteLighting - $wasteTransfer - $cullChick - $chickNumber;
-            if($unhatched <> $eggs){
+            if ($unhatched <> $eggs) {
                 $detail->unhatched = $unhatched;
             } else {
                 $detail->unhatched = null;
