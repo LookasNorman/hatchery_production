@@ -1,0 +1,60 @@
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 400px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="card ">
+        <h4 class="card-header">
+            {% trans %}incubators.setters.title{% endtrans %}
+        </h4>
+        <div class="card-horizontal">
+            <div class="card-body">
+                <table class="table table-sm table-hover">
+                    <thead class="thaed-light">
+                    <tr>
+                        <th>
+                            {% trans %}incubators.setters.table.name{% endtrans %}
+                        </th>
+                        <th>
+                            {% trans %}incubators.setters.table.shortname{% endtrans %}
+                        </th>
+                        <th>
+                            {% trans %}incubators.setters.table.actions{% endtrans %}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for setter in setters %}
+                    <tr>
+                        <td>{{ setter.name }}</td>
+                        <td>{{ setter.shortname }}</td>
+                        <td>
+                            <a class="badge badge-info" href="{{ path('setters_show', {'id': setter.id}) }}">
+                                {% trans %}incubators.setters.table.badge.show{% endtrans %}
+                            </a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="badge badge-warning" href="{{ path('setters_edit', {'id': setter.id}) }}">
+                                    {% trans %}incubators.setters.table.badge.edit{% endtrans %}
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('setters_new') }}">
+                    <span class="badge badge-success">
+                        {% trans %}incubators.setters.badge.new{% endtrans %}
+                    </span>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

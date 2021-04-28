@@ -552,6 +552,31 @@ herds:
       edit: Edytuj
       back: Lista stad
       breeder_herds: Stada dostawcy / hodowcy
+incubators:
+  index:
+    title: Wykaz aparatów wylęgowych i klujnikowych
+  setters:
+    title: Aparaty wylęgowe
+    table:
+      name: Nazwa
+      shortname: Kod
+      actions: Akcje
+      badge:
+        show: Szczegóły
+        edit: Edytuj
+    badge:
+      new: Utwórz nowy
+  hatchers:
+    title: Aparaty klujnikowe
+    table:
+      name: Nazwa
+      shortname: Kod
+      actions: Akcje
+      badge:
+        show: Szczegóły
+        edit: Edytuj
+    badge:
+      new: Utwórz nowy
 main_page:
   eggs_transfer:
     title: Przekłady
@@ -620,6 +645,8 @@ menu:
       index: Dostawcy jaj
     herds:
       index: Stada
+    incubators:
+      index: Aparaty
     main_page:
       index: Strona główna
     logout: Wyloguj
