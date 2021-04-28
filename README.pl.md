@@ -7,7 +7,8 @@ Aplikacja służy do zbierania informacji produkcyjnych na wylęgarni. Powstała
 Zawiera informacje o dostawcy jaj (hodowcy stada reprodukcyjnego), stadzie (data wylęgu), dacie dostawy, ilości dostarczonych jaj, dacie zniesienia jaj. Wybór stada następuje z listy po określeniu hodowcy. Dzięki tym wszystkim informacją można ustalić wiek stada w momencie zniesienia jaj, czasie przetrzymywania jaj na fermie a później na wylęgarnii.
 
 ## Nakłady:
-Po stworzeniu nakładu - podaniu nazwy i daty nakładu musimy dodać informacje szczegółowe o odbiorcy piskląt i dostawcy jaj. Podając ilość jaj i stado z którego chcemy wziąć jaja do nakładu, system automatycznie wskazuje i pobiera zasoby z najstarszych dostaw. Generując w ten sposób listę ułatwiającą wybór właściwych wózków pracownikom produkcji.
+Po stworzeniu nakładu - podaniu nazwy i daty nakładu musimy dodać informacje szczegółowe o odbiorcy piskląt i dostawcy jaj. Podając ilość jaj i stado z którego chcemy wziąć jaja do nakładu, system automatycznie wskazuje i pobiera zasoby z najstarszych dostaw. Generując w ten sposób listę ułatwiającą wybór właściwych wózków pracownikom produkcji. <br/>
+Eksport danych nakładu do .xls - generowanie karty lęgu.
 
 ## Świetlenie:
 Zapisujemy tutaj informację o świetleniu wg dostawców jaj. System automatycznie rozpisuje te informacje do danych dostaw z uwzględnieniem odbiorcy piskląt.
@@ -17,3 +18,9 @@ Zapisujemy tutaj informację o przekładzie wg dostawców jaj. System automatycz
 
 ## Wybieranie:
 Zapisujemy tutaj informację o wybieraniu wg dostawców jaj. System automatycznie rozpisuje te informacje do danych dostaw z uwzględnieniem odbiorcy piskląt.
+
+## Aparaty:
+### Aparaty lęgowe
+Lista aparatów i dopisywanie w którym aparacie znajduje się dany nakład.
+### Aparaty klujnikowe
+Lista aparatów i dopisywanie w którym aparacie znajduje się dany nakład.
