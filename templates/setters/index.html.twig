@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>
+        {% trans %}setters.index.title{% endtrans %}
+    </h1>
+{% if is_granted('ROLE_ADMIN') %}
+    <a class="btn btn-success" href="{{ path('setters_new') }}">
+        {% trans %}setters.index.button.new{% endtrans %}
+    </a>
+    {% endif %}
+    <table class="table table-sm table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    {% trans %}setters.index.table.id{% endtrans %}
+                </th>
+                <th>
+                    {% trans %}setters.index.table.name{% endtrans %}
+                </th>
+                <th>
+                    {% trans %}setters.index.table.shortname{% endtrans %}
+                </th>
+                <th>
+                    {% trans %}setters.index.table.actions{% endtrans %}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for setter in setters %}
+            <tr>
+                <td>{{ setter.id }}</td>
+                <td>{{ setter.name }}</td>
+                <td>{{ setter.shortname }}</td>
+                <td>
+                    <a class="badge badge-info" href="{{ path('setters_show', {'id': setter.id}) }}">
+                        {% trans %}setters.index.table.badge.show{% endtrans %}
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a class="badge badge-warning" href="{{ path('setters_edit', {'id': setter.id}) }}">
+                        {% trans %}setters.index.table.badge.edit{% endtrans %}
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">
+                    {% trans %}setters.index.table.no_found{% endtrans %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {% trans %}setters.new.title{% endtrans %}
+            </h5>
+            <div class="card-body">
+                {{ include('setters/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="{{ path('setters_index') }}">
+        {% trans %}setters.new.button.back{% endtrans %}
+    </a>
+{% endblock %}

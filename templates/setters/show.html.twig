@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <h1>{% trans %}setters.show.title{% endtrans %}</h1>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {{ setter.name }}
+            </h5>
+            <div class="card-body">
+                <p class="card-text">
+                    {% trans %}setters.show.shortname{% endtrans %}
+                    : {{ setter.shortname }}
+                </p>
+            </div>
+            <div class="card-footer bg-transparent border-success d-flex">
+                {% if is_granted('ROLE_ADMIN') %}
+                    {{ include('setters/_delete_form.html.twig') }}
+                    <a class="btn btn-warning" href="{{ path('setters_edit', {'id': setter.id}) }}">
+                        {% trans %}setters.show.button.edit{% endtrans %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('setters_index') }}">
+        {% trans %}setters.show.button.back{% endtrans %}
+    </a>
+{% endblock %}

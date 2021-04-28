@@ -2,7 +2,6 @@ form:
   breed:
   chicks_recipient:
   eggs_delivery:
-
 base:
   site:
     title: Zarządzanie produkcją
@@ -267,7 +266,6 @@ eggs_inputs:
       badge:
         fertilization: Zapłodnienie
         hatchability: Wylęgowość
-
 eggs_inputs_details:
   delete:
     confirm: Na pewno chcesz usunąć dostawy z nakładu?
@@ -601,3 +599,45 @@ security:
         send: Zaloguj
       help:
         email: Nigdy nie pokazujemy Twojego adresu email innym.
+setters:
+  delete:
+    confirm: Na pewno chcesz usunąć aparat wylęgowy
+    button:
+      delete: Usuń
+  form:
+    button:
+      save: Zapisz
+    label:
+      name: Nazwa aparatu wylęgowego
+      shortname: Nazwa skrócona (Kod)
+    help:
+      name: Podaj nazwę aparatu
+      shortname: Podaj kod aparatu
+  edit:
+    title: Edycja aparatu wylęgowego
+    button:
+      update: Zaktualizuj
+      back: Lista aparatów wylęgowych
+  index:
+    title: Wykaz aparatów wylęgowych
+    table:
+      id: Indeks
+      name: Nazwa
+      shortname: Kod
+      actions: Akcje
+      badge:
+        show: Szczegóły
+        edit: Edytuj
+      no_found: Brak aparatów wylęgowych
+    button:
+      new: Dodaj aparat
+  new:
+    title: Tworzenie aparatu wylęgowego
+    button:
+      back: Lista aparatów wylęgowych
+  show:
+    title: Szczegóły aparatu wylęgowego
+    shortname: Kod
+    button:
+      edit: Edytuj
+      back: Lista aparatów wylęgowych

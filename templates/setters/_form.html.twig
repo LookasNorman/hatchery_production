@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+<div class="form-group">
+    <label>{{ form_label(form.name) }}</label>
+    {{ form_widget(form.name) }}
+    <small>{{ form_help(form.name) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.name) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.shortname) }}</label>
+    {{ form_widget(form.shortname) }}
+    <small>{{ form_help(form.shortname) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.shortname) }}
+    </div>
+</div>
+<button class="btn btn-danger">{{ button_label|default('setters.form.button.save')|trans }}</button>
+{{ form_end(form) }}

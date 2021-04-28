@@ -25,3 +25,10 @@ herds:
   name:
     min: Nazwa musi zawierać conajmniej 3 znaki
     max: Nazwa nie może być dłuższa niż 20 znaków
+setters:
+  name:
+    min: Nazwa jest zbyt krótka. Powinna mieć od 4 do 20 znaków.
+    max: Nazwa jest zbyt długa. Powinna mieć od 4 do 20 znaków.
+  shortname:
+    min: Kod jest zbyt krótki. Powinien mieć od 2 do 4 znaków.
+    max: Kod jest zbyt długi. Powinien mieć od 2 do 4 znaków.
