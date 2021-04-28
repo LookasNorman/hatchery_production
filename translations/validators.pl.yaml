@@ -21,6 +21,13 @@ egg_supplier:
   phone_number:
     min: Numer telefonu musi zawierać conajmniej 9 znaków lub być pusty
     max: Numer telefonu musi zawierać mniej niż 30 znaków lub być pusty
+hatchers:
+  name:
+    min: Nazwa jest zbyt krótka. Powinna mieć od 4 do 20 znaków.
+    max: Nazwa jest zbyt długa. Powinna mieć od 4 do 20 znaków.
+  shortname:
+    min: Kod jest zbyt krótki. Powinien mieć od 2 do 4 znaków.
+    max: Kod jest zbyt długi. Powinien mieć od 2 do 4 znaków.
 herds:
   name:
     min: Nazwa musi zawierać conajmniej 3 znaki

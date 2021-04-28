@@ -463,6 +463,48 @@ eggs_inputs_selections:
     selection_date: Data wybierania
     chick_number: Ilość piskląt
     cull_chick: Wybrakowane pisklęta
+hatchers:
+  delete:
+    confirm: Na pewno chcesz usunąć aparat klujnikowy?
+    button:
+      delete: Usuń
+  form:
+    label:
+      name: Nazwa aparatu
+      shortname: Kod
+    help:
+      name: Wpisz nazwę aparatu
+      shortname: Wpisz nazwę skróconą (kod)
+    button:
+      save: Zapisz
+  edit:
+    title: Edycja aparatu
+    button:
+      update: Zaktualizuj
+      back: Lista aparatów klujnikowych
+  index:
+    title: Lista aparatów klujnikowych
+    table:
+      id: Indeks
+      name: Nazwa aparatu
+      shortname: Kod
+      actions: Akcje
+      no_found: Brak aparatów klujnikowych
+      badge:
+        show: Szczegóły
+        edit: Edytuj
+    button:
+      new: Utwórz nowy
+  new:
+    title: Dodawanie nowego aparatu klujnikowego
+    button:
+      back: Lista aparatów klujnikowych
+  show:
+    title: Szczegóły aparatu
+    shortname: Kod
+    button:
+      edit: Edytuj
+      back: Lista aparatów klujnikowych
 herds:
   delete:
     confirm: Na pewno chcesz usunąć stado?
