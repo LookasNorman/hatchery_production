@@ -118,7 +118,6 @@ class EggsInputsController extends AbstractController
             ->setOddFooter('&Lhttps://lookaskonieczny.com' . '&C' . $spreadsheet->getProperties()->getTitle() . '&RPage &P of &N');
 
 
-
         $sheet->getCell('A1')->setValue('Odbiorca piskląt');
         $sheet->getCell('B1')->setValue('ilość piskląt');
         $sheet->getCell('C1')->setValue('Aparaty lęgowe');
@@ -186,8 +185,8 @@ class EggsInputsController extends AbstractController
                         $deliveryDate->format('Y-m-d'),
                         'OD',
                         $age,
-                        number_format($eggsNumber, 0, ',' , ' '),
-                        number_format($wasteLightingsEggs, 0, ',' , ' '),
+                        number_format($eggsNumber, 0, ',', ' '),
+                        number_format($wasteLightingsEggs, 0, ',', ' '),
                         number_format($lightingFertilization, 2, ',', ' '),
                         number_format($wasteTransferEggs, 0, ',', ' '),
                         number_format($transfersFertilization, 2, ',', ' '),
@@ -210,7 +209,7 @@ class EggsInputsController extends AbstractController
                         $deliveryDate->format('Y-m-d'),
                         'OD',
                         $age,
-                        number_format($eggsNumber, 0, ',' , ' '),
+                        number_format($eggsNumber, 0, ',', ' '),
                         '',
                         '',
                         '',
@@ -227,12 +226,12 @@ class EggsInputsController extends AbstractController
                 }
             }
         }
-        $rowsNumber = count($data)+1;
+        $rowsNumber = count($data) + 1;
         $sheet->fromArray($data, null, 'A2', true);
-        $spreadsheet->getActiveSheet()->getStyle('A1:U'.$rowsNumber)->getAlignment()->setWrapText(true);
-        $spreadsheet->getActiveSheet()->getStyle('A1:U'.$rowsNumber)
+        $spreadsheet->getActiveSheet()->getStyle('A1:U' . $rowsNumber)->getAlignment()->setWrapText(true);
+        $spreadsheet->getActiveSheet()->getStyle('A1:U' . $rowsNumber)
             ->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-        $spreadsheet->getActiveSheet()->getStyle('A1:U'.$rowsNumber)
+        $spreadsheet->getActiveSheet()->getStyle('A1:U' . $rowsNumber)
             ->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(80);
         $styleArray = [
@@ -258,7 +257,7 @@ class EggsInputsController extends AbstractController
                 ],
             ],
         ];
-        $spreadsheet->getActiveSheet()->getStyle('A1:U'.$rowsNumber)->applyFromArray($styleBorders);
+        $spreadsheet->getActiveSheet()->getStyle('A1:U' . $rowsNumber)->applyFromArray($styleBorders);
         $spreadsheet->getActiveSheet()->getStyle('A1:U1')->applyFromArray($styleArray);
         $columnsDimensions = [
             'A' => 'auto',
@@ -311,6 +310,7 @@ class EggsInputsController extends AbstractController
     public function show(EggsInputs $eggsInput, EggsInputsDetailsRepository $detailsRepository, EggsInputsDetailsEggsDeliveryRepository $deliveryRepository): Response
     {
         $inputDetails = $detailsRepository->deliveriesInput($eggsInput);
+
         foreach ($inputDetails as $detail) {
             $eggs = 0;
             $wasteLighting = 0;
@@ -318,6 +318,7 @@ class EggsInputsController extends AbstractController
             $deliveries = $deliveryRepository->findBy(['eggsInputDetails' => $detail]);
             foreach ($deliveries as $delivery) {
                 $eggs = $eggs + $delivery->getEggsNumber();
+                $breeders [$delivery->getEggsDeliveries()->getHerd()->getBreeder()->getId()] = ($delivery->getEggsDeliveries()->getHerd()->getBreeder());
             }
             $detail->eggsNumber = $eggs;
             foreach ($detail->getEggsInputsLightings() as $lighting) {
@@ -355,13 +356,12 @@ class EggsInputsController extends AbstractController
             } else {
                 $detail->unhatched = null;
             }
-//            dump($detail);
             $details [] = $detail;
         }
-//        die();
         return $this->render('eggs_inputs/show.html.twig', [
             'eggs_input' => $eggsInput,
             'details_input' => $details,
+            'breeders' => $breeders,
         ]);
     }
 
