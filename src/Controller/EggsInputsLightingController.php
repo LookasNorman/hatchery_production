@@ -56,22 +56,29 @@ class EggsInputsLightingController extends AbstractController
             /** @var  $inputDetail
              * Get sum eggs for breeder in eggs input
              */
-            foreach ($inputsDetails as $inputDetail){
+            foreach ($inputsDetails as $inputDetail) {
                 $totalEggs = $totalEggs + $inputDetail[1];
             }
 
+            $totalWaste = 0;
+            $length = count($inputsDetails);
             /** @var  $inputDetail
              * Added eggs lighting to eggs input details
              */
-            foreach ($inputsDetails as $inputDetail) {
+            foreach ($inputsDetails as $key => $inputDetail) {
                 $eggsInputsLighting = new EggsInputsLighting();
                 $eggsInputsLighting->setEggsInputsDetail($inputDetail[0]);
-                $eggsInputsLighting->setWasteEggs($inputDetail[1] / $totalEggs * $wasteEggs);
+                if ($key < $length) {
+                    $setWaste = round($inputDetail[1] / $totalEggs * $wasteEggs, 0);
+                    $eggsInputsLighting->setWasteEggs($setWaste);
+                    $totalWaste = $totalWaste + $setWaste;
+                } else {
+                    $setWaste = $wasteEggs - $totalWaste;
+                    $eggsInputsLighting->setWasteEggs($setWaste);
+                }
                 $eggsInputsLighting->setLightingDate($lightingDate);
                 $entityManager->persist($eggsInputsLighting);
-
             }
-
             $entityManager->flush();
 
             return $this->redirectToRoute('eggs_inputs_lighting_index');
