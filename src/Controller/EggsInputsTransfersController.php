@@ -59,14 +59,23 @@ class EggsInputsTransfersController extends AbstractController
             foreach ($inputsDetails as $inputDetail) {
                 $totalEggs = $totalEggs + $inputDetail[1];
             }
+            $totalWaste = 0;
+            $length = count($inputsDetails);
 
             /** @var  $inputDetail
              * Added eggs transfer to eggs input details
              */
-            foreach ($inputsDetails as $inputDetail) {
+            foreach ($inputsDetails as $key => $inputDetail) {
                 $eggsInputsTransfer = new EggsInputsTransfers();
                 $eggsInputsTransfer->setEggsInputsDetail($inputDetail[0]);
-                $eggsInputsTransfer->setWasteEggs($inputDetail[1] / $totalEggs * $wasteEggs);
+                if ($key < $length) {
+                    $setWaste = round($inputDetail[1] / $totalEggs * $wasteEggs, 0);
+                    $eggsInputsTransfer->setWasteEggs($setWaste);
+                    $totalWaste = $totalWaste + $setWaste;
+                } else {
+                    $setWaste = $wasteEggs - $totalWaste;
+                    $eggsInputsTransfer->setWasteEggs($setWaste);
+                }
                 $eggsInputsTransfer->setTransferDate($lightingDate);
                 $entityManager->persist($eggsInputsTransfer);
             }
