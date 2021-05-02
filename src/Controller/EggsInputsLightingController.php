@@ -9,6 +9,7 @@ use App\Form\EggsInputsLightingType;
 use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsLightingRepository;
 use App\Repository\EggsInputsRepository;
+use App\Repository\EggSupplierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,22 +33,24 @@ class EggsInputsLightingController extends AbstractController
     }
 
     /**
-     * @Route("/new/{id}", name="eggs_inputs_lighting_new", methods={"GET","POST"})
+     * @Route("/new/{inputs}/{breeder}", name="eggs_inputs_lighting_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new($id = null, Request $request, EggsInputsDetailsRepository $detailsRepository, EggsInputsRepository $eggsInputsRepository): Response
+    public function new($inputs,
+                        $breeder,
+                        Request $request,
+                        EggsInputsDetailsRepository $detailsRepository,
+                        EggsInputsRepository $eggsInputsRepository,
+                        EggSupplierRepository $eggSupplierRepository
+    ): Response
     {
-        $inputs = $eggsInputsRepository->find($id);
+        $inputs = $eggsInputsRepository->find($inputs);
+        $breeder = $eggSupplierRepository->find($breeder);
         $form = $this->createForm(EggsInputsLightingType::class);
         $form->handleRequest($request);
 
-        if (
-            $form->isSubmitted() &&
-            $form->isValid() &&
-            $form['breeder']->getData() instanceof EggSupplier
-        ) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $totalEggs = 0;
-            $breeder = $form['breeder']->getData();
             $wasteEggs = $form['wasteEggs']->getData();
             $lightingDate = $form['lightingDate']->getData();
             $entityManager = $this->getDoctrine()->getManager();

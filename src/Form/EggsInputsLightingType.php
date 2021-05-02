@@ -29,16 +29,6 @@ class EggsInputsLightingType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('breeder', EntityType::class, [
-                'class' => EggSupplier::class,
-                'choice_label' => 'name',
-                'label' => 'eggs_inputs_lighting.form.label.breeder',
-                'mapped' => false,
-                'placeholder' => 'eggs_inputs_lighting.form.placeholder.breeder',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
             ->add('wasteEggs', IntegerType::class, [
                 'label' => 'eggs_inputs_lighting.form.label.waste_eggs',
                 'help' => 'eggs_inputs_lighting.form.help.waste_eggs',

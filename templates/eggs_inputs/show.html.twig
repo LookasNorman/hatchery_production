@@ -50,7 +50,9 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     {% for breeder in breeders %}
-                                    <a class="dropdown-item" href="{{ path('eggs_inputs_lighting_new', {'id': eggs_input.id}) }}">{{ breeder.name }}</a>
+                                    <a class="dropdown-item"
+                                       href="{{ path('eggs_inputs_lighting_new', {'inputs': eggs_input.id, 'breeder': breeder.id}) }}"
+                                    >{{ breeder.name }}</a>
                                     {% endfor %}
                                 </div>
                             </div>
