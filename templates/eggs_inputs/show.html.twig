@@ -38,7 +38,9 @@
                         <hr>
                         <li class="d-flex">{% trans %}eggs_inputs.show.card.footer.add{% endtrans %}</li>
                         <li class="d-flex">
-                            <a class="btn btn-success disabled" href="" disabled>
+                            <a class="btn btn-success"
+                               href="{{ path('eggs_inputs_lighting_new', {'id': eggs_input.id}) }}"
+                            >
                                 {% trans %}eggs_inputs.show.button.lighting{% endtrans %}
                             </a>
                             <a class="btn btn-success disabled" href="" disabled>
@@ -153,7 +155,7 @@
                     {% endfor %}
                 </td>
                 <td class="text-center align-middle">
-                        {{ detail.unhatched ? detail.unhatched|number_format(0, ',', ' ') : '' }}
+                    {{ detail.unhatched ? detail.unhatched|number_format(0, ',', ' ') : '' }}
                 </td>
             </tr>
             <tr>
@@ -163,14 +165,14 @@
                 </td>
                 <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.badge.fertilization{% endtrans %}</th>
                 <td class="text-center align-middle">
-                    {{ detail.fertilizationTransfer ? detail.fertilizationTransfer|number_format(2, ',', ' ') : ''}}%
+                    {{ detail.fertilizationTransfer ? detail.fertilizationTransfer|number_format(2, ',', ' ') : '' }}%
                 </td>
                 <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.badge.hatchability{% endtrans %}</th>
                 <td class="text-center align-middle">
-                    {{ detail.hatchability ? detail.hatchability|number_format(2, ',', ' ') : ''}}%
+                    {{ detail.hatchability ? detail.hatchability|number_format(2, ',', ' ') : '' }}%
                 </td>
                 <td class="text-center align-middle">
-                    {{ detail.cullChick ? detail.cullChick|number_format(2, ',', ' ') : ''}}%
+                    {{ detail.cullChick ? detail.cullChick|number_format(2, ',', ' ') : '' }}%
                 </td>
                 <td>
 

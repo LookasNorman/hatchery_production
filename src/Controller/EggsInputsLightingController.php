@@ -8,6 +8,7 @@ use App\Entity\EggSupplier;
 use App\Form\EggsInputsLightingType;
 use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsLightingRepository;
+use App\Repository\EggsInputsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,22 +32,21 @@ class EggsInputsLightingController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="eggs_inputs_lighting_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="eggs_inputs_lighting_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new(Request $request, EggsInputsDetailsRepository $detailsRepository): Response
+    public function new($id = null, Request $request, EggsInputsDetailsRepository $detailsRepository, EggsInputsRepository $eggsInputsRepository): Response
     {
+        $inputs = $eggsInputsRepository->find($id);
         $form = $this->createForm(EggsInputsLightingType::class);
         $form->handleRequest($request);
 
         if (
             $form->isSubmitted() &&
             $form->isValid() &&
-            $form['breeder']->getData() instanceof EggSupplier &&
-            $form['eggsInputs']->getData() instanceof EggsInputs
+            $form['breeder']->getData() instanceof EggSupplier
         ) {
             $totalEggs = 0;
-            $inputs = $form['eggsInputs']->getData();
             $breeder = $form['breeder']->getData();
             $wasteEggs = $form['wasteEggs']->getData();
             $lightingDate = $form['lightingDate']->getData();
