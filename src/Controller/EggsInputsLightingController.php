@@ -81,7 +81,7 @@ class EggsInputsLightingController extends AbstractController
             }
             $entityManager->flush();
 
-            return $this->redirectToRoute('eggs_inputs_lighting_index');
+            return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputs->getId()]);
         }
 
         return $this->render('eggs_inputs_lighting/new.html.twig', [
