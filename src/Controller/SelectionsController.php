@@ -18,7 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  * @Route("/eggs_selections")
  * @IsGranted("ROLE_USER")
  */
-class EggsSelectionsController extends AbstractController
+class SelectionsController extends AbstractController
 {
     /**
      * @Route("/", name="eggs_selections_index", methods={"GET"})

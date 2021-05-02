@@ -20,7 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  * @Route("/eggs_inputs_lighting")
  * @IsGranted("ROLE_USER")
  */
-class EggsInputsLightingController extends AbstractController
+class LightingController extends AbstractController
 {
     /**
      * @Route("/", name="eggs_inputs_lighting_index", methods={"GET"})
