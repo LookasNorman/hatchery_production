@@ -7,7 +7,9 @@ use App\Entity\EggsInputsTransfers;
 use App\Entity\EggSupplier;
 use App\Form\EggsInputsTransfersType;
 use App\Repository\EggsInputsDetailsRepository;
+use App\Repository\EggsInputsRepository;
 use App\Repository\EggsInputsTransfersRepository;
+use App\Repository\EggSupplierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,23 +33,24 @@ class TransfersController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="eggs_inputs_transfers_new", methods={"GET","POST"})
+     * @Route("/new/{inputs}/{breeder}", name="eggs_inputs_transfers_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new(Request $request, EggsInputsDetailsRepository $detailsRepository): Response
+    public function new($inputs,
+                        $breeder,
+                        Request $request,
+                        EggsInputsDetailsRepository $detailsRepository,
+                        EggsInputsRepository $eggsInputsRepository,
+                        EggSupplierRepository $eggSupplierRepository
+    ): Response
     {
+        $inputs = $eggsInputsRepository->find($inputs);
+        $breeder = $eggSupplierRepository->find($breeder);
         $form = $this->createForm(EggsInputsTransfersType::class);
         $form->handleRequest($request);
 
-        if (
-            $form->isSubmitted() &&
-            $form->isValid() &&
-            $form['breeder']->getData() instanceof EggSupplier &&
-            $form['eggsInputs']->getData() instanceof EggsInputs
-        ) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $totalEggs = 0;
-            $inputs = $form['eggsInputs']->getData();
-            $breeder = $form['breeder']->getData();
             $wasteEggs = $form['wasteEggs']->getData();
             $lightingDate = $form['transferDate']->getData();
             $entityManager = $this->getDoctrine()->getManager();
@@ -82,7 +85,7 @@ class TransfersController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('eggs_inputs_transfers_index');
+            return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputs->getId()]);
         }
 
         return $this->render('eggs_inputs_transfers/new.html.twig', [
