@@ -39,26 +39,6 @@ class EggsSelectionsType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('eggsInputs', EntityType::class, [
-                'class' => EggsInputs::class,
-                'choice_label' => 'name',
-                'label' => 'eggs_inputs_selections.form.label.eggs_inputs',
-                'mapped' => false,
-                'placeholder' => 'eggs_inputs_selections.form.placeholder.eggs_inputs',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('breeder', EntityType::class, [
-                'class' => EggSupplier::class,
-                'choice_label' => 'name',
-                'label' => 'eggs_inputs_selections.form.label.breeder',
-                'mapped' => false,
-                'placeholder' => 'eggs_inputs_selections.form.placeholder.breeder',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
         ;
     }
 

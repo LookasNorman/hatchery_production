@@ -4,11 +4,6 @@
     <h1>
         {% trans %}eggs_inputs_selections.index.title{% endtrans %}
     </h1>
-    {% if is_granted('ROLE_ADMIN') %}
-        <a class="btn btn-success" href="{{ path('eggs_selections_new') }}">
-            {% trans %}eggs_inputs_selections.index.button.new{% endtrans %}
-        </a>
-    {% endif %}
     <table class="table table-sm table-hover">
         <thead class="thead-light">
         <tr>

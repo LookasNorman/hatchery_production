@@ -74,12 +74,24 @@
                                     {% endfor %}
                                 </div>
                             </div>
-                            <a class="btn btn-success disabled" href="" disabled>
-
-                            </a>
-                            <a class="btn btn-success disabled" href="" disabled>
-                                {% trans %}eggs_inputs.show.button.selection{% endtrans %}
-                            </a>
+                            <div class="dropdown">
+                                <button
+                                        class="btn btn-success dropdown-toggle"
+                                        type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                >
+                                    {% trans %}eggs_inputs.show.button.selection{% endtrans %}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    {% for breeder in breeders %}
+                                        <a class="dropdown-item"
+                                           href="{{ path('eggs_selections_new', {'inputs': eggs_input.id, 'breeder': breeder.id}) }}"
+                                        >{{ breeder.name }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </li>
                     {% endif %}
                 </ul>
