@@ -63,7 +63,7 @@ class TransfersController extends AbstractController
                 $totalEggs = $totalEggs + $inputDetail[1];
             }
             $totalWaste = 0;
-            $length = count($inputsDetails);
+            $length = count($inputsDetails) - 1;
 
             /** @var  $inputDetail
              * Added eggs transfer to eggs input details

@@ -64,7 +64,7 @@ class LightingController extends AbstractController
             }
 
             $totalWaste = 0;
-            $length = count($inputsDetails);
+            $length = count($inputsDetails) - 1;
             /** @var  $inputDetail
              * Added eggs lighting to eggs input details
              */
@@ -82,6 +82,7 @@ class LightingController extends AbstractController
                 $eggsInputsLighting->setLightingDate($lightingDate);
                 $entityManager->persist($eggsInputsLighting);
             }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputs->getId()]);
