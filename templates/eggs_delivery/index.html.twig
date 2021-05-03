@@ -42,7 +42,20 @@
         <tbody>
         {% for eggs_delivery in eggs_deliveries %}
             <tr>
-                <td>{{ eggs_delivery.id }}</td>
+                <td>
+                    {% if eggs_delivery.partIndex %}
+                        {{ eggs_delivery.partIndex }}
+                    {% else %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="badge badge-success"
+                               href="{{ path('eggs_delivery_add', {'id': eggs_delivery.id}) }}">
+                                {% trans %}eggs_delivery.index.table.badge.add_part_index{% endtrans %}
+                            </a>
+                        {% else %}
+                            ------
+                        {% endif %}
+                    {% endif %}
+                </td>
                 <td>{{ eggs_delivery.herd.breeder.name }}</td>
                 <td>{{ eggs_delivery.herd.name }}</td>
                 <td>{{ eggs_delivery.deliveryDate ? eggs_delivery.deliveryDate|date('Y-m-d') : '' }}</td>

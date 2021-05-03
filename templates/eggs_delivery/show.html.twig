@@ -16,6 +16,22 @@
             </h5>
             <div class="card-body">
                 <p class="card-text">
+                    {% trans %}eggs_delivery.show.id{% endtrans %}
+                    :
+                    {% if eggs_delivery.partIndex %}
+                        {{ eggs_delivery.partIndex }}
+                    {% else %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="badge badge-success"
+                               href="{{ path('eggs_delivery_add', {'id': eggs_delivery.id}) }}">
+                                {% trans %}eggs_delivery.show.badge.add_part_index{% endtrans %}
+                            </a>
+                        {% else %}
+                            ------
+                        {% endif %}
+                    {% endif %}
+                </p>
+                <p class="card-text">
                     {% trans %}eggs_delivery.show.delivery_date{% endtrans %}
                     : {{ eggs_delivery.deliveryDate ? eggs_delivery.deliveryDate|date('Y-m-d') : '' }}
                 </p>

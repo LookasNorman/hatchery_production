@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\EggsDelivery;
+use App\Form\DeliveryPartIndexType;
 use App\Form\EggsDeliveryType;
 use App\Repository\EggsDeliveryRepository;
 use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
@@ -79,6 +80,27 @@ class EggsDeliveryController extends AbstractController
         }
 
         return $this->render('eggs_delivery/edit.html.twig', [
+            'eggs_delivery' => $eggsDelivery,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/add", name="eggs_delivery_add", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function addPartIndex(Request $request, EggsDelivery $eggsDelivery)
+    {
+        $form = $this->createForm(DeliveryPartIndexType::class, $eggsDelivery);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('eggs_delivery_index');
+        }
+
+        return $this->render('eggs_delivery/addPartIndex.html.twig', [
             'eggs_delivery' => $eggsDelivery,
             'form' => $form->createView(),
         ]);

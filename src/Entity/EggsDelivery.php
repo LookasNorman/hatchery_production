@@ -58,6 +58,17 @@ class EggsDelivery
      */
     private $eggsOnWarehouse;
 
+    /**
+     * @ORM\Column(type="string", length=6, nullable=true)
+     * @Assert\Length(
+     *     min=6,
+     *     max=6,
+     *     minMessage="eggs_delivery.part_index.min",
+     *     maxMessage="eggs_delivery.part_index.max"
+     * )
+     */
+    private $partIndex;
+
     public function __construct()
     {
         $this->eggsInputsDetailsEggsDeliveries = new ArrayCollection();
@@ -166,6 +177,18 @@ class EggsDelivery
     public function setEggsOnWarehouse(?int $eggsOnWarehouse): self
     {
         $this->eggsOnWarehouse = $eggsOnWarehouse;
+
+        return $this;
+    }
+
+    public function getPartIndex(): ?string
+    {
+        return $this->partIndex;
+    }
+
+    public function setPartIndex(?string $partIndex): self
+    {
+        $this->partIndex = $partIndex;
 
         return $this;
     }

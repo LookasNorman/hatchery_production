@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+<div class="form-group">
+    <label>{{ form_label(form.partIndex) }}</label>
+    {{ form_widget(form.partIndex) }}
+    <small>{{ form_help(form.partIndex) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.partIndex) }}
+    </div>
+</div>
+<button class="btn btn-danger">{{ button_label|default('eggs_delivery.form.button.save')|trans }}</button>
+{{ form_end(form) }}

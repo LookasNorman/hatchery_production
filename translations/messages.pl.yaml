@@ -172,6 +172,7 @@ eggs_delivery:
       badge:
         show: Szczegóły
         edit: Edytuj
+        add_part_index: Dodaj index
   list:
     breeder: Hodowca
     herd: Stado
@@ -183,12 +184,15 @@ eggs_delivery:
     button:
       back: Lista dostaw
   show:
+    id: Index
     title: Szczegóły dostawy
     delivery_date: Data dostawy
     eggs_number: Jaja dostarczone
     eggs_warehouse: Jaja magazyn
     first_laying_date: Data zniesienia od
     last_laying_date: Data zniesienia do
+    badge:
+      add_part_index: Dodaj index
     button:
       edit: Edytuj dostawę
       back: Lista dostaw jaj
