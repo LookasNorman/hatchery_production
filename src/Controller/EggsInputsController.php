@@ -350,9 +350,13 @@ class EggsInputsController extends AbstractController
                 $detail->hatchability = null;
                 $detail->cullChick = null;
             }
-            $unhatched = $eggs - $wasteLighting - $wasteTransfer - $cullChick - $chickNumber;
-            if ($unhatched <> $eggs) {
-                $detail->unhatched = $unhatched;
+            if ($cullChick > 0 or $chickNumber > 0) {
+                $unhatched = $eggs - $wasteLighting - $wasteTransfer - $cullChick - $chickNumber;
+                if ($unhatched <> $eggs) {
+                    $detail->unhatched = $unhatched;
+                } else {
+                    $detail->unhatched = null;
+                }
             } else {
                 $detail->unhatched = null;
             }
