@@ -19,6 +19,18 @@ class EggsInputsRepository extends ServiceEntityRepository
         parent::__construct($registry, EggsInputs::class);
     }
 
+    public function inputsDetails()
+    {
+        return $this->createQueryBuilder('e')
+            ->select('SUM(eid.chickNumber) as chickNumber')
+            ->join('e.eggsInputsDetails', 'eid')
+            ->leftJoin('eid.eggsSelections', 'es')
+            ->where('es.id IS NULL')
+            ->getQuery()
+            ->getScalarResult()
+            ;
+    }
+
     // /**
     //  * @return EggsInputs[] Returns an array of EggsInputs objects
     //  */

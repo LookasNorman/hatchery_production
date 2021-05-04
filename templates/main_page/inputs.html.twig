@@ -24,7 +24,7 @@
                     </tr>
                     <tr>
                         <th scope="row">{% trans %}main_page.inputs.body.chicks_number{% endtrans %}</th>
-                        <td></td>
+                        <td>{{ inputs.chicksNumber|number_format(0, ',', ' ') }}</td>
                     </tr>
                     </tbody>
                 </table>
