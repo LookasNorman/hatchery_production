@@ -34,6 +34,16 @@ class EggsDeliveryRepository extends ServiceEntityRepository
             ;
     }
 
+    public function eggsInWarehouse()
+    {
+        return $this->createQueryBuilder('ed')
+            ->select('SUM(ed.eggsOnWarehouse) as eggsInWarehouse')
+            ->andWhere('ed.eggsOnWarehouse > 0')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     /*
     public function findOneBySomeField($value): ?EggsDelivery
     {

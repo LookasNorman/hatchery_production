@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ChicksRecipientRepository;
+use App\Repository\EggsDeliveryRepository;
 use App\Repository\EggsInputsRepository;
 use App\Repository\EggSupplierRepository;
 use App\Repository\HatchersRepository;
@@ -20,12 +21,16 @@ class DefaultController extends AbstractController
     public function index(
         EggSupplierRepository $supplierRepository,
         ChicksRecipientRepository $recipientRepository,
-        EggsInputsRepository $inputsRepository
+        EggsInputsRepository $inputsRepository,
+        EggsDeliveryRepository $deliveryRepository
     ): Response
     {
         $suppliers = [];
         $eggsSuppliers = $supplierRepository->findAll();
         $suppliers['suppliersNumber'] = count($eggsSuppliers);
+        $eggsInWarehouse = $deliveryRepository->eggsInWarehouse();
+        $suppliers['eggsInWarehouse'] = $eggsInWarehouse[0]['eggsInWarehouse'];
+
 
         $recipients = [];
         $chicksRecipients = $recipientRepository->findAll();
