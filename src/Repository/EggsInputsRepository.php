@@ -22,9 +22,10 @@ class EggsInputsRepository extends ServiceEntityRepository
     public function inputsDetails()
     {
         return $this->createQueryBuilder('e')
-            ->select('SUM(eid.chickNumber) as chickNumber')
+            ->select('SUM(eid.chickNumber) as chickNumber', 'SUM(idd.eggsNumber) as eggsNumber')
             ->join('e.eggsInputsDetails', 'eid')
             ->leftJoin('eid.eggsSelections', 'es')
+            ->leftJoin('eid.eggsInputsDetailsEggsDeliveries', 'idd')
             ->where('es.id IS NULL')
             ->getQuery()
             ->getScalarResult()

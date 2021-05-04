@@ -36,6 +36,7 @@ class DefaultController extends AbstractController
         $inputs['inputsNumber'] = count($eggsInputs);
         $chicksNumber = $inputsRepository->inputsDetails();
         $inputs['chicksNumber'] = $chicksNumber[0]['chickNumber'];
+        $inputs['eggsNumber'] = $chicksNumber[0]['eggsNumber'];
 
         return $this->render('main_page/index.html.twig', [
             'suppliers' => $suppliers,
