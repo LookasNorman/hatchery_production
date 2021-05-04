@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\ChicksRecipientRepository;
+use App\Repository\EggsInputsRepository;
+use App\Repository\EggSupplierRepository;
 use App\Repository\HatchersRepository;
 use App\Repository\SettersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,9 +17,28 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="main_page")
      */
-    public function index(): Response
+    public function index(
+        EggSupplierRepository $supplierRepository,
+        ChicksRecipientRepository $recipientRepository,
+        EggsInputsRepository $inputsRepository
+    ): Response
     {
+        $suppliers = [];
+        $eggsSuppliers = $supplierRepository->findAll();
+        $suppliers['suppliersNumber'] = count($eggsSuppliers);
+
+        $recipients = [];
+        $chicksRecipients = $recipientRepository->findAll();
+        $recipients['recipientsNumber'] = count($chicksRecipients);
+
+        $inputs = [];
+        $eggsInputs = $inputsRepository->findAll();
+        $inputs['inputsNumber'] = count($eggsInputs);
+
         return $this->render('main_page/index.html.twig', [
+            'suppliers' => $suppliers,
+            'recipients' => $recipients,
+            'inputs' => $inputs,
         ]);
     }
 
