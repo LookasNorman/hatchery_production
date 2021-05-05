@@ -60,6 +60,19 @@ class EggsInputsRepository extends ServiceEntityRepository
             ;
     }
 
+    public function inputsPickings()
+    {
+        return $this->createQueryBuilder('e')
+            ->addSelect('SUM(eid.chickNumber) as chickNumber')
+            ->join('e.eggsInputsDetails', 'eid')
+            ->leftJoin('eid.eggsSelections', 'es')
+            ->where('es.id IS NULL')
+            ->groupBy('e.id')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return EggsInputs[] Returns an array of EggsInputs objects
     //  */

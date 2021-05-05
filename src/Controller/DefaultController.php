@@ -44,6 +44,7 @@ class DefaultController extends AbstractController
 
         $lighting = $inputsRepository->inputsLighting();
         $transfer = $inputsRepository->inputsTransfers();
+        $picking = $inputsRepository->inputsPickings();
 
         return $this->render('main_page/index.html.twig', [
             'suppliers' => $suppliers,
@@ -51,6 +52,7 @@ class DefaultController extends AbstractController
             'inputs' => $inputs,
             'lighting' => $lighting,
             'transfer' => $transfer,
+            'picking' => $picking,
         ]);
     }
 

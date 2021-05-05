@@ -611,9 +611,7 @@ main_page:
     title: Wybierania
     list: Wykaz
     table:
-      first: Pierwsze
-      second: Drugie
-      third: Trzecie
+      inputs_name: Nakład
       date: Data
       chicks_number: Ilość kurcząt
   supplier:
