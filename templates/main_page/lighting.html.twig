@@ -28,11 +28,13 @@
                     </thead>
                     <tbody>
                     {% for data in lighting %}
-                    <tr>
-                        <th scope="row">{{ data.0.name }}</th>
-                        <td>{{ data.0.inputDate ? data.0.inputDate|date_modify("+12 day")|date('Y-m-d') : '' }}</td>
-                        <td>{{ data.eggsNumber }}</td>
-                    </tr>
+                        <tr>
+                            <th scope="row">
+                                <a href="{{ path('eggs_inputs_show', {'id': data.0.id}) }}">{{ data.0.name }}</a>
+                            </th>
+                            <td>{{ data.0.inputDate ? data.0.inputDate|date_modify("+12 day")|date('Y-m-d') : '' }}</td>
+                            <td>{{ data.eggsNumber }}</td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
