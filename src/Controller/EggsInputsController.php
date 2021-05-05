@@ -310,6 +310,8 @@ class EggsInputsController extends AbstractController
     public function show(EggsInputs $eggsInput, EggsInputsDetailsRepository $detailsRepository, EggsInputsDetailsEggsDeliveryRepository $deliveryRepository): Response
     {
         $inputDetails = $detailsRepository->deliveriesInput($eggsInput);
+        $details = [];
+        $breeders = [];
 
         foreach ($inputDetails as $detail) {
             $eggs = 0;
