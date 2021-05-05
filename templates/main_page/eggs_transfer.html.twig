@@ -31,7 +31,7 @@
                     <tr>
                         <th scope="row">{{ data.0.name }}</th>
                         <td>{{ data.0.inputDate ? data.0.inputDate|date_modify("+18 day")|date('Y-m-d') : '' }}</td>
-                        <td>{{ data.eggsNumber }}</td>
+                        <td>{{ data.wasteEggs ? data.eggsNumber - data.wasteEggs : data.eggsNumber }}</td>
                     </tr>
                     {% endfor %}
                     </tbody>
