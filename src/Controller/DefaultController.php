@@ -43,12 +43,14 @@ class DefaultController extends AbstractController
         $inputs['eggsNumber'] = $chicksNumber[0]['eggsNumber'];
 
         $lighting = $inputsRepository->inputsLighting();
+        $transfer = $inputsRepository->inputsTransfers();
 
         return $this->render('main_page/index.html.twig', [
             'suppliers' => $suppliers,
             'recipients' => $recipients,
             'inputs' => $inputs,
             'lighting' => $lighting,
+            'transfer' => $transfer,
         ]);
     }
 

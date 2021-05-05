@@ -46,6 +46,20 @@ class EggsInputsRepository extends ServiceEntityRepository
             ;
     }
 
+    public function inputsTransfers()
+    {
+        return $this->createQueryBuilder('e')
+            ->addSelect('SUM(idd.eggsNumber) as eggsNumber')
+            ->join('e.eggsInputsDetails', 'eid')
+            ->leftJoin('eid.eggsInputsTransfers', 'it')
+            ->leftJoin('eid.eggsInputsDetailsEggsDeliveries', 'idd')
+            ->where('it.id IS NULL')
+            ->groupBy('e.id')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return EggsInputs[] Returns an array of EggsInputs objects
     //  */

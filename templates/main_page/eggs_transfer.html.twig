@@ -15,7 +15,9 @@
                 <table class="table table-hover">
                     <thead class="thead-light">
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">
+                            {% trans %}main_page.eggs_transfer.table.inputs_name{% endtrans %}
+                        </th>
                         <th scope="col">
                             {% trans %}main_page.eggs_transfer.table.date{% endtrans %}
                         </th>
@@ -25,21 +27,13 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% for data in transfer %}
                     <tr>
-                        <th scope="row">{% trans %}main_page.eggs_transfer.table.first{% endtrans %}</th>
-                        <td></td>
-                        <td></td>
+                        <th scope="row">{{ data.0.name }}</th>
+                        <td>{{ data.0.inputDate ? data.0.inputDate|date_modify("+18 day")|date('Y-m-d') : '' }}</td>
+                        <td>{{ data.eggsNumber }}</td>
                     </tr>
-                    <tr>
-                        <th scope="row">{% trans %}main_page.eggs_transfer.table.second{% endtrans %}</th>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">{% trans %}main_page.eggs_transfer.table.third{% endtrans %}</th>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

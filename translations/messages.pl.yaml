@@ -586,9 +586,7 @@ main_page:
     title: Przekłady
     list: Wykaz
     table:
-      first: Pierwsze
-      second: Drugie
-      third: Trzecie
+      inputs_name: Nakład
       date: Data
       eggs_number: Ilość jaj
   index:
