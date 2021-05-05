@@ -602,6 +602,13 @@ main_page:
       eggs_number: Nałożonych jaj
       chicks_number: Piskląt w nakładach
       inputs_number: Ilość nakładów
+  lighting:
+    title: Świetlenia
+    table:
+      inputs_name: Nakład
+      date: Data
+      eggs_number: Ilość jaj
+    list: Wykaz
   picking:
     title: Wybierania
     list: Wykaz

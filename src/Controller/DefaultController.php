@@ -31,7 +31,6 @@ class DefaultController extends AbstractController
         $eggsInWarehouse = $deliveryRepository->eggsInWarehouse();
         $suppliers['eggsInWarehouse'] = $eggsInWarehouse[0]['eggsInWarehouse'];
 
-
         $recipients = [];
         $chicksRecipients = $recipientRepository->findAll();
         $recipients['recipientsNumber'] = count($chicksRecipients);
@@ -43,10 +42,13 @@ class DefaultController extends AbstractController
         $inputs['chicksNumber'] = $chicksNumber[0]['chickNumber'];
         $inputs['eggsNumber'] = $chicksNumber[0]['eggsNumber'];
 
+        $lighting = $inputsRepository->inputsLighting();
+
         return $this->render('main_page/index.html.twig', [
             'suppliers' => $suppliers,
             'recipients' => $recipients,
             'inputs' => $inputs,
+            'lighting' => $lighting,
         ]);
     }
 
