@@ -235,6 +235,7 @@ eggs_inputs:
     button:
       back: Lista nakładów
       edit: Edytuj nakład
+      add_delivery: Dodaj dostawy
       xls: Pobierz .xls
       lighting: Świetlenie
       transfer: Przekład

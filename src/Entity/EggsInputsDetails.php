@@ -23,7 +23,6 @@ class EggsInputsDetails
     /**
      * @ORM\ManyToOne(targetEntity=EggsInputs::class, inversedBy="eggsInputsDetails")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotNull()
      */
     private $eggInput;
 

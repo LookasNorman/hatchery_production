@@ -24,21 +24,12 @@ class EggsInputsDetailsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('eggInput', EntityType::class, [
-                'class' => EggsInputs::class,
-                'label' => 'eggs_inputs_details.form.label.egg_input',
-                'choice_label' => 'name',
-                'placeholder' => "eggs_inputs_details.form.placeholder.egg_input",
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
             ->add('breeder', EntityType::class, [
                 'class' => EggSupplier::class,
                 'choice_label' => function (EggSupplier $eggSupplier) {
                     $eggs = 0;
                     $herds = $eggSupplier->getHerds();
-                    foreach($herds as $herd){
+                    foreach ($herds as $herd) {
                         $deliveries = $herd->getEggsDeliveries();
                         foreach ($deliveries as $delivery) {
                             $eggs = $eggs + $delivery->getEggsOnWarehouse();

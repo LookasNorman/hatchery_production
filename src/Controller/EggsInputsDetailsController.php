@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\EggsDelivery;
+use App\Entity\EggsInputs;
 use App\Entity\EggsInputsDetails;
 use App\Entity\EggsInputsDetailsEggsDelivery;
 use App\Entity\Herds;
@@ -10,6 +11,7 @@ use App\Form\EggsInputsDetailsType;
 use App\Repository\EggsDeliveryRepository;
 use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
 use App\Repository\EggsInputsDetailsRepository;
+use App\Repository\EggsInputsRepository;
 use App\Repository\HerdsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,16 +37,22 @@ class EggsInputsDetailsController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="eggs_inputs_details_new", methods={"GET","POST"})
+     * @Route("/new/{inputs}", name="eggs_inputs_details_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new(Request $request, EggsDeliveryRepository $deliveryRepository): Response
+    public function new($inputs,
+                        Request $request,
+                        EggsDeliveryRepository $deliveryRepository,
+                        EggsInputsRepository $eggsInputsRepository
+    ): Response
     {
+        $inputs = $eggsInputsRepository->find($inputs);
         $entityManager = $this->getDoctrine()->getManager();
         $eggsInputsDetail = new EggsInputsDetails();
         $form = $this->createForm(EggsInputsDetailsType::class, $eggsInputsDetail);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $eggsInputsDetail->setEggInput($inputs);
             $herd = $form['herd']->getData();
             $totalEggs = $form['eggsNumber']->getData();
             $deliveries = $deliveryRepository->eggsOnWarehouse($herd);
@@ -75,7 +83,7 @@ class EggsInputsDetailsController extends AbstractController
 
                 $entityManager->flush();
 
-                return $this->redirectToRoute('eggs_inputs_details_index');
+                return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputs->getId()]);
             }
 
         }
