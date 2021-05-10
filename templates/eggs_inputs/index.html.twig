@@ -9,39 +9,5 @@
             {% trans %}eggs_inputs.index.button.new{% endtrans %}
         </a>
     {% endif %}
-    <table class="table table-sm">
-        <thead class="thead-light">
-        <tr>
-            <th>{% trans %}eggs_inputs.index.table.id{% endtrans %}</th>
-            <th>{% trans %}eggs_inputs.index.table.name{% endtrans %}</th>
-            <th>{% trans %}eggs_inputs.index.table.input_date{% endtrans %}</th>
-            <th>{% trans %}eggs_inputs.index.table.actions{% endtrans %}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for eggs_input in eggs_inputs %}
-            <tr>
-                <td>{{ eggs_input.id }}</td>
-                <td>{{ eggs_input.name }}</td>
-                <td>{{ eggs_input.inputDate ? eggs_input.inputDate|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a class="badge badge-info" href="{{ path('eggs_inputs_show', {'id': eggs_input.id}) }}">
-                        {% trans %}eggs_inputs.index.table.badge.show{% endtrans %}
-                    </a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a class="badge badge-warning" href="{{ path('eggs_inputs_edit', {'id': eggs_input.id}) }}">
-                            {% trans %}eggs_inputs.index.table.badge.edit{% endtrans %}
-                        </a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">
-                    {% trans %}eggs_inputs.index.table.no_found{% endtrans %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% include('eggs_inputs/table_list.html.twig') %}
 {% endblock %}

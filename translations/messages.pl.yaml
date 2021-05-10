@@ -229,6 +229,8 @@ eggs_inputs:
     title: Dodawanie nakładu
     button:
       back: Lista nakładów
+  no_lighting:
+    title: Wykaz nakładów przed świetleniem
   show:
     title: Szczegóły nakładu
     input_date: Data nakładu
@@ -271,6 +273,27 @@ eggs_inputs:
       badge:
         fertilization: Zapłodnienie
         hatchability: Wylęgowość
+  table_list:
+    table_detail:
+      chick_number: Ilość piskląt
+      chick_recipient: Odbiorca piskląt
+      deliveries: Wykaz dostaw
+    table_deliveries:
+      breeder: Hodowca
+      herd: Stado
+      delivery_date: Data dostawy
+      laying_date: Data zniesienia
+      eggs_number: Ilość jaj nałożonych
+    table:
+      id: Indeks
+      detail: Szczegóły nakładu
+      name: Nazwa
+      input_date: Data nałożenia
+      actions: Akcje
+      no_found: Brak nakładów
+      badge:
+        show: Szczegóły
+        edit: Edycja
 eggs_inputs_details:
   delete:
     confirm: Na pewno chcesz usunąć dostawy z nakładu?
