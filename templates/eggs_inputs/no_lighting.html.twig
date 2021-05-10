@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>
+        {% trans %}eggs_inputs.no_lighting.title{% endtrans %}
+    </h1>
+    {% include('eggs_inputs/table_list.html.twig') %}
+{% endblock %}

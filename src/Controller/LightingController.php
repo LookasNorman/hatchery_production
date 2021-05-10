@@ -94,6 +94,21 @@ class LightingController extends AbstractController
     }
 
     /**
+     * @param \App\Repository\EggsInputsRepository $inputsRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/lighting", name="no_lighting_index", methods={"GET"})
+     */
+    public function showNoLighting(EggsInputsRepository $inputsRepository)
+    {
+        $lighting = $inputsRepository->inputsNoLighting();
+//        $lighting = $inputsRepository->findAll();
+//        dd($lighting);
+        return $this->render('eggs_inputs/no_lighting.html.twig', [
+            'eggs_inputs' => $lighting,
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="eggs_inputs_lighting_show", methods={"GET"})
      */
     public function show(EggsInputsLighting $eggsInputsLighting): Response

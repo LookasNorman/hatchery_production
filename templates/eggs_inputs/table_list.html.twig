@@ -1,0 +1,87 @@
+{% block body %}
+    <table class="table table-sm">
+        <thead class="thead-light">
+        <tr>
+            <th>{% trans %}eggs_inputs.table_list.table.id{% endtrans %}</th>
+            <th>{% trans %}eggs_inputs.table_list.table.name{% endtrans %}</th>
+            <th>{% trans %}eggs_inputs.table_list.table.detail{% endtrans %}</th>
+            <th>{% trans %}eggs_inputs.table_list.table.input_date{% endtrans %}</th>
+            <th>{% trans %}eggs_inputs.table_list.table.actions{% endtrans %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for eggs_input in eggs_inputs %}
+            <tr>
+                <td>{{ eggs_input.id }}</td>
+                <td>{{ eggs_input.name }}</td>
+                <td>
+                    <table class="table table-sm table-bordered table-hover">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>{% trans %}eggs_inputs.table_list.table_detail.chick_number{% endtrans %}</th>
+                            <th>{% trans %}eggs_inputs.table_list.table_detail.chick_recipient{% endtrans %}</th>
+                            <th>{% trans %}eggs_inputs.table_list.table_detail.deliveries{% endtrans %}</th>
+                        </tr>
+                        </thead>
+
+                    {% for eggsInputsDetail in eggs_input.eggsInputsDetails %}
+                        <tbody>
+                        <tr>
+                            <td>{{ eggsInputsDetail.chickNumber }}</td>
+                            <td>{{ eggsInputsDetail.chicksRecipient.name }}</td>
+                            <td>
+                                <table class="table table-sm">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th>{% trans %}eggs_inputs.table_list.table_deliveries.breeder{% endtrans %}</th>
+                                        <th>{% trans %}eggs_inputs.table_list.table_deliveries.herd{% endtrans %}</th>
+                                        <th>{% trans %}eggs_inputs.table_list.table_deliveries.delivery_date{% endtrans %}</th>
+                                        <th>{% trans %}eggs_inputs.table_list.table_deliveries.laying_date{% endtrans %}</th>
+                                        <th>{% trans %}eggs_inputs.table_list.table_deliveries.eggs_number{% endtrans %}</th>
+                                    </tr>
+                                    </thead>
+                                    {% for delivery in eggsInputsDetail.eggsInputsDetailsEggsDeliveries %}
+                                        <tbody>
+                                        <tr>
+                                            <td>{{ delivery.eggsDeliveries.herd.breeder.name }}</td>
+                                            <td>{{ delivery.eggsDeliveries.herd.name }}</td>
+                                            <td>{{ delivery.eggsDeliveries.deliveryDate ? delivery.eggsDeliveries.deliveryDate|date('Y-m-d') : '' }}</td>
+                                            <td>
+                                                {{ delivery.eggsDeliveries.firstLayingDate ? delivery.eggsDeliveries.firstLayingDate|date('Y-m-d') : '' }}
+                                                -
+                                                {{ delivery.eggsDeliveries.lastLayingDate ? delivery.eggsDeliveries.lastLayingDate|date('Y-m-d') : '' }}
+                                            </td>
+                                            <td>{{ delivery.eggsNumber }}</td>
+                                        </tr>
+                                        </tbody>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                    {% endfor %}
+                    </table>
+                </td>
+                <td>{{ eggs_input.inputDate ? eggs_input.inputDate|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a class="badge badge-info" href="{{ path('eggs_inputs_show', {'id': eggs_input.id}) }}">
+                        {% trans %}eggs_inputs.table_list.table.badge.show{% endtrans %}
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="badge badge-warning" href="{{ path('eggs_inputs_edit', {'id': eggs_input.id}) }}">
+                            {% trans %}eggs_inputs.table_list.table.badge.edit{% endtrans %}
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">
+                    {% trans %}eggs_inputs.table_list.table.no_found{% endtrans %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

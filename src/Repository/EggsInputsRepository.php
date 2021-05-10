@@ -32,6 +32,20 @@ class EggsInputsRepository extends ServiceEntityRepository
             ;
     }
 
+    public function inputsNoLighting()
+    {
+        return $this->createQueryBuilder('e')
+            ->addSelect('eid')
+            ->join('e.eggsInputsDetails', 'eid')
+            ->leftJoin('eid.eggsInputsLightings', 'il')
+            ->leftJoin('eid.eggsInputsDetailsEggsDeliveries', 'idd')
+            ->where('il.id IS NULL')
+//            ->groupBy('e.id')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function inputsLighting()
     {
         return $this->createQueryBuilder('e')
