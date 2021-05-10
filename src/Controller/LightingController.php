@@ -98,7 +98,7 @@ class LightingController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/lighting", name="no_lighting_index", methods={"GET"})
      */
-    public function showNoLighting(EggsInputsRepository $inputsRepository)
+    public function showNoLighting(EggsInputsRepository $inputsRepository): Response
     {
         $lighting = $inputsRepository->inputsNoLighting();
         return $this->render('eggs_inputs/no_lighting.html.twig', [
