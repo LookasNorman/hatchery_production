@@ -55,4 +55,26 @@ class DetailsRepository extends ServiceEntityRepository
             ;
     }
 
+    public function eggs()
+    {
+        return $this->createQueryBuilder('eid')
+            ->select('SUM(idd.eggsNumber) as eggsNumber')
+            ->leftJoin('eid.eggsSelections', 'es')
+            ->leftJoin('eid.eggsInputsDetailsEggsDeliveries', 'idd')
+            ->where('es.id IS NULL')
+            ->getQuery()
+            ->getSingleResult()
+            ;
+    }
+
+    public function chicks()
+    {
+        return $this->createQueryBuilder('eid')
+            ->select('SUM(eid.chickNumber) as chickNumber')
+            ->leftJoin('eid.eggsSelections', 'es')
+            ->where('es.id IS NULL')
+            ->getQuery()
+            ->getSingleResult()
+            ;
+    }
 }

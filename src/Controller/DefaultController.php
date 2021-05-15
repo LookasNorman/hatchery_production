@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ChicksRecipientRepository;
 use App\Repository\DeliveryRepository;
+use App\Repository\DetailsRepository;
 use App\Repository\InputsRepository;
 use App\Repository\SupplierRepository;
 use App\Repository\HatchersRepository;
@@ -22,7 +23,8 @@ class DefaultController extends AbstractController
         SupplierRepository $supplierRepository,
         ChicksRecipientRepository $recipientRepository,
         InputsRepository $inputsRepository,
-        DeliveryRepository $deliveryRepository
+        DeliveryRepository $deliveryRepository,
+        DetailsRepository $detailsRepository
     ): Response
     {
         $suppliers = [];
@@ -38,9 +40,10 @@ class DefaultController extends AbstractController
         $inputs = [];
         $eggsInputs = $inputsRepository->findAll();
         $inputs['inputsNumber'] = count($eggsInputs);
-        $chicksNumber = $inputsRepository->inputsDetails();
-        $inputs['chicksNumber'] = $chicksNumber[0]['chickNumber'];
-        $inputs['eggsNumber'] = $chicksNumber[0]['eggsNumber'];
+        $eggs = $detailsRepository->eggs();
+        $chicks = $detailsRepository->chicks();
+        $inputs['chicksNumber'] = $chicks['chickNumber'];
+        $inputs['eggsNumber'] = $eggs['eggsNumber'];
 
         $lighting = $inputsRepository->inputsLighting();
         $transfer = $inputsRepository->inputsTransfers();

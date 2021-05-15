@@ -19,19 +19,6 @@ class InputsRepository extends ServiceEntityRepository
         parent::__construct($registry, Inputs::class);
     }
 
-    public function inputsDetails()
-    {
-        return $this->createQueryBuilder('e')
-            ->select('SUM(eid.chickNumber) as chickNumber', 'SUM(idd.eggsNumber) as eggsNumber')
-            ->join('e.eggsInputsDetails', 'eid')
-            ->leftJoin('eid.eggsSelections', 'es')
-            ->leftJoin('eid.eggsInputsDetailsEggsDeliveries', 'idd')
-            ->where('es.id IS NULL')
-            ->getQuery()
-            ->getScalarResult()
-            ;
-    }
-
     public function inputsNoLighting()
     {
         return $this->createQueryBuilder('e')
@@ -88,32 +75,4 @@ class InputsRepository extends ServiceEntityRepository
             ;
     }
 
-    // /**
-    //  * @return Inputs[] Returns an array of Inputs objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Inputs
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
