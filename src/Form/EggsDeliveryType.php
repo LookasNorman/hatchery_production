@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\EggsDelivery;
-use App\Entity\EggSupplier;
+use App\Entity\Delivery;
+use App\Entity\Supplier;
 use App\Entity\Herds;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -48,7 +48,7 @@ class EggsDeliveryType extends AbstractType
             ])
             ->add('breeder', EntityType::class, [
                 'label' => 'eggs_delivery.form.label.breeder',
-                'class' => EggSupplier::class,
+                'class' => Supplier::class,
                 'choice_label' => 'name',
                 'placeholder' => 'eggs_delivery.form.placeholder.breeder',
                 'mapped' => false,
@@ -79,7 +79,7 @@ class EggsDeliveryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => EggsDelivery::class,
+            'data_class' => Delivery::class,
         ]);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\EggsInputs;
+use App\Entity\Inputs;
 use App\Form\EggsInputsType;
 use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
 use App\Repository\EggsInputsDetailsRepository;
@@ -44,7 +44,7 @@ class InputsController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $eggsInput = new EggsInputs();
+        $eggsInput = new Inputs();
         $form = $this->createForm(EggsInputsType::class, $eggsInput);
         $form->handleRequest($request);
 
@@ -99,7 +99,7 @@ class InputsController extends AbstractController
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @Route("/xls/{id}", name="eggs_inputs_xls")
      */
-    public function xls(EggsInputs $eggsInput, EggsInputsDetailsRepository $detailsRepository): StreamedResponse
+    public function xls(Inputs $eggsInput, EggsInputsDetailsRepository $detailsRepository): StreamedResponse
     {
         $details = $detailsRepository->deliveriesInput($eggsInput);
 
@@ -307,7 +307,7 @@ class InputsController extends AbstractController
     /**
      * @Route("/{id}", name="eggs_inputs_show", methods={"GET"})
      */
-    public function show(EggsInputs $eggsInput, EggsInputsDetailsRepository $detailsRepository, EggsInputsDetailsEggsDeliveryRepository $deliveryRepository): Response
+    public function show(Inputs $eggsInput, EggsInputsDetailsRepository $detailsRepository, EggsInputsDetailsEggsDeliveryRepository $deliveryRepository): Response
     {
         $inputDetails = $detailsRepository->deliveriesInput($eggsInput);
         $details = [];
@@ -375,7 +375,7 @@ class InputsController extends AbstractController
      * @Route("/{id}/edit", name="eggs_inputs_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, EggsInputs $eggsInput): Response
+    public function edit(Request $request, Inputs $eggsInput): Response
     {
         $form = $this->createForm(EggsInputsType::class, $eggsInput);
         $form->handleRequest($request);
@@ -396,7 +396,7 @@ class InputsController extends AbstractController
      * @Route("/{id}", name="eggs_inputs_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, EggsInputs $eggsInput): Response
+    public function delete(Request $request, Inputs $eggsInput): Response
     {
         if ($this->isCsrfTokenValid('delete' . $eggsInput->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

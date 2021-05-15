@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=EggsSelectionsRepository::class)
  */
-class EggsSelections
+class Selections
 {
     /**
      * @ORM\Id
@@ -18,7 +18,7 @@ class EggsSelections
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=EggsInputsDetails::class, inversedBy="eggsSelections")
+     * @ORM\ManyToOne(targetEntity=InputsDetails::class, inversedBy="eggsSelections")
      * @ORM\JoinColumn(nullable=false)
      */
     private $eggsInputsDetail;
@@ -43,12 +43,12 @@ class EggsSelections
         return $this->id;
     }
 
-    public function getEggsInputsDetail(): ?EggsInputsDetails
+    public function getEggsInputsDetail(): ?InputsDetails
     {
         return $this->eggsInputsDetail;
     }
 
-    public function setEggsInputsDetail(?EggsInputsDetails $eggsInputsDetail): self
+    public function setEggsInputsDetail(?InputsDetails $eggsInputsDetail): self
     {
         $this->eggsInputsDetail = $eggsInputsDetail;
 

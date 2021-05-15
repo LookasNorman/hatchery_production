@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\EggsInputsDetailsEggsDelivery;
+use App\Entity\DetailsDelivery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method EggsInputsDetailsEggsDelivery|null find($id, $lockMode = null, $lockVersion = null)
- * @method EggsInputsDetailsEggsDelivery|null findOneBy(array $criteria, array $orderBy = null)
- * @method EggsInputsDetailsEggsDelivery[]    findAll()
- * @method EggsInputsDetailsEggsDelivery[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method DetailsDelivery|null find($id, $lockMode = null, $lockVersion = null)
+ * @method DetailsDelivery|null findOneBy(array $criteria, array $orderBy = null)
+ * @method DetailsDelivery[]    findAll()
+ * @method DetailsDelivery[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class EggsInputsDetailsEggsDeliveryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EggsInputsDetailsEggsDelivery::class);
+        parent::__construct($registry, DetailsDelivery::class);
     }
 
     // /**
-    //  * @return EggsInputsDetailsEggsDelivery[] Returns an array of EggsInputsDetailsEggsDelivery objects
+    //  * @return DetailsDelivery[] Returns an array of DetailsDelivery objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class EggsInputsDetailsEggsDeliveryRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?EggsInputsDetailsEggsDelivery
+    public function findOneBySomeField($value): ?DetailsDelivery
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\EggSupplier;
+use App\Entity\Supplier;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -40,7 +40,7 @@ class EggSupplierType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => EggSupplier::class,
+            'data_class' => Supplier::class,
         ]);
     }
 }

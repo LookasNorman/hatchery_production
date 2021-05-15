@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=EggsInputsDetailsRepository::class)
  */
-class EggsInputsDetails
+class InputsDetails
 {
     /**
      * @ORM\Id
@@ -21,7 +21,7 @@ class EggsInputsDetails
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=EggsInputs::class, inversedBy="eggsInputsDetails")
+     * @ORM\ManyToOne(targetEntity=Inputs::class, inversedBy="eggsInputsDetails")
      * @ORM\JoinColumn(nullable=false)
      */
     private $eggInput;
@@ -33,7 +33,7 @@ class EggsInputsDetails
     private $chickNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity=EggsInputsDetailsEggsDelivery::class, mappedBy="eggsInputDetails")
+     * @ORM\OneToMany(targetEntity=DetailsDelivery::class, mappedBy="eggsInputDetails")
      */
     private $eggsInputsDetailsEggsDeliveries;
 
@@ -44,17 +44,17 @@ class EggsInputsDetails
     private $chicksRecipient;
 
     /**
-     * @ORM\OneToMany(targetEntity=EggsInputsLighting::class, mappedBy="eggsInputsDetail")
+     * @ORM\OneToMany(targetEntity=Lighting::class, mappedBy="eggsInputsDetail")
      */
     private $eggsInputsLightings;
 
     /**
-     * @ORM\OneToMany(targetEntity=EggsInputsTransfers::class, mappedBy="eggsInputsDetail")
+     * @ORM\OneToMany(targetEntity=Transfers::class, mappedBy="eggsInputsDetail")
      */
     private $eggsInputsTransfers;
 
     /**
-     * @ORM\OneToMany(targetEntity=EggsSelections::class, mappedBy="eggsInputsDetail")
+     * @ORM\OneToMany(targetEntity=Selections::class, mappedBy="eggsInputsDetail")
      */
     private $eggsSelections;
 
@@ -71,12 +71,12 @@ class EggsInputsDetails
         return $this->id;
     }
 
-    public function getEggInput(): ?EggsInputs
+    public function getEggInput(): ?Inputs
     {
         return $this->eggInput;
     }
 
-    public function setEggInput(?EggsInputs $eggInput): self
+    public function setEggInput(?Inputs $eggInput): self
     {
         $this->eggInput = $eggInput;
 
@@ -96,14 +96,14 @@ class EggsInputsDetails
     }
 
     /**
-     * @return Collection|EggsInputsDetailsEggsDelivery[]
+     * @return Collection|DetailsDelivery[]
      */
     public function getEggsInputsDetailsEggsDeliveries(): Collection
     {
         return $this->eggsInputsDetailsEggsDeliveries;
     }
 
-    public function addEggsInputsDetailsEggsDelivery(EggsInputsDetailsEggsDelivery $eggsInputsDetailsEggsDelivery): self
+    public function addEggsInputsDetailsEggsDelivery(DetailsDelivery $eggsInputsDetailsEggsDelivery): self
     {
         if (!$this->eggsInputsDetailsEggsDeliveries->contains($eggsInputsDetailsEggsDelivery)) {
             $this->eggsInputsDetailsEggsDeliveries[] = $eggsInputsDetailsEggsDelivery;
@@ -113,7 +113,7 @@ class EggsInputsDetails
         return $this;
     }
 
-    public function removeEggsInputsDetailsEggsDelivery(EggsInputsDetailsEggsDelivery $eggsInputsDetailsEggsDelivery): self
+    public function removeEggsInputsDetailsEggsDelivery(DetailsDelivery $eggsInputsDetailsEggsDelivery): self
     {
         if ($this->eggsInputsDetailsEggsDeliveries->removeElement($eggsInputsDetailsEggsDelivery)) {
             // set the owning side to null (unless already changed)
@@ -138,14 +138,14 @@ class EggsInputsDetails
     }
 
     /**
-     * @return Collection|EggsInputsLighting[]
+     * @return Collection|Lighting[]
      */
     public function getEggsInputsLightings(): Collection
     {
         return $this->eggsInputsLightings;
     }
 
-    public function addEggsInputsLighting(EggsInputsLighting $eggsInputsLighting): self
+    public function addEggsInputsLighting(Lighting $eggsInputsLighting): self
     {
         if (!$this->eggsInputsLightings->contains($eggsInputsLighting)) {
             $this->eggsInputsLightings[] = $eggsInputsLighting;
@@ -155,7 +155,7 @@ class EggsInputsDetails
         return $this;
     }
 
-    public function removeEggsInputsLighting(EggsInputsLighting $eggsInputsLighting): self
+    public function removeEggsInputsLighting(Lighting $eggsInputsLighting): self
     {
         if ($this->eggsInputsLightings->removeElement($eggsInputsLighting)) {
             // set the owning side to null (unless already changed)
@@ -168,14 +168,14 @@ class EggsInputsDetails
     }
 
     /**
-     * @return Collection|EggsInputsTransfers[]
+     * @return Collection|Transfers[]
      */
     public function getEggsInputsTransfers(): Collection
     {
         return $this->eggsInputsTransfers;
     }
 
-    public function addEggsInputsTransfer(EggsInputsTransfers $eggsInputsTransfer): self
+    public function addEggsInputsTransfer(Transfers $eggsInputsTransfer): self
     {
         if (!$this->eggsInputsTransfers->contains($eggsInputsTransfer)) {
             $this->eggsInputsTransfers[] = $eggsInputsTransfer;
@@ -185,7 +185,7 @@ class EggsInputsDetails
         return $this;
     }
 
-    public function removeEggsInputsTransfer(EggsInputsTransfers $eggsInputsTransfer): self
+    public function removeEggsInputsTransfer(Transfers $eggsInputsTransfer): self
     {
         if ($this->eggsInputsTransfers->removeElement($eggsInputsTransfer)) {
             // set the owning side to null (unless already changed)
@@ -198,14 +198,14 @@ class EggsInputsDetails
     }
 
     /**
-     * @return Collection|EggsSelections[]
+     * @return Collection|Selections[]
      */
     public function getEggsSelections(): Collection
     {
         return $this->eggsSelections;
     }
 
-    public function addEggsSelection(EggsSelections $eggsSelection): self
+    public function addEggsSelection(Selections $eggsSelection): self
     {
         if (!$this->eggsSelections->contains($eggsSelection)) {
             $this->eggsSelections[] = $eggsSelection;
@@ -215,7 +215,7 @@ class EggsInputsDetails
         return $this;
     }
 
-    public function removeEggsSelection(EggsSelections $eggsSelection): self
+    public function removeEggsSelection(Selections $eggsSelection): self
     {
         if ($this->eggsSelections->removeElement($eggsSelection)) {
             // set the owning side to null (unless already changed)

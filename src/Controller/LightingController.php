@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\EggsInputs;
-use App\Entity\EggsInputsLighting;
-use App\Entity\EggSupplier;
+use App\Entity\Inputs;
+use App\Entity\Lighting;
+use App\Entity\Supplier;
 use App\Form\EggsInputsLightingType;
 use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsLightingRepository;
@@ -69,7 +69,7 @@ class LightingController extends AbstractController
              * Added eggs lighting to eggs input details
              */
             foreach ($inputsDetails as $key => $inputDetail) {
-                $eggsInputsLighting = new EggsInputsLighting();
+                $eggsInputsLighting = new Lighting();
                 $eggsInputsLighting->setEggsInputsDetail($inputDetail[0]);
                 if ($key < $length) {
                     $setWaste = round($inputDetail[1] / $totalEggs * $wasteEggs, 0);
@@ -109,7 +109,7 @@ class LightingController extends AbstractController
     /**
      * @Route("/{id}", name="eggs_inputs_lighting_show", methods={"GET"})
      */
-    public function show(EggsInputsLighting $eggsInputsLighting): Response
+    public function show(Lighting $eggsInputsLighting): Response
     {
         return $this->render('eggs_inputs_lighting/show.html.twig', [
             'eggs_inputs_lighting' => $eggsInputsLighting,
@@ -120,7 +120,7 @@ class LightingController extends AbstractController
      * @Route("/{id}/edit", name="eggs_inputs_lighting_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, EggsInputsLighting $eggsInputsLighting): Response
+    public function edit(Request $request, Lighting $eggsInputsLighting): Response
     {
         $form = $this->createForm(EggsInputsLightingType::class, $eggsInputsLighting);
         $form->handleRequest($request);
@@ -141,7 +141,7 @@ class LightingController extends AbstractController
      * @Route("/{id}", name="eggs_inputs_lighting_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, EggsInputsLighting $eggsInputsLighting): Response
+    public function delete(Request $request, Lighting $eggsInputsLighting): Response
     {
         if ($this->isCsrfTokenValid('delete' . $eggsInputsLighting->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

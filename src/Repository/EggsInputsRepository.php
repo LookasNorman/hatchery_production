@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\EggsInputs;
+use App\Entity\Inputs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method EggsInputs|null find($id, $lockMode = null, $lockVersion = null)
- * @method EggsInputs|null findOneBy(array $criteria, array $orderBy = null)
- * @method EggsInputs[]    findAll()
- * @method EggsInputs[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Inputs|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Inputs|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Inputs[]    findAll()
+ * @method Inputs[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class EggsInputsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EggsInputs::class);
+        parent::__construct($registry, Inputs::class);
     }
 
     public function inputsDetails()
@@ -89,7 +89,7 @@ class EggsInputsRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return EggsInputs[] Returns an array of EggsInputs objects
+    //  * @return Inputs[] Returns an array of Inputs objects
     //  */
     /*
     public function findByExampleField($value)
@@ -106,7 +106,7 @@ class EggsInputsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?EggsInputs
+    public function findOneBySomeField($value): ?Inputs
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

@@ -3,10 +3,10 @@
 namespace App\Form;
 
 use App\Entity\ChicksRecipient;
-use App\Entity\EggsDelivery;
-use App\Entity\EggsInputs;
-use App\Entity\EggsInputsDetails;
-use App\Entity\EggSupplier;
+use App\Entity\Delivery;
+use App\Entity\Inputs;
+use App\Entity\InputsDetails;
+use App\Entity\Supplier;
 use App\Entity\Herds;
 use App\Repository\EggsDeliveryRepository;
 use App\Repository\HerdsRepository;
@@ -25,8 +25,8 @@ class EggsInputsDetailsType extends AbstractType
     {
         $builder
             ->add('breeder', EntityType::class, [
-                'class' => EggSupplier::class,
-                'choice_label' => function (EggSupplier $eggSupplier) {
+                'class' => Supplier::class,
+                'choice_label' => function (Supplier $eggSupplier) {
                     $eggs = 0;
                     $herds = $eggSupplier->getHerds();
                     foreach ($herds as $herd) {
@@ -102,7 +102,7 @@ class EggsInputsDetailsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => EggsInputsDetails::class,
+            'data_class' => InputsDetails::class,
         ]);
     }
 }

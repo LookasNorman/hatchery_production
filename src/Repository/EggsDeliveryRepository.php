@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\EggsDelivery;
+use App\Entity\Delivery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method EggsDelivery|null find($id, $lockMode = null, $lockVersion = null)
- * @method EggsDelivery|null findOneBy(array $criteria, array $orderBy = null)
- * @method EggsDelivery[]    findAll()
- * @method EggsDelivery[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Delivery|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Delivery|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Delivery[]    findAll()
+ * @method Delivery[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class EggsDeliveryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EggsDelivery::class);
+        parent::__construct($registry, Delivery::class);
     }
 
     /**
@@ -45,7 +45,7 @@ class EggsDeliveryRepository extends ServiceEntityRepository
     }
 
     /*
-    public function findOneBySomeField($value): ?EggsDelivery
+    public function findOneBySomeField($value): ?Delivery
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=EggsDeliveryRepository::class)
  */
-class EggsDelivery
+class Delivery
 {
     /**
      * @ORM\Id
@@ -49,7 +49,7 @@ class EggsDelivery
     private $lastLayingDate;
 
     /**
-     * @ORM\OneToMany(targetEntity=EggsInputsDetailsEggsDelivery::class, mappedBy="EggsDeliveries")
+     * @ORM\OneToMany(targetEntity=DetailsDelivery::class, mappedBy="EggsDeliveries")
      */
     private $eggsInputsDetailsEggsDeliveries;
 
@@ -140,14 +140,14 @@ class EggsDelivery
     }
 
     /**
-     * @return Collection|EggsInputsDetailsEggsDelivery[]
+     * @return Collection|DetailsDelivery[]
      */
     public function getEggsInputsDetailsEggsDeliveries(): Collection
     {
         return $this->eggsInputsDetailsEggsDeliveries;
     }
 
-    public function addEggsInputsDetailsEggsDelivery(EggsInputsDetailsEggsDelivery $eggsInputsDetailsEggsDelivery): self
+    public function addEggsInputsDetailsEggsDelivery(DetailsDelivery $eggsInputsDetailsEggsDelivery): self
     {
         if (!$this->eggsInputsDetailsEggsDeliveries->contains($eggsInputsDetailsEggsDelivery)) {
             $this->eggsInputsDetailsEggsDeliveries[] = $eggsInputsDetailsEggsDelivery;
@@ -157,7 +157,7 @@ class EggsDelivery
         return $this;
     }
 
-    public function removeEggsInputsDetailsEggsDelivery(EggsInputsDetailsEggsDelivery $eggsInputsDetailsEggsDelivery): self
+    public function removeEggsInputsDetailsEggsDelivery(DetailsDelivery $eggsInputsDetailsEggsDelivery): self
     {
         if ($this->eggsInputsDetailsEggsDeliveries->removeElement($eggsInputsDetailsEggsDelivery)) {
             // set the owning side to null (unless already changed)

@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\EggsInputsTransfersRepository;
+use App\Repository\EggsInputsLightingRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=EggsInputsTransfersRepository::class)
+ * @ORM\Entity(repositoryClass=EggsInputsLightingRepository::class)
  */
-class EggsInputsTransfers
+class Lighting
 {
     /**
      * @ORM\Id
@@ -20,7 +20,7 @@ class EggsInputsTransfers
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=EggsInputsDetails::class, inversedBy="eggsInputsTransfers")
+     * @ORM\ManyToOne(targetEntity=InputsDetails::class, inversedBy="eggsInputsLightings")
      * @ORM\JoinColumn(nullable=false)
      */
     private $eggsInputsDetail;
@@ -35,19 +35,19 @@ class EggsInputsTransfers
      * @ORM\Column(type="date")
      * @Assert\Date()
      */
-    private $transferDate;
+    private $lightingDate;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEggsInputsDetail(): ?EggsInputsDetails
+    public function getEggsInputsDetail(): ?InputsDetails
     {
         return $this->eggsInputsDetail;
     }
 
-    public function setEggsInputsDetail(?EggsInputsDetails $eggsInputsDetail): self
+    public function setEggsInputsDetail(?InputsDetails $eggsInputsDetail): self
     {
         $this->eggsInputsDetail = $eggsInputsDetail;
 
@@ -66,14 +66,14 @@ class EggsInputsTransfers
         return $this;
     }
 
-    public function getTransferDate(): ?DateTimeInterface
+    public function getLightingDate(): ?DateTimeInterface
     {
-        return $this->transferDate;
+        return $this->lightingDate;
     }
 
-    public function setTransferDate(DateTimeInterface $transferDate): self
+    public function setLightingDate(DateTimeInterface $lightingDate): self
     {
-        $this->transferDate = $transferDate;
+        $this->lightingDate = $lightingDate;
 
         return $this;
     }

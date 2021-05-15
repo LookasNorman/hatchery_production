@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\EggsInputs;
+use App\Entity\Inputs;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -33,7 +33,7 @@ class EggsInputsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => EggsInputs::class,
+            'data_class' => Inputs::class,
         ]);
     }
 }

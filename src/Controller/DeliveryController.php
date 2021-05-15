@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\EggsDelivery;
+use App\Entity\Delivery;
 use App\Form\DeliveryPartIndexType;
 use App\Form\EggsDeliveryType;
 use App\Repository\EggsDeliveryRepository;
@@ -35,7 +35,7 @@ class DeliveryController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $eggsDelivery = new EggsDelivery();
+        $eggsDelivery = new Delivery();
         $form = $this->createForm(EggsDeliveryType::class, $eggsDelivery);
         $form->handleRequest($request);
 
@@ -57,7 +57,7 @@ class DeliveryController extends AbstractController
     /**
      * @Route("/{id}", name="eggs_delivery_show", methods={"GET"})
      */
-    public function show(EggsDelivery $eggsDelivery): Response
+    public function show(Delivery $eggsDelivery): Response
     {
         return $this->render('eggs_delivery/show.html.twig', [
             'eggs_delivery' => $eggsDelivery,
@@ -68,7 +68,7 @@ class DeliveryController extends AbstractController
      * @Route("/{id}/edit", name="eggs_delivery_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, EggsDelivery $eggsDelivery): Response
+    public function edit(Request $request, Delivery $eggsDelivery): Response
     {
         $form = $this->createForm(EggsDeliveryType::class, $eggsDelivery);
         $form->handleRequest($request);
@@ -89,7 +89,7 @@ class DeliveryController extends AbstractController
      * @Route("/{id}/add", name="eggs_delivery_add", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function addPartIndex(Request $request, EggsDelivery $eggsDelivery)
+    public function addPartIndex(Request $request, Delivery $eggsDelivery)
     {
         $form = $this->createForm(DeliveryPartIndexType::class, $eggsDelivery);
         $form->handleRequest($request);
@@ -110,7 +110,7 @@ class DeliveryController extends AbstractController
      * @Route("/{id}", name="eggs_delivery_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, EggsDelivery $eggsDelivery): Response
+    public function delete(Request $request, Delivery $eggsDelivery): Response
     {
         if ($this->isCsrfTokenValid('delete'.$eggsDelivery->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

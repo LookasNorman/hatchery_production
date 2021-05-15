@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\EggsSelections;
+use App\Entity\Selections;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method EggsSelections|null find($id, $lockMode = null, $lockVersion = null)
- * @method EggsSelections|null findOneBy(array $criteria, array $orderBy = null)
- * @method EggsSelections[]    findAll()
- * @method EggsSelections[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Selections|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Selections|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Selections[]    findAll()
+ * @method Selections[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class EggsSelectionsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EggsSelections::class);
+        parent::__construct($registry, Selections::class);
     }
 
     // /**
-    //  * @return EggsSelections[] Returns an array of EggsSelections objects
+    //  * @return Selections[] Returns an array of Selections objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class EggsSelectionsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?EggsSelections
+    public function findOneBySomeField($value): ?Selections
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

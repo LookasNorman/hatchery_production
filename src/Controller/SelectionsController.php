@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\EggsInputs;
-use App\Entity\EggsSelections;
-use App\Entity\EggSupplier;
+use App\Entity\Inputs;
+use App\Entity\Selections;
+use App\Entity\Supplier;
 use App\Form\EggsSelectionsType;
 use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsRepository;
@@ -72,7 +72,7 @@ class SelectionsController extends AbstractController
              * Added eggs transfer to eggs input details
              */
             foreach ($inputsDetails as $key => $inputDetail) {
-                $eggsSelection = new EggsSelections();
+                $eggsSelection = new Selections();
                 $eggsSelection->setEggsInputsDetail($inputDetail[0]);
                 if ($key < $length) {
                     $setChick = round($inputDetail[1] / $totalEggs * $chickNumber, 0);
@@ -105,7 +105,7 @@ class SelectionsController extends AbstractController
     /**
      * @Route("/{id}", name="eggs_selections_show", methods={"GET"})
      */
-    public function show(EggsSelections $eggsSelection): Response
+    public function show(Selections $eggsSelection): Response
     {
         return $this->render('eggs_selections/show.html.twig', [
             'eggs_selection' => $eggsSelection,
@@ -116,7 +116,7 @@ class SelectionsController extends AbstractController
      * @Route("/{id}/edit", name="eggs_selections_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, EggsSelections $eggsSelection): Response
+    public function edit(Request $request, Selections $eggsSelection): Response
     {
         $form = $this->createForm(EggsSelectionsType::class, $eggsSelection);
         $form->handleRequest($request);
@@ -137,7 +137,7 @@ class SelectionsController extends AbstractController
      * @Route("/{id}", name="eggs_selections_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, EggsSelections $eggsSelection): Response
+    public function delete(Request $request, Selections $eggsSelection): Response
     {
         if ($this->isCsrfTokenValid('delete' . $eggsSelection->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

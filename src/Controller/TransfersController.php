@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\EggsInputs;
-use App\Entity\EggsInputsTransfers;
-use App\Entity\EggSupplier;
+use App\Entity\Inputs;
+use App\Entity\Transfers;
+use App\Entity\Supplier;
 use App\Form\EggsInputsTransfersType;
 use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsRepository;
@@ -69,7 +69,7 @@ class TransfersController extends AbstractController
              * Added eggs transfer to eggs input details
              */
             foreach ($inputsDetails as $key => $inputDetail) {
-                $eggsInputsTransfer = new EggsInputsTransfers();
+                $eggsInputsTransfer = new Transfers();
                 $eggsInputsTransfer->setEggsInputsDetail($inputDetail[0]);
                 if ($key < $length) {
                     $setWaste = round($inputDetail[1] / $totalEggs * $wasteEggs, 0);
@@ -96,7 +96,7 @@ class TransfersController extends AbstractController
     /**
      * @Route("/{id}", name="eggs_inputs_transfers_show", methods={"GET"})
      */
-    public function show(EggsInputsTransfers $eggsInputsTransfer): Response
+    public function show(Transfers $eggsInputsTransfer): Response
     {
         return $this->render('eggs_inputs_transfers/show.html.twig', [
             'eggs_inputs_transfer' => $eggsInputsTransfer,
@@ -107,7 +107,7 @@ class TransfersController extends AbstractController
      * @Route("/{id}/edit", name="eggs_inputs_transfers_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, EggsInputsTransfers $eggsInputsTransfer): Response
+    public function edit(Request $request, Transfers $eggsInputsTransfer): Response
     {
         $form = $this->createForm(EggsInputsTransfersType::class, $eggsInputsTransfer);
         $form->handleRequest($request);
@@ -128,7 +128,7 @@ class TransfersController extends AbstractController
      * @Route("/{id}", name="eggs_inputs_transfers_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, EggsInputsTransfers $eggsInputsTransfer): Response
+    public function delete(Request $request, Transfers $eggsInputsTransfer): Response
     {
         if ($this->isCsrfTokenValid('delete' . $eggsInputsTransfer->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

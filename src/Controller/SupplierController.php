@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\EggSupplier;
+use App\Entity\Supplier;
 use App\Form\EggSupplierType;
 use App\Repository\EggSupplierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +33,7 @@ class SupplierController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $eggSupplier = new EggSupplier();
+        $eggSupplier = new Supplier();
         $form = $this->createForm(EggSupplierType::class, $eggSupplier);
         $form->handleRequest($request);
 
@@ -54,7 +54,7 @@ class SupplierController extends AbstractController
     /**
      * @Route("/{id}", name="egg_supplier_show", methods={"GET"})
      */
-    public function show(EggSupplier $eggSupplier): Response
+    public function show(Supplier $eggSupplier): Response
     {
         return $this->render('egg_supplier/show.html.twig', [
             'egg_supplier' => $eggSupplier,
@@ -65,7 +65,7 @@ class SupplierController extends AbstractController
      * @Route("/{id}/edit", name="egg_supplier_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, EggSupplier $eggSupplier): Response
+    public function edit(Request $request, Supplier $eggSupplier): Response
     {
         $form = $this->createForm(EggSupplierType::class, $eggSupplier);
         $form->handleRequest($request);
@@ -86,7 +86,7 @@ class SupplierController extends AbstractController
      * @Route("/{id}", name="egg_supplier_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, EggSupplier $eggSupplier): Response
+    public function delete(Request $request, Supplier $eggSupplier): Response
     {
         if ($this->isCsrfTokenValid('delete'.$eggSupplier->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
-use App\Entity\EggsInputs;
-use App\Entity\EggsInputsDetails;
-use App\Entity\EggsInputsTransfers;
-use App\Entity\EggSupplier;
+use App\Entity\Inputs;
+use App\Entity\InputsDetails;
+use App\Entity\Transfers;
+use App\Entity\Supplier;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -38,7 +38,7 @@ class EggsInputsTransfersType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => EggsInputsTransfers::class,
+            'data_class' => Transfers::class,
         ]);
     }
 }

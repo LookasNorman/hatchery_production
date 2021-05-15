@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=EggsInputsDetailsEggsDeliveryRepository::class)
  */
-class EggsInputsDetailsEggsDelivery
+class DetailsDelivery
 {
     /**
      * @ORM\Id
@@ -19,18 +19,18 @@ class EggsInputsDetailsEggsDelivery
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=EggsInputsDetails::class, inversedBy="eggsInputsDetailsEggsDeliveries")
+     * @ORM\ManyToOne(targetEntity=InputsDetails::class, inversedBy="eggsInputsDetailsEggsDeliveries")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull()
      */
     private $eggsInputDetails;
 
     /**
-     * @ORM\ManyToOne(targetEntity=EggsDelivery::class, inversedBy="eggsInputsDetailsEggsDeliveries")
+     * @ORM\ManyToOne(targetEntity=Delivery::class, inversedBy="eggsInputsDetailsEggsDeliveries")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull()
      */
-    private $EggsDeliveries;
+    private $eggsDeliveries;
 
     /**
      * @ORM\Column(type="integer")
@@ -43,26 +43,26 @@ class EggsInputsDetailsEggsDelivery
         return $this->id;
     }
 
-    public function getEggsInputDetails(): ?EggsInputsDetails
+    public function getEggsInputDetails(): ?InputsDetails
     {
         return $this->eggsInputDetails;
     }
 
-    public function setEggsInputDetails(?EggsInputsDetails $eggsInputDetails): self
+    public function setEggsInputDetails(?InputsDetails $eggsInputDetails): self
     {
         $this->eggsInputDetails = $eggsInputDetails;
 
         return $this;
     }
 
-    public function getEggsDeliveries(): ?EggsDelivery
+    public function getEggsDeliveries(): ?Delivery
     {
-        return $this->EggsDeliveries;
+        return $this->eggsDeliveries;
     }
 
-    public function setEggsDeliveries(?EggsDelivery $EggsDeliveries): self
+    public function setEggsDeliveries(?Delivery $eggsDeliveries): self
     {
-        $this->EggsDeliveries = $EggsDeliveries;
+        $this->eggsDeliveries = $eggsDeliveries;
 
         return $this;
     }

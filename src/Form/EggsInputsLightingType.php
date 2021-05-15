@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
-use App\Entity\EggsInputs;
-use App\Entity\EggsInputsDetails;
-use App\Entity\EggsInputsLighting;
-use App\Entity\EggSupplier;
+use App\Entity\Inputs;
+use App\Entity\InputsDetails;
+use App\Entity\Lighting;
+use App\Entity\Supplier;
 use App\Entity\Herds;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -42,7 +42,7 @@ class EggsInputsLightingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => EggsInputsLighting::class,
+            'data_class' => Lighting::class,
         ]);
     }
 }

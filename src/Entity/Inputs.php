@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=EggsInputsRepository::class)
  */
-class EggsInputs
+class Inputs
 {
     /**
      * @ORM\Id
@@ -40,7 +40,7 @@ class EggsInputs
     private $inputDate;
 
     /**
-     * @ORM\OneToMany(targetEntity=EggsInputsDetails::class, mappedBy="eggInput")
+     * @ORM\OneToMany(targetEntity=InputsDetails::class, mappedBy="eggInput")
      */
     private $eggsInputsDetails;
 
@@ -79,14 +79,14 @@ class EggsInputs
     }
 
     /**
-     * @return Collection|EggsInputsDetails[]
+     * @return Collection|InputsDetails[]
      */
     public function getEggsInputsDetails(): Collection
     {
         return $this->eggsInputsDetails;
     }
 
-    public function addEggsInputsDetail(EggsInputsDetails $eggsInputsDetail): self
+    public function addEggsInputsDetail(InputsDetails $eggsInputsDetail): self
     {
         if (!$this->eggsInputsDetails->contains($eggsInputsDetail)) {
             $this->eggsInputsDetails[] = $eggsInputsDetail;
@@ -96,7 +96,7 @@ class EggsInputs
         return $this;
     }
 
-    public function removeEggsInputsDetail(EggsInputsDetails $eggsInputsDetail): self
+    public function removeEggsInputsDetail(InputsDetails $eggsInputsDetail): self
     {
         if ($this->eggsInputsDetails->removeElement($eggsInputsDetail)) {
             // set the owning side to null (unless already changed)

@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\EggsDelivery;
-use App\Entity\EggsInputs;
-use App\Entity\EggsInputsDetails;
-use App\Entity\EggsInputsDetailsEggsDelivery;
+use App\Entity\Delivery;
+use App\Entity\Inputs;
+use App\Entity\InputsDetails;
+use App\Entity\DetailsDelivery;
 use App\Entity\Herds;
 use App\Form\EggsInputsDetailsType;
 use App\Repository\EggsDeliveryRepository;
@@ -48,7 +48,7 @@ class InputsDetailsController extends AbstractController
     {
         $inputs = $eggsInputsRepository->find($inputs);
         $entityManager = $this->getDoctrine()->getManager();
-        $eggsInputsDetail = new EggsInputsDetails();
+        $eggsInputsDetail = new InputsDetails();
         $form = $this->createForm(EggsInputsDetailsType::class, $eggsInputsDetail);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -65,7 +65,7 @@ class InputsDetailsController extends AbstractController
                 foreach ($deliveries as $delivery) {
                     $eggsNumber = $delivery->getEggsOnWarehouse();
                     if ($totalEggs > 0 && $eggsNumber > 0) {
-                        $eggsInputsDetailEggsDeliveries = new EggsInputsDetailsEggsDelivery();
+                        $eggsInputsDetailEggsDeliveries = new DetailsDelivery();
                         $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
                         $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
                         if ($eggsNumber > $totalEggs) {
@@ -98,7 +98,7 @@ class InputsDetailsController extends AbstractController
      * @Route("/{id}", name="eggs_inputs_details_show", methods={"GET"})
      */
     public
-    function show(EggsInputsDetails $eggsInputsDetail): Response
+    function show(InputsDetails $eggsInputsDetail): Response
     {
         return $this->render('eggs_inputs_details/show.html.twig', [
             'eggs_inputs_detail' => $eggsInputsDetail,
@@ -110,7 +110,7 @@ class InputsDetailsController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      */
     public
-    function edit(Request $request, EggsInputsDetails $eggsInputsDetail): Response
+    function edit(Request $request, InputsDetails $eggsInputsDetail): Response
     {
         $form = $this->createForm(EggsInputsDetailsType::class, $eggsInputsDetail);
         $form->handleRequest($request);
@@ -132,7 +132,7 @@ class InputsDetailsController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      */
     public
-    function delete(Request $request, EggsInputsDetails $eggsInputsDetail): Response
+    function delete(Request $request, InputsDetails $eggsInputsDetail): Response
     {
         if ($this->isCsrfTokenValid('delete' . $eggsInputsDetail->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

@@ -34,7 +34,7 @@ class Herds
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=EggSupplier::class, inversedBy="herds")
+     * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="herds")
      * @ORM\JoinColumn(nullable=false)
      */
     private $breeder;
@@ -53,7 +53,7 @@ class Herds
     private $breed;
 
     /**
-     * @ORM\OneToMany(targetEntity=EggsDelivery::class, mappedBy="herd")
+     * @ORM\OneToMany(targetEntity=Delivery::class, mappedBy="herd")
      */
     private $eggsDeliveries;
 
@@ -80,12 +80,12 @@ class Herds
         return $this;
     }
 
-    public function getBreeder(): ?EggSupplier
+    public function getBreeder(): ?Supplier
     {
         return $this->breeder;
     }
 
-    public function setBreeder(?EggSupplier $breeder): self
+    public function setBreeder(?Supplier $breeder): self
     {
         $this->breeder = $breeder;
 
@@ -117,14 +117,14 @@ class Herds
     }
 
     /**
-     * @return Collection|EggsDelivery[]
+     * @return Collection|Delivery[]
      */
     public function getEggsDeliveries(): Collection
     {
         return $this->eggsDeliveries;
     }
 
-    public function addEggsDelivery(EggsDelivery $eggsDelivery): self
+    public function addEggsDelivery(Delivery $eggsDelivery): self
     {
         if (!$this->eggsDeliveries->contains($eggsDelivery)) {
             $this->eggsDeliveries[] = $eggsDelivery;
@@ -134,7 +134,7 @@ class Herds
         return $this;
     }
 
-    public function removeEggsDelivery(EggsDelivery $eggsDelivery): self
+    public function removeEggsDelivery(Delivery $eggsDelivery): self
     {
         if ($this->eggsDeliveries->removeElement($eggsDelivery)) {
             // set the owning side to null (unless already changed)

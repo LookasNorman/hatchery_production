@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\EggsInputsLighting;
+use App\Entity\Lighting;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method EggsInputsLighting|null find($id, $lockMode = null, $lockVersion = null)
- * @method EggsInputsLighting|null findOneBy(array $criteria, array $orderBy = null)
- * @method EggsInputsLighting[]    findAll()
- * @method EggsInputsLighting[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Lighting|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Lighting|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Lighting[]    findAll()
+ * @method Lighting[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class EggsInputsLightingRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EggsInputsLighting::class);
+        parent::__construct($registry, Lighting::class);
     }
 
     // /**
-    //  * @return EggsInputsLighting[] Returns an array of EggsInputsLighting objects
+    //  * @return Lighting[] Returns an array of Lighting objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class EggsInputsLightingRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?EggsInputsLighting
+    public function findOneBySomeField($value): ?Lighting
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

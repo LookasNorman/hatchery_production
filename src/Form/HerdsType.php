@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Breed;
-use App\Entity\EggSupplier;
+use App\Entity\Supplier;
 use App\Entity\Herds;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -31,7 +31,7 @@ class HerdsType extends AbstractType
                 ]
             ])
             ->add('breeder', EntityType::class, [
-                'class' => EggSupplier::class,
+                'class' => Supplier::class,
                 'choice_label' => 'name',
                 'placeholder' => 'herds.form.placeholder.breeder',
                 'label' => 'herds.form.label.breeder',
