@@ -44,7 +44,7 @@ class DetailsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('eid')
             ->addSelect('SUM(edd.eggsNumber)')
             ->join('eid.eggsInputsDetailsEggsDeliveries', 'edd')
-            ->join('edd.EggsDeliveries', 'ed')
+            ->join('edd.eggsDeliveries', 'ed')
             ->join('ed.herd', 'h')
             ->where('eid.eggInput = :input')
             ->andWhere('h.breeder = :breeder')
@@ -55,32 +55,4 @@ class DetailsRepository extends ServiceEntityRepository
             ;
     }
 
-    // /**
-    //  * @return InputsDetails[] Returns an array of InputsDetails objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?InputsDetails
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
