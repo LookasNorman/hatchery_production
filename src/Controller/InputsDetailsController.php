@@ -7,7 +7,7 @@ use App\Entity\Inputs;
 use App\Entity\InputsDetails;
 use App\Entity\DetailsDelivery;
 use App\Entity\Herds;
-use App\Form\EggsInputsDetailsType;
+use App\Form\InputsDetailsType;
 use App\Repository\EggsDeliveryRepository;
 use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
 use App\Repository\EggsInputsDetailsRepository;
@@ -49,7 +49,7 @@ class InputsDetailsController extends AbstractController
         $inputs = $eggsInputsRepository->find($inputs);
         $entityManager = $this->getDoctrine()->getManager();
         $eggsInputsDetail = new InputsDetails();
-        $form = $this->createForm(EggsInputsDetailsType::class, $eggsInputsDetail);
+        $form = $this->createForm(InputsDetailsType::class, $eggsInputsDetail);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $eggsInputsDetail->setEggInput($inputs);
@@ -112,7 +112,7 @@ class InputsDetailsController extends AbstractController
     public
     function edit(Request $request, InputsDetails $eggsInputsDetail): Response
     {
-        $form = $this->createForm(EggsInputsDetailsType::class, $eggsInputsDetail);
+        $form = $this->createForm(InputsDetailsType::class, $eggsInputsDetail);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

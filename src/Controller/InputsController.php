@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Inputs;
-use App\Form\EggsInputsType;
+use App\Form\InputsType;
 use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
 use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsRepository;
@@ -45,7 +45,7 @@ class InputsController extends AbstractController
     public function new(Request $request): Response
     {
         $eggsInput = new Inputs();
-        $form = $this->createForm(EggsInputsType::class, $eggsInput);
+        $form = $this->createForm(InputsType::class, $eggsInput);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -377,7 +377,7 @@ class InputsController extends AbstractController
      */
     public function edit(Request $request, Inputs $eggsInput): Response
     {
-        $form = $this->createForm(EggsInputsType::class, $eggsInput);
+        $form = $this->createForm(InputsType::class, $eggsInput);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

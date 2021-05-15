@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Inputs;
 use App\Entity\Selections;
 use App\Entity\Supplier;
-use App\Form\EggsSelectionsType;
+use App\Form\SelectionsType;
 use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsRepository;
 use App\Repository\EggsSelectionsRepository;
@@ -46,7 +46,7 @@ class SelectionsController extends AbstractController
     {
         $inputs = $eggsInputsRepository->find($inputs);
         $breeder = $eggSupplierRepository->find($breeder);
-        $form = $this->createForm(EggsSelectionsType::class);
+        $form = $this->createForm(SelectionsType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -118,7 +118,7 @@ class SelectionsController extends AbstractController
      */
     public function edit(Request $request, Selections $eggsSelection): Response
     {
-        $form = $this->createForm(EggsSelectionsType::class, $eggsSelection);
+        $form = $this->createForm(SelectionsType::class, $eggsSelection);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

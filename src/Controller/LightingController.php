@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Inputs;
 use App\Entity\Lighting;
 use App\Entity\Supplier;
-use App\Form\EggsInputsLightingType;
+use App\Form\LightingType;
 use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsLightingRepository;
 use App\Repository\EggsInputsRepository;
@@ -46,7 +46,7 @@ class LightingController extends AbstractController
     {
         $inputs = $eggsInputsRepository->find($inputs);
         $breeder = $eggSupplierRepository->find($breeder);
-        $form = $this->createForm(EggsInputsLightingType::class);
+        $form = $this->createForm(LightingType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -122,7 +122,7 @@ class LightingController extends AbstractController
      */
     public function edit(Request $request, Lighting $eggsInputsLighting): Response
     {
-        $form = $this->createForm(EggsInputsLightingType::class, $eggsInputsLighting);
+        $form = $this->createForm(LightingType::class, $eggsInputsLighting);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

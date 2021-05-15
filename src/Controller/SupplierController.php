@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Supplier;
-use App\Form\EggSupplierType;
+use App\Form\SupplierType;
 use App\Repository\EggSupplierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +34,7 @@ class SupplierController extends AbstractController
     public function new(Request $request): Response
     {
         $eggSupplier = new Supplier();
-        $form = $this->createForm(EggSupplierType::class, $eggSupplier);
+        $form = $this->createForm(SupplierType::class, $eggSupplier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -67,7 +67,7 @@ class SupplierController extends AbstractController
      */
     public function edit(Request $request, Supplier $eggSupplier): Response
     {
-        $form = $this->createForm(EggSupplierType::class, $eggSupplier);
+        $form = $this->createForm(SupplierType::class, $eggSupplier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

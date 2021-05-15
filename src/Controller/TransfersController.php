@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Inputs;
 use App\Entity\Transfers;
 use App\Entity\Supplier;
-use App\Form\EggsInputsTransfersType;
+use App\Form\TransfersType;
 use App\Repository\EggsInputsDetailsRepository;
 use App\Repository\EggsInputsRepository;
 use App\Repository\EggsInputsTransfersRepository;
@@ -46,7 +46,7 @@ class TransfersController extends AbstractController
     {
         $inputs = $eggsInputsRepository->find($inputs);
         $breeder = $eggSupplierRepository->find($breeder);
-        $form = $this->createForm(EggsInputsTransfersType::class);
+        $form = $this->createForm(TransfersType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -109,7 +109,7 @@ class TransfersController extends AbstractController
      */
     public function edit(Request $request, Transfers $eggsInputsTransfer): Response
     {
-        $form = $this->createForm(EggsInputsTransfersType::class, $eggsInputsTransfer);
+        $form = $this->createForm(TransfersType::class, $eggsInputsTransfer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

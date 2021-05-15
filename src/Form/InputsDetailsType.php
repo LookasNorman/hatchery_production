@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EggsInputsDetailsType extends AbstractType
+class InputsDetailsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

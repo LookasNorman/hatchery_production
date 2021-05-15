@@ -2,34 +2,27 @@
 
 namespace App\Form;
 
-use App\Entity\Supplier;
+use App\Entity\Inputs;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EggSupplierType extends AbstractType
+class InputsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'egg_supplier.form.label.name',
+                'label' => 'eggs_inputs.form.label.name',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
-            ->add('email', EmailType::class, [
-                'required' => false,
-                'label' => 'egg_supplier.form.label.email',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('phoneNumber', TextType::class, [
-                'required' => false,
-                'label' => 'egg_supplier.form.label.phone_number',
+            ->add('inputDate', DateType::class, [
+                'widget' => 'single_text',
+                'label' => 'eggs_inputs.form.label.input_date',
                 'attr' => [
                     'class' => 'form-control'
                 ]
@@ -40,7 +33,7 @@ class EggSupplierType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Supplier::class,
+            'data_class' => Inputs::class,
         ]);
     }
 }

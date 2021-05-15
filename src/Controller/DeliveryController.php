@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Delivery;
 use App\Form\DeliveryPartIndexType;
-use App\Form\EggsDeliveryType;
+use App\Form\DeliveryType;
 use App\Repository\EggsDeliveryRepository;
 use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,7 +36,7 @@ class DeliveryController extends AbstractController
     public function new(Request $request): Response
     {
         $eggsDelivery = new Delivery();
-        $form = $this->createForm(EggsDeliveryType::class, $eggsDelivery);
+        $form = $this->createForm(DeliveryType::class, $eggsDelivery);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -70,7 +70,7 @@ class DeliveryController extends AbstractController
      */
     public function edit(Request $request, Delivery $eggsDelivery): Response
     {
-        $form = $this->createForm(EggsDeliveryType::class, $eggsDelivery);
+        $form = $this->createForm(DeliveryType::class, $eggsDelivery);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
