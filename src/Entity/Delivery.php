@@ -49,7 +49,7 @@ class Delivery
     private $lastLayingDate;
 
     /**
-     * @ORM\OneToMany(targetEntity=DetailsDelivery::class, mappedBy="EggsDeliveries")
+     * @ORM\OneToMany(targetEntity=DetailsDelivery::class, mappedBy="eggsDeliveries")
      */
     private $eggsInputsDetailsEggsDeliveries;
 
