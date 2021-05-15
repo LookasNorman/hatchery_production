@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Repository\ChicksRecipientRepository;
-use App\Repository\EggsDeliveryRepository;
-use App\Repository\EggsInputsRepository;
-use App\Repository\EggSupplierRepository;
+use App\Repository\DeliveryRepository;
+use App\Repository\InputsRepository;
+use App\Repository\SupplierRepository;
 use App\Repository\HatchersRepository;
 use App\Repository\SettersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,10 +19,10 @@ class DefaultController extends AbstractController
      * @Route("/", name="main_page")
      */
     public function index(
-        EggSupplierRepository $supplierRepository,
+        SupplierRepository $supplierRepository,
         ChicksRecipientRepository $recipientRepository,
-        EggsInputsRepository $inputsRepository,
-        EggsDeliveryRepository $deliveryRepository
+        InputsRepository $inputsRepository,
+        DeliveryRepository $deliveryRepository
     ): Response
     {
         $suppliers = [];

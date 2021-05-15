@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\EggsSelectionsRepository;
+use App\Repository\SelectionsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=EggsSelectionsRepository::class)
+ * @ORM\Entity(repositoryClass=SelectionsRepository::class)
  */
 class Selections
 {

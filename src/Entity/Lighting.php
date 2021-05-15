@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\EggsInputsLightingRepository;
+use App\Repository\LightingRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=EggsInputsLightingRepository::class)
+ * @ORM\Entity(repositoryClass=LightingRepository::class)
  */
 class Lighting
 {

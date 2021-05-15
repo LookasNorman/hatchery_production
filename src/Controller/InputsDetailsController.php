@@ -8,10 +8,10 @@ use App\Entity\InputsDetails;
 use App\Entity\DetailsDelivery;
 use App\Entity\Herds;
 use App\Form\InputsDetailsType;
-use App\Repository\EggsDeliveryRepository;
-use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
-use App\Repository\EggsInputsDetailsRepository;
-use App\Repository\EggsInputsRepository;
+use App\Repository\DeliveryRepository;
+use App\Repository\DetailsDeliveryRepository;
+use App\Repository\DetailsRepository;
+use App\Repository\InputsRepository;
 use App\Repository\HerdsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +28,7 @@ class InputsDetailsController extends AbstractController
     /**
      * @Route("/", name="eggs_inputs_details_index", methods={"GET"})
      */
-    public function index(EggsInputsDetailsRepository $eggsInputsDetailsRepository, EggsInputsDetailsEggsDeliveryRepository $repository): Response
+    public function index(DetailsRepository $eggsInputsDetailsRepository, DetailsDeliveryRepository $repository): Response
     {
         $eggsInputsDetails = $eggsInputsDetailsRepository->deliveries();
         return $this->render('eggs_inputs_details/index.html.twig', [
@@ -42,8 +42,8 @@ class InputsDetailsController extends AbstractController
      */
     public function new($inputs,
                         Request $request,
-                        EggsDeliveryRepository $deliveryRepository,
-                        EggsInputsRepository $eggsInputsRepository
+                        DeliveryRepository $deliveryRepository,
+                        InputsRepository $eggsInputsRepository
     ): Response
     {
         $inputs = $eggsInputsRepository->find($inputs);

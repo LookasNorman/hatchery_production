@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Supplier;
 use App\Form\SupplierType;
-use App\Repository\EggSupplierRepository;
+use App\Repository\SupplierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,7 @@ class SupplierController extends AbstractController
     /**
      * @Route("/", name="egg_supplier_index", methods={"GET"})
      */
-    public function index(EggSupplierRepository $eggSupplierRepository): Response
+    public function index(SupplierRepository $eggSupplierRepository): Response
     {
         return $this->render('egg_supplier/index.html.twig', [
             'egg_suppliers' => $eggSupplierRepository->findAll(),

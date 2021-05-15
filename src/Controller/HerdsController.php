@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Herds;
 use App\Form\HerdsType;
-use App\Repository\EggSupplierRepository;
+use App\Repository\SupplierRepository;
 use App\Repository\HerdsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +31,7 @@ class HerdsController extends AbstractController
     /**
      * @Route("/breeder/{id}", name="herds_breeder_index", methods={"GET"})
      */
-    public function breeder(HerdsRepository $herdsRepository, EggSupplierRepository $eggSupplierRepository, $id): Response
+    public function breeder(HerdsRepository $herdsRepository, SupplierRepository $eggSupplierRepository, $id): Response
     {
         $breeder = $eggSupplierRepository->find($id);
         return $this->render('herds/index.html.twig', [

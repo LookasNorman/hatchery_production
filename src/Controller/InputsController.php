@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Inputs;
 use App\Form\InputsType;
-use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
-use App\Repository\EggsInputsDetailsRepository;
-use App\Repository\EggsInputsRepository;
+use App\Repository\DetailsDeliveryRepository;
+use App\Repository\DetailsRepository;
+use App\Repository\InputsRepository;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
@@ -31,7 +31,7 @@ class InputsController extends AbstractController
     /**
      * @Route("/", name="eggs_inputs_index", methods={"GET"})
      */
-    public function index(EggsInputsRepository $eggsInputsRepository): Response
+    public function index(InputsRepository $eggsInputsRepository): Response
     {
         return $this->render('eggs_inputs/index.html.twig', [
             'eggs_inputs' => $eggsInputsRepository->findAll(),
@@ -65,7 +65,7 @@ class InputsController extends AbstractController
     /**
      * @Route("/pdf", name="eggs_inputs_pdf")
      */
-    public function pdf(EggsInputsRepository $eggsInputsRepository)
+    public function pdf(InputsRepository $eggsInputsRepository)
     {
         // Configure Dompdf according to your needs
         $pdfOptions = new Options();
@@ -99,7 +99,7 @@ class InputsController extends AbstractController
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @Route("/xls/{id}", name="eggs_inputs_xls")
      */
-    public function xls(Inputs $eggsInput, EggsInputsDetailsRepository $detailsRepository): StreamedResponse
+    public function xls(Inputs $eggsInput, DetailsRepository $detailsRepository): StreamedResponse
     {
         $details = $detailsRepository->deliveriesInput($eggsInput);
 
@@ -307,7 +307,7 @@ class InputsController extends AbstractController
     /**
      * @Route("/{id}", name="eggs_inputs_show", methods={"GET"})
      */
-    public function show(Inputs $eggsInput, EggsInputsDetailsRepository $detailsRepository, EggsInputsDetailsEggsDeliveryRepository $deliveryRepository): Response
+    public function show(Inputs $eggsInput, DetailsRepository $detailsRepository, DetailsDeliveryRepository $deliveryRepository): Response
     {
         $inputDetails = $detailsRepository->deliveriesInput($eggsInput);
         $details = [];

@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
+use App\Repository\DetailsDeliveryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=EggsInputsDetailsEggsDeliveryRepository::class)
+ * @ORM\Entity(repositoryClass=DetailsDeliveryRepository::class)
  */
 class DetailsDelivery
 {

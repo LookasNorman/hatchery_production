@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Entity\Delivery;
 use App\Form\DeliveryPartIndexType;
 use App\Form\DeliveryType;
-use App\Repository\EggsDeliveryRepository;
-use App\Repository\EggsInputsDetailsEggsDeliveryRepository;
+use App\Repository\DeliveryRepository;
+use App\Repository\DetailsDeliveryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,7 @@ class DeliveryController extends AbstractController
     /**
      * @Route("/", name="eggs_delivery_index", methods={"GET"})
      */
-    public function index(EggsDeliveryRepository $eggsDeliveryRepository): Response
+    public function index(DeliveryRepository $eggsDeliveryRepository): Response
     {
         return $this->render('eggs_delivery/index.html.twig', [
             'eggs_deliveries' => $eggsDeliveryRepository->findAll(),

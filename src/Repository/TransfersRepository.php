@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Supplier;
+use App\Entity\Transfers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Supplier|null find($id, $lockMode = null, $lockVersion = null)
- * @method Supplier|null findOneBy(array $criteria, array $orderBy = null)
- * @method Supplier[]    findAll()
- * @method Supplier[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Transfers|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Transfers|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Transfers[]    findAll()
+ * @method Transfers[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EggSupplierRepository extends ServiceEntityRepository
+class TransfersRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Supplier::class);
+        parent::__construct($registry, Transfers::class);
     }
 
     // /**
-    //  * @return Supplier[] Returns an array of Supplier objects
+    //  * @return Transfers[] Returns an array of Transfers objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class EggSupplierRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Supplier
+    public function findOneBySomeField($value): ?Transfers
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

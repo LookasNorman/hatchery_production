@@ -8,7 +8,7 @@ use App\Entity\Inputs;
 use App\Entity\InputsDetails;
 use App\Entity\Supplier;
 use App\Entity\Herds;
-use App\Repository\EggsDeliveryRepository;
+use App\Repository\DeliveryRepository;
 use App\Repository\HerdsRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

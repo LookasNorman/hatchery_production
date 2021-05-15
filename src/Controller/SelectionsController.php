@@ -6,10 +6,10 @@ use App\Entity\Inputs;
 use App\Entity\Selections;
 use App\Entity\Supplier;
 use App\Form\SelectionsType;
-use App\Repository\EggsInputsDetailsRepository;
-use App\Repository\EggsInputsRepository;
-use App\Repository\EggsSelectionsRepository;
-use App\Repository\EggSupplierRepository;
+use App\Repository\DetailsRepository;
+use App\Repository\InputsRepository;
+use App\Repository\SelectionsRepository;
+use App\Repository\SupplierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +25,7 @@ class SelectionsController extends AbstractController
     /**
      * @Route("/", name="eggs_selections_index", methods={"GET"})
      */
-    public function index(EggsSelectionsRepository $eggsSelectionsRepository): Response
+    public function index(SelectionsRepository $eggsSelectionsRepository): Response
     {
         return $this->render('eggs_selections/index.html.twig', [
             'eggs_selections' => $eggsSelectionsRepository->findAll(),
@@ -39,9 +39,9 @@ class SelectionsController extends AbstractController
     public function new($inputs,
                         $breeder,
                         Request $request,
-                        EggsInputsDetailsRepository $detailsRepository,
-                        EggsInputsRepository $eggsInputsRepository,
-                        EggSupplierRepository $eggSupplierRepository
+                        DetailsRepository $detailsRepository,
+                        InputsRepository $eggsInputsRepository,
+                        SupplierRepository $eggSupplierRepository
     ): Response
     {
         $inputs = $eggsInputsRepository->find($inputs);

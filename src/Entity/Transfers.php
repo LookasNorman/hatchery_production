@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\EggsInputsTransfersRepository;
+use App\Repository\TransfersRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=EggsInputsTransfersRepository::class)
+ * @ORM\Entity(repositoryClass=TransfersRepository::class)
  */
 class Transfers
 {

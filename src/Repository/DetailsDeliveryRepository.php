@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method DetailsDelivery[]    findAll()
  * @method DetailsDelivery[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EggsInputsDetailsEggsDeliveryRepository extends ServiceEntityRepository
+class DetailsDeliveryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

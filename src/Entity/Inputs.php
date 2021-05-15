@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\EggsInputsRepository;
+use App\Repository\InputsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=EggsInputsRepository::class)
+ * @ORM\Entity(repositoryClass=InputsRepository::class)
  */
 class Inputs
 {

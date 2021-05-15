@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Transfers;
+use App\Entity\Selections;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Transfers|null find($id, $lockMode = null, $lockVersion = null)
- * @method Transfers|null findOneBy(array $criteria, array $orderBy = null)
- * @method Transfers[]    findAll()
- * @method Transfers[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Selections|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Selections|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Selections[]    findAll()
+ * @method Selections[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EggsInputsTransfersRepository extends ServiceEntityRepository
+class SelectionsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Transfers::class);
+        parent::__construct($registry, Selections::class);
     }
 
     // /**
-    //  * @return Transfers[] Returns an array of Transfers objects
+    //  * @return Selections[] Returns an array of Selections objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class EggsInputsTransfersRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Transfers
+    public function findOneBySomeField($value): ?Selections
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

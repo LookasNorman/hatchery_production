@@ -6,10 +6,10 @@ use App\Entity\Inputs;
 use App\Entity\Lighting;
 use App\Entity\Supplier;
 use App\Form\LightingType;
-use App\Repository\EggsInputsDetailsRepository;
-use App\Repository\EggsInputsLightingRepository;
-use App\Repository\EggsInputsRepository;
-use App\Repository\EggSupplierRepository;
+use App\Repository\DetailsRepository;
+use App\Repository\LightingRepository;
+use App\Repository\InputsRepository;
+use App\Repository\SupplierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +25,7 @@ class LightingController extends AbstractController
     /**
      * @Route("/", name="eggs_inputs_lighting_index", methods={"GET"})
      */
-    public function index(EggsInputsLightingRepository $eggsInputsLightingRepository): Response
+    public function index(LightingRepository $eggsInputsLightingRepository): Response
     {
         return $this->render('eggs_inputs_lighting/index.html.twig', [
             'eggs_inputs_lightings' => $eggsInputsLightingRepository->findAll(),
@@ -39,9 +39,9 @@ class LightingController extends AbstractController
     public function new($inputs,
                         $breeder,
                         Request $request,
-                        EggsInputsDetailsRepository $detailsRepository,
-                        EggsInputsRepository $eggsInputsRepository,
-                        EggSupplierRepository $eggSupplierRepository
+                        DetailsRepository $detailsRepository,
+                        InputsRepository $eggsInputsRepository,
+                        SupplierRepository $eggSupplierRepository
     ): Response
     {
         $inputs = $eggsInputsRepository->find($inputs);
@@ -94,11 +94,11 @@ class LightingController extends AbstractController
     }
 
     /**
-     * @param \App\Repository\EggsInputsRepository $inputsRepository
+     * @param \App\Repository\InputsRepository $inputsRepository
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/lighting", name="no_lighting_index", methods={"GET"})
      */
-    public function showNoLighting(EggsInputsRepository $inputsRepository): Response
+    public function showNoLighting(InputsRepository $inputsRepository): Response
     {
         $lighting = $inputsRepository->inputsNoLighting();
         return $this->render('eggs_inputs/no_lighting.html.twig', [

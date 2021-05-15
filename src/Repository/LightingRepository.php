@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Selections;
+use App\Entity\Lighting;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Selections|null find($id, $lockMode = null, $lockVersion = null)
- * @method Selections|null findOneBy(array $criteria, array $orderBy = null)
- * @method Selections[]    findAll()
- * @method Selections[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Lighting|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Lighting|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Lighting[]    findAll()
+ * @method Lighting[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EggsSelectionsRepository extends ServiceEntityRepository
+class LightingRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Selections::class);
+        parent::__construct($registry, Lighting::class);
     }
 
     // /**
-    //  * @return Selections[] Returns an array of Selections objects
+    //  * @return Lighting[] Returns an array of Lighting objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class EggsSelectionsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Selections
+    public function findOneBySomeField($value): ?Lighting
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

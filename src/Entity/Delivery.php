@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\EggsDeliveryRepository;
+use App\Repository\DeliveryRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=EggsDeliveryRepository::class)
+ * @ORM\Entity(repositoryClass=DeliveryRepository::class)
  */
 class Delivery
 {
