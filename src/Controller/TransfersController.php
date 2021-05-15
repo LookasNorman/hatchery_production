@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @Route("/eggs_inputs_transfers")
+ * @Route("/transfers")
  * @IsGranted("ROLE_USER")
  */
 class TransfersController extends AbstractController

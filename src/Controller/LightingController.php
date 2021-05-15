@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @Route("/eggs_inputs_lighting")
+ * @Route("/lighting")
  * @IsGranted("ROLE_USER")
  */
 class LightingController extends AbstractController

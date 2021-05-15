@@ -20,10 +20,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @Route("/eggs_inputs_details")
+ * @Route("/inputs_details")
  * @IsGranted("ROLE_USER")
  */
-class EggsInputsDetailsController extends AbstractController
+class InputsDetailsController extends AbstractController
 {
     /**
      * @Route("/", name="eggs_inputs_details_index", methods={"GET"})

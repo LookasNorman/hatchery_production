@@ -23,10 +23,10 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 
 /**
- * @Route("/eggs_inputs")
+ * @Route("/inputs")
  * @IsGranted("ROLE_USER")
  */
-class EggsInputsController extends AbstractController
+class InputsController extends AbstractController
 {
     /**
      * @Route("/", name="eggs_inputs_index", methods={"GET"})

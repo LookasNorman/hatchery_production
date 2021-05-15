@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @Route("/eggs_selections")
+ * @Route("/selections")
  * @IsGranted("ROLE_USER")
  */
 class SelectionsController extends AbstractController

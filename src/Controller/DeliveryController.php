@@ -14,10 +14,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @Route("/eggs_delivery")
+ * @Route("/delivery")
  * @IsGranted("ROLE_USER")
  */
-class EggsDeliveryController extends AbstractController
+class DeliveryController extends AbstractController
 {
     /**
      * @Route("/", name="eggs_delivery_index", methods={"GET"})
