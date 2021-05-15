@@ -60,7 +60,7 @@ class InputsDetailsController extends AbstractController
             foreach ($deliveries as $delivery) {
                 $eggsNumber = $eggsNumber + $delivery->getEggsNumber();
             }
-            if ($eggsNumber > $totalEggs) {
+            if ($eggsNumber >= $totalEggs) {
                 $entityManager->persist($eggsInputsDetail);
                 foreach ($deliveries as $delivery) {
                     $eggsNumber = $delivery->getEggsOnWarehouse();
@@ -68,7 +68,7 @@ class InputsDetailsController extends AbstractController
                         $eggsInputsDetailEggsDeliveries = new DetailsDelivery();
                         $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
                         $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
-                        if ($eggsNumber > $totalEggs) {
+                        if ($eggsNumber >= $totalEggs) {
                             $eggsInputsDetailEggsDeliveries->setEggsNumber($totalEggs);
                             $delivery->setEggsOnWarehouse($eggsNumber - $totalEggs);
                             $totalEggs = 0;
