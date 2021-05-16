@@ -24,6 +24,9 @@ class DetailsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('eid')
             ->addSelect('edd')
             ->join('eid.eggsInputsDetailsEggsDeliveries', 'edd')
+            ->join('eid.eggInput', 'e')
+            ->orderBy('e.name')
+            ->addOrderBy('eid.chicksRecipient')
             ->getQuery()
             ->execute();
     }

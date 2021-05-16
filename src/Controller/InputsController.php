@@ -34,7 +34,7 @@ class InputsController extends AbstractController
     public function index(InputsRepository $eggsInputsRepository): Response
     {
         return $this->render('eggs_inputs/index.html.twig', [
-            'eggs_inputs' => $eggsInputsRepository->findAll(),
+            'eggs_inputs' => $eggsInputsRepository->findBy([], ['inputDate' => 'desc']),
         ]);
     }
 
