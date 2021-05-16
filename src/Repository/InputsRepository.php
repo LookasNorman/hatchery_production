@@ -19,19 +19,6 @@ class InputsRepository extends ServiceEntityRepository
         parent::__construct($registry, Inputs::class);
     }
 
-    public function inputsDetails()
-    {
-        return $this->createQueryBuilder('e')
-            ->select('SUM(eid.chickNumber) as chickNumber', 'SUM(idd.eggsNumber) as eggsNumber')
-            ->join('e.eggsInputsDetails', 'eid')
-            ->leftJoin('eid.eggsSelections', 'es')
-            ->leftJoin('eid.eggsInputsDetailsEggsDeliveries', 'idd')
-            ->where('es.id IS NULL')
-            ->getQuery()
-            ->getScalarResult()
-            ;
-    }
-
     public function inputsNoLighting()
     {
         return $this->createQueryBuilder('e')
@@ -55,6 +42,8 @@ class InputsRepository extends ServiceEntityRepository
             ->leftJoin('eid.eggsInputsDetailsEggsDeliveries', 'idd')
             ->where('il.id IS NULL')
             ->groupBy('e.id')
+            ->orderBy('e.inputDate')
+            ->addOrderBy('e.name')
             ->getQuery()
             ->getResult()
             ;
@@ -70,6 +59,8 @@ class InputsRepository extends ServiceEntityRepository
             ->leftJoin('eid.eggsInputsLightings', 'il')
             ->where('it.id IS NULL')
             ->groupBy('e.id')
+            ->orderBy('e.inputDate')
+            ->addOrderBy('e.name')
             ->getQuery()
             ->getResult()
             ;
@@ -83,6 +74,8 @@ class InputsRepository extends ServiceEntityRepository
             ->leftJoin('eid.eggsSelections', 'es')
             ->where('es.id IS NULL')
             ->groupBy('e.id')
+            ->orderBy('e.inputDate')
+            ->addOrderBy('e.name')
             ->getQuery()
             ->getResult()
             ;
