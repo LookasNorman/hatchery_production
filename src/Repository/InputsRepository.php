@@ -40,7 +40,7 @@ class InputsRepository extends ServiceEntityRepository
             ->leftJoin('eid.eggsInputsLightings', 'il')
             ->leftJoin('eid.eggsInputsDetailsEggsDeliveries', 'idd')
             ->where('il.id IS NULL')
-//            ->groupBy('e.id')
+            ->groupBy('e.id')
             ->getQuery()
             ->getResult()
             ;
@@ -88,32 +88,4 @@ class InputsRepository extends ServiceEntityRepository
             ;
     }
 
-    // /**
-    //  * @return Inputs[] Returns an array of Inputs objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Inputs
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

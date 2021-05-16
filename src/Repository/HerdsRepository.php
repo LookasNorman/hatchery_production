@@ -19,32 +19,15 @@ class HerdsRepository extends ServiceEntityRepository
         parent::__construct($registry, Herds::class);
     }
 
-    // /**
-    //  * @return Herds[] Returns an array of Herds objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function herdsEggsOnWarehouse()
     {
         return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('h.id', 'ASC')
-            ->setMaxResults(10)
+            ->addSelect('SUM(ed.eggsOnWarehouse) as eggs')
+            ->join('h.eggsDeliveries', 'ed')
+            ->groupBy('h')
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Herds
-    {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
