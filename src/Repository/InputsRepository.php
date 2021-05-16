@@ -42,6 +42,8 @@ class InputsRepository extends ServiceEntityRepository
             ->leftJoin('eid.eggsInputsDetailsEggsDeliveries', 'idd')
             ->where('il.id IS NULL')
             ->groupBy('e.id')
+            ->orderBy('e.inputDate')
+            ->addOrderBy('e.name')
             ->getQuery()
             ->getResult()
             ;
@@ -57,6 +59,8 @@ class InputsRepository extends ServiceEntityRepository
             ->leftJoin('eid.eggsInputsLightings', 'il')
             ->where('it.id IS NULL')
             ->groupBy('e.id')
+            ->orderBy('e.inputDate')
+            ->addOrderBy('e.name')
             ->getQuery()
             ->getResult()
             ;
@@ -70,6 +74,8 @@ class InputsRepository extends ServiceEntityRepository
             ->leftJoin('eid.eggsSelections', 'es')
             ->where('es.id IS NULL')
             ->groupBy('e.id')
+            ->orderBy('e.inputDate')
+            ->addOrderBy('e.name')
             ->getQuery()
             ->getResult()
             ;
