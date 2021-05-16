@@ -27,7 +27,7 @@ class InputsRepository extends ServiceEntityRepository
             ->leftJoin('eid.eggsInputsLightings', 'il')
             ->leftJoin('eid.eggsInputsDetailsEggsDeliveries', 'idd')
             ->where('il.id IS NULL')
-            ->groupBy('e.id')
+            ->orderBy('e.inputDate')
             ->getQuery()
             ->getResult()
             ;

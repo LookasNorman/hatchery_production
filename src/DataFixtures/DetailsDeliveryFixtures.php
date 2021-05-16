@@ -18,11 +18,11 @@ class DetailsDeliveryFixtures extends Fixture
         $inputs = $manager->getRepository(Inputs::class)->findAll();
 
         foreach ($inputs as $input) {
-            $maxFor = rand(1, 3);
+            $maxFor = rand(1, 4);
             for ($i = 0; $i < $maxFor; $i++) {
                 $details = new InputsDetails();
                 $details->setEggInput($input);
-                $totalEggs = rand(1, 2) * 4800;
+                $totalEggs = rand(1, 5) * 4800;
                 $chicksNumber = $totalEggs * 0.9;
                 $details->setChickNumber($chicksNumber);
                 $chicksRecipients = $manager->getRepository(ChicksRecipient::class)->findAll();
