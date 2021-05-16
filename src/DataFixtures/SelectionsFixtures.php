@@ -22,7 +22,7 @@ class SelectionsFixtures extends Fixture
                 foreach ($details as $detail){
                     $selection = new Selections();
                     $selection->setSelectionDate($SelectionsDate);
-                    $chickNumber = $detail->getChickNumber() * (rand(1, 3) / 100);
+                    $chickNumber = $detail->getChickNumber() * (rand(97, 99) / 100);
                     $cullChick = $detail->getChickNumber() - $chickNumber;
                     $selection->setChickNumber($chickNumber);
                     $selection->setCullChicken($cullChick);
