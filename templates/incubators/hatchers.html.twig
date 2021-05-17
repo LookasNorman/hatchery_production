@@ -32,11 +32,11 @@
                             <td>{{ hatcher.name }}</td>
                             <td>{{ hatcher.shortname }}</td>
                             <td>
-                                <a class="badge badge-info" href="{{ path('setters_show', {'id': hatcher.id}) }}">
+                                <a class="badge badge-info" href="{{ path('hatchers_show', {'id': hatcher.id}) }}">
                                     {% trans %}incubators.hatchers.table.badge.show{% endtrans %}
                                 </a>
                                 {% if is_granted('ROLE_ADMIN') %}
-                                    <a class="badge badge-warning" href="{{ path('setters_edit', {'id': hatcher.id}) }}">
+                                    <a class="badge badge-warning" href="{{ path('hatchers_edit', {'id': hatcher.id}) }}">
                                         {% trans %}incubators.hatchers.table.badge.edit{% endtrans %}
                                     </a>
                                 {% endif %}
