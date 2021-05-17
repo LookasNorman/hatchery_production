@@ -231,6 +231,8 @@ eggs_inputs:
       back: Lista nakładów
   no_lighting:
     title: Wykaz nakładów przed świetleniem
+  no_transfer:
+    title: Wykaz nakładów przed przekładem
   show:
     title: Szczegóły nakładu
     input_date: Data nakładu

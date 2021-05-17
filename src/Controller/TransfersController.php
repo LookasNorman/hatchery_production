@@ -94,6 +94,19 @@ class TransfersController extends AbstractController
     }
 
     /**
+     * @param \App\Repository\InputsRepository $inputsRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/transfer", name="no_transfer_index", methods={"GET"})
+     */
+    public function showNoTransfer(InputsRepository $inputsRepository): Response
+    {
+        $transfers = $inputsRepository->inputsNoTransfer();
+        return $this->render('eggs_inputs/no_transfer.html.twig', [
+            'eggs_inputs' => $transfers,
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="eggs_inputs_transfers_show", methods={"GET"})
      */
     public function show(Transfers $eggsInputsTransfer): Response
