@@ -103,6 +103,19 @@ class SelectionsController extends AbstractController
     }
 
     /**
+     * @param \App\Repository\InputsRepository $inputsRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/transfer", name="no_selection_index", methods={"GET"})
+     */
+    public function showNoSelection(InputsRepository $inputsRepository): Response
+    {
+        $selections = $inputsRepository->inputsNoSelection();
+        return $this->render('eggs_inputs/no_selection.html.twig', [
+            'eggs_inputs' => $selections,
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="eggs_selections_show", methods={"GET"})
      */
     public function show(Selections $eggsSelection): Response

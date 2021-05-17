@@ -47,6 +47,20 @@ class InputsRepository extends ServiceEntityRepository
             ;
     }
 
+    public function inputsNoSelection()
+    {
+        return $this->createQueryBuilder('e')
+            ->addSelect('eid')
+            ->join('e.eggsInputsDetails', 'eid')
+            ->leftJoin('eid.eggsSelections', 'es')
+            ->leftJoin('eid.eggsInputsDetailsEggsDeliveries', 'idd')
+            ->where('es.id IS NULL')
+            ->orderBy('e.inputDate')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function inputsLighting()
     {
         return $this->createQueryBuilder('e')
