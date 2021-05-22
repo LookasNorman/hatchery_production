@@ -36,6 +36,41 @@ class InputsDetailsController extends AbstractController
         ]);
     }
 
+    public function addDelivery($deliveries, $totalEggs, $eggsInputsDetail)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        foreach ($deliveries as $delivery) {
+            $eggsNumber = $delivery->getEggsOnWarehouse();
+            if ($totalEggs > 0 && $eggsNumber > 0) {
+                $eggsInputsDetailEggsDeliveries = new DetailsDelivery();
+                $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
+                $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
+                if ($eggsNumber >= $totalEggs) {
+                    $eggsInputsDetailEggsDeliveries->setEggsNumber($totalEggs);
+                    $delivery->setEggsOnWarehouse($eggsNumber - $totalEggs);
+                    $totalEggs = 0;
+                } else {
+                    $eggsInputsDetailEggsDeliveries->setEggsNumber($eggsNumber);
+                    $delivery->setEggsOnWarehouse(0);
+                    $totalEggs = $totalEggs - $eggsNumber;
+                }
+                $entityManager->persist($eggsInputsDetailEggsDeliveries);
+            }
+        }
+
+        $entityManager->flush();
+    }
+
+    public function getEggsNumberInDeliveries($deliveries)
+    {
+        $eggsNumber = 0;
+        foreach ($deliveries as $delivery) {
+            $eggsNumber = $eggsNumber + $delivery->getEggsNumber();
+        }
+        return $eggsNumber;
+    }
+
     /**
      * @Route("/new/{inputs}", name="eggs_inputs_details_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
@@ -56,32 +91,13 @@ class InputsDetailsController extends AbstractController
             $herd = $form['herd']->getData();
             $totalEggs = $form['eggsNumber']->getData();
             $deliveries = $deliveryRepository->eggsOnWarehouse($herd);
-            $eggsNumber = 0;
-            foreach ($deliveries as $delivery) {
-                $eggsNumber = $eggsNumber + $delivery->getEggsNumber();
-            }
+
+            $eggsNumber = $this->getEggsNumberInDeliveries($deliveries);
+
             if ($eggsNumber >= $totalEggs) {
                 $entityManager->persist($eggsInputsDetail);
-                foreach ($deliveries as $delivery) {
-                    $eggsNumber = $delivery->getEggsOnWarehouse();
-                    if ($totalEggs > 0 && $eggsNumber > 0) {
-                        $eggsInputsDetailEggsDeliveries = new DetailsDelivery();
-                        $eggsInputsDetailEggsDeliveries->setEggsDeliveries($delivery);
-                        $eggsInputsDetailEggsDeliveries->setEggsInputDetails($eggsInputsDetail);
-                        if ($eggsNumber >= $totalEggs) {
-                            $eggsInputsDetailEggsDeliveries->setEggsNumber($totalEggs);
-                            $delivery->setEggsOnWarehouse($eggsNumber - $totalEggs);
-                            $totalEggs = 0;
-                        } else {
-                            $eggsInputsDetailEggsDeliveries->setEggsNumber($eggsNumber);
-                            $delivery->setEggsOnWarehouse(0);
-                            $totalEggs = $totalEggs - $eggsNumber;
-                        }
-                        $entityManager->persist($eggsInputsDetailEggsDeliveries);
-                    }
-                }
 
-                $entityManager->flush();
+                $this->addDelivery($deliveries, $totalEggs, $eggsInputsDetail);
 
                 return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputs->getId()]);
             }
