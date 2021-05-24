@@ -50,6 +50,11 @@ class User implements UserInterface
      */
     private $phoneNumber;
 
+    /**
+     *
+     */
+    private $plainPassword;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -163,6 +168,18 @@ class User implements UserInterface
     public function setPhoneNumber(?string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }

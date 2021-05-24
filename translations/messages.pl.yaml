@@ -687,6 +687,19 @@ menu:
     logout: Wyloguj
     login: Zaloguj
     registration: Nowy użytkownik
+registration:
+  form:
+    button:
+      add: Utwórz
+    label:
+      email: Email
+      firstname: Imię
+      lastname: Nazwisko
+      password: Hasło
+      phone_number: Numer telefonu
+      repeat_password: Powtórz hasło
+  register:
+    title: Dodawanie nowego użytkownika
 security:
   login:
     form:

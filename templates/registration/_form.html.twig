@@ -1,0 +1,51 @@
+{{ form_start(form) }}
+<div class="form-group">
+    <label>{{ form_label(form.email) }}</label>
+    {{ form_widget(form.email) }}
+    <small>{{ form_help(form.email) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.email) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.plainPassword.first) }}</label>
+    {{ form_widget(form.plainPassword.first) }}
+    <small>{{ form_help(form.plainPassword.first) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.plainPassword.first) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.plainPassword.second) }}</label>
+    {{ form_widget(form.plainPassword.second) }}
+    <small>{{ form_help(form.plainPassword.second) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.plainPassword.second) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.firstname) }}</label>
+    {{ form_widget(form.firstname) }}
+    <small>{{ form_help(form.firstname) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.firstname) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.lastname) }}</label>
+    {{ form_widget(form.lastname) }}
+    <small>{{ form_help(form.lastname) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.lastname) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.phoneNumber) }}</label>
+    {{ form_widget(form.phoneNumber) }}
+    <small>{{ form_help(form.phoneNumber) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.phoneNumber) }}
+    </div>
+</div>
+<button class="btn btn-success" type="submit">{% trans %}registration.form.button.add{% endtrans %}</button>
+{{ form_end(form) }}
