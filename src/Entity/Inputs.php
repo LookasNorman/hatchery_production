@@ -23,6 +23,7 @@ class Inputs
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\Length(
+     *     allowEmptyString=false,
      *     min=3,
      *     max=50,
      *     minMessage = "eggs_inputs.name.min",

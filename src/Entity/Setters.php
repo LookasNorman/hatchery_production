@@ -21,6 +21,7 @@ class Setters
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\Length(
+     *     allowEmptyString=false,
      *     min=4,
      *     max=20,
      *     minMessage="setters.name.min",
@@ -32,6 +33,7 @@ class Setters
     /**
      * @ORM\Column(type="string", length=4)
      * @Assert\Length(
+     *     allowEmptyString=false,
      *     min=2,
      *     max=4,
      *     minMessage="setters.shortname.min",

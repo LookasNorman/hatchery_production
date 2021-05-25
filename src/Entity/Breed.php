@@ -23,10 +23,11 @@ class Breed
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\Length(
-     *      min = 4,
-     *      max = 20,
-     *      minMessage = "breed.name.min",
-     *      maxMessage = "breed.name.max"
+     *     allowEmptyString=false,
+     *     min = 4,
+     *     max = 20,
+     *     minMessage = "breed.name.min",
+     *     maxMessage = "breed.name.max"
      * )
      */
     private $name;
@@ -34,10 +35,11 @@ class Breed
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\Length(
-     *      min = 3,
-     *      max = 20,
-     *      minMessage = "breed.type.min",
-     *      maxMessage = "breed.type.max"
+     *     allowEmptyString=false,
+     *     min = 3,
+     *     max = 20,
+     *     minMessage = "breed.type.min",
+     *     maxMessage = "breed.type.max"
      * )
      */
     private $type;

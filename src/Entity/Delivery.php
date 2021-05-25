@@ -61,6 +61,7 @@ class Delivery
     /**
      * @ORM\Column(type="string", length=6, nullable=true)
      * @Assert\Length(
+     *     allowEmptyString=false,
      *     min=6,
      *     max=6,
      *     minMessage="eggs_delivery.part_index.min",

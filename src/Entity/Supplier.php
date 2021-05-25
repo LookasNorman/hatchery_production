@@ -24,10 +24,11 @@ class Supplier
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\Length(
-     *      min = 5,
-     *      max = 50,
-     *      minMessage = "egg_supplier.name.min",
-     *      maxMessage = "egg_supplier.name.max"
+     *     allowEmptyString=false,
+     *     min = 5,
+     *     max = 50,
+     *     minMessage = "egg_supplier.name.min",
+     *     maxMessage = "egg_supplier.name.max"
      * )
      */
     private $name;
@@ -44,10 +45,11 @@ class Supplier
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
      * @Assert\Length(
-     *      min = 9,
-     *      max = 30,
-     *      minMessage = "egg_supplier.phone_number.min",
-     *      maxMessage = "egg_supplier.phone_number.max"
+     *     allowEmptyString=false,
+     *     min = 9,
+     *     max = 30,
+     *     minMessage = "egg_supplier.phone_number.min",
+     *     maxMessage = "egg_supplier.phone_number.max"
      * )
      */
     private $phoneNumber;

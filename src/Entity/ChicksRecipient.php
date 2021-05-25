@@ -23,6 +23,7 @@ class ChicksRecipient
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\Length(
+     *     allowEmptyString=false,
      *     min=5,
      *     max=50,
      *     minMessage = "chicks_recipient.name.min",
@@ -43,6 +44,7 @@ class ChicksRecipient
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
      * @Assert\Length(
+     *     allowEmptyString=false,
      *     min=9,
      *     max=30,
      *     minMessage = "chicks_recipient.phone_number.min",
