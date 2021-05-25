@@ -36,6 +36,16 @@ herds:
   name:
     min: Nazwa musi zawierać conajmniej 3 znaki
     max: Nazwa nie może być dłuższa niż 20 znaków
+plain_password:
+  not_blank: Hasło nie może być puste
+  min: Hasło jest zbyt krótkie. Powinno mieć od 6 do 100 znaków.
+  max: Hasło jest zbyt długie. Powinno mieć od 6 do 100 znaków.
+registration:
+  email:
+    min: Email jest zbyt krótki. Powinien mieć od 7 do 180 znaków'
+    max: Email jest zbyt długi. Powinien mieć od 7 do 180 znaków'
+  repeat_password:
+    error: Hasła nie są takie same
 setters:
   name:
     min: Nazwa jest zbyt krótka. Powinna mieć od 4 do 20 znaków.

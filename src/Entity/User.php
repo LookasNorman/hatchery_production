@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -21,6 +22,15 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email()
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     allowEmptyString=false,
+     *     min=7,
+     *     max=180,
+     *     minMessage="registration.email.min",
+     *     maxMessage="registration.email.max",
+     * )
      */
     private $email;
 
@@ -37,23 +47,55 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Length(
+     *     allowEmptyString=false,
+     *     min=3,
+     *     max=50,
+     * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Length(
+     *     allowEmptyString=false,
+     *     min=3,
+     *     max=50,
+     * )
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\Length(
+     *     allowEmptyString=false,
+     *     min=9,
+     *     max=13,
+     * )
      */
     private $phoneNumber;
 
     /**
-     *
+     * @Assert\Length(
+     *     allowEmptyString=false,
+     *     min=6,
+     *     max=100,
+     *     minMessage="plain_password.min",
+     *     maxMessage="plain_password.max",
+     * )
+     * @Assert\NotBlank(
+     *     message="plain_password.not_blank"
+     * )
      */
     private $plainPassword;
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->roles = ['ROLE_USER'];
+    }
 
     public function getId(): ?int
     {

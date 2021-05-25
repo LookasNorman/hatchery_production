@@ -24,6 +24,7 @@ class UserType extends AbstractType
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'invalid_message' => 'registration.repeat_password.error',
                 'first_options' => [
                     'label' => 'registration.form.label.password',
                     'attr' => [
@@ -38,18 +39,21 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('firstname', TextType::class, [
+                'required' => false,
                 'label' => 'registration.form.label.firstname',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('lastname', TextType::class, [
+                'required' => false,
                 'label' => 'registration.form.label.lastname',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('phoneNumber', TextType::class, [
+                'required' => false,
                 'label' => 'registration.form.label.phone_number',
                 'attr' => [
                     'class' => 'form-control'
