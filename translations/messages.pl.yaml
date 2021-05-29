@@ -700,6 +700,27 @@ registration:
       repeat_password: Powtórz hasło
   register:
     title: Dodawanie nowego użytkownika
+reset_password:
+  check_email:
+    message: Wiadomość email zawierająca link do ustawienia nowego hasła została wysłana. Link wygaśnie w ciągu
+    no_message: Jeżeli nie otrzymałeś wiadomości sprawdź folder SPAM lub
+    send: spróbuj ponownie
+  email:
+    title: Witaj!
+    message: Aby ustawić nowe hasło kliknij poniższy link
+    expire: Link wygaśnie w ciągu
+    signature: Powodzenia
+  form:
+    label:
+      email: Email
+    help:
+      email: Wprowadź swój adres email a my wyślemy na niego link do ustawienia nowego hasła.
+  request:
+    title: Zresetuj swoje hasło
+    button:
+      send: Wyślij email
+  reset:
+    title: Ustaw nowe hasło
 security:
   login:
     form:

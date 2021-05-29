@@ -18,25 +18,28 @@ class ChangePasswordFormType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
+                    'label' => 'registration.form.label.password',
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Please enter a password',
+                            'message' => 'plain_password.not_blank',
                         ]),
                         new Length([
                             'min' => 6,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
-                            // max length allowed by Symfony for security reasons
-                            'max' => 4096,
+                            'minMessage' => 'plain_password.min',
+                            'max' => 100,
                         ]),
                     ],
-                    'label' => 'New password',
                 ],
                 'second_options' => [
-                    'label' => 'Repeat Password',
+                    'label' => 'registration.form.label.repeat_password',
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
                 ],
-                'invalid_message' => 'The password fields must match.',
-                // Instead of being set onto the object directly,
-                // this is read and encoded in the controller
+                'invalid_message' => 'registration.repeat_password.error',
                 'mapped' => false,
             ])
         ;

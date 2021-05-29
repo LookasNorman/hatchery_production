@@ -1,12 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
-
 {% block body %}
-    <h1>Reset your password</h1>
-
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    {% for flashError in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+    <div class="d-flex justify-content-center card-group">
+        <div class="card">
+            <h5 class="card-header">
+                {% trans %}reset_password.reset.title{% endtrans %}
+            </h5>
+            <div class="card-body">
+                {{ form_start(resetForm) }}
+                <div class="form-group">
+                    {{ form_widget(resetForm.plainPassword) }}
+                    <small>{{ form_help(resetForm.plainPassword) }}</small>
+                    <div class="form-text text-danger">
+                        {{ form_errors(resetForm.plainPassword) }}
+                    </div>
+                </div>
+                <button class="btn btn-primary">{% trans %}reset_password.request.button.send{% endtrans %}</button>
+                {{ form_end(resetForm) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
