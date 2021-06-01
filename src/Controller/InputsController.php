@@ -94,6 +94,33 @@ class InputsController extends AbstractController
         ]);
     }
 
+    public function xlsInputCardHeader()
+    {
+        return [
+            'Odbiorca piskląt',
+            'ilość piskląt',
+            'Aparaty lęgowe',
+            'Dostawca jaj',
+            'Stado',
+            'Data dostawy',
+            'Odpad z dostawy',
+            'Wiek stada',
+            'Liczba nałożonych jaj',
+            'Odpad po świetleniu',
+            '% zapłodnienia',
+            'Odpad po przekładzie',
+            '% zapłodnienia',
+            'Wylęg',
+            'Brakowanie',
+            'Liczba jaj niewyklutych',
+            '% wylęgu',
+            '% wylęg z jaj zapłodnionych',
+            '% brakowania',
+            'różnica między % zapł. i % wylęgu',
+            'Aparaty klujnikowe'
+        ];
+    }
+
     /**
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      * @throws \PhpOffice\PhpSpreadsheet\Exception
@@ -117,30 +144,15 @@ class InputsController extends AbstractController
         $spreadsheet->getActiveSheet()->getHeaderFooter()
             ->setOddFooter('&Lhttps://lookaskonieczny.com' . '&C' . $spreadsheet->getProperties()->getTitle() . '&RPage &P of &N');
 
+        $header = $this->xlsInputCardHeader();
+        $sheet->fromArray($header, null, 'A1', true);
 
-        $sheet->getCell('A1')->setValue('Odbiorca piskląt');
-        $sheet->getCell('B1')->setValue('ilość piskląt');
-        $sheet->getCell('C1')->setValue('Aparaty lęgowe');
-        $sheet->getCell('D1')->setValue('Dostawca jaj');
-        $sheet->getCell('E1')->setValue('Stado');
-        $sheet->getCell('F1')->setValue('Data dostawy');
-        $sheet->getCell('G1')->setValue('Odpad z dostawy');
-        $sheet->getCell('H1')->setValue('Wiek stada');
-        $sheet->getCell('I1')->setValue('Liczba nałożonych jaj');
-        $sheet->getCell('J1')->setValue('Odpad po świetleniu');
-        $sheet->getCell('K1')->setValue('% zapłodnienia');
-        $sheet->getCell('L1')->setValue('Odpad po przekładzie');
-        $sheet->getCell('M1')->setValue('% zapłodnienia');
-        $sheet->getCell('N1')->setValue('Wylęg');
-        $sheet->getCell('O1')->setValue('Brakowanie');
-        $sheet->getCell('P1')->setValue('Liczba jaj niewyklutych');
-        $sheet->getCell('Q1')->setValue('% wylęgu');
-        $sheet->getCell('R1')->setValue('% wylęg z jaj zapłodnionych');
-        $sheet->getCell('S1')->setValue('% brakowania');
-        $sheet->getCell('T1')->setValue('różnica między % zapł. i % wylęgu');
-        $sheet->getCell('U1')->setValue('Aparaty klujnikowe');
         $data = [];
         foreach ($details as $detail) {
+            $eggsNumber = 0;
+            foreach ($detail->getEggsInputsDetailsEggsDeliveries() as $key => $eggsDelivery) {
+                $eggsNumber = $eggsNumber + $eggsDelivery->getEggsNumber();
+            }
             foreach ($detail->getEggsInputsDetailsEggsDeliveries() as $key => $delivery) {
                 $wasteLightingsEggs = null;
                 $wasteTransferEggs = null;
@@ -151,7 +163,7 @@ class InputsController extends AbstractController
                     $wasteLightingsEggs = $detail->getEggsInputsLightings()[0]->getWasteEggs();
                 }
 
-                if (!empty($detail->getEggsInputsLightings()[0])) {
+                if (!empty($detail->getEggsInputsTransfers()[0])) {
                     $wasteTransferEggs = $detail->getEggsInputsTransfers()[0]->getWasteEggs();
                 }
 
@@ -164,7 +176,7 @@ class InputsController extends AbstractController
                 $breederName = $delivery->getEggsDeliveries()->getHerd()->getBreeder()->getName();
                 $herdName = $delivery->getEggsDeliveries()->getHerd()->getName();
                 $hatchingDate = $delivery->getEggsDeliveries()->getHerd()->getHatchingDate();
-                $eggsNumber = $delivery->getEggsNumber();
+                $eggsInputs = $delivery->getEggsNumber();
                 $deliveryDate = $delivery->getEggsDeliveries()->getDeliveryDate();
                 $age = (int)($hatchingDate->diff($deliveryDate)->days / 7);
                 $lightingFertilization = ($eggsNumber - $wasteLightingsEggs) / $eggsNumber * 100;
@@ -185,7 +197,7 @@ class InputsController extends AbstractController
                         $deliveryDate->format('Y-m-d'),
                         'OD',
                         $age,
-                        number_format($eggsNumber, 0, ',', ' '),
+                        number_format($eggsInputs, 0, ',', ' '),
                         number_format($wasteLightingsEggs, 0, ',', ' '),
                         number_format($lightingFertilization, 2, ',', ' '),
                         number_format($wasteTransferEggs, 0, ',', ' '),
@@ -209,7 +221,7 @@ class InputsController extends AbstractController
                         $deliveryDate->format('Y-m-d'),
                         'OD',
                         $age,
-                        number_format($eggsNumber, 0, ',', ' '),
+                        number_format($eggsInputs, 0, ',', ' '),
                         '',
                         '',
                         '',
@@ -242,12 +254,6 @@ class InputsController extends AbstractController
                 'bottom' => [
                     'borderStyle' => Border::BORDER_DOUBLE,
                 ],
-            ],
-            'fill' => [
-                'fillType' => Fill::FILL_GRADIENT_LINEAR,
-                'startColor' => [
-                    'rgb' => 'EEEEEE'
-                ]
             ],
         ];
         $styleBorders = [
