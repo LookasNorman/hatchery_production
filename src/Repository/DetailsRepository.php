@@ -31,6 +31,21 @@ class DetailsRepository extends ServiceEntityRepository
             ->execute();
     }
 
+    public function deliveriesHerd($herd)
+    {
+        return $this->createQueryBuilder('eid')
+            ->addSelect('edd', 'el', 'et', 'es')
+            ->join('eid.eggsInputsDetailsEggsDeliveries', 'edd')
+            ->join('edd.eggsDeliveries', 'ed')
+            ->leftJoin('eid.eggsInputsLightings', 'el')
+            ->leftJoin('eid.eggsInputsTransfers', 'et')
+            ->leftJoin('eid.eggsSelections', 'es')
+            ->where('ed.herd = :herd')
+            ->setParameter('herd', $herd)
+            ->getQuery()
+            ->execute();
+    }
+
     public function deliveriesInput($val)
     {
         return $this->createQueryBuilder('eid')

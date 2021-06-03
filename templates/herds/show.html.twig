@@ -9,6 +9,9 @@
         }
     </style>
     <h1>{% trans %}herds.show.title{% endtrans %}</h1>
+    <a class="btn btn-primary" href="{{ path('herds_index') }}">
+        {% trans %}herds.show.button.back{% endtrans %}
+    </a>
     <div class="d-flex justify-content-center card-group">
         <div class="card">
             <h5 class="card-header">
@@ -33,8 +36,5 @@
             </div>
         </div>
     </div>
-
-    <a class="btn btn-primary" href="{{ path('herds_index') }}">
-        {% trans %}herds.show.button.back{% endtrans %}
-    </a>
+    {% include('herds/show_delivery.html.twig') %}
 {% endblock %}

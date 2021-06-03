@@ -2,8 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Delivery;
+use App\Entity\DetailsDelivery;
 use App\Entity\Herds;
+use App\Entity\InputsDetails;
 use App\Form\HerdsType;
+use App\Repository\DeliveryRepository;
+use App\Repository\DetailsDeliveryRepository;
+use App\Repository\DetailsRepository;
 use App\Repository\SupplierRepository;
 use App\Repository\HerdsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,13 +70,25 @@ class HerdsController extends AbstractController
         ]);
     }
 
+    public function herdsDelivery(Herds $herd)
+    {
+        $detailsRepository = $this->getDoctrine()->getRepository(InputsDetails::class);
+        $inputDetails = $detailsRepository->deliveriesHerd($herd);
+        
+        return $inputDetails;
+
+    }
+
     /**
      * @Route("/{id}", name="herds_show", methods={"GET"})
      */
-    public function show(Herds $herd): Response
+    public function show(Herds $herd, DetailsRepository $detailsRepository): Response
     {
+        $inputDetails = $this->herdsDelivery($herd);
+
         return $this->render('herds/show.html.twig', [
             'herd' => $herd,
+            'inputDetails' => $inputDetails
         ]);
     }
 
@@ -101,7 +119,7 @@ class HerdsController extends AbstractController
      */
     public function delete(Request $request, Herds $herd): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$herd->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $herd->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($herd);
             $entityManager->flush();

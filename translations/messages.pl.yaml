@@ -584,6 +584,19 @@ herds:
       edit: Edytuj
       back: Lista stad
       breeder_herds: Stada dostawcy / hodowcy
+  show_delivery:
+    table:
+      input_name: Nakład
+      delivery: Dostawy
+      id: Indeks
+      delivery_date: Data dostawy
+      delivery_eggs: Dostarczonych jaj
+      eggs_number: Wykorzystanych jaj
+      waste_lighting: Odpad po świetleniu
+      waste_transfer: Odpad po przekładzie
+      chick_number: Wyklute pisklęta
+      cull_chick: Wybrakowane pisklęta
+      unhatched: Niewyklute pisklęta
 incubators:
   index:
     title: Wykaz aparatów wylęgowych i klujnikowych
