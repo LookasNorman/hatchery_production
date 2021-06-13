@@ -26,7 +26,7 @@ class HerdsController extends AbstractController
     public function index(HerdsRepository $herdsRepository): Response
     {
         return $this->render('herds/index.html.twig', [
-            'herds' => $herdsRepository->findAll(),
+            'herds' => $herdsRepository->findBy([] , ['name' => 'ASC']),
         ]);
     }
 

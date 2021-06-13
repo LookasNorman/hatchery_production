@@ -23,7 +23,7 @@ class SupplierController extends AbstractController
     public function index(SupplierRepository $eggSupplierRepository): Response
     {
         return $this->render('egg_supplier/index.html.twig', [
-            'egg_suppliers' => $eggSupplierRepository->findAll(),
+            'egg_suppliers' => $eggSupplierRepository->findBy([], ['name' => 'ASC']),
         ]);
     }
 
