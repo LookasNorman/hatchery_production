@@ -22,11 +22,11 @@ class Herds
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=50)
      * @Assert\Length(
      *     allowEmptyString=false,
      *     min = 3,
-     *     max = 20,
+     *     max = 50,
      *     minMessage = "herds.name.min",
      *     maxMessage = "herds.name.max"
      * )
