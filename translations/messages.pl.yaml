@@ -588,6 +588,7 @@ herds:
     table:
       input_name: Nakład
       delivery: Dostawy
+      delivery_id: Indeks dostawy
       id: Indeks
       delivery_date: Data dostawy
       delivery_eggs: Dostarczonych jaj
