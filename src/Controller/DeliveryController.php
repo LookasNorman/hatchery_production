@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Breed;
 use App\Entity\Delivery;
+use App\Entity\Herds;
+use App\Entity\Supplier;
 use App\Form\DeliveryPartIndexType;
 use App\Form\DeliveryType;
 use App\Repository\DeliveryRepository;
@@ -27,6 +30,72 @@ class DeliveryController extends AbstractController
         return $this->render('eggs_delivery/index.html.twig', [
             'eggs_deliveries' => $eggsDeliveryRepository->findAll(),
         ]);
+    }
+
+    public function addHerd($name, $supplier, $breed)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $herd = new Herds();
+        $herd->setName($name);
+        $herd->setBreeder($supplier);
+        $herd->setBreed($breed);
+        $hatchingDate = new \DateTime('2019-03-31');
+        $herd->setHatchingDate($hatchingDate);
+        $em->persist($herd);
+        $em->flush();
+
+        return $herd;
+    }
+
+    public function addSupplier($name)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $supplier = new Supplier();
+        $supplier->setName($name);
+        $em->persist($supplier);
+        $em->flush();
+
+        return $supplier;
+    }
+
+    /**
+     * @Route("/import", name="delivery_import", methods={"GET"})
+     * @throws \Exception
+     */
+    public function importDeliveryXls()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+        $spreadsheet = $reader->load("delivery.xls");
+        $worksheet = $spreadsheet->getActiveSheet();
+        foreach ($worksheet->getRowIterator() as $row) {
+            $deliveryDate = new \DateTime($worksheet->getCell('A' . $row->getRowIndex())->getFormattedValue());
+            $name = $worksheet->getCell('B' . $row->getRowIndex())->getFormattedValue();
+            $firstLayingDate = new \DateTime($worksheet->getCell('C' . $row->getRowIndex())->getFormattedValue());
+            $lastLayingDate = new \DateTime($worksheet->getCell('D' . $row->getRowIndex())->getFormattedValue());
+            $eggsNumber = $worksheet->getCell('E' . $row->getRowIndex())->getValue();
+
+            $herd = $em->getRepository(Herds::class)->findOneBy(['name' => $name]);
+            if (!$herd instanceof Herds) {
+                $nameArr = explode(' ', $name);
+                $supplier = $em->getRepository(Supplier::class)->findOneBy(['name' => $nameArr[0]]);
+                if (!$supplier instanceof Supplier) {
+                    $supplier = $this->addSupplier($nameArr[0]);
+                }
+                $breed = $em->getRepository(Breed::class)->find(3);
+                $herd = $this->addHerd($name, $supplier, $breed);
+            }
+            $delivery = new Delivery();
+            $delivery->setHerd($herd);
+            $delivery->setDeliveryDate($deliveryDate);
+            $delivery->setFirstLayingDate($firstLayingDate);
+            $delivery->setLastLayingDate($lastLayingDate);
+            $delivery->setEggsNumber($eggsNumber);
+            $delivery->setEggsOnWarehouse($eggsNumber);
+            $em->persist($delivery);
+        }
+        $em->flush();
+        die();
     }
 
     /**
@@ -112,7 +181,7 @@ class DeliveryController extends AbstractController
      */
     public function delete(Request $request, Delivery $eggsDelivery): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$eggsDelivery->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $eggsDelivery->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($eggsDelivery);
             $entityManager->flush();
