@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Delivery;
 use App\Entity\Herds;
 use App\Entity\InputsDetails;
 use App\Form\HerdsType;
@@ -137,15 +138,24 @@ class HerdsController extends AbstractController
     /**
      * @Route("/{id}", name="herds_show", methods={"GET"})
      */
-    public function show(Herds $herd, DetailsRepository $detailsRepository): Response
+    public function show(Herds $herd): Response
     {
         $inputDetails = $this->herdsDelivery($herd);
+        $deliveries = $this->herdDeliveries($herd);
 
         return $this->render('herds/show.html.twig', [
             'herd' => $herd,
+            'deliveries' => $deliveries,
             'inputDetails' => $inputDetails['inputDetails'],
             'inputsDetails' => $inputDetails['inputsDetails'],
         ]);
+    }
+
+    public function herdDeliveries($herd): array
+    {
+        $deliveries = $this->getDoctrine()->getManager()->getRepository(Delivery::class)->findBy(['herd' => $herd]);
+
+        return $deliveries;
     }
 
     /**

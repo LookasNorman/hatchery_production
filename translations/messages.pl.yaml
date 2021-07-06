@@ -558,6 +558,18 @@ herds:
     button:
       back: Lista stad
       update: Zaktualizuj
+  herd_deliveries:
+    table:
+      id: Indeks
+      delivery_date: Data dostawy
+      first_laying_date: Data zniesienia od
+      last_laying_date: Data zniesienia do
+      delivery_eggs_number: Ilość jaj
+      eggs_warehouse: Stan jaj
+      action: Akcje
+      badge:
+        show: Szczegóły
+        edit: Edycja
   index:
     title: Lista stad
     table:
