@@ -9,18 +9,13 @@
         }
     </style>
     <div class="d-flex justify-content-center card-group">
-        <div class="card">
-            <h5 class="card-header">
+        {% include 'layout/cards/chead.html.twig' %}
                 {% trans %}chicks_recipient.new.title{% endtrans %}
-            </h5>
-            <div class="card-body">
-
+        {% include 'layout/cards/cbody.html.twig' %}
                 {{ include('chicks_recipient/_form.html.twig') }}
-            </div>
-        </div>
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% include 'layout/cards/cend.html.twig' %}
     </div>
-    <a class="btn btn-primary" href="{{ path('chicks_recipient_index') }}">
-        {% trans %}chicks_recipient.new.button.back{% endtrans %}
-    </a>
+    {{ include('layout/buttons/back.html.twig', {pathLink: path('chicks_recipient_index'), text: 'chicks_recipient.new.button.back'}) }}
 
 {% endblock %}

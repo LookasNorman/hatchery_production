@@ -29,7 +29,7 @@ class ChicksRecipientRepository extends ServiceEntityRepository
             ->where('cr.id = :recipient')
             ->setParameter('recipient', $recipient)
             ->getQuery()
-            ->getSingleResult()
+            ->getOneOrNullResult()
             ;
     }
 

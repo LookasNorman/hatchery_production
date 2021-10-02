@@ -41,11 +41,8 @@
             </div>
         </div>
         <div class="card-footer">
-            <a href="{{ path('no_lighting_index') }}">
-                <span class="badge badge-info">
-                    {% trans %}main_page.lighting.list{% endtrans %}
-                </span>
-            </a>
+            {{ include('layout/buttons/back.html.twig',
+                { pathLink: path('no_lighting_index'), text: 'main_page.lighting.list'}) }}
         </div>
     </div>
 {% endblock %}

@@ -9,19 +9,15 @@
         }
     </style>
     <div class="d-flex justify-content-center card-group">
-        <div class="card">
-            <h5 class="card-header">
-                {% trans %}eggs_inputs_lighting.edit.title{% endtrans %}
-            </h5>
-            <div class="card-body">
-                {{ include('eggs_inputs_lighting/_form.html.twig', {'button_label': 'eggs_inputs_lighting.edit.button.update'}) }}
-            </div>
-            <div class="card-footer bg-transparent border-success d-flex">
-                {{ include('eggs_inputs_lighting/_delete_form.html.twig') }}
-            </div>
-        </div>
+        {% include 'layout/cards/chead.html.twig' %}
+        {% trans %}eggs_inputs_lighting.edit.title{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        {{ include('eggs_inputs_lighting/_form.html.twig', {'button_label': 'eggs_inputs_lighting.edit.button.update'}) }}
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {{ include('eggs_inputs_lighting/_delete_form.html.twig') }}
+        {% include 'layout/cards/cend.html.twig' %}
     </div>
-    <a class="btn btn-primary" href="{{ path('eggs_inputs_lighting_index') }}">
-        {% trans %}eggs_inputs_lighting.edit.button.back{% endtrans %}
-    </a>
+    {{ include('layout/buttons/back.html.twig',
+        { pathLink: path('eggs_inputs_lighting_index'), text: 'eggs_inputs_lighting.edit.button.back' }) }}
+
 {% endblock %}

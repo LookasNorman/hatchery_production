@@ -9,17 +9,14 @@
         }
     </style>
     <div class="d-flex justify-content-center card-group">
-        <div class="card">
-            <h5 class="card-header">
-                {% trans %}eggs_inputs_selections.new.title{% endtrans %}
-            </h5>
-            <div class="card-body">
-                {{ include('eggs_selections/_form.html.twig') }}
-            </div>
-        </div>
+        {% include 'layout/cards/chead.html.twig' %}
+        {% trans %}eggs_inputs_selections.new.title{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        {{ include('eggs_selections/_form.html.twig') }}
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% include 'layout/cards/cend.html.twig' %}
     </div>
-    <a class="btn btn-primary" href="{{ path('eggs_selections_index') }}">
-        {% trans %}eggs_inputs_selections.new.button.back{% endtrans %}
-    </a>
+    {{ include('layout/buttons/back.html.twig',
+        {pathLink: path('eggs_selections_index'), text: 'eggs_inputs_selections.new.button.back'}) }}
 
 {% endblock %}

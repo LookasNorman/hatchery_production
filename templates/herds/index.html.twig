@@ -8,9 +8,8 @@
         {% endif %}
     </h1>
     {% if is_granted('ROLE_ADMIN') %}
-        <a class="btn btn-success" href="{{ path('herds_new') }}">
-            {% trans %}herds.index.button.new{% endtrans %}
-        </a>
+        {{ include('layout/buttons/new.html.twig',
+            { pathLink: path('herds_new'), text: 'herds.index.button.new' }) }}
     {% endif %}
     {% include('herds/list.html.twig') %}
 {% endblock %}

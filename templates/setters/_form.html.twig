@@ -15,5 +15,5 @@
         {{ form_errors(form.shortname) }}
     </div>
 </div>
-<button class="btn btn-danger">{{ button_label|default('setters.form.button.save')|trans }}</button>
+{{ include('layout/buttons/create.html.twig', {text: 'setters.form.button.save'}) }}
 {{ form_end(form) }}

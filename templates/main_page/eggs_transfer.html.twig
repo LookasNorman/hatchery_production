@@ -41,11 +41,8 @@
             </div>
         </div>
         <div class="card-footer">
-            <a href="{{ path('no_transfer_index') }}">
-                <span class="badge badge-info">
-                    {% trans %}main_page.eggs_transfer.list{% endtrans %}
-                </span>
-            </a>
+            {{ include('layout/buttons/back.html.twig',
+                { pathLink: path('no_transfer_index'), text: 'main_page.eggs_transfer.list'}) }}
         </div>
     </div>
 {% endblock %}

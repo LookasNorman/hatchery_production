@@ -46,7 +46,7 @@
         </div>
     </div>
 {% endif %}
-<button class="btn btn-danger">{{ button_label|default('eggs_inputs_details.form.button.save')|trans }}</button>
+    {{ include('layout/buttons/create.html.twig', {text: 'eggs_inputs_details.form.button.save'}) }}
 {{ form_end(form) }}
 
 <script>

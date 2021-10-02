@@ -1,65 +1,61 @@
 {% block body %}
-    <table class="table table-sm">
-        <thead class="thead-light">
+    {% include 'layout/tables/thead.html.twig' %}
+    <tr>
+        <th>
+            {% trans %}herds.index.table.id{% endtrans %}
+        </th>
+        <th>
+            {% trans %}herds.index.table.name{% endtrans %}
+        </th>
+        <th>
+            {% trans %}herds.index.table.hatching_date{% endtrans %}
+        </th>
+        <th>
+            {% trans %}herds.index.table.breed{% endtrans %}
+        </th>
+        {% if breeder is not defined %}
+            <th>
+                {% trans %}herds.index.table.breeders{% endtrans %}
+            </th>
+        {% endif %}
+        <th>
+            {% trans %}herds.index.table.actions{% endtrans %}
+        </th>
+    </tr>
+    {% include 'layout/tables/tbody.html.twig' %}
+    {% for herd in herds %}
         <tr>
-            <th>
-                {% trans %}herds.index.table.id{% endtrans %}
-            </th>
-            <th>
-                {% trans %}herds.index.table.name{% endtrans %}
-            </th>
-            <th>
-                {% trans %}herds.index.table.hatching_date{% endtrans %}
-            </th>
-            <th>
-                {% trans %}herds.index.table.breed{% endtrans %}
-            </th>
+            <td>{{ herd.id }}</td>
+            <td>{{ herd.name }}</td>
+            <td>{{ herd.hatchingDate ? herd.hatchingDate|date('Y-m-d') : '' }}</td>
+            <td>
+                <a href="{{ path('breed_show', {'id': herd.breed.id}) }}">
+                    {{ herd.breed.name }} {{ herd.breed.type }}
+                </a>
+            </td>
             {% if breeder is not defined %}
-                <th>
-                    {% trans %}herds.index.table.breeders{% endtrans %}
-                </th>
+                <td>
+                    <a href="{{ path('egg_supplier_show', {'id': herd.breeder.id}) }}">
+                        {{ herd.breeder.name }}
+                    </a>
+                </td>
             {% endif %}
-            <th>
-                {% trans %}herds.index.table.actions{% endtrans %}
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for herd in herds %}
-            <tr>
-                <td>{{ herd.id }}</td>
-                <td>{{ herd.name }}</td>
-                <td>{{ herd.hatchingDate ? herd.hatchingDate|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('breed_show', {'id': herd.breed.id}) }}">
-                        {{ herd.breed.name }} {{ herd.breed.type }}
-                    </a>
-                </td>
-                {% if breeder is not defined %}
-                    <td>
-                        <a href="{{ path('egg_supplier_show', {'id': herd.breeder.id}) }}">
-                            {{ herd.breeder.name }}
-                        </a>
-                    </td>
+            <td>
+                {{ include('layout/buttons/list_actions.html.twig',
+                    {pathLink: path('herds_show', {'id': herd.id}), text: 'herds.index.table.badge.show' }) }}
+                {% if is_granted('ROLE_ADMIN') %}
+                    {{ include('layout/buttons/list_actions.html.twig',
+                        {pathLink: path('herds_edit', {'id': herd.id}), text: 'herds.index.table.badge.edit' }) }}
                 {% endif %}
-                <td>
-                    <a class="badge badge-info" href="{{ path('herds_show', {'id': herd.id}) }}">
-                        {% trans %}herds.index.table.badge.show{% endtrans %}
-                    </a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a class="badge badge-warning" href="{{ path('herds_edit', {'id': herd.id}) }}">
-                            {% trans %}herds.index.table.badge.edit{% endtrans %}
-                        </a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">
-                    {% trans %}herds.index.table.no_found{% endtrans %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">
+                {% trans %}herds.index.table.no_found{% endtrans %}
+            </td>
+        </tr>
+    {% endfor %}
+    {% include 'layout/tables/tfooter.html.twig' %}
+    {% include 'layout/tables/tend.html.twig' %}
 {% endblock %}

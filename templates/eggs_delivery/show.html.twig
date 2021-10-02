@@ -10,12 +10,10 @@
     </style>
     <h1>{% trans %}eggs_delivery.show.title{% endtrans %}</h1>
     <div class="d-flex justify-content-center card-group">
-        <div class="card">
-            <h5 class="card-header">
-                {{ eggs_delivery.herd.breeder.name }} - {{ eggs_delivery.herd.name }}
-            </h5>
-            <div class="card-body">
-                <p class="card-text">
+        {% include 'layout/cards/chead.html.twig' %}
+        {{ eggs_delivery.herd.breeder.name }} - {{ eggs_delivery.herd.name }}
+        {% include 'layout/cards/cbody.html.twig' %}
+        <p class="card-text">
                     {% trans %}eggs_delivery.show.id{% endtrans %}
                     :
                     {% if eggs_delivery.partIndex %}
@@ -51,20 +49,15 @@
                     {% trans %}eggs_delivery.show.last_laying_date{% endtrans %}
                     : {{ eggs_delivery.lastLayingDate ? eggs_delivery.lastLayingDate|date('Y-m-d') : '' }}
                 </p>
-            </div>
-            <div class="card-footer bg-transparent border-success d-flex">
-                {% if is_granted('ROLE_ADMIN') %}
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% if is_granted('ROLE_ADMIN') %}
                     {{ include('eggs_delivery/_delete_form.html.twig') }}
                     <a class="btn btn-warning" href="{{ path('eggs_delivery_edit', {'id': eggs_delivery.id}) }}">
                         {% trans %}eggs_delivery.show.button.edit{% endtrans %}
                     </a>
                 {% endif %}
-            </div>
-        </div>
+        {% include 'layout/cards/cend.html.twig' %}
     </div>
-
-    <a class="btn btn-primary" href="{{ path('eggs_delivery_index') }}">
-        {% trans %}eggs_delivery.show.button.back{% endtrans %}
-    </a>
+    {{ include('layout/buttons/back.html.twig', { pathLink: path('eggs_delivery_index'), text: 'eggs_delivery.show.button.back' }) }}
 
 {% endblock %}

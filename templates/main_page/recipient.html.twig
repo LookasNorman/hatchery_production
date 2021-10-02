@@ -27,17 +27,11 @@
             </div>
         </div>
         <div class="card-footer">
-            <a href="{{ path('chicks_recipient_index') }}">
-                <span class="badge badge-info">
-                    {% trans %}main_page.recipient.list{% endtrans %}
-                </span>
-            </a>
+            {{ include('layout/buttons/back.html.twig',
+                { pathLink: path('chicks_recipient_index'), text: 'main_page.recipient.list'}) }}
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('chicks_recipient_new') }}">
-                    <span class="badge badge-success">
-                        {% trans %}main_page.recipient.new{% endtrans %}
-                    </span>
-                </a>
+                {{ include('layout/buttons/create.html.twig',
+                    { pathLink: path('chicks_recipient_new'), text: 'main_page.recipient.new' }) }}
             {% endif %}
         </div>
     </div>

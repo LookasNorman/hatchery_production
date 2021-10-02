@@ -9,21 +9,14 @@
         }
     </style>
     <div class="d-flex justify-content-center card-group">
-        <div class="card">
-            <h5 class="card-header">
-                {% trans %}hatchers.edit.title{% endtrans %}
-            </h5>
-            <div class="card-body">
-                {{ include('hatchers/_form.html.twig', {'button_label': 'hatchers.edit.button.update'}) }}
-            </div>
-            <div class="card-footer bg-transparent border-success d-flex">
-                {{ include('hatchers/_delete_form.html.twig') }}
-            </div>
-        </div>
+        {% include 'layout/cards/chead.html.twig' %}
+        {% trans %}hatchers.edit.title{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        {{ include('hatchers/_form.html.twig', {'button_label': 'hatchers.edit.button.update'}) }}
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {{ include('hatchers/_delete_form.html.twig') }}
+        {% include 'layout/cards/cend.html.twig' %}
     </div>
-    <a class="btn btn-primary" href="{{ path('hatchers_index') }}">
-        {% trans %}hatchers.edit.button.back{% endtrans %}
-    </a>
-
-
+    {{ include('layout/buttons/back.html.twig',
+        { pathLink: path('hatchers_index'), text: 'hatchers.edit.button.back' }) }}
 {% endblock %}

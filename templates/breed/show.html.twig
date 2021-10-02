@@ -9,25 +9,16 @@
         }
     </style>
     <div class="d-flex justify-content-center card-group">
-        <div class="card">
-            <h5 class="card-header">
-                {% trans %}breed.show.title{% endtrans %}
-            </h5>
-            <div class="card-body">
-                <h5 class="card-title">{{ breed.name }} {{ breed.type }}</h5>
-            </div>
-            {% if is_granted('ROLE_ADMIN') %}
-            <div class="card-footer bg-transparent border-success d-flex">
-                {{ include('breed/_delete_form.html.twig') }}
-                <a class="btn btn-warning" href="{{ path('breed_edit', {'id': breed.id}) }}">
-                    {% trans %}breed.show.button.edit{% endtrans %}
-                </a>
-            </div>
-            {% endif %}
-        </div>
+        {% include 'layout/cards/chead.html.twig' %}
+        {% trans %}breed.show.title{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        <h5 class="card-title">{{ breed.name }} {{ breed.type }}</h5>
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('breed/_delete_form.html.twig') }}
+            {{ include('layout/buttons/edit.html.twig', {pathLink: path('breed_edit', {'id': breed.id}), text: 'breed.show.button.edit'}) }}
+        {% endif %}
+        {% include 'layout/cards/cend.html.twig' %}
     </div>
-
-    <a class="btn btn-primary" href="{{ path('breed_index') }}">
-        {% trans %}breed.show.button.back{% endtrans %}
-    </a>
+    {{ include('layout/buttons/back.html.twig', { pathLink: path('breed_index'), text: 'breed.show.button.back' }) }}
 {% endblock %}

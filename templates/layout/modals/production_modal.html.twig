@@ -1,0 +1,23 @@
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#{{ title|trans }}">
+    {{ title|trans }}
+</button>
+<div class="modal fade" id="{{ title|trans }}" tabindex="-1" aria-labelledby="lightingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-white bg-info">
+                <h5 class="modal-title" id="lightingModalLabel">{{ title|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% for breeder in breeders %}
+                    <a class="dropdown-item"
+                       href="{{ path(pathLink, {'inputs': eggs_input.id, 'breeder': breeder.id}) }}"
+                    >{{ breeder.name }}</a>
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+                {{ include('layout/buttons/close_modal.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>

@@ -10,28 +10,21 @@
     </style>
     <h1>{% trans %}setters.show.title{% endtrans %}</h1>
     <div class="d-flex justify-content-center card-group">
-        <div class="card">
-            <h5 class="card-header">
-                {{ setter.name }}
-            </h5>
-            <div class="card-body">
-                <p class="card-text">
-                    {% trans %}setters.show.shortname{% endtrans %}
-                    : {{ setter.shortname }}
-                </p>
-            </div>
-            <div class="card-footer bg-transparent border-success d-flex">
-                {% if is_granted('ROLE_ADMIN') %}
-                    {{ include('setters/_delete_form.html.twig') }}
-                    <a class="btn btn-warning" href="{{ path('setters_edit', {'id': setter.id}) }}">
-                        {% trans %}setters.show.button.edit{% endtrans %}
-                    </a>
-                {% endif %}
-            </div>
-        </div>
+        {% include 'layout/cards/chead.html.twig' %}
+        {{ setter.name }}
+        {% include 'layout/cards/cbody.html.twig' %}
+        <p class="card-text">
+            {% trans %}setters.show.shortname{% endtrans %}
+            : {{ setter.shortname }}
+        </p>
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('setters/_delete_form.html.twig') }}
+            {{ include('layout/buttons/edit.html.twig',
+                {pathLink: path('setters_edit', {'id': setter.id}), text: 'setters.show.button.edit'}) }}
+        {% endif %}
+        {% include 'layout/cards/cend.html.twig' %}
     </div>
-
-    <a class="btn btn-primary" href="{{ path('setters_index') }}">
-        {% trans %}setters.show.button.back{% endtrans %}
-    </a>
+    {{ include('layout/buttons/back.html.twig',
+        { pathLink: path('setters_index'), text: 'setters.show.button.back' }) }}
 {% endblock %}

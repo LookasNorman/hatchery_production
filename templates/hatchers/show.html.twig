@@ -10,25 +10,20 @@
     </style>
     <h1>{% trans %}hatchers.show.title{% endtrans %}</h1>
     <div class="d-flex justify-content-center card-group">
-        <div class="card">
-            <h5 class="card-header">
-                {{ hatcher.name }}
-            </h5>
-            <div class="card-body">
-                <p class="card-text">
-                    {% trans %}hatchers.show.shortname{% endtrans %}
-                    : {{ hatcher.shortname }}
-                </p>
-            </div>
-            <div class="card-footer bg-transparent border-success d-flex">
-                {% if is_granted('ROLE_ADMIN') %}
-                    {{ include('hatchers/_delete_form.html.twig') }}
-                    <a class="btn btn-warning" href="{{ path('hatchers_edit', {'id': hatcher.id}) }}">
-                        {% trans %}hatchers.show.button.edit{% endtrans %}
-                    </a>
-                {% endif %}
-            </div>
-        </div>
+        {% include 'layout/cards/chead.html.twig' %}
+        {{ hatcher.name }}
+        {% include 'layout/cards/cbody.html.twig' %}
+        <p class="card-text">
+            {% trans %}hatchers.show.shortname{% endtrans %}
+            : {{ hatcher.shortname }}
+        </p>
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('hatchers/_delete_form.html.twig') }}
+            {{ include('layout/buttons/edit.html.twig',
+                {pathLink: path('hatchers_edit', {'id': hatcher.id}), text: 'hatchers.show.button.edit'}) }}
+        {% endif %}
+        {% include 'layout/cards/cend.html.twig' %}
     </div>
 
     <a class="btn btn-primary" href="{{ path('hatchers_index') }}">

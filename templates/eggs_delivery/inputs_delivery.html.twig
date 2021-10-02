@@ -1,36 +1,35 @@
 {% block body %}
-    <table class="table table-sm table-hover table-bordered">
-        <thead class="thead-dark">
+    {% include 'layout/tables/thead.html.twig' %}
+    <tr>
+        <th>{% trans %}eggs_inputs.show.table.delivery.breeder{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_inputs.show.table.delivery.herd{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_inputs.show.table.delivery.delivery_date{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_inputs.show.table.delivery.laying_date{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_inputs.show.table.delivery.eggs_number{% endtrans %}</th>
+    </tr>
+    {% include 'layout/tables/tbody.html.twig' %}
+    {% for delivery in detail.eggsInputsDetailsEggsDeliveries %}
         <tr>
-            <th>{% trans %}eggs_inputs.show.table.delivery.breeder{% endtrans %}</th>
-            <th class="text-center">{% trans %}eggs_inputs.show.table.delivery.herd{% endtrans %}</th>
-            <th class="text-center">{% trans %}eggs_inputs.show.table.delivery.delivery_date{% endtrans %}</th>
-            <th class="text-center">{% trans %}eggs_inputs.show.table.delivery.laying_date{% endtrans %}</th>
-            <th class="text-center">{% trans %}eggs_inputs.show.table.delivery.eggs_number{% endtrans %}</th>
+            <td>
+                {{ delivery.eggsDeliveries.herd.breeder.name }}
+            </td>
+            <td class="text-center">
+                {{ delivery.eggsDeliveries.herd.name }}
+            </td>
+            <td class="text-center">
+                {{ delivery.eggsDeliveries.deliveryDate ? delivery.eggsDeliveries.deliveryDate|date('Y-m-d') : '' }}
+            </td>
+            <td class="text-center">
+                {{ delivery.eggsDeliveries.firstLayingDate ? delivery.eggsDeliveries.firstLayingDate|date('Y-m-d') : '' }}
+                -
+                {{ delivery.eggsDeliveries.lastLayingDate ? delivery.eggsDeliveries.lastLayingDate|date('Y-m-d') : '' }}
+            </td>
+            <td class="text-center">
+                {{ delivery.eggsNumber|number_format(0, ',', ' ') }}
+            </td>
         </tr>
-        </thead>
-        <tbody>
-        {% for delivery in detail.eggsInputsDetailsEggsDeliveries %}
-            <tr>
-                <td>
-                    {{ delivery.eggsDeliveries.herd.breeder.name }}
-                </td>
-                <td class="text-center">
-                    {{ delivery.eggsDeliveries.herd.name }}
-                </td>
-                <td class="text-center">
-                    {{ delivery.eggsDeliveries.deliveryDate ? delivery.eggsDeliveries.deliveryDate|date('Y-m-d') : '' }}
-                </td>
-                <td class="text-center">
-                    {{ delivery.eggsDeliveries.firstLayingDate ? delivery.eggsDeliveries.firstLayingDate|date('Y-m-d') : '' }}
-                    -
-                    {{ delivery.eggsDeliveries.lastLayingDate ? delivery.eggsDeliveries.lastLayingDate|date('Y-m-d') : '' }}
-                </td>
-                <td class="text-center">
-                    {{ delivery.eggsNumber|number_format(0, ',', ' ') }}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% endfor %}
+    {% include 'layout/tables/tfooter.html.twig' %}
+    {% include 'layout/tables/tend.html.twig' %}
+
 {% endblock %}

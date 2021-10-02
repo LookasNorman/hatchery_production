@@ -11,18 +11,12 @@
         }
     </style>
     <div class="d-flex justify-content-center card-group">
-        <div class="card">
-            <h5 class="card-header">
-                {% trans %}breed.new.title{% endtrans %}
-            </h5>
-            <div class="card-body">
-
-                {{ include('breed/_form.html.twig') }}
-            </div>
-        </div>
+        {% include 'layout/cards/chead.html.twig' %}
+        {% trans %}breed.new.title{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        {{ include('breed/_form.html.twig') }}
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% include 'layout/cards/cend.html.twig' %}
     </div>
-
-    <a class="btn btn-primary" href="{{ path('breed_index') }}">
-        {% trans %}breed.new.button.back{% endtrans %}
-    </a>
+    {{ include('layout/buttons/back.html.twig', {pathLink: path('breed_index'), text: 'breed.new.button.back'}) }}
 {% endblock %}

@@ -9,21 +9,14 @@
         }
     </style>
     <div class="d-flex justify-content-center card-group">
-        <div class="card">
-            <h5 class="card-header">
-                {% trans %}setters.edit.title{% endtrans %}
-            </h5>
-            <div class="card-body">
-                {{ include('setters/_form.html.twig', {'button_label': 'setters.edit.button.update'}) }}
-            </div>
-            <div class="card-footer bg-transparent border-success d-flex">
-                {{ include('setters/_delete_form.html.twig') }}
-            </div>
-        </div>
+        {% include 'layout/cards/chead.html.twig' %}
+        {% trans %}setters.edit.title{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        {{ include('setters/_form.html.twig', {'button_label': 'setters.edit.button.update'}) }}
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {{ include('setters/_delete_form.html.twig') }}
+        {% include 'layout/cards/cend.html.twig' %}
     </div>
-    <a class="btn btn-primary" href="{{ path('setters_index') }}">
-        {% trans %}setters.edit.button.back{% endtrans %}
-    </a>
-
-
+    {{ include('layout/buttons/back.html.twig',
+        { pathLink: path('setters_index'), text: 'setters.edit.button.back' }) }}
 {% endblock %}

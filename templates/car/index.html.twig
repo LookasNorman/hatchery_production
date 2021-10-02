@@ -2,6 +2,9 @@
 
 {% block body %}
     <h1>{% trans %}car.index.title{% endtrans %}</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('layout/buttons/new.html.twig', { pathLink: path('car_new'), text: 'car.index.button.new' }) }}
+    {% endif %}
 
     {% include 'layout/tables/thead.html.twig' %}
     <tr>
@@ -28,6 +31,5 @@
     {% endfor %}
     {% include 'layout/tables/tfooter.html.twig' %}
     {% include 'layout/tables/tend.html.twig' %}
-    {{ include('layout/buttons/new.html.twig', {pathLink: path('car_new'), text: 'car.index.button.new' }) }}
 
 {% endblock %}

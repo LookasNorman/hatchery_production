@@ -7,5 +7,5 @@
         {{ form_errors(form.partIndex) }}
     </div>
 </div>
-<button class="btn btn-danger">{{ button_label|default('eggs_delivery.form.button.save')|trans }}</button>
+{{ include('layout/buttons/create.html.twig', {text: 'eggs_delivery.form.button.save'}) }}
 {{ form_end(form) }}

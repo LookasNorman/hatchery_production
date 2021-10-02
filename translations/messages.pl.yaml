@@ -220,18 +220,21 @@ eggs_delivery:
       breeder: Wybierz hodowcę
       herd: Wybierz stado
     label:
+      breeder: Dostawca jaj
       delivery_date: Data dostawy
       eggs_number: Ilość jaj
       first_laying_date: Data zniesienia od
-      last_laying_date: Data zniesienia do
-      breeder: Dostawca jaj
       herd: Stado
+      last_laying_date: Data zniesienia do
+      part_index: Indeks partii
   edit:
     title: Edycja dostawy jaj
     button:
       back: Lista dostaw jaj
       update: Zaktualizuj
   index:
+    button:
+      new: Dodaj dostawę
     title: Dostawy jaj
     table:
       id: Indeks
@@ -710,6 +713,9 @@ incubators:
         edit: Edytuj
     badge:
       new: Utwórz nowy
+layout:
+  button:
+    close: Zamknij
 main_page:
   eggs_transfer:
     title: Przekłady

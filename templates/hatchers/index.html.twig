@@ -5,52 +5,48 @@
         {% trans %}hatchers.index.title{% endtrans %}
     </h1>
     {% if is_granted('ROLE_ADMIN') %}
-        <a class="btn btn-success" href="{{ path('hatchers_new') }}">
-            {% trans %}hatchers.index.button.new{% endtrans %}
-        </a>
+        {{ include('layout/buttons/new.html.twig',
+            { pathLink: path('hatchers_new'), text: 'hatchers.index.button.new' }) }}
     {% endif %}
-    <table class="table table-sm table-hover">
-        <thead class="thead-light">
+
+    {% include 'layout/tables/thead.html.twig' %}
+    <tr>
+        <th>
+            {% trans %}hatchers.index.table.id{% endtrans %}
+        </th>
+        <th>
+            {% trans %}hatchers.index.table.name{% endtrans %}
+        </th>
+        <th>
+            {% trans %}hatchers.index.table.shortname{% endtrans %}
+        </th>
+        <th>
+            {% trans %}hatchers.index.table.actions{% endtrans %}
+        </th>
+    </tr>
+    {% include 'layout/tables/tbody.html.twig' %}
+    {% for hatcher in hatchers %}
         <tr>
-            <th>
-                {% trans %}hatchers.index.table.id{% endtrans %}
-            </th>
-            <th>
-                {% trans %}hatchers.index.table.name{% endtrans %}
-            </th>
-            <th>
-                {% trans %}hatchers.index.table.shortname{% endtrans %}
-            </th>
-            <th>
-                {% trans %}hatchers.index.table.actions{% endtrans %}
-            </th>
+            <td>{{ hatcher.id }}</td>
+            <td>{{ hatcher.name }}</td>
+            <td>{{ hatcher.shortname }}</td>
+            <td>
+                {{ include('layout/buttons/list_actions.html.twig',
+                    {pathLink: path('hatchers_show', {'id': hatcher.id}), text: 'hatchers.index.table.badge.show' }) }}
+                {% if is_granted('ROLE_ADMIN') %}
+                    {{ include('layout/buttons/list_actions.html.twig',
+                        {pathLink: path('hatchers_edit', {'id': hatcher.id}), text: 'hatchers.index.table.badge.edit' }) }}
+                {% endif %}
+            </td>
         </tr>
-        </thead>
-        <tbody>
-        {% for hatcher in hatchers %}
-            <tr>
-                <td>{{ hatcher.id }}</td>
-                <td>{{ hatcher.name }}</td>
-                <td>{{ hatcher.shortname }}</td>
-                <td>
-                    <a class="badge badge-info" href="{{ path('hatchers_show', {'id': hatcher.id}) }}">
-                        {% trans %}hatchers.index.table.badge.show{% endtrans %}
-                    </a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a class="badge badge-warning" href="{{ path('hatchers_edit', {'id': hatcher.id}) }}">
-                            {% trans %}hatchers.index.table.badge.edit{% endtrans %}
-                        </a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">
-                    {% trans %}hatchers.index.table.no_found{% endtrans %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% else %}
+        <tr>
+            <td colspan="4">
+                {% trans %}hatchers.index.table.no_found{% endtrans %}
+            </td>
+        </tr>
+    {% endfor %}
+    {% include 'layout/tables/tfooter.html.twig' %}
+    {% include 'layout/tables/tend.html.twig' %}
 
 {% endblock %}

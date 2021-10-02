@@ -5,82 +5,76 @@
         {% trans %}eggs_delivery.index.title{% endtrans %}
     </h1>
     {% if is_granted('ROLE_ADMIN') %}
-        <a class="btn btn-success" href="{{ path('eggs_delivery_new') }}">Create new</a>
+        {{ include('layout/buttons/new.html.twig', {pathLink: path('eggs_delivery_new'), text: 'eggs_delivery.index.button.new' }) }}
     {% endif %}
-    <table class="table table-sm">
-        <thead class="thead-light">
+
+    {% include 'layout/tables/thead.html.twig' %}
+    <tr>
+        <th>
+            {% trans %}eggs_delivery.index.table.id{% endtrans %}
+        </th>
+        <th>
+            {% trans %}eggs_delivery.index.table.breeder{% endtrans %}
+        </th>
+        <th>
+            {% trans %}eggs_delivery.index.table.herds{% endtrans %}
+        </th>
+        <th>
+            {% trans %}eggs_delivery.index.table.delivery_date{% endtrans %}
+        </th>
+        <th>
+            {% trans %}eggs_delivery.index.table.eggs_number{% endtrans %}
+        </th>
+        <th>
+            {% trans %}eggs_delivery.index.table.eggs_warehouse{% endtrans %}
+        </th>
+        <th>
+            {% trans %}eggs_delivery.index.table.first_laying_date{% endtrans %}
+        </th>
+        <th>
+            {% trans %}eggs_delivery.index.table.last_laying_date{% endtrans %}
+        </th>
+        <th>
+            {% trans %}eggs_delivery.index.table.actions{% endtrans %}
+        </th>
+    </tr>
+    {% include 'layout/tables/tbody.html.twig' %}
+    {% for eggs_delivery in eggs_deliveries %}
         <tr>
-            <th>
-                {% trans %}eggs_delivery.index.table.id{% endtrans %}
-            </th>
-            <th>
-                {% trans %}eggs_delivery.index.table.breeder{% endtrans %}
-            </th>
-            <th>
-                {% trans %}eggs_delivery.index.table.herds{% endtrans %}
-            </th>
-            <th>
-                {% trans %}eggs_delivery.index.table.delivery_date{% endtrans %}
-            </th>
-            <th>
-                {% trans %}eggs_delivery.index.table.eggs_number{% endtrans %}
-            </th>
-            <th>
-                {% trans %}eggs_delivery.index.table.eggs_warehouse{% endtrans %}
-            </th>
-            <th>
-                {% trans %}eggs_delivery.index.table.first_laying_date{% endtrans %}
-            </th>
-            <th>
-                {% trans %}eggs_delivery.index.table.last_laying_date{% endtrans %}
-            </th>
-            <th>
-                {% trans %}eggs_delivery.index.table.actions{% endtrans %}
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for eggs_delivery in eggs_deliveries %}
-            <tr>
-                <td>
-                    {% if eggs_delivery.partIndex %}
-                        {{ eggs_delivery.partIndex }}
-                    {% else %}
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <a class="badge badge-success"
-                               href="{{ path('eggs_delivery_add', {'id': eggs_delivery.id}) }}">
-                                {% trans %}eggs_delivery.index.table.badge.add_part_index{% endtrans %}
-                            </a>
-                        {% else %}
-                            ------
-                        {% endif %}
-                    {% endif %}
-                </td>
-                <td>{{ eggs_delivery.herd.breeder.name }}</td>
-                <td>{{ eggs_delivery.herd.name }}</td>
-                <td>{{ eggs_delivery.deliveryDate ? eggs_delivery.deliveryDate|date('Y-m-d') : '' }}</td>
-                <td>{{ eggs_delivery.eggsNumber }}</td>
-                <td>{{ eggs_delivery.eggsOnWarehouse }}</td>
-                <td>{{ eggs_delivery.firstLayingDate ? eggs_delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
-                <td>{{ eggs_delivery.lastLayingDate ? eggs_delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a class="badge badge-info" href="{{ path('eggs_delivery_show', {'id': eggs_delivery.id}) }}">
-                        {% trans %}eggs_delivery.index.table.badge.show{% endtrans %}
-                    </a>
+            <td>
+                {% if eggs_delivery.partIndex %}
+                    {{ eggs_delivery.partIndex }}
+                {% else %}
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a class="badge badge-warning"
-                           href="{{ path('eggs_delivery_edit', {'id': eggs_delivery.id}) }}">
-                            {% trans %}eggs_delivery.index.table.badge.edit{% endtrans %}
+                        <a class="badge badge-success"
+                           href="{{ path('eggs_delivery_add', {'id': eggs_delivery.id}) }}">
+                            {% trans %}eggs_delivery.index.table.badge.add_part_index{% endtrans %}
                         </a>
+                    {% else %}
+                        ------
                     {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">{% trans %}eggs_delivery.index.table.no_found{% endtrans %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                {% endif %}
+            </td>
+            <td>{{ eggs_delivery.herd.breeder.name }}</td>
+            <td>{{ eggs_delivery.herd.name }}</td>
+            <td>{{ eggs_delivery.deliveryDate ? eggs_delivery.deliveryDate|date('Y-m-d') : '' }}</td>
+            <td>{{ eggs_delivery.eggsNumber }}</td>
+            <td>{{ eggs_delivery.eggsOnWarehouse }}</td>
+            <td>{{ eggs_delivery.firstLayingDate ? eggs_delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
+            <td>{{ eggs_delivery.lastLayingDate ? eggs_delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
+            <td>
+                {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('eggs_delivery_show', {'id': eggs_delivery.id}), text: 'eggs_delivery.index.table.badge.show' }) }}
+                {% if is_granted('ROLE_ADMIN') %}
+                    {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('eggs_delivery_edit', {'id': eggs_delivery.id}), text: 'eggs_delivery.index.table.badge.edit' }) }}
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="8">{% trans %}eggs_delivery.index.table.no_found{% endtrans %}</td>
+        </tr>
+    {% endfor %}
+    {% include 'layout/tables/tfooter.html.twig' %}
+    {% include 'layout/tables/tend.html.twig' %}
 
 {% endblock %}

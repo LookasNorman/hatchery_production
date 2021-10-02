@@ -1,7 +1,5 @@
 <form method="post" action="{{ path('breed_delete', {'id': breed.id}) }}"
       onsubmit="return confirm('{% trans %}breed.delete.confirm{% endtrans %}');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ breed.id) }}">
-    <button class="btn btn-danger">
-        {% trans %}breed.delete.button.delete{% endtrans %}
-    </button>
+    {{ include('layout/buttons/delete.html.twig', { text: 'breed.delete.button.delete' }) }}
 </form>

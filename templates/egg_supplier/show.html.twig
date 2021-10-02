@@ -9,32 +9,24 @@
         }
     </style>
     <div class="d-flex justify-content-center card-group">
-        <div class="card">
-            <h5 class="card-header">
-                {% trans %}egg_supplier.show.title{% endtrans %}
-            </h5>
-            <div class="card-body">
-                <h5 class="card-title">{{ egg_supplier.name }}</h5>
-                <p class="card-text">
-                    {% trans %}egg_supplier.show.email{% endtrans %}: {{ egg_supplier.email }}
-                </p>
-                <p class="card-text">
-                    {% trans %}egg_supplier.show.phone_number{% endtrans %}: {{ egg_supplier.phoneNumber }}
-                </p>
-            </div>
-            {% if is_granted('ROLE_ADMIN') %}
-                <div class="card-footer bg-transparent border-success d-flex">
-                    {{ include('egg_supplier/_delete_form.html.twig') }}
-                    <a class="btn btn-warning" href="{{ path('egg_supplier_edit', {'id': egg_supplier.id}) }}">
-                        {% trans %}egg_supplier.show.button.edit{% endtrans %}
-                    </a>
-                </div>
-            {% endif %}
-        </div>
+        {% include 'layout/cards/chead.html.twig' %}
+        {% trans %}egg_supplier.show.title{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        <h5 class="card-title">{{ egg_supplier.name }}</h5>
+        <p class="card-text">
+            {% trans %}egg_supplier.show.email{% endtrans %}: {{ egg_supplier.email }}
+        </p>
+        <p class="card-text">
+            {% trans %}egg_supplier.show.phone_number{% endtrans %}: {{ egg_supplier.phoneNumber }}
+        </p>
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('egg_supplier/_delete_form.html.twig') }}
+            {{ include('layout/buttons/edit.html.twig', {pathLink: path('egg_supplier_edit', {'id': egg_supplier.id}), text: 'egg_supplier.show.button.edit'}) }}
+        {% endif %}
+        {% include 'layout/cards/cend.html.twig' %}
     </div>
-    <a class="btn btn-primary" href="{{ path('egg_supplier_index') }}">
-        {% trans %}egg_supplier.show.button.back{% endtrans %}
-    </a>
+    {{ include('layout/buttons/back.html.twig', { pathLink: path('egg_supplier_index'), text: 'egg_supplier.show.button.back' }) }}
     <h3>{% trans %}egg_supplier.show.herds.list{% endtrans %}</h3>
     {% include 'herds/list.html.twig' with {'herds': egg_supplier.herds, 'breeder': egg_supplier} %}
 {% endblock %}

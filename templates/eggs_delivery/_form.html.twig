@@ -40,23 +40,22 @@
     </div>
 </div>
 {% if form.herd is defined %}
-<div class="form-group">
-    <label>{{ form_label(form.herd) }}</label>
-    {{ form_widget(form.herd) }}
-    <small>{{ form_help(form.herd) }}</small>
-    <div class="form-text text-danger">
-        {{ form_errors(form.herd) }}
+    <div class="form-group">
+        <label>{{ form_label(form.herd) }}</label>
+        {{ form_widget(form.herd) }}
+        <small>{{ form_help(form.herd) }}</small>
+        <div class="form-text text-danger">
+            {{ form_errors(form.herd) }}
+        </div>
     </div>
-</div>
 {% endif %}
-<button class="btn btn-danger">{{ button_label|default('eggs_delivery.form.button.save')|trans }}</button>
+    {{ include('layout/buttons/create.html.twig', {text: 'eggs_delivery.form.button.save'}) }}
 {{ form_end(form) }}
 
 <script>
     let breeder = $('#eggs_delivery_breeder')
     let herds = $('#eggs_delivery_herd')
-    breeder.change(function (){
-        console.log(herds.closest('div'))
+    breeder.change(function () {
         herds.closest('div').remove()
     })
 </script>

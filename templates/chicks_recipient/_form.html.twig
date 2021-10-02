@@ -23,5 +23,5 @@
         {{ form_errors(form.phoneNumber) }}
     </div>
 </div>
-<button class="btn btn-danger">{{ button_label|default('chicks_recipient.form.button.save')|trans }}</button>
+{{ include('layout/buttons/create.html.twig', {text: 'chicks_recipient.form.button.save'}) }}
 {{ form_end(form) }}

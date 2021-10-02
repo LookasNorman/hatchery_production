@@ -5,57 +5,49 @@
         {% trans %}chicks_recipient.index.title{% endtrans %}
     </h1>
     {% if is_granted('ROLE_ADMIN') %}
-        <a class="btn btn-success" href="{{ path('chicks_recipient_new') }}">
-            {% trans %}chicks_recipient.index.button.new{% endtrans %}
-        </a>
+        {{ include('layout/buttons/new.html.twig', {pathLink: path('chicks_recipient_new'), text: 'chicks_recipient.index.button.new' }) }}
     {% endif %}
-    <table class="table table-sm">
-        <thead class="thead-light">
+
+    {% include 'layout/tables/thead.html.twig' %}
+    <tr>
+        <th>
+            {% trans %}chicks_recipient.index.table.id{% endtrans %}
+        </th>
+        <th>
+            {% trans %}chicks_recipient.index.table.name{% endtrans %}
+        </th>
+        <th>
+            {% trans %}chicks_recipient.index.table.email{% endtrans %}
+        </th>
+        <th>
+            {% trans %}chicks_recipient.index.table.phone_number{% endtrans %}
+        </th>
+        <th>
+            {% trans %}chicks_recipient.index.table.actions{% endtrans %}
+        </th>
+    </tr>
+    {% include 'layout/tables/tbody.html.twig' %}
+    {% for chicks_recipient in chicks_recipients %}
         <tr>
-            <th>
-                {% trans %}chicks_recipient.index.table.id{% endtrans %}
-            </th>
-            <th>
-                {% trans %}chicks_recipient.index.table.name{% endtrans %}
-            </th>
-            <th>
-                {% trans %}chicks_recipient.index.table.email{% endtrans %}
-            </th>
-            <th>
-                {% trans %}chicks_recipient.index.table.phone_number{% endtrans %}
-            </th>
-            <th>
-                {% trans %}chicks_recipient.index.table.actions{% endtrans %}
-            </th>
+            <td>{{ chicks_recipient.id }}</td>
+            <td>{{ chicks_recipient.name }}</td>
+            <td>{{ chicks_recipient.email }}</td>
+            <td>{{ chicks_recipient.phoneNumber }}</td>
+            <td>
+                {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('chicks_recipient_show', {'id': chicks_recipient.id}), text: 'chicks_recipient.index.table.badge.show' }) }}
+                {% if is_granted('ROLE_ADMIN') %}
+                    {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('chicks_recipient_edit', {'id': chicks_recipient.id}), text: 'chicks_recipient.index.table.badge.edit' }) }}
+                {% endif %}
+            </td>
         </tr>
-        </thead>
-        <tbody>
-        {% for chicks_recipient in chicks_recipients %}
-            <tr>
-                <td>{{ chicks_recipient.id }}</td>
-                <td>{{ chicks_recipient.name }}</td>
-                <td>{{ chicks_recipient.email }}</td>
-                <td>{{ chicks_recipient.phoneNumber }}</td>
-                <td>
-                    <a class="badge badge-info" href="{{ path('chicks_recipient_show', {'id': chicks_recipient.id}) }}">
-                        {% trans %}chicks_recipient.index.table.badge.show{% endtrans %}
-                    </a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a class="badge badge-warning"
-                           href="{{ path('chicks_recipient_edit', {'id': chicks_recipient.id}) }}">
-                            {% trans %}chicks_recipient.index.table.badge.edit{% endtrans %}
-                        </a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">
-                    {% trans %}chicks_recipient.index.table.no_records{% endtrans %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% else %}
+        <tr>
+            <td colspan="5">
+                {% trans %}chicks_recipient.index.table.no_records{% endtrans %}
+            </td>
+        </tr>
+    {% endfor %}
+    {% include 'layout/tables/tfooter.html.twig' %}
+    {% include 'layout/tables/tend.html.twig' %}
 
 {% endblock %}

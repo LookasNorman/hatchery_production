@@ -4,52 +4,44 @@
     <h1>
         {% trans %}breed.index.title{% endtrans %}
     </h1>
-    <a class="btn btn-success" href="{{ path('breed_new') }}">
-        {% trans %}breed.index.button.new{% endtrans %}
-    </a>
+    {{ include('layout/buttons/new.html.twig', {pathLink: path('breed_new'), text: 'breed.index.button.new' }) }}
 
-    <table class="table table-sm">
-        <thead class="thead-light">
-            <tr>
-                <th>
-                    {% trans %}breed.index.table.id{% endtrans %}
-                </th>
-                <th>
-                    {% trans %}breed.index.table.name{% endtrans %}
-                </th>
-                <th>
-                    {% trans %}breed.index.table.type{% endtrans %}
-                </th>
-                <th>
-                    {% trans %}breed.index.table.actions{% endtrans %}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for breed in breeds %}
-            <tr>
-                <td>{{ breed.id }}</td>
-                <td>{{ breed.name }}</td>
-                <td>{{ breed.type }}</td>
-                <td>
-                    <a class="badge badge-info" href="{{ path('breed_show', {'id': breed.id}) }}">
-                        {% trans %}breed.index.table.badge.show{% endtrans %}
-                    </a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <a class="badge badge-warning" href="{{ path('breed_edit', {'id': breed.id}) }}">
-                        {% trans %}breed.index.table.badge.edit{% endtrans %}
-                    </a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">
-                    {% trans %}breed.index.table.no_found{% endtrans %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% include 'layout/tables/thead.html.twig' %}
+    <tr>
+        <th>
+            {% trans %}breed.index.table.id{% endtrans %}
+        </th>
+        <th>
+            {% trans %}breed.index.table.name{% endtrans %}
+        </th>
+        <th>
+            {% trans %}breed.index.table.type{% endtrans %}
+        </th>
+        <th>
+            {% trans %}breed.index.table.actions{% endtrans %}
+        </th>
+    </tr>
+    {% include 'layout/tables/tbody.html.twig' %}
+    {% for breed in breeds %}
+        <tr>
+            <td>{{ breed.id }}</td>
+            <td>{{ breed.name }}</td>
+            <td>{{ breed.type }}</td>
+            <td>
+                {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('breed_show', {'id': breed.id}), text: 'breed.index.table.badge.show' }) }}
+                {% if is_granted('ROLE_ADMIN') %}
+                    {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('breed_edit', {'id': breed.id}), text: 'breed.index.table.badge.edit' }) }}
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">
+                {% trans %}breed.index.table.no_found{% endtrans %}
+            </td>
+        </tr>
+    {% endfor %}
+    {% include 'layout/tables/tfooter.html.twig' %}
+    {% include 'layout/tables/tend.html.twig' %}
 
 {% endblock %}
