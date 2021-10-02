@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
+        {% include 'layout/cards/chead.html.twig' %}
+        {% trans %}car.show.title{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        <h5 class="card-title">{{ car.name }}</h5>
+        <p class="card-text">
+            {% trans %}car.show.registration_number{% endtrans %}: {{ car.registrationNumber }}
+        </p>
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('car/_delete_form.html.twig') }}
+            {{ include('layout/buttons/edit.html.twig', {pathLink: path('car_edit', {'id': car.id}), text: 'car.show.button.edit'}) }}
+        {% endif %}
+        {% include 'layout/cards/cend.html.twig' %}
+    </div>
+    {{ include('layout/buttons/back.html.twig', { pathLink: path('car_index'), text: 'car.show.button.back' }) }}
+{% endblock %}

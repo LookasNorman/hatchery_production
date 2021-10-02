@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
+        {% include 'layout/cards/chead.html.twig' %}
+        {% trans %}driver.show.title{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        <h5 class="card-title">{{ driver.firstname }} {{ driver.lastname }}</h5>
+        <p class="card-text">
+            {% trans %}driver.show.phone_number{% endtrans %}: {{ driver.phoneNumber }}
+        </p>
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('driver/_delete_form.html.twig') }}
+            {{ include('layout/buttons/edit.html.twig', {pathLink: path('driver_edit', {'id': driver.id}), text: 'driver.show.button.edit'}) }}
+        {% endif %}
+        {% include 'layout/cards/cend.html.twig' %}
+    </div>
+    {{ include('layout/buttons/back.html.twig', { pathLink: path('driver_index'), text: 'driver.show.button.back' }) }}
+
+{% endblock %}

@@ -5,6 +5,11 @@ breed:
   type:
     min: Typ musi musi zawierać conajmniej 3 znaków
     max: Typ musi być krótsza niż 20 znaków
+car:
+  name:
+    isset: Istnieje pojazd o tej nazwie
+  registration_number:
+    isset: Istnieje pojazd o tym numerze rejestracyjnym
 eggs_delivery:
   part_index:
     min: Index musi zkładać się z 6 znaków

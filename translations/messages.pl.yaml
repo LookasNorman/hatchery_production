@@ -43,6 +43,43 @@ breed:
     button:
       edit: Edytuj rasę
       back: Lista ras kur
+car:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Jesteś pewien że chcesz usunąć pojazd?
+  edit:
+    button:
+      update: Zapisz
+    title: Edycja pojazdu
+  form:
+    button:
+      save: Dodaj
+    name: Nazwa
+    registration_number: Numer rejestracyjny
+  index:
+    button:
+      new: Dodaj samochód
+    table:
+      actions: Akcje
+      badge:
+        edit: Edytuj
+        show: Szczegóły
+      id: Lp.
+      name: Nazwa
+      not_found: Brak samochodów
+      registration_number: Numer rejestracyjny
+    title: Lista pojazdów
+  new:
+    button:
+      back: Lista samochodów
+    title: Dodaj samochód
+  show:
+    button:
+      back: Lista pojazdów
+      edit: Edytuj
+    registration_number: Numer rejestracyjny
+    title: Szczegóły pojazdu
 chicks_recipient:
   delete:
     confirm: Czy na pewno chcesz usunąć odbiorcę piskląt?
@@ -89,6 +126,44 @@ chicks_recipient:
       deliveries: Dostawy
       chicks_plan: Planowane
       chicks_real: Rzeczywiste
+driver:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Jesteś pewien, że chcesz usunąć kierowcę?
+  edit:
+    title: Edycja danych kierowcy
+  form:
+    button:
+      save: Zapisz
+      update: Aktualizuj
+    firstname: Imię
+    lastname: Nazwisko
+    phone_number: Numer telefonu
+  index:
+    button:
+      new: Dodaj kierowcę
+    table:
+      actions: Akcje
+      badge:
+        edit: Edytuj
+        show: Szczegóły
+      firstname: Imię
+      id: Lp.
+      lastname: Nazwisko
+      not_found: Brak kierowców
+      phone_number: Numer telefonu
+    title: Lista kierowców
+  new:
+    button:
+      back: Lista kierowców
+    title: Dodaj kierowcę
+  show:
+    button:
+      back: Lista kierowców
+      edit: Edytuj dane kierowcy
+    phone_number: Numer telefonu
+    title: Szczegóły kierowcy
 egg_supplier:
   delete:
     title: Jesteś pewien, że chcesz usunąć dostawcę jaj?
@@ -688,8 +763,12 @@ menu:
   menu_top:
     breed:
       index: Rasy kur
+    car:
+      index: Samochody
     chicks_recipient:
       index: Odbiorcy piskląt
+    driver:
+      index: Kierowcy
     eggs_delivery:
       index: Dostawy jaj
     eggs_inputs:
@@ -713,6 +792,8 @@ menu:
     logout: Wyloguj
     login: Zaloguj
     registration: Nowy użytkownik
+    transport:
+      title: Transport
 registration:
   form:
     button:

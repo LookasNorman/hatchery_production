@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+
+    <div class="d-flex justify-content-center card-group">
+        {% include 'layout/cards/chead.html.twig' %}
+        <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-car"
+                                                        aria-hidden="true"></i> {% trans %}car.new.title{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        {{ include('car/_form.html.twig') }}
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% include 'layout/cards/cend.html.twig' %}
+    </div>
+    {{ include('layout/buttons/back.html.twig', {pathLink: path('car_index'), text: 'car.new.button.back'}) }}
+
+{% endblock %}
