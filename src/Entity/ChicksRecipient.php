@@ -58,6 +58,11 @@ class ChicksRecipient
      */
     private $eggsInputsDetails;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="chicksRecipients")
+     */
+    private $customer;
+
     public function __construct()
     {
         $this->eggsInputsDetails = new ArrayCollection();
@@ -130,6 +135,18 @@ class ChicksRecipient
                 $eggsInputsDetail->setChicksRecipient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(?Customer $customer): self
+    {
+        $this->customer = $customer;
 
         return $this;
     }

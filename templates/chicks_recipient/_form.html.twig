@@ -1,5 +1,13 @@
 {{ form_start(form) }}
 <div class="form-group">
+    <label>{{ form_label(form.customer) }}</label>
+    {{ form_widget(form.customer) }}
+    <small>{{ form_help(form.customer) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.customer) }}
+    </div>
+</div>
+<div class="form-group">
     <label>{{ form_label(form.name) }}</label>
     {{ form_widget(form.name) }}
     <small>{{ form_help(form.name) }}</small>

@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\ChicksRecipient;
+use App\Entity\Customer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,6 +15,15 @@ class ChicksRecipientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('customer', EntityType::class, [
+                'class' => Customer::class,
+                'choice_label' => 'name',
+                'placeholder' => 'chicks_recipient.form.placeholder.customer',
+                'label' => 'chicks_recipient.form.label.customer',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('name', TextType::class, [
                 'label' => 'chicks_recipient.form.label.name',
                 'attr' => [

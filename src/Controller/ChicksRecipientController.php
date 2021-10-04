@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ChicksRecipient;
 use App\Form\ChicksRecipientType;
 use App\Repository\ChicksRecipientRepository;
+use App\Repository\CustomerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,20 @@ class ChicksRecipientController extends AbstractController
     {
         return $this->render('chicks_recipient/index.html.twig', [
             'chicks_recipients' => $chicksRecipientRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/customer/{id}", name="chick_recipient_customer_index", methods={"GET"})
+     */
+    public function customerIndex(ChicksRecipientRepository $chicksRecipientRepository, CustomerRepository $customerRepository, $id): Response
+    {
+        $customer = $customerRepository->find($id);
+        $chicksRecipients = $chicksRecipientRepository->findBy(['customer' => $customer]);
+
+        return $this->render('chicks_recipient/index.html.twig', [
+            'chicks_recipients' => $chicksRecipients,
+            'customer' => $customer
         ]);
     }
 

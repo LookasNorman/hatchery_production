@@ -82,50 +82,98 @@ car:
     title: Szczegóły pojazdu
 chicks_recipient:
   delete:
-    confirm: Czy na pewno chcesz usunąć odbiorcę piskląt?
+    confirm: Czy na pewno chcesz usunąć fermę odbiorcy piskląt?
     button:
       delete: Usuń
+  edit:
+    title: Edycja fermy odbiorcy
+    button:
+      back: Lista ferm odbiorców
+      update: Zaktualizuj
   form:
     button:
       save: Zapisz
     label:
-      name: Nazwa odbiorcy
+      customer: Nazwa odbiorcy
+      name: Nazwa fermy odbiorcy
       email: Adres email
       phone_number: Numer telefonu
-  edit:
-    title: Edycja odbiorcy
-    button:
-      back: Lista odbiorców
-      update: Zaktualizuj
+    placeholder:
+      customer: Wybierz odbiorcę z listy
   index:
-    title: Odbiorcy piskląt
+    short_title: Fermy odbiorcy
+    title: Fermy odbiorców piskląt
     table:
       id: Indeks
       name: Nazwa
       email: Adres email
       phone_number: Numer telefonu
       actions: Akcje
-      no_records: Brak odbiorców
+      no_records: Brak ferm odbiorców
       badge:
         show: Szczegóły
         edit: Edytuj
     button:
-      new: Dodaj odbiorcę
+      new: Dodaj fermę odbiorcy
   new:
-    title: Dodawanie nowego odbiorcy
+    title: Dodawanie nowej fermy odbiorcy
     button:
-      back: Lista odbiorców
+      back: Lista ferm odbiorców
   show:
-    title: Odbiorca piskląt
+    title: Ferma odbiorcy piskląt
     button:
       edit: Edytuj
-      back: Lista odbiorców
+      back: Lista ferm odbiorców
     table:
       inputs: Nakład
       chicks: Pisklęta
       deliveries: Dostawy
       chicks_plan: Planowane
       chicks_real: Rzeczywiste
+customer:
+  delete:
+    button:
+      delete: Usuń odbiorcę
+    confirm: Jesteś pewien, że chcesz usunąć odbiorę piskląt?
+  edit:
+    button:
+      back: Wykaz odbiorców piskląt
+      upddate: Aktualizuj
+    title: Edycja odbiorcy
+  form:
+    button:
+      save: Zapisz
+    label:
+      email: Email
+      name: Nazwa
+      phone_number: Numer telefonu
+  index:
+    button:
+      new: Dodaj odbiorcę
+    table:
+      actions: Akcje
+      badge:
+        edit: Edycja
+        farm: Fermy
+        show: Szczegóły
+      email: Email
+      id: Lp.
+      name: Nazwa
+      phone_number: Numer telefonu
+    title: Lista odbiorców piskląt
+  new:
+    button:
+      back: Wykaz odbiorców piskląt
+    header: Dane odbiorcy
+    title: Dodaj odbiorcę
+  show:
+    button:
+      back: Wykaz odbiorców piskląt
+      edit: Edycja odbiorcy
+    email: Adres email
+    header: Dane odbiorcy
+    phone_number: Numer telefonu
+    title: Szczegóły odbiorcy
 driver:
   delete:
     button:
@@ -772,6 +820,9 @@ menu:
     car:
       index: Samochody
     chicks_recipient:
+      index: Fermy odbiorców piskląt
+    customer:
+      title: Odbiorcy
       index: Odbiorcy piskląt
     driver:
       index: Kierowcy

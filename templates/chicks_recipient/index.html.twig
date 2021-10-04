@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% if customer is defined %}
+    <h1>{% trans %}chicks_recipient.index.short_title{% endtrans %}: {{ customer.name }}</h1>
+    {% else %}
     <h1>
         {% trans %}chicks_recipient.index.title{% endtrans %}
     </h1>
+    {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
         {{ include('layout/buttons/new.html.twig', {pathLink: path('chicks_recipient_new'), text: 'chicks_recipient.index.button.new' }) }}
     {% endif %}

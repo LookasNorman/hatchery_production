@@ -31,20 +31,18 @@
                         {% trans %}menu.menu_top.herds.index{% endtrans %}
                     </a>
                 </li>
-                <li>
-                    <a class="nav-link" href={{ path('eggs_delivery_index') }}>
-                        {% trans %}menu.menu_top.eggs_delivery.index{% endtrans %}
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href={{ path('chicks_recipient_index') }}>
-                        {% trans %}menu.menu_top.chicks_recipient.index{% endtrans %}
-                    </a>
-                </li>
+                <li><a class="nav-link" href={{ path('eggs_delivery_index') }}>{% trans %}menu.menu_top.eggs_delivery.index{% endtrans %}</a></li>
                 <li>
                     <a class="nav-link" href={{ path('eggs_inputs_index') }}>
                         {% trans %}menu.menu_top.eggs_inputs.index{% endtrans %}
                     </a>
+                </li>
+                <li class="nav-item dropdown" id="customer">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{% trans %}menu.menu_top.customer.title{% endtrans %}</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href={{ path('chicks_recipient_index') }}>{% trans %}menu.menu_top.chicks_recipient.index{% endtrans %}</a></li>
+                        <li><a class="dropdown-item" href="{{ path('customer_index') }}">{% trans %}menu.menu_top.customer.index{% endtrans %}</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown" id="transport">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{% trans %}menu.menu_top.transport.title{% endtrans %}</a>
