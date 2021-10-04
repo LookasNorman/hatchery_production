@@ -58,3 +58,6 @@ setters:
   shortname:
     min: Kod jest zbyt krótki. Powinien mieć od 2 do 4 znaków.
     max: Kod jest zbyt długi. Powinien mieć od 2 do 4 znaków.
+user:
+  email:
+    isset: Istnieja użytkownik o takim adresie email.

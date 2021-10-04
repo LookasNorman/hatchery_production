@@ -34,8 +34,8 @@ class Inputs
     private $name;
 
     /**
-     * @ORM\Column(type="date")
-     * @Assert\Date()
+     * @ORM\Column(type="datetime")
+     * @Assert\DateTime()
      * @Assert\NotNull()
      */
     private $inputDate;
@@ -74,7 +74,7 @@ class Inputs
 
     public function setInputDate(\DateTimeInterface $inputDate): self
     {
-        $this->inputDate = $inputDate;
+        $this->inputDate = $inputDate->sub(new \DateInterval('P21DT4H'));
 
         return $this;
     }

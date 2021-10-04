@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Inputs;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +21,7 @@ class InputsType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('inputDate', DateType::class, [
+            ->add('inputDate', DateTimeType::class, [
                 'widget' => 'single_text',
                 'label' => 'eggs_inputs.form.label.input_date',
                 'attr' => [
