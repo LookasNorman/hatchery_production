@@ -74,7 +74,7 @@ class Inputs
 
     public function setInputDate(\DateTimeInterface $inputDate): self
     {
-        $this->inputDate = $inputDate->sub(new \DateInterval('P21DT4H'));
+        $this->inputDate = $inputDate->sub(new \DateInterval('P21DT6H'));
 
         return $this;
     }
