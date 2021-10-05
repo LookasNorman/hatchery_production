@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Breed;
 use App\Entity\Supplier;
 use App\Entity\Herds;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -33,6 +34,10 @@ class HerdsType extends AbstractType
             ->add('breeder', EntityType::class, [
                 'class' => Supplier::class,
                 'choice_label' => 'name',
+                'query_builder' => function(EntityRepository $entityRepository) {
+                    return $entityRepository->createQueryBuilder('s')
+                        ->orderBy('s.name', 'ASC');
+                },
                 'placeholder' => 'herds.form.placeholder.breeder',
                 'label' => 'herds.form.label.breeder',
                 'attr' => [
