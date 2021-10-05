@@ -107,6 +107,7 @@ class InputsDetailsController extends AbstractController
         return $this->render('eggs_inputs_details/new.html.twig', [
             'eggs_inputs_detail' => $eggsInputsDetail,
             'form' => $form->createView(),
+            'inputs' => $inputs
         ]);
     }
 

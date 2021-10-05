@@ -466,9 +466,12 @@ eggs_inputs_details:
     button:
       new: Dodaj dostawy do nakładu
   new:
-    title: Dodawanie dostaw do nakładu
     button:
       back: Lista dostaw w nakładach
+      inputs_details: Szczegóły nakładu
+    header: Nakład numer
+    on_date: z dnia
+    title: Dodawanie dostaw do nakładu
   show:
     title: Szczegóły nakładu
     egg: jaj
