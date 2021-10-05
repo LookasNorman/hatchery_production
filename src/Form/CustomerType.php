@@ -24,13 +24,15 @@ class CustomerType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ],
-                'label' => 'customer.form.label.phone_number'
+                'label' => 'customer.form.label.email',
+                'required' => false
             ])
             ->add('phoneNumber', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
-                'label' => 'customer.form.label.phone_number'
+                'label' => 'customer.form.label.phone_number',
+                'required' => false
             ])
         ;
     }

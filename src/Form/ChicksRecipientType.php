@@ -34,7 +34,8 @@ class ChicksRecipientType extends AbstractType
                 'label' => 'chicks_recipient.form.label.email',
                 'attr' => [
                     'class' => 'form-control'
-                ]
+                ],
+                'required' => false
             ])
             ->add('phoneNumber', TextType::class, [
                 'label' => 'chicks_recipient.form.label.phone_number',
