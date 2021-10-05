@@ -29,6 +29,7 @@ class DeliveryRepository extends ServiceEntityRepository
             ->where('ed.herd = :herd')
             ->andWhere('ed.eggsOnWarehouse > 0')
             ->setParameter('herd', $herd)
+            ->orderBy('ed.deliveryDate', 'asc')
             ->getQuery()
             ->getResult()
             ;
@@ -39,6 +40,20 @@ class DeliveryRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('ed')
             ->select('SUM(ed.eggsOnWarehouse) as eggsInWarehouse')
             ->andWhere('ed.eggsOnWarehouse > 0')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function deliveryOnWarehouse()
+    {
+        return $this->createQueryBuilder('ed')
+            ->join('ed.herd', 'h')
+            ->join('h.breeder', 'b')
+            ->where('ed.eggsOnWarehouse > 0')
+            ->orderBy('b.name')
+            ->addOrderBy('h.name')
+            ->addOrderBy('ed.deliveryDate')
             ->getQuery()
             ->getResult()
             ;
