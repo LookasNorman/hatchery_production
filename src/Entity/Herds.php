@@ -57,6 +57,11 @@ class Herds
      */
     private $eggsDeliveries;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": true})
+     */
+    private $active;
+
     public function __construct()
     {
         $this->eggsDeliveries = new ArrayCollection();
@@ -142,6 +147,18 @@ class Herds
                 $eggsDelivery->setHerd(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }
