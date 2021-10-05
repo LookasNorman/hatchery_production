@@ -18,6 +18,7 @@ class DefaultController extends AbstractController
 {
     /**
      * @Route("/", name="main_page")
+     * @IsGranted("ROLE_USER")
      */
     public function index(
         SupplierRepository $supplierRepository,
