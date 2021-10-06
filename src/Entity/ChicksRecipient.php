@@ -83,9 +83,15 @@ class ChicksRecipient
      */
     private $streetNumber;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CustomerBuilding::class, mappedBy="farm")
+     */
+    private $customerBuildings;
+
     public function __construct()
     {
         $this->eggsInputsDetails = new ArrayCollection();
+        $this->customerBuildings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -215,6 +221,36 @@ class ChicksRecipient
     public function setStreetNumber(?string $streetNumber): self
     {
         $this->streetNumber = $streetNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CustomerBuilding[]
+     */
+    public function getCustomerBuildings(): Collection
+    {
+        return $this->customerBuildings;
+    }
+
+    public function addCustomerBuilding(CustomerBuilding $customerBuilding): self
+    {
+        if (!$this->customerBuildings->contains($customerBuilding)) {
+            $this->customerBuildings[] = $customerBuilding;
+            $customerBuilding->setFarm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomerBuilding(CustomerBuilding $customerBuilding): self
+    {
+        if ($this->customerBuildings->removeElement($customerBuilding)) {
+            // set the owning side to null (unless already changed)
+            if ($customerBuilding->getFarm() === $this) {
+                $customerBuilding->setFarm(null);
+            }
+        }
 
         return $this;
     }
