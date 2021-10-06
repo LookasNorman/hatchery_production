@@ -4,12 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Inputs;
 use App\Entity\Lighting;
-use App\Entity\Supplier;
 use App\Form\LightingType;
 use App\Repository\DetailsRepository;
+use App\Repository\HerdsRepository;
 use App\Repository\LightingRepository;
 use App\Repository\InputsRepository;
-use App\Repository\SupplierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,19 +32,19 @@ class LightingController extends AbstractController
     }
 
     /**
-     * @Route("/new/{inputs}/{breeder}", name="eggs_inputs_lighting_new", methods={"GET","POST"})
+     * @Route("/new/{inputs}/{herd}", name="eggs_inputs_lighting_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function new($inputs,
-                        $breeder,
+                        $herd,
                         Request $request,
                         DetailsRepository $detailsRepository,
                         InputsRepository $eggsInputsRepository,
-                        SupplierRepository $eggSupplierRepository
+                        HerdsRepository $herdsRepository
     ): Response
     {
         $inputs = $eggsInputsRepository->find($inputs);
-        $breeder = $eggSupplierRepository->find($breeder);
+        $herd = $herdsRepository->find($herd);
         $form = $this->createForm(LightingType::class);
         $form->handleRequest($request);
 
@@ -54,7 +53,7 @@ class LightingController extends AbstractController
             $wasteEggs = $form['wasteEggs']->getData();
             $lightingDate = $form['lightingDate']->getData();
             $entityManager = $this->getDoctrine()->getManager();
-            $inputsDetails = $detailsRepository->inputBreederDetails($inputs, $breeder);
+            $inputsDetails = $detailsRepository->inputHerdDetails($inputs, $herd);
 
             /** @var  $inputDetail
              * Get sum eggs for breeder in eggs input

@@ -73,6 +73,21 @@ class DetailsRepository extends ServiceEntityRepository
             ;
     }
 
+    public function inputHerdDetails($input, $herd)
+    {
+        return $this->createQueryBuilder('eid')
+            ->addSelect('SUM(edd.eggsNumber)')
+            ->join('eid.eggsInputsDetailsEggsDeliveries', 'edd')
+            ->join('edd.eggsDeliveries', 'ed')
+            ->where('eid.eggInput = :input')
+            ->andWhere('ed.herd = :herd')
+            ->groupBy('eid')
+            ->setParameters(['input' => $input, 'herd' => $herd])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function eggs()
     {
         return $this->createQueryBuilder('eid')

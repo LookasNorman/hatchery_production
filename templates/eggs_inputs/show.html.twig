@@ -34,11 +34,11 @@
                 <li class="d-flex">{% trans %}eggs_inputs.show.card.footer.add{% endtrans %}</li>
                 <li class="d-flex">
                     {{ include('layout/modals/production_modal.html.twig',
-                        { title: 'eggs_inputs.show.button.lighting', body: breeders, pathLink: 'eggs_inputs_lighting_new' }) }}
+                        { title: 'eggs_inputs.show.button.lighting', body: herds, pathLink: 'eggs_inputs_lighting_new' }) }}
                     {{ include('layout/modals/production_modal.html.twig',
-                        { title: 'eggs_inputs.show.button.transfer', body: breeders, pathLink: 'eggs_inputs_transfers_new' }) }}
+                        { title: 'eggs_inputs.show.button.transfer', body: herds, pathLink: 'eggs_inputs_transfers_new' }) }}
                     {{ include('layout/modals/production_modal.html.twig',
-                        { title: 'eggs_inputs.show.button.selection', body: breeders, pathLink: 'eggs_selections_new' }) }}
+                        { title: 'eggs_inputs.show.button.selection', body: herds, pathLink: 'eggs_selections_new' }) }}
                 </li>
             {% endif %}
         </ul>

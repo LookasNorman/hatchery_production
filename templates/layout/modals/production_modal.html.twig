@@ -9,10 +9,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                {% for breeder in breeders %}
+                {% for herd in herds %}
                     <a class="dropdown-item"
-                       href="{{ path(pathLink, {'inputs': eggs_input.id, 'breeder': breeder.id}) }}"
-                    >{{ breeder.name }}</a>
+                       href="{{ path(pathLink, {'inputs': eggs_input.id, 'herd': herd.id}) }}"
+                    >{{ herd.name }}</a>
                 {% endfor %}
             </div>
             <div class="modal-footer">

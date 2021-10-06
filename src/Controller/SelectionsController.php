@@ -4,12 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Inputs;
 use App\Entity\Selections;
-use App\Entity\Supplier;
 use App\Form\SelectionsType;
 use App\Repository\DetailsRepository;
+use App\Repository\HerdsRepository;
 use App\Repository\InputsRepository;
 use App\Repository\SelectionsRepository;
-use App\Repository\SupplierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,19 +32,19 @@ class SelectionsController extends AbstractController
     }
 
     /**
-     * @Route("/new/{inputs}/{breeder}", name="eggs_selections_new", methods={"GET","POST"})
+     * @Route("/new/{inputs}/{herd}", name="eggs_selections_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function new($inputs,
-                        $breeder,
+                        $herd,
                         Request $request,
                         DetailsRepository $detailsRepository,
                         InputsRepository $eggsInputsRepository,
-                        SupplierRepository $eggSupplierRepository
+                        HerdsRepository $herdsRepository
     ): Response
     {
         $inputs = $eggsInputsRepository->find($inputs);
-        $breeder = $eggSupplierRepository->find($breeder);
+        $herd = $herdsRepository->find($herd);
         $form = $this->createForm(SelectionsType::class);
         $form->handleRequest($request);
 
@@ -55,7 +54,7 @@ class SelectionsController extends AbstractController
             $cullChicken = $form['cullChicken']->getData();
             $selectionDate = $form['selectionDate']->getData();
             $entityManager = $this->getDoctrine()->getManager();
-            $inputsDetails = $detailsRepository->inputBreederDetails($inputs, $breeder);
+            $inputsDetails = $detailsRepository->inputHerdDetails($inputs, $herd);
 
             /** @var  $inputDetail
              * Get sum eggs for breeder in eggs input

@@ -317,7 +317,7 @@ class InputsController extends AbstractController
     {
         $inputDetails = $detailsRepository->deliveriesInput($eggsInput);
         $details = [];
-        $breeders = [];
+        $herds = [];
 
         foreach ($inputDetails as $detail) {
             $eggs = 0;
@@ -326,7 +326,7 @@ class InputsController extends AbstractController
             $deliveries = $deliveryRepository->findBy(['eggsInputDetails' => $detail]);
             foreach ($deliveries as $delivery) {
                 $eggs = $eggs + $delivery->getEggsNumber();
-                $breeders [$delivery->getEggsDeliveries()->getHerd()->getBreeder()->getId()] = ($delivery->getEggsDeliveries()->getHerd()->getBreeder());
+                $herds [$delivery->getEggsDeliveries()->getHerd()->getId()] = ($delivery->getEggsDeliveries()->getHerd());
             }
             $detail->eggsNumber = $eggs;
             foreach ($detail->getEggsInputsLightings() as $lighting) {
@@ -373,7 +373,7 @@ class InputsController extends AbstractController
         return $this->render('eggs_inputs/show.html.twig', [
             'eggs_input' => $eggsInput,
             'details_input' => $details,
-            'breeders' => $breeders,
+            'herds' => $herds,
         ]);
     }
 
