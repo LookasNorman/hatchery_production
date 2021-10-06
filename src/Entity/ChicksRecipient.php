@@ -88,10 +88,16 @@ class ChicksRecipient
      */
     private $customerBuildings;
 
+    /**
+     * @ORM\OneToMany(targetEntity=InputsFarm::class, mappedBy="chicksFarm")
+     */
+    private $inputsFarms;
+
     public function __construct()
     {
         $this->eggsInputsDetails = new ArrayCollection();
         $this->customerBuildings = new ArrayCollection();
+        $this->inputsFarms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -249,6 +255,36 @@ class ChicksRecipient
             // set the owning side to null (unless already changed)
             if ($customerBuilding->getFarm() === $this) {
                 $customerBuilding->setFarm(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InputsFarm[]
+     */
+    public function getInputsFarms(): Collection
+    {
+        return $this->inputsFarms;
+    }
+
+    public function addInputsFarm(InputsFarm $inputsFarm): self
+    {
+        if (!$this->inputsFarms->contains($inputsFarm)) {
+            $this->inputsFarms[] = $inputsFarm;
+            $inputsFarm->setChicksFarm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInputsFarm(InputsFarm $inputsFarm): self
+    {
+        if ($this->inputsFarms->removeElement($inputsFarm)) {
+            // set the owning side to null (unless already changed)
+            if ($inputsFarm->getChicksFarm() === $this) {
+                $inputsFarm->setChicksFarm(null);
             }
         }
 

@@ -45,9 +45,15 @@ class Inputs
      */
     private $eggsInputsDetails;
 
+    /**
+     * @ORM\OneToMany(targetEntity=InputsFarm::class, mappedBy="eggInput")
+     */
+    private $inputsFarms;
+
     public function __construct()
     {
         $this->eggsInputsDetails = new ArrayCollection();
+        $this->inputsFarms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,6 +109,36 @@ class Inputs
             // set the owning side to null (unless already changed)
             if ($eggsInputsDetail->getEggInput() === $this) {
                 $eggsInputsDetail->setEggInput(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InputsFarm[]
+     */
+    public function getInputsFarms(): Collection
+    {
+        return $this->inputsFarms;
+    }
+
+    public function addInputsFarm(InputsFarm $inputsFarm): self
+    {
+        if (!$this->inputsFarms->contains($inputsFarm)) {
+            $this->inputsFarms[] = $inputsFarm;
+            $inputsFarm->setEggInput($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInputsFarm(InputsFarm $inputsFarm): self
+    {
+        if ($this->inputsFarms->removeElement($inputsFarm)) {
+            // set the owning side to null (unless already changed)
+            if ($inputsFarm->getEggInput() === $this) {
+                $inputsFarm->setEggInput(null);
             }
         }
 
