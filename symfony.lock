@@ -94,6 +94,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
+    "guzzlehttp/psr7": {
+        "version": "1.8.3"
+    },
     "laminas/laminas-code": {
         "version": "4.1.0"
     },
@@ -163,6 +166,9 @@
     "psr/simple-cache": {
         "version": "1.0.1"
     },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
+    },
     "sabberworm/php-css-parser": {
         "version": "8.3.1"
     },
@@ -177,6 +183,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "smsapi/php-client": {
+        "version": "v3.0.3"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.7"

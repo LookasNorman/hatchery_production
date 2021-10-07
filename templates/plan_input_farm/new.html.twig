@@ -7,5 +7,5 @@
 
     {{ include('plan_input_farm/_form.html.twig') }}
 
-    <a href="{{ path('plan_input_farm_index') }}">back to list</a>
+    <a href="{{ path('plan_input_show', {id: plan_input_farm.eggInput.id}) }}">back to list</a>
 {% endblock %}
