@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PlanInputFarm{% endblock %}
+
+{% block body %}
+    <h1>Create new PlanInputFarm</h1>
+
+    {{ include('plan_input_farm/_form.html.twig') }}
+
+    <a href="{{ path('plan_input_farm_index') }}">back to list</a>
+{% endblock %}

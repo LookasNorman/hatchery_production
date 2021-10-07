@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <h1>{% trans %}plan_input.show.title{% endtrans %}</h1>
+    {{ include('layout/buttons/back.html.twig', { pathLink: path('plan_input_index'), text: 'plan_input.show.button.back' }) }}
+
+    <div class="d-flex justify-content-center card-group">
+        {% include 'layout/cards/chead.html.twig' %}
+            {% trans %}plan_input.show.header{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        <p class="card-text">
+            {% trans %}eggs_inputs.show.input_date{% endtrans %}
+            : {{ plan_input.inputDate ? plan_input.inputDate|date('Y-m-d H:i:s') : '' }}
+        </p>
+        {% include 'layout/cards/cfooter.html.twig' %}
+        <ul>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="d-flex">
+                    {{ include('plan_input/_delete_form.html.twig') }}
+                    {{ include('layout/buttons/edit.html.twig',
+                        {pathLink: path('plan_input_edit', {'id': plan_input.id}), text: 'plan_input.show.button.edit'}) }}
+                    {{ include('layout/buttons/add.html.twig',
+                        {pathLink: path('plan_input_farm_new', {'id': plan_input.id}), text: 'plan_input.show.button.add_farm'}) }}
+                </li>
+            {% endif %}
+        </ul>
+        {% include 'layout/cards/cend.html.twig' %}
+    </div>
+    <hr>
+    <h5>{% trans %}plan_input.show.chicks_plan{% endtrans %}</h5>
+    {% include 'plan_input/show_customer_delivery.html.twig' %}
+
+{% endblock %}

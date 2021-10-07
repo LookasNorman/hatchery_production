@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>
+        {% trans %}plan_input.index.title{% endtrans %}
+    </h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('layout/buttons/new.html.twig', {pathLink: path('plan_input_new'), text: 'eggs_inputs.index.button.new' }) }}
+    {% endif %}
+
+    {% include 'layout/tables/thead.html.twig' %}
+    <tr>
+        <th>{% trans %}eggs_inputs.table_list.table.id{% endtrans %}</th>
+        <th>{% trans %}eggs_inputs.table_list.table.detail{% endtrans %}</th>
+        <th>{% trans %}eggs_inputs.table_list.table.input_date{% endtrans %}</th>
+        <th>{% trans %}eggs_inputs.table_list.table.actions{% endtrans %}</th>
+    </tr>
+    {% include 'layout/tables/tbody.html.twig' %}
+    {% for plan_input in plan_inputs %}
+        <tr>
+            <td>{{ plan_input.id }}</td>
+            <td>
+                <table class="table table-sm table-bordered table-hover">
+                    <thead class="bg-success text-white">
+                    <tr>
+                        <th>{% trans %}plan_input.table_list.table_detail.chick_number{% endtrans %}</th>
+                        <th>{% trans %}plan_input.table_list.table_detail.chick_recipient{% endtrans %}</th>
+                        <th>{% trans %}plan_input.table_list.table_detail.eggs_number{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for planInputFarm in plan_input.planInputFarms %}
+
+                        <tr>
+                            <td>{{ planInputFarm.chickNumber }}</td>
+                            <td>{{ planInputFarm.chicksFarm.customer.name }}: {{ planInputFarm.chicksFarm.name }}</td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </td>
+            <td>{{ plan_input.inputDate ? plan_input.inputDate|date('Y-m-d H:i:s') : '' }}</td>
+            <td>
+                {{ include('layout/buttons/list_actions.html.twig',
+                    {pathLink: path('plan_input_show', {'id': plan_input.id}), text: 'plan_input.table_list.table.badge.show' }) }}
+                {% if is_granted('ROLE_ADMIN') %}
+                    {{ include('layout/buttons/list_actions.html.twig',
+                        {pathLink: path('plan_input_edit', {'id': plan_input.id}), text: 'plan_input.table_list.table.badge.edit' }) }}
+                    {{ include('layout/buttons/list_actions.html.twig',
+                        {pathLink: path('plan_input_farm_new', {'id': plan_input.id}), text: 'plan_input.table_list.table.badge.add' }) }}
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="3">no records found</td>
+        </tr>
+    {% endfor %}
+    {% include 'layout/tables/tfooter.html.twig' %}
+    {% include 'layout/tables/tend.html.twig' %}
+
+    <a href="{{ path('plan_input_new') }}">Create new</a>
+{% endblock %}

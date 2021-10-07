@@ -52,6 +52,12 @@
                         <li><a class="dropdown-item" href="{{ path('driver_index') }}">{% trans %}menu.menu_top.driver.index{% endtrans %}</a></li>
                     </ul>
                 </li>
+                <li class="nav-item dropdown" id="plans">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{% trans %}menu.menu_top.plans.title{% endtrans %}</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('plan_input_index') }}">{% trans %}menu.menu_top.plan_input.index{% endtrans %}</a></li>
+                    </ul>
+                </li>
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
                         <a class="nav-link" href={{ path('registration') }}>{% trans %}menu.menu_top.registration{% endtrans %}</a>

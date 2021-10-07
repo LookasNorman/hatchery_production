@@ -883,9 +883,55 @@ menu:
       index: Strona główna
     logout: Wyloguj
     login: Zaloguj
+    plan_input:
+      index: Nakłady - planowane
+    plans:
+      title: Plany
     registration: Nowy użytkownik
     transport:
       title: Transport
+plan_input:
+  form:
+    button:
+      save: Utwórz
+    label:
+      input_date: Data i godzina wybierania
+  index:
+    title: Wykaz planowanych nakładów
+  new:
+    button:
+      back: Lista planowanych nakładów
+    header: Dodawanie planowanego nakładu
+    title: Planowanie nakładu
+  show:
+    button:
+      add_farm: Dodaj odbiorcę piskląt
+      back: Wykaz planów
+      edit: Edytuj nakład
+    chicks_plan: Planowane pisklęta
+    header: Planowany nakład
+    title: Szczegóły planowanego nakładu
+    table:
+      action: Akcje
+      chick_number: Ilość piskląt
+      chick_recipient: Odbiorca piskląt - ferma
+      eggs_number: Ilość jaj do nałożenia
+      id: Indeks
+  table_list:
+    table:
+      badge:
+        edit: Edycja
+        show: Szczegóły
+        add: Dodaj odbiorcę
+    table_detail:
+      chick_number: Ilość piskląt
+      chick_recipient: Odbiorca piskląt - ferma
+      eggs_number: Ilość jaj do nałożenia
+plan_input_farm:
+  delete:
+    button:
+      delete: Usuń planowaną fermę
+    confirm: Jesteś pewień że chcesz usnąć fermę z planowanego nakładu?
 registration:
   form:
     button:
