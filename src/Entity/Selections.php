@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SelectionsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,12 +18,6 @@ class Selections
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=InputsDetails::class, inversedBy="eggsSelections")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $eggsInputsDetail;
 
     /**
      * @ORM\Column(type="integer")
@@ -38,21 +34,24 @@ class Selections
      */
     private $selectionDate;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $unhatched;
+
+    /**
+     * @ORM\OneToMany(targetEntity=InputsFarmDelivery::class, mappedBy="selections")
+     */
+    private $inputsFarmDelivery;
+
+    public function __construct()
+    {
+        $this->inputsFarmDelivery = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getEggsInputsDetail(): ?InputsDetails
-    {
-        return $this->eggsInputsDetail;
-    }
-
-    public function setEggsInputsDetail(?InputsDetails $eggsInputsDetail): self
-    {
-        $this->eggsInputsDetail = $eggsInputsDetail;
-
-        return $this;
     }
 
     public function getChickNumber(): ?int
@@ -87,6 +86,48 @@ class Selections
     public function setSelectionDate(\DateTimeInterface $selectionDate): self
     {
         $this->selectionDate = $selectionDate;
+
+        return $this;
+    }
+
+    public function getUnhatched(): ?int
+    {
+        return $this->unhatched;
+    }
+
+    public function setUnhatched(int $unhatched): self
+    {
+        $this->unhatched = $unhatched;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InputsFarmDelivery[]
+     */
+    public function getInputsFarmDelivery(): Collection
+    {
+        return $this->inputsFarmDelivery;
+    }
+
+    public function addInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
+    {
+        if (!$this->inputsFarmDelivery->contains($inputsFarmDelivery)) {
+            $this->inputsFarmDelivery[] = $inputsFarmDelivery;
+            $inputsFarmDelivery->setSelections($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
+    {
+        if ($this->inputsFarmDelivery->removeElement($inputsFarmDelivery)) {
+            // set the owning side to null (unless already changed)
+            if ($inputsFarmDelivery->getSelections() === $this) {
+                $inputsFarmDelivery->setSelections(null);
+            }
+        }
 
         return $this;
     }

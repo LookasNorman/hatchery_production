@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Breed;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,6 +22,12 @@ class BreedType extends AbstractType
             ])
             ->add('type', TextType::class, [
                 'label' => 'breed.form.label.type',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('lighting', PercentType::class, [
+                'label' => 'breed.form.label.lighting',
                 'attr' => [
                     'class' => 'form-control'
                 ]

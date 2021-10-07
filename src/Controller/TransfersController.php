@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Entity\Inputs;
 use App\Entity\Transfers;
 use App\Form\TransfersType;
-use App\Repository\DetailsRepository;
 use App\Repository\HerdsRepository;
+use App\Repository\InputsFarmDeliveryRepository;
 use App\Repository\InputsRepository;
 use App\Repository\TransfersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,12 +35,13 @@ class TransfersController extends AbstractController
      * @Route("/new/{inputs}/{herd}", name="eggs_inputs_transfers_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new($inputs,
-                        $herd,
-                        Request $request,
-                        DetailsRepository $detailsRepository,
-                        InputsRepository $eggsInputsRepository,
-                        HerdsRepository $herdsRepository
+    public function new(
+        $inputs,
+        $herd,
+        Request $request,
+        InputsRepository $eggsInputsRepository,
+        HerdsRepository $herdsRepository,
+        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
     ): Response
     {
         $inputs = $eggsInputsRepository->find($inputs);
@@ -50,37 +51,37 @@ class TransfersController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $totalEggs = 0;
-            $wasteEggs = $form['wasteEggs']->getData();
-            $lightingDate = $form['transferDate']->getData();
+            $transfersEgg = $form['transfersEgg']->getData();
+            $transferDate = $form['transferDate']->getData();
             $entityManager = $this->getDoctrine()->getManager();
-            $inputsDetails = $detailsRepository->inputHerdDetails($inputs, $herd);
+            $inputsFarmDelivery = $inputsFarmDeliveryRepository->findByExampleField($inputs, $herd);
 
-            /** @var  $inputDetail
-             * Get sum eggs for breeder in eggs input
-             */
-            foreach ($inputsDetails as $inputDetail) {
-                $totalEggs = $totalEggs + $inputDetail[1];
+            foreach ($inputsFarmDelivery as $inputFarmDelivery) {
+                $totalEggs = $totalEggs + $inputFarmDelivery->getEggsNumber() - $inputFarmDelivery->getLighting()->getWasteEggs();
             }
+
             $totalWaste = 0;
-            $length = count($inputsDetails) - 1;
+            $totalEggsNumber = 0;
+            $length = count($inputsFarmDelivery) - 1;
 
-            /** @var  $inputDetail
-             * Added eggs transfer to eggs input details
-             */
-            foreach ($inputsDetails as $key => $inputDetail) {
-                $eggsInputsTransfer = new Transfers();
-                $eggsInputsTransfer->setEggsInputsDetail($inputDetail[0]);
+            foreach ($inputsFarmDelivery as $key => $inputFarmDelivery) {
+                $eggsInputTransfer = new Transfers();
+                $eggsInputTransfer->setTransferDate($transferDate);
+
                 if ($key < $length) {
-                    $setWaste = round($inputDetail[1] / $totalEggs * $wasteEggs, 0);
-                    $eggsInputsTransfer->setWasteEggs($setWaste);
-                    $totalWaste = $totalWaste + $setWaste;
+                    $setEggs = round($transfersEgg / $totalEggs * $inputFarmDelivery->getEggsNumber());
+                    $eggsInputTransfer->setTransfersEgg($setEggs);
+                    $totalEggsNumber = $totalEggsNumber + $setEggs;
                 } else {
-                    $setWaste = $wasteEggs - $totalWaste;
-                    $eggsInputsTransfer->setWasteEggs($setWaste);
+                    $setEggs = $transfersEgg - $totalEggsNumber;
+                    $eggsInputTransfer->setTransfersEgg($setEggs);
                 }
-                $eggsInputsTransfer->setTransferDate($lightingDate);
-                $entityManager->persist($eggsInputsTransfer);
+
+                $eggsInputTransfer->addInputsFarmDelivery($inputFarmDelivery);
+
+                $entityManager->persist($eggsInputTransfer);
             }
+
 
             $entityManager->flush();
 

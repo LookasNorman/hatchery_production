@@ -41,6 +41,8 @@ herds:
   name:
     min: Nazwa musi zawierać conajmniej 3 znaki
     max: Nazwa nie może być dłuższa niż 50 znaków
+inputs_farm_delivery:
+  eggs_number: Podaj ilość jaj do nałożenia
 plain_password:
   not_blank: Hasło nie może być puste
   min: Hasło jest zbyt krótkie. Powinno mieć od 6 do 100 znaków.

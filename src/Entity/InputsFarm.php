@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\InputsFarmRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,6 +35,16 @@ class InputsFarm
      * @ORM\JoinColumn(nullable=false)
      */
     private $chicksFarm;
+
+    /**
+     * @ORM\OneToMany(targetEntity=InputsFarmDelivery::class, mappedBy="inputsFarm")
+     */
+    private $inputsFarmDeliveries;
+
+    public function __construct()
+    {
+        $this->inputsFarmDeliveries = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -71,6 +83,36 @@ class InputsFarm
     public function setChicksFarm(?ChicksRecipient $chicksFarm): self
     {
         $this->chicksFarm = $chicksFarm;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InputsFarmDelivery[]
+     */
+    public function getInputsFarmDeliveries(): Collection
+    {
+        return $this->inputsFarmDeliveries;
+    }
+
+    public function addInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
+    {
+        if (!$this->inputsFarmDeliveries->contains($inputsFarmDelivery)) {
+            $this->inputsFarmDeliveries[] = $inputsFarmDelivery;
+            $inputsFarmDelivery->setInputsFarm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
+    {
+        if ($this->inputsFarmDeliveries->removeElement($inputsFarmDelivery)) {
+            // set the owning side to null (unless already changed)
+            if ($inputsFarmDelivery->getInputsFarm() === $this) {
+                $inputsFarmDelivery->setInputsFarm(null);
+            }
+        }
 
         return $this;
     }

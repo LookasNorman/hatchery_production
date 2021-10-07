@@ -54,11 +54,6 @@ class ChicksRecipient
     private $phoneNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity=InputsDetails::class, mappedBy="chicksRecipient")
-     */
-    private $eggsInputsDetails;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="chicksRecipients")
      */
     private $customer;
@@ -95,7 +90,6 @@ class ChicksRecipient
 
     public function __construct()
     {
-        $this->eggsInputsDetails = new ArrayCollection();
         $this->customerBuildings = new ArrayCollection();
         $this->inputsFarms = new ArrayCollection();
     }
@@ -137,36 +131,6 @@ class ChicksRecipient
     public function setPhoneNumber(?string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|InputsDetails[]
-     */
-    public function getEggsInputsDetails(): Collection
-    {
-        return $this->eggsInputsDetails;
-    }
-
-    public function addEggsInputsDetail(InputsDetails $eggsInputsDetail): self
-    {
-        if (!$this->eggsInputsDetails->contains($eggsInputsDetail)) {
-            $this->eggsInputsDetails[] = $eggsInputsDetail;
-            $eggsInputsDetail->setChicksRecipient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEggsInputsDetail(InputsDetails $eggsInputsDetail): self
-    {
-        if ($this->eggsInputsDetails->removeElement($eggsInputsDetail)) {
-            // set the owning side to null (unless already changed)
-            if ($eggsInputsDetail->getChicksRecipient() === $this) {
-                $eggsInputsDetail->setChicksRecipient(null);
-            }
-        }
 
         return $this;
     }

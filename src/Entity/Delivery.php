@@ -49,11 +49,6 @@ class Delivery
     private $lastLayingDate;
 
     /**
-     * @ORM\OneToMany(targetEntity=DetailsDelivery::class, mappedBy="eggsDeliveries")
-     */
-    private $eggsInputsDetailsEggsDeliveries;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $eggsOnWarehouse;
@@ -70,9 +65,14 @@ class Delivery
      */
     private $partIndex;
 
+    /**
+     * @ORM\OneToMany(targetEntity=InputsFarmDelivery::class, mappedBy="delivery")
+     */
+    private $inputsFarmDeliveries;
+
     public function __construct()
     {
-        $this->eggsInputsDetailsEggsDeliveries = new ArrayCollection();
+        $this->inputsFarmDeliveries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,36 +140,6 @@ class Delivery
         return $this;
     }
 
-    /**
-     * @return Collection|DetailsDelivery[]
-     */
-    public function getEggsInputsDetailsEggsDeliveries(): Collection
-    {
-        return $this->eggsInputsDetailsEggsDeliveries;
-    }
-
-    public function addEggsInputsDetailsEggsDelivery(DetailsDelivery $eggsInputsDetailsEggsDelivery): self
-    {
-        if (!$this->eggsInputsDetailsEggsDeliveries->contains($eggsInputsDetailsEggsDelivery)) {
-            $this->eggsInputsDetailsEggsDeliveries[] = $eggsInputsDetailsEggsDelivery;
-            $eggsInputsDetailsEggsDelivery->setEggsDeliveries($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEggsInputsDetailsEggsDelivery(DetailsDelivery $eggsInputsDetailsEggsDelivery): self
-    {
-        if ($this->eggsInputsDetailsEggsDeliveries->removeElement($eggsInputsDetailsEggsDelivery)) {
-            // set the owning side to null (unless already changed)
-            if ($eggsInputsDetailsEggsDelivery->getEggsDeliveries() === $this) {
-                $eggsInputsDetailsEggsDelivery->setEggsDeliveries(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getEggsOnWarehouse(): ?int
     {
         return $this->eggsOnWarehouse;
@@ -194,4 +164,33 @@ class Delivery
         return $this;
     }
 
+    /**
+     * @return Collection|InputsFarmDelivery[]
+     */
+    public function getInputsFarmDeliveries(): Collection
+    {
+        return $this->inputsFarmDeliveries;
+    }
+
+    public function addInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
+    {
+        if (!$this->inputsFarmDeliveries->contains($inputsFarmDelivery)) {
+            $this->inputsFarmDeliveries[] = $inputsFarmDelivery;
+            $inputsFarmDelivery->setDelivery($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
+    {
+        if ($this->inputsFarmDeliveries->removeElement($inputsFarmDelivery)) {
+            // set the owning side to null (unless already changed)
+            if ($inputsFarmDelivery->getDelivery() === $this) {
+                $inputsFarmDelivery->setDelivery(null);
+            }
+        }
+
+        return $this;
+    }
 }

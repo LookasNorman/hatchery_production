@@ -18,13 +18,6 @@ class TransfersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('wasteEggs', IntegerType::class, [
-                'help' => 'eggs_inputs_transfer.form.help.waste_eggs',
-                'label' => 'eggs_inputs_transfer.form.label.waste_eggs',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
             ->add('transferDate', DateType::class, [
                 'widget' => 'single_text',
                 'label' => 'eggs_inputs_transfer.form.label.transfer_date',
@@ -32,7 +25,13 @@ class TransfersType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-        ;
+            ->add('transfersEgg', IntegerType::class, [
+                'help' => 'eggs_inputs_transfer.form.help.transfers_egg',
+                'label' => 'eggs_inputs_transfer.form.label.transfers_egg',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

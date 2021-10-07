@@ -10,7 +10,6 @@
     </style>
     <h1>{% trans %}eggs_inputs.show.title{% endtrans %}</h1>
     {{ include('layout/buttons/back.html.twig', { pathLink: path('eggs_inputs_index'), text: 'eggs_inputs.show.button.back' }) }}
-    {{ include('layout/buttons/add.html.twig', { pathLink: path('eggs_inputs_xls', {'id': eggs_input.id}), text: 'eggs_inputs.show.button.xls' }) }}
 
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
@@ -28,23 +27,26 @@
                     {{ include('layout/buttons/edit.html.twig',
                         {pathLink: path('eggs_inputs_edit', {'id': eggs_input.id}), text: 'eggs_inputs.show.button.edit'}) }}
                     {{ include('layout/buttons/add.html.twig',
-                        {pathLink: path('eggs_inputs_details_new', {'inputs': eggs_input.id}), text: 'eggs_inputs.show.button.add_delivery'}) }}
+                        {pathLink: path('inputs_farm_new', {'id': eggs_input.id}), text: 'eggs_inputs.show.button.add_farm'}) }}
                 </li>
                 <hr>
                 <li class="d-flex">{% trans %}eggs_inputs.show.card.footer.add{% endtrans %}</li>
                 <li class="d-flex">
                     {{ include('layout/modals/production_modal.html.twig',
-                        { title: 'eggs_inputs.show.button.lighting', body: herds, pathLink: 'eggs_inputs_lighting_new' }) }}
+                        { title: 'eggs_inputs.show.button.lighting', body: herdsEggs, pathLink: 'eggs_inputs_lighting_new' }) }}
                     {{ include('layout/modals/production_modal.html.twig',
-                        { title: 'eggs_inputs.show.button.transfer', body: herds, pathLink: 'eggs_inputs_transfers_new' }) }}
+                        { title: 'eggs_inputs.show.button.transfer', body: herdsEggs, pathLink: 'eggs_inputs_transfers_new' }) }}
                     {{ include('layout/modals/production_modal.html.twig',
-                        { title: 'eggs_inputs.show.button.selection', body: herds, pathLink: 'eggs_selections_new' }) }}
+                        { title: 'eggs_inputs.show.button.selection', body: herdsEggs, pathLink: 'eggs_selections_new' }) }}
                 </li>
             {% endif %}
         </ul>
         {% include 'layout/cards/cend.html.twig' %}
     </div>
     <hr>
-    {% include 'eggs_inputs/show_delivery.html.twig' %}
+    <h5>Planowane pisklęta</h5>
+    {% include 'eggs_inputs/show_customer_delivery.html.twig' %}
+    <h5>Nakład</h5>
+    {% include 'eggs_inputs/show_supplier_delivery.html.twig' %}
 
 {% endblock %}

@@ -15,5 +15,13 @@
         {{ form_errors(form.type) }}
     </div>
 </div>
+<div class="form-group">
+    <label>{{ form_label(form.lighting) }}</label>
+    {{ form_widget(form.lighting) }}
+    <small>{{ form_help(form.lighting) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.lighting) }}
+    </div>
+</div>
 {{ include('layout/buttons/create.html.twig', {text: 'breed.form.button.save'}) }}
 {{ form_end(form) }}

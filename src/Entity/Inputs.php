@@ -41,18 +41,12 @@ class Inputs
     private $inputDate;
 
     /**
-     * @ORM\OneToMany(targetEntity=InputsDetails::class, mappedBy="eggInput")
-     */
-    private $eggsInputsDetails;
-
-    /**
      * @ORM\OneToMany(targetEntity=InputsFarm::class, mappedBy="eggInput")
      */
     private $inputsFarms;
 
     public function __construct()
     {
-        $this->eggsInputsDetails = new ArrayCollection();
         $this->inputsFarms = new ArrayCollection();
     }
 
@@ -81,36 +75,6 @@ class Inputs
     public function setInputDate(\DateTimeInterface $inputDate): self
     {
         $this->inputDate = $inputDate->sub(new \DateInterval('P21DT5H'));
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|InputsDetails[]
-     */
-    public function getEggsInputsDetails(): Collection
-    {
-        return $this->eggsInputsDetails;
-    }
-
-    public function addEggsInputsDetail(InputsDetails $eggsInputsDetail): self
-    {
-        if (!$this->eggsInputsDetails->contains($eggsInputsDetail)) {
-            $this->eggsInputsDetails[] = $eggsInputsDetail;
-            $eggsInputsDetail->setEggInput($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEggsInputsDetail(InputsDetails $eggsInputsDetail): self
-    {
-        if ($this->eggsInputsDetails->removeElement($eggsInputsDetail)) {
-            // set the owning side to null (unless already changed)
-            if ($eggsInputsDetail->getEggInput() === $this) {
-                $eggsInputsDetail->setEggInput(null);
-            }
-        }
 
         return $this;
     }

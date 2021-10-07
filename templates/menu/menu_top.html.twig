@@ -32,10 +32,11 @@
                     </a>
                 </li>
                 <li><a class="nav-link" href={{ path('eggs_delivery_index') }}>{% trans %}menu.menu_top.eggs_delivery.index{% endtrans %}</a></li>
-                <li>
-                    <a class="nav-link" href={{ path('eggs_inputs_index') }}>
-                        {% trans %}menu.menu_top.eggs_inputs.index{% endtrans %}
-                    </a>
+                <li class="nav-item dropdown" id="inputs">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{% trans %}menu.menu_top.eggs_inputs.title{% endtrans %}</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href={{ path('eggs_inputs_index') }}>{% trans %}menu.menu_top.eggs_inputs.index{% endtrans %}</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown" id="customer">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{% trans %}menu.menu_top.customer.title{% endtrans %}</a>

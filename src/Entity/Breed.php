@@ -49,6 +49,11 @@ class Breed
      */
     private $herds;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $lighting;
+
     public function __construct()
     {
         $this->herds = new ArrayCollection();
@@ -109,6 +114,18 @@ class Breed
                 $herd->setBreed(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLighting(): ?int
+    {
+        return $this->lighting;
+    }
+
+    public function setLighting(?int $lighting): self
+    {
+        $this->lighting = $lighting;
 
         return $this;
     }

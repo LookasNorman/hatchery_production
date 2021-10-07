@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Repository\ChicksRecipientRepository;
 use App\Repository\DeliveryRepository;
-use App\Repository\DetailsRepository;
 use App\Repository\InputsRepository;
 use App\Repository\SupplierRepository;
 use App\Repository\HatchersRepository;
@@ -24,8 +23,7 @@ class DefaultController extends AbstractController
         SupplierRepository $supplierRepository,
         ChicksRecipientRepository $recipientRepository,
         InputsRepository $inputsRepository,
-        DeliveryRepository $deliveryRepository,
-        DetailsRepository $detailsRepository
+        DeliveryRepository $deliveryRepository
     ): Response
     {
         $suppliers = [];
@@ -41,22 +39,11 @@ class DefaultController extends AbstractController
         $inputs = [];
         $eggsInputs = $inputsRepository->findAll();
         $inputs['inputsNumber'] = count($eggsInputs);
-        $eggs = $detailsRepository->eggs();
-        $chicks = $detailsRepository->chicks();
-        $inputs['chicksNumber'] = $chicks['chickNumber'];
-        $inputs['eggsNumber'] = $eggs['eggsNumber'];
-
-        $lighting = $inputsRepository->inputsLighting();
-        $transfer = $inputsRepository->inputsTransfers();
-        $picking = $inputsRepository->inputsPickings();
 
         return $this->render('main_page/index.html.twig', [
             'suppliers' => $suppliers,
             'recipients' => $recipients,
             'inputs' => $inputs,
-            'lighting' => $lighting,
-            'transfer' => $transfer,
-            'picking' => $picking,
         ]);
     }
 

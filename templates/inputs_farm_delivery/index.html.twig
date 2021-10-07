@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}InputsFarmDelivery index{% endblock %}
+
+{% block body %}
+    <h1>InputsFarmDelivery index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>EggsNumber</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for inputs_farm_delivery in inputs_farm_deliveries %}
+            <tr>
+                <td>{{ inputs_farm_delivery.id }}</td>
+                <td>{{ inputs_farm_delivery.eggsNumber }}</td>
+                <td>
+                    <a href="{{ path('inputs_farm_delivery_show', {'id': inputs_farm_delivery.id}) }}">show</a>
+                    <a href="{{ path('inputs_farm_delivery_edit', {'id': inputs_farm_delivery.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('inputs_farm_delivery_new') }}">Create new</a>
+{% endblock %}

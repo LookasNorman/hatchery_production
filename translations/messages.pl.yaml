@@ -14,6 +14,7 @@ breed:
     button:
       save: Zapisz
     label:
+      lighting: Świetlenie
       name: Rasa kur
       type: Typ
   edit:
@@ -365,9 +366,10 @@ eggs_inputs:
     title: Szczegóły nakładu
     input_date: Data nakładu
     button:
+      add_delivery: Dodaj dostawy
+      add_farm: Dodaj odbiorcę piskląt
       back: Lista nakładów
       edit: Edytuj nakład
-      add_delivery: Dodaj dostawy
       xls: Pobierz .xls
       lighting: Świetlenie
       transfer: Przekład
@@ -382,9 +384,13 @@ eggs_inputs:
       chicks_recipient: Odbiorca piskląt
       lighting:
         title: Świetlenie
+        eggs_number: Ilość świetlona
+        fertilization: Zapłodnienie
         date: Data
         waste_eggs: Odpad jaj
+        waste_lighting: Odpad
       transfer:
+        eggs_transfer: Jaja przełożone
         title: Przekład
         date: Data
         waste_eggs: Odpad jaj
@@ -403,6 +409,13 @@ eggs_inputs:
       badge:
         fertilization: Zapłodnienie
         hatchability: Wylęgowość
+  show_delivery:
+    table:
+      badge:
+        delivery: Dostawy
+        lighting: Świetlenie
+        selection: Wybieranie
+        transfer: Przekład
   table_list:
     table_detail:
       chick_number: Ilość piskląt
@@ -534,11 +547,13 @@ eggs_inputs_transfer:
     label:
       waste_eggs: Odpad jaj
       transfer_date: Data przekładu
+      transfers_egg: Ilość przełożonych jaj
       eggs_inputs_detail: Szczegóły nakładu
       eggs_inputs: Nakład
       breeder: Dostawca jaj
     help:
       waste_eggs: Wpisz ilość wyrzuconych jaj dla wybranego nakładu i hodowcy
+      transfers_egg: Wpisz ilość przełożonych jaj dla wybranego nakładu i stada
     placeholder:
       eggs_inputs_detail: Wybierz nakład
       eggs_inputs: Wybierz nakład
@@ -585,14 +600,16 @@ eggs_inputs_selections:
       breeder: Wybierz hodowcę
     help:
       cull_chick: Wpisz ilość wybrakowanych piskląt
+      cull_chick_percent: Wpisz procent brakowania
       chick_number: Wpisz ilość piskląt
     label:
+      breeder: Dostawca jaj
       chick_number: Pisklęta
       cull_chick: Wybrakowane
-      selection_date: Data wybierania
-      eggs_inputs_detail: Nakład
+      cull_chick_percent: Procent brakowania
       eggs_inputs: Nakład
-      breeder: Dostawca jaj
+      eggs_inputs_detail: Nakład
+      selection_date: Data wybierania
   edit:
     title: Edycja wybierania
     button:
@@ -678,10 +695,11 @@ herds:
     button:
       save: Zapisz
     label:
-      name: Nazwa stada
-      hatching_date: Data wylęgu
-      breeder: Hodowca
       breed: Rasa
+      breeder: Hodowca
+      hatching_date: Data wylęgu
+      lighting: Świetlenie
+      name: Nazwa stada
   edit:
     title: Edytuj stado
     button:
@@ -764,6 +782,17 @@ incubators:
         edit: Edytuj
     badge:
       new: Utwórz nowy
+inputs_farm:
+  form:
+    button:
+      save: Dodaj fermę do nakładu
+    placeholder:
+      chicks_farm: Wybierz fermę z listy
+  new:
+    button:
+      back: Powrót do szczegółów nakładu
+    header: Dodawanie do nakładu
+    title: Dodawanie dostawy na fermę do nakładu
 layout:
   button:
     close: Zamknij
@@ -833,6 +862,7 @@ menu:
       index: Dostawy jaj
     eggs_inputs:
       index: Nakłady
+      title: Nakłady
     eggs_inputs_details:
       index: Dostawy nakładu
     eggs_inputs_lighting:
@@ -847,6 +877,8 @@ menu:
       index: Stada
     incubators:
       index: Aparaty
+    inputs_farm:
+      index: Nakłady na fermy
     main_page:
       index: Strona główna
     logout: Wyloguj

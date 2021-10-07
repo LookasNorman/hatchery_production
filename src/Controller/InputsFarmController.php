@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Inputs;
 use App\Entity\InputsFarm;
 use App\Form\InputsFarmType;
 use App\Repository\InputsFarmRepository;
@@ -11,26 +12,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/inputs/farm")
+ * @Route("/inputs_farm")
  */
 class InputsFarmController extends AbstractController
 {
-    /**
-     * @Route("/", name="inputs_farm_index", methods={"GET"})
-     */
-    public function index(InputsFarmRepository $inputsFarmRepository): Response
-    {
-        return $this->render('inputs_farm/index.html.twig', [
-            'inputs_farms' => $inputsFarmRepository->findAll(),
-        ]);
-    }
 
     /**
-     * @Route("/new", name="inputs_farm_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="inputs_farm_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Inputs $inputs = null): Response
     {
         $inputsFarm = new InputsFarm();
+        $inputsFarm->setEggInput($inputs);
         $form = $this->createForm(InputsFarmType::class, $inputsFarm);
         $form->handleRequest($request);
 
@@ -39,7 +32,7 @@ class InputsFarmController extends AbstractController
             $entityManager->persist($inputsFarm);
             $entityManager->flush();
 
-            return $this->redirectToRoute('inputs_farm_index');
+            return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputs->getId()]);
         }
 
         return $this->render('inputs_farm/new.html.twig', [

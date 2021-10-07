@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,12 +26,13 @@ class SelectionsType extends AbstractType
                     'class' => 'form-control',
                 ]
             ])
-            ->add('cullChicken', IntegerType::class, [
-                'label' => 'eggs_inputs_selections.form.label.cull_chick',
-                'help' => 'eggs_inputs_selections.form.help.cull_chick',
+            ->add('cullChickenPercent', PercentType::class, [
+                'label' => 'eggs_inputs_selections.form.label.cull_chick_percent',
+                'help' => 'eggs_inputs_selections.form.help.cull_chick_percent',
                 'attr' => [
                     'class' => 'form-control',
-                ]
+                ],
+                'mapped' => false
             ])
             ->add('selectionDate', DateType::class, [
                 'widget' => 'single_text',

@@ -4,9 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Inputs;
 use App\Entity\Selections;
+use App\Entity\Transfers;
 use App\Form\SelectionsType;
-use App\Repository\DetailsRepository;
 use App\Repository\HerdsRepository;
+use App\Repository\InputsFarmDeliveryRepository;
 use App\Repository\InputsRepository;
 use App\Repository\SelectionsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,12 +36,13 @@ class SelectionsController extends AbstractController
      * @Route("/new/{inputs}/{herd}", name="eggs_selections_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new($inputs,
-                        $herd,
-                        Request $request,
-                        DetailsRepository $detailsRepository,
-                        InputsRepository $eggsInputsRepository,
-                        HerdsRepository $herdsRepository
+    public function new(
+        $inputs,
+        $herd,
+        Request $request,
+        InputsRepository $eggsInputsRepository,
+        HerdsRepository $herdsRepository,
+        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
     ): Response
     {
         $inputs = $eggsInputsRepository->find($inputs);
@@ -51,45 +53,45 @@ class SelectionsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $totalEggs = 0;
             $chickNumber = $form['chickNumber']->getData();
-            $cullChicken = $form['cullChicken']->getData();
+            $cullChickPercent = $form['cullChickenPercent']->getData();
             $selectionDate = $form['selectionDate']->getData();
             $entityManager = $this->getDoctrine()->getManager();
-            $inputsDetails = $detailsRepository->inputHerdDetails($inputs, $herd);
+            $inputsFarmDelivery = $inputsFarmDeliveryRepository->findByExampleField($inputs, $herd);
 
-            /** @var  $inputDetail
-             * Get sum eggs for breeder in eggs input
-             */
-            foreach ($inputsDetails as $inputDetail) {
-                $totalEggs = $totalEggs + $inputDetail[1];
+            foreach ($inputsFarmDelivery as $inputFarmDelivery) {
+                $totalEggs = $totalEggs
+                    + $inputFarmDelivery->getEggsNumber()
+                    - round($inputFarmDelivery->getLighting()->getWasteEggs() / $inputFarmDelivery->getLighting()->getLightingEggs() + 0.02, 3)
+                    * $inputFarmDelivery->getEggsNumber();
             }
 
-            $length = count($inputsDetails) - 1;
             $totalChick = 0;
-            $totalCull = 0;
+            $length = count($inputsFarmDelivery) - 1;
 
-            /** @var  $inputDetail
-             * Added eggs transfer to eggs input details
-             */
-            foreach ($inputsDetails as $key => $inputDetail) {
-                $eggsSelection = new Selections();
-                $eggsSelection->setEggsInputsDetail($inputDetail[0]);
+            foreach ($inputsFarmDelivery as $key => $inputFarmDelivery) {
+                $eggsInputSelections = new Selections();
+                $eggsInputSelections->setSelectionDate($selectionDate);
+
                 if ($key < $length) {
-                    $setChick = round($inputDetail[1] / $totalEggs * $chickNumber, 0);
-                    $setCull = round($inputDetail[1] / $totalEggs * $cullChicken, 0);
-                    $eggsSelection->setChickNumber($setChick);
-                    $eggsSelection->setCullChicken($setCull);
+                    $setChick = round($chickNumber / $totalEggs * $inputFarmDelivery->getTransfers()->getTransfersEgg());
+                    $eggsInputSelections->setChickNumber($setChick);
                     $totalChick = $totalChick + $setChick;
-                    $totalCull = $totalCull + $setCull;
+
                 } else {
-                    dump($chickNumber);
                     $setChick = $chickNumber - $totalChick;
-                    $setCull = $cullChicken - $totalCull;
-                    $eggsSelection->setChickNumber($setChick);
-                    $eggsSelection->setCullChicken($setCull);
+                    $eggsInputSelections->setChickNumber($setChick);
                 }
-                $eggsSelection->setSelectionDate($selectionDate);
-                $entityManager->persist($eggsSelection);
+                $setCullChick = round($setChick * $cullChickPercent, 0);
+                $eggsInputSelections->setCullChicken($setCullChick);
+
+                $setUnhatched = $inputFarmDelivery->getEggsNumber() - $inputFarmDelivery->getLighting()->getWasteLighting() - $setChick - $setCullChick;
+                $eggsInputSelections->setUnhatched($setUnhatched);
+
+                $eggsInputSelections->addInputsFarmDelivery($inputFarmDelivery);
+
+                $entityManager->persist($eggsInputSelections);
             }
+
 
             $entityManager->flush();
 

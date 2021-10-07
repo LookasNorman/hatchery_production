@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,6 +21,12 @@ class HerdsType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'herds.form.label.name',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('lighting', IntegerType::class, [
+                'label' => 'herds.form.label.lighting',
                 'attr' => [
                     'class' => 'form-control'
                 ]

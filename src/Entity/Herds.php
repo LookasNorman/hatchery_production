@@ -62,6 +62,11 @@ class Herds
      */
     private $active;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $lighting;
+
     public function __construct()
     {
         $this->eggsDeliveries = new ArrayCollection();
@@ -159,6 +164,18 @@ class Herds
     public function setActive(?bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getLighting(): ?int
+    {
+        return $this->lighting;
+    }
+
+    public function setLighting(?int $lighting): self
+    {
+        $this->lighting = $lighting;
 
         return $this;
     }

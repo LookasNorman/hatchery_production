@@ -1,0 +1,60 @@
+{% block body %}
+    {% include 'layout/tables/thead.html.twig' %}
+    <tr>
+        <th class="align-middle">
+            {% trans %}eggs_inputs.show.table.id{% endtrans %}
+        </th>
+        <th class="align-middle">
+            {% trans %}eggs_inputs.show.table.chicks_recipient{% endtrans %}
+        </th>
+        <th class="text-center align-middle">
+            {% trans %}eggs_inputs.show.table.chick{% endtrans %}
+        </th>
+        <th class="text-center align-middle">
+            {% trans %}eggs_inputs.show.table.deliveries{% endtrans %}
+        </th>
+    </tr>
+    {% include 'layout/tables/tbody.html.twig' %}
+    {% for inputFarm in farms %}
+        <tr>
+            <td class="align-middle">
+                <div class="d-grid gap-2">
+                    {{ include('layout/buttons/list_actions.html.twig',
+                        {pathLink: path('inputs_farm_delivery_new', {'id': inputFarm.id}), text: 'eggs_inputs.show_delivery.table.badge.delivery' }) }}
+                </div>
+            </td>
+            <td class="align-middle">
+                {{ inputFarm.chicksFarm.customer.name }}: {{ inputFarm.chicksFarm.name }}
+            </td>
+            <td class="text-center align-middle">{{ inputFarm.chickNumber|number_format(0, ',', ' ') }}
+            </td>
+            <td>
+                <table class="table table-sm">
+                    <thead class="bg-success text-white">
+                    <tr>
+                        <td>Hodowca</td>
+                        <td>Stado</td>
+                        <td>Data dostawy</td>
+                        <td>Data zniesienia</td>
+                        <td>Ilość jaj</td>
+                    </tr>
+                    </thead>
+                    {% for delivery in inputFarm.inputsFarmDeliveries %}
+                        <tr>
+                            <td>{{ delivery.delivery.herd.breeder.name }}</td>
+                            <td>{{ delivery.delivery.herd.name }}</td>
+                            <td>{{ delivery.delivery.deliveryDate|date('Y-m-d') }}</td>
+                            <td>{{ delivery.delivery.firstLayingDate|date('Y-m-d') }}
+                                - {{ delivery.delivery.lastLayingDate|date('Y-m-d') }}</td>
+                            <td>{{ delivery.eggsNumber }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+        </tr>
+    {% endfor %}
+
+    {% include 'layout/tables/tfooter.html.twig' %}
+    {% include 'layout/tables/tend.html.twig' %}
+
+{% endblock %}

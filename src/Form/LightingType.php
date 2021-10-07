@@ -29,6 +29,14 @@ class LightingType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+            ->add('eggsNumber', IntegerType::class, [
+                'label' => 'eggs_inputs_lighting.form.label.eggs_number',
+                'help' => 'eggs_inputs_lighting.form.help.eggs_number',
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('wasteEggs', IntegerType::class, [
                 'label' => 'eggs_inputs_lighting.form.label.waste_eggs',
                 'help' => 'eggs_inputs_lighting.form.help.waste_eggs',
