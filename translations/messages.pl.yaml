@@ -437,61 +437,6 @@ eggs_inputs:
       badge:
         show: Szczegóły
         edit: Edycja
-eggs_inputs_details:
-  delete:
-    confirm: Na pewno chcesz usunąć dostawy z nakładu?
-    button:
-      delete: Usuń dostawy w nakładzie
-  form:
-    placeholder:
-      egg_input: Wybierz nakład
-      breeder: Wybierz hodowcę
-      herd: Wybierz stado
-      chicks_recipient: Wybierz hodowcę
-    button:
-      save: Zapisz
-    label:
-      egg_input: Nakład
-      breeder: Dostawca jaj
-      eggs_number: Ilość jaj do nakładu
-      herd: Stado
-      chicks_recipient: Odbiorca piskląt
-      chick_number: Ilość piskląt
-  edit:
-    title: Edycja nakładu
-    button:
-      back: Lista dostaw w nakładach
-      update: Zaktualizuj
-  index:
-    title: Dostawy w nakładach
-    table:
-      id: Indeks
-      eggs_input: Nakład
-      deliveries: Lista dostaw
-      eggs_number: Ilość jaj
-      chicks_recipient: Odbiorca piskląt
-      chicks_number: Ilość piskląt
-      actions: Akcje
-      no_found: Brak nakładów z dostawami
-      badge:
-        show: Szczegóły
-        edit: Edytuj
-    button:
-      new: Dodaj dostawy do nakładu
-  new:
-    button:
-      back: Lista dostaw w nakładach
-      inputs_details: Szczegóły nakładu
-    header: Nakład numer
-    on_date: z dnia
-    title: Dodawanie dostaw do nakładu
-  show:
-    title: Szczegóły nakładu
-    egg: jaj
-    chick: piskląt
-    button:
-      edit: Edytuj
-      back: Lista dostaw w nakładach
 eggs_inputs_lighting:
   delete:
     confirm: Jesteś pewien, że chcesz usunąć świetlenie?
@@ -499,16 +444,18 @@ eggs_inputs_lighting:
       delete: Usuń
   form:
     label:
-      waste_eggs: Odpad jaj
-      lighting_date: Data świetlenia
-      eggs_inputs: Nakład
       breeder: Dostawca jaj
+      eggs_inputs: Nakład
+      eggs_number: Ilość jaj świetlonych
+      lighting_date: Data świetlenia
+      waste_eggs: Odpad jaj
     button:
       save: Zapisz
     placeholder:
       eggs_inputs: Wybierz nakład
       breeder: Wybierz hodowcę
     help:
+      eggs_number: Podaj ilość jaj prześwietlonych
       waste_eggs: Wpisz odpad jaj dla wybranego nakładu i hodowcy
   edit:
     title: Edycja świetlenia
@@ -529,9 +476,10 @@ eggs_inputs_lighting:
     button:
       new: Dodaj świetlenie
   new:
-    title: Dodawanie świetlenia
     button:
-      back: Lista świetleń
+      back: Szczegóły nakładu
+    herd: Stado
+    title: Dodawanie świetlenia
   show:
     title: Szczegóły świetlenia
     waste_eggs: Odpad jaj

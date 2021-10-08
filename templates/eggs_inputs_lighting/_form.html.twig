@@ -15,5 +15,14 @@
         {{ form_errors(form.wasteEggs) }}
     </div>
 </div>
+<div class="form-group">
+    <label>{{ form_label(form.eggsNumber) }}</label>
+    {{ form_widget(form.eggsNumber) }}
+    <small>{{ form_help(form.eggsNumber) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.eggsNumber) }}
+    </div>
+</div>
+
 {{ include('layout/buttons/create.html.twig', {text: 'eggs_inputs_lighting.form.button.save'}) }}
 {{ form_end(form) }}
