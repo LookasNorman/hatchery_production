@@ -1,9 +1,12 @@
 {% block menu_top %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="https://lookaskonieczny.com">
-                Lookas
+            Lookas
         </a>
-
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -31,43 +34,63 @@
                         {% trans %}menu.menu_top.herds.index{% endtrans %}
                     </a>
                 </li>
-                <li><a class="nav-link" href={{ path('eggs_delivery_index') }}>{% trans %}menu.menu_top.eggs_delivery.index{% endtrans %}</a></li>
+                <li><a class="nav-link"
+                       href={{ path('eggs_delivery_index') }}>{% trans %}menu.menu_top.eggs_delivery.index{% endtrans %}</a>
+                </li>
                 <li class="nav-item dropdown" id="inputs">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{% trans %}menu.menu_top.eggs_inputs.title{% endtrans %}</a>
+                    <a class="nav-link dropdown-toggle" href="#"
+                       data-bs-toggle="dropdown">{% trans %}menu.menu_top.eggs_inputs.title{% endtrans %}</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href={{ path('eggs_inputs_index') }}>{% trans %}menu.menu_top.eggs_inputs.index{% endtrans %}</a></li>
+                        <li><a class="dropdown-item"
+                               href={{ path('eggs_inputs_index') }}>{% trans %}menu.menu_top.eggs_inputs.index{% endtrans %}</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown" id="customer">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{% trans %}menu.menu_top.customer.title{% endtrans %}</a>
+                    <a class="nav-link dropdown-toggle" href="#"
+                       data-bs-toggle="dropdown">{% trans %}menu.menu_top.customer.title{% endtrans %}</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href={{ path('chicks_recipient_index') }}>{% trans %}menu.menu_top.chicks_recipient.index{% endtrans %}</a></li>
-                        <li><a class="dropdown-item" href="{{ path('customer_index') }}">{% trans %}menu.menu_top.customer.index{% endtrans %}</a></li>
+                        <li><a class="dropdown-item"
+                               href={{ path('chicks_recipient_index') }}>{% trans %}menu.menu_top.chicks_recipient.index{% endtrans %}</a>
+                        </li>
+                        <li><a class="dropdown-item"
+                               href="{{ path('customer_index') }}">{% trans %}menu.menu_top.customer.index{% endtrans %}</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown" id="transport">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{% trans %}menu.menu_top.transport.title{% endtrans %}</a>
+                    <a class="nav-link dropdown-toggle" href="#"
+                       data-bs-toggle="dropdown">{% trans %}menu.menu_top.transport.title{% endtrans %}</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ path('car_index') }}">{% trans %}menu.menu_top.car.index{% endtrans %}</a></li>
-                        <li><a class="dropdown-item" href="{{ path('driver_index') }}">{% trans %}menu.menu_top.driver.index{% endtrans %}</a></li>
+                        <li><a class="dropdown-item"
+                               href="{{ path('car_index') }}">{% trans %}menu.menu_top.car.index{% endtrans %}</a></li>
+                        <li><a class="dropdown-item"
+                               href="{{ path('driver_index') }}">{% trans %}menu.menu_top.driver.index{% endtrans %}</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown" id="plans">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{% trans %}menu.menu_top.plans.title{% endtrans %}</a>
+                    <a class="nav-link dropdown-toggle" href="#"
+                       data-bs-toggle="dropdown">{% trans %}menu.menu_top.plans.title{% endtrans %}</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ path('plan_input_index') }}">{% trans %}menu.menu_top.plan_input.index{% endtrans %}</a></li>
+                        <li><a class="dropdown-item"
+                               href="{{ path('plan_input_index') }}">{% trans %}menu.menu_top.plan_input.index{% endtrans %}</a>
+                        </li>
                     </ul>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
-                        <a class="nav-link" href={{ path('registration') }}>{% trans %}menu.menu_top.registration{% endtrans %}</a>
+                        <a class="nav-link"
+                           href={{ path('registration') }}>{% trans %}menu.menu_top.registration{% endtrans %}</a>
                     </li>
                 {% endif %}
             </ul>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a class="btn btn-warning my-2 my-sm-0" href={{ path('app_logout') }}>{% trans %}menu.menu_top.logout{% endtrans %}</a>
+                <a class="btn btn-warning my-2 my-sm-0"
+                   href={{ path('app_logout') }}>{% trans %}menu.menu_top.logout{% endtrans %}</a>
             {% else %}
-                <a class="btn btn-success my-2 my-sm-0" href={{ path('app_login') }}>{% trans %}menu.menu_top.login{% endtrans %}</a>
+                <a class="btn btn-success my-2 my-sm-0"
+                   href={{ path('app_login') }}>{% trans %}menu.menu_top.login{% endtrans %}</a>
             {% endif %}
         </div>
     </nav>
