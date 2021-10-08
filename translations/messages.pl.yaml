@@ -527,9 +527,10 @@ eggs_inputs_transfer:
     button:
       new: Wpisz dane przekładu
   new:
-    title: Dodawanie danych z przekładu
     button:
-      back: Lista przekładów
+      back: Szczegóły nakładu
+    herd: Stado
+    title: Dodawanie danych z przekładu
   show:
     title: Szczegóły przekładu
     waste_eggs: Odpad jaj

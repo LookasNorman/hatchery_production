@@ -90,6 +90,8 @@ class TransfersController extends AbstractController
 
         return $this->render('eggs_inputs_transfers/new.html.twig', [
             'form' => $form->createView(),
+            'input' => $inputs,
+            'herd' => $herd
         ]);
     }
 
