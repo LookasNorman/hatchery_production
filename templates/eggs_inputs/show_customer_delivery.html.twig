@@ -40,12 +40,28 @@
                     </tr>
                     </thead>
                     {% for delivery in inputFarm.inputsFarmDeliveries %}
+                        {# Eggs in hatchery after input #}
+                        {% set differenceHatchery = date(eggs_input.inputDate).diff(date(delivery.delivery.deliveryDate)) %}
+                        {% set hatcheryDays = differenceHatchery.days %}
+                        {% set hatcheryColor = hatcheryDays > 7 ? 'text-danger' : 'text-dark' %}
+                        {# Eggs laying after input #}
+                        {% set differenceFirstLaying = date(eggs_input.inputDate).diff(date(delivery.delivery.firstLayingDate)) %}
+                        {% set firstLayingDays = differenceFirstLaying.days %}
+                        {% set firstLayingColor = firstLayingDays > 7 ? 'text-danger' : 'text-dark' %}
+                        {% set differenceLastLaying = date(eggs_input.inputDate).diff(date(delivery.delivery.lastLayingDate)) %}
+                        {% set lastLayingDays = differenceLastLaying.days %}
+                        {% set lastLayingColor = lastLayingDays > 7 ? 'text-danger' : 'text-dark' %}
                         <tr>
                             <td>{{ delivery.delivery.herd.breeder.name }}</td>
                             <td>{{ delivery.delivery.herd.name }}</td>
-                            <td>{{ delivery.delivery.deliveryDate|date('Y-m-d') }}</td>
+                            <td>{{ delivery.delivery.deliveryDate|date('Y-m-d') }}
+                                <span class="{{ hatcheryColor }}"> ({{ hatcheryDays }})</span></td>
                             <td>{{ delivery.delivery.firstLayingDate|date('Y-m-d') }}
-                                - {{ delivery.delivery.lastLayingDate|date('Y-m-d') }}</td>
+                                - {{ delivery.delivery.lastLayingDate|date('Y-m-d') }}
+                                <span class="{{ lastLayingColor }}">({{ lastLayingDays }}</span>
+                                -
+                                <span class="{{ firstLayingColor }}">{{ firstLayingDays }})</span>
+                            </td>
                             <td>{{ delivery.eggsNumber }}</td>
                         </tr>
                     {% endfor %}
