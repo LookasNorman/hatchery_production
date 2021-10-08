@@ -579,9 +579,10 @@ eggs_inputs_selections:
     button:
       new: Wpisz wybieranie
   new:
-    title: Dodawanie danych z wybierania
     button:
-      back: Lista wybierań
+      back: Szczegóły nakładu
+    herd: Stado
+    title: Dodawanie danych z wybierania
   show:
     title: Szczegóły wybierania
     button:

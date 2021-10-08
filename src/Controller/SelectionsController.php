@@ -100,6 +100,8 @@ class SelectionsController extends AbstractController
 
         return $this->render('eggs_selections/new.html.twig', [
             'form' => $form->createView(),
+            'input' => $inputs,
+            'herd' => $herd
         ]);
     }
 
