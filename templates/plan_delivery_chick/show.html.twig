@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PlanDeliveryChick{% endblock %}
+
+{% block body %}
+    <h1>PlanDeliveryChick</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ plan_delivery_chick.id }}</td>
+            </tr>
+            <tr>
+                <th>ChickNumber</th>
+                <td>{{ plan_delivery_chick.chickNumber }}</td>
+            </tr>
+            <tr>
+                <th>DeliveryDate</th>
+                <td>{{ plan_delivery_chick.deliveryDate ? plan_delivery_chick.deliveryDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>InputDate</th>
+                <td>{{ plan_delivery_chick.inputDate ? plan_delivery_chick.inputDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>LightingDate</th>
+                <td>{{ plan_delivery_chick.lightingDate ? plan_delivery_chick.lightingDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>TransferDate</th>
+                <td>{{ plan_delivery_chick.transferDate ? plan_delivery_chick.transferDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('plan_delivery_chick_index') }}">back to list</a>
+
+    <a href="{{ path('plan_delivery_chick_edit', {'id': plan_delivery_chick.id}) }}">edit</a>
+
+    {{ include('plan_delivery_chick/_delete_form.html.twig') }}
+{% endblock %}

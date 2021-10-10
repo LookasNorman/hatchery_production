@@ -89,15 +89,16 @@ class ChicksRecipient
     private $inputsFarms;
 
     /**
-     * @ORM\OneToMany(targetEntity=PlanInputFarm::class, mappedBy="chicksFarm")
+     * @ORM\OneToMany(targetEntity=PlanDeliveryChick::class, mappedBy="chickFarm")
      */
-    private $planInputFarms;
+    private $planDeliveryChicks;
 
     public function __construct()
     {
         $this->customerBuildings = new ArrayCollection();
         $this->inputsFarms = new ArrayCollection();
         $this->planInputFarms = new ArrayCollection();
+        $this->planDeliveryChicks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -262,32 +263,33 @@ class ChicksRecipient
     }
 
     /**
-     * @return Collection|PlanInputFarm[]
+     * @return Collection|PlanDeliveryChick[]
      */
-    public function getPlanInputFarms(): Collection
+    public function getPlanDeliveryChicks(): Collection
     {
-        return $this->planInputFarms;
+        return $this->planDeliveryChicks;
     }
 
-    public function addPlanInputFarm(PlanInputFarm $planInputFarm): self
+    public function addPlanDeliveryChick(PlanDeliveryChick $planDeliveryChick): self
     {
-        if (!$this->planInputFarms->contains($planInputFarm)) {
-            $this->planInputFarms[] = $planInputFarm;
-            $planInputFarm->setChicksFarm($this);
+        if (!$this->planDeliveryChicks->contains($planDeliveryChick)) {
+            $this->planDeliveryChicks[] = $planDeliveryChick;
+            $planDeliveryChick->setChickFarm($this);
         }
 
         return $this;
     }
 
-    public function removePlanInputFarm(PlanInputFarm $planInputFarm): self
+    public function removePlanDeliveryChick(PlanDeliveryChick $planDeliveryChick): self
     {
-        if ($this->planInputFarms->removeElement($planInputFarm)) {
+        if ($this->planDeliveryChicks->removeElement($planDeliveryChick)) {
             // set the owning side to null (unless already changed)
-            if ($planInputFarm->getChicksFarm() === $this) {
-                $planInputFarm->setChicksFarm(null);
+            if ($planDeliveryChick->getChickFarm() === $this) {
+                $planDeliveryChick->setChickFarm(null);
             }
         }
 
         return $this;
     }
+
 }

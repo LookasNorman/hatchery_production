@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\PlanInputFarm;
+use App\Entity\PlanDeliveryChick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method PlanInputFarm|null find($id, $lockMode = null, $lockVersion = null)
- * @method PlanInputFarm|null findOneBy(array $criteria, array $orderBy = null)
- * @method PlanInputFarm[]    findAll()
- * @method PlanInputFarm[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PlanDeliveryChick|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PlanDeliveryChick|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PlanDeliveryChick[]    findAll()
+ * @method PlanDeliveryChick[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PlanInputFarmRepository extends ServiceEntityRepository
+class PlanDeliveryChickRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PlanInputFarm::class);
+        parent::__construct($registry, PlanDeliveryChick::class);
     }
 
     // /**
-    //  * @return PlanInputFarm[] Returns an array of PlanInputFarm objects
+    //  * @return PlanDeliveryChick[] Returns an array of PlanDeliveryChick objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class PlanInputFarmRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?PlanInputFarm
+    public function findOneBySomeField($value): ?PlanDeliveryChick
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')

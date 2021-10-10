@@ -1,3 +1,4 @@
+Thursday: Czwartek
 form:
   breed:
   chicks_recipient:
@@ -833,13 +834,21 @@ menu:
       index: Strona główna
     logout: Wyloguj
     login: Zaloguj
-    plan_input:
-      index: Nakłady - planowane
+    plan_delivery_chick:
+      index: Zamówienia - planowane
     plans:
       title: Plany
     registration: Nowy użytkownik
     transport:
       title: Transport
+plan_delivery_chick:
+  form:
+    label:
+      chick_farm: Ferma
+      chick_number: Ilość piskląt
+      delivery_date: Data dostawy
+  placeholder:
+    chick_farm: Wybierz fermę z listy
 plan_input:
   form:
     button:
