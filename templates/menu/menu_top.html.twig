@@ -19,23 +19,34 @@
                         {% trans %}menu.menu_top.incubators.index{% endtrans %}
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href={{ path('egg_supplier_index') }}>
-                        {% trans %}menu.menu_top.eggs_supplier.index{% endtrans %}
-                    </a>
+                <li class="nav-item dropdown" id="supplier">
+                    <a class="nav-link dropdown-toggle" href="#"
+                       data-bs-toggle="dropdown">{% trans %}menu.menu_top.eggs_supplier.title{% endtrans %}</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item"
+                               href={{ path('egg_supplier_index') }}>{% trans %}menu.menu_top.eggs_supplier.index{% endtrans %}</a>
+                        </li>
+                        <li><a class="dropdown-item"
+                               href={{ path('herds_index') }}>{% trans %}menu.menu_top.herds.index{% endtrans %}</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a class="nav-link" href={{ path('breed_index') }}>
                         {% trans %}menu.menu_top.breed.index{% endtrans %}
                     </a>
                 </li>
-                <li>
-                    <a class="nav-link" href={{ path('herds_index') }}>
-                        {% trans %}menu.menu_top.herds.index{% endtrans %}
-                    </a>
-                </li>
-                <li><a class="nav-link"
-                       href={{ path('eggs_delivery_index') }}>{% trans %}menu.menu_top.eggs_delivery.index{% endtrans %}</a>
+                <li class="nav-item dropdown" id="eggs">
+                    <a class="nav-link dropdown-toggle" href="#"
+                       data-bs-toggle="dropdown">{% trans %}menu.menu_top.eggs_delivery.title{% endtrans %}</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item"
+                               href={{ path('eggs_delivery_index') }}>{% trans %}menu.menu_top.eggs_delivery.index{% endtrans %}</a>
+                        </li>
+                        <li><a class="dropdown-item"
+                               href={{ path('eggs_delivery_all_index') }}>{% trans %}menu.menu_top.eggs_delivery.all{% endtrans %}</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown" id="inputs">
                     <a class="nav-link dropdown-toggle" href="#"

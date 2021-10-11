@@ -744,6 +744,18 @@ inputs_farm:
       back: Powrót do szczegółów nakładu
     header: Dodawanie do nakładu
     title: Dodawanie dostawy na fermę do nakładu
+inputs_farm_delivery:
+  form:
+    label:
+      breader: Dostawca jaj
+      eggs_number: Ilość jaj
+      herd: Stado
+    placeholder:
+      breeder: Wybierz dostawcę jaj
+      herd: Wybierz stado
+  new:
+    header: Odbiorca piskląt
+    title: Dodawanie dostawy do nakładu
 layout:
   button:
     close: Zamknij
@@ -810,7 +822,9 @@ menu:
     driver:
       index: Kierowcy
     eggs_delivery:
-      index: Dostawy jaj
+      all: Dostawy jaj
+      index: Dostawy jaj na magazynie
+      title: Jaja
     eggs_inputs:
       index: Nakłady
       title: Nakłady
@@ -824,6 +838,7 @@ menu:
       index: Wybieranie
     eggs_supplier:
       index: Dostawcy jaj
+      title: Dostawy
     herds:
       index: Stada
     incubators:
@@ -836,6 +851,8 @@ menu:
     login: Zaloguj
     plan_delivery_chick:
       index: Zamówienia - planowane
+    plan_indicator:
+      index: Wskaźniki do planów
     plans:
       title: Plany
     registration: Nowy użytkownik
