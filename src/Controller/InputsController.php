@@ -2,7 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Herds;
 use App\Entity\Inputs;
+use App\Entity\InputsFarmDelivery;
+use App\Entity\Lighting;
+use App\Entity\Selections;
+use App\Entity\Transfers;
 use App\Form\InputsType;
 use App\Repository\DeliveryRepository;
 use App\Repository\DetailsDeliveryRepository;
@@ -66,6 +71,73 @@ class InputsController extends AbstractController
         ]);
     }
 
+    public function herdInputFarmDelivery($herd, $input)
+    {
+        $inputFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+        $inputFarmDeliveries = $inputFarmDeliveryRepository->herdInputFarmDelivery($herd, $input);
+
+        return $inputFarmDeliveries;
+
+    }
+
+    public function herdLightingInInput($herd, $input)
+    {
+        $lightingRepository = $this->getDoctrine()->getRepository(Lighting::class);
+        $lighting = $lightingRepository->herdLightingInInput($herd, $input);
+        return $lighting;
+    }
+
+    public function herdTransferInInput($herd, $input)
+    {
+        $transferRepository = $this->getDoctrine()->getRepository(Transfers::class);
+        $transfer = $transferRepository->herdTransferInInput($herd, $input);
+        return $transfer;
+    }
+
+    public function herdSelectionInInput($herd, $input)
+    {
+        $selectionRepository = $this->getDoctrine()->getRepository(Selections::class);
+        $selection = $selectionRepository->herdSelectionInInput($herd, $input);
+        return $selection;
+    }
+
+    public function herdInInput($input)
+    {
+        $herdRepository = $this->getDoctrine()->getRepository(Herds::class);
+        $herds = $herdRepository->herdInInput($input);
+
+        return $herds;
+    }
+
+    public function herdInputEggsInInput($herd, $input)
+    {
+        $inputFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+        $inputEggs = $inputFarmDeliveryRepository->herdInputEggsInInput($herd, $input);
+
+        return $inputEggs;
+    }
+
+    public function herdInInputData($input)
+    {
+        $herds = $this->herdInInput($input);
+        $herdData = [];
+        foreach ($herds as $herd) {
+            $inputEggs = $this->herdInputEggsInInput($herd, $input);
+            $lighting = $this->herdLightingInInput($herd, $input);
+            $transfer = $this->herdTransferInInput($herd, $input);
+            $selection = $this->herdSelectionInInput($herd, $input);
+            array_push($herdData, [
+                'herd' => $herd,
+                'inputEggs' => $inputEggs,
+                'eggsNumber' => 5,
+                'lighting' => $lighting,
+                'transfer' => $transfer,
+                'selection' => $selection
+            ]);
+        }
+        return $herdData;
+    }
+
     /**
      * @Route("/{id}", name="eggs_inputs_show", methods={"GET"})
      */
@@ -76,121 +148,13 @@ class InputsController extends AbstractController
     ): Response
     {
         $farms = $farmRepository->findBy(['eggInput' => $eggsInput]);
+        $herds = $this->herdInInput($eggsInput);
+        $herdsData = $this->herdInInputData($eggsInput);
 
-        $herdsEggs = [];
-        $herds = [];
-        foreach ($farms as $farm) {
-            $farmsDelivery = $inputsFarmDeliveryRepository->findBy(['inputsFarm' => $farm]);
-            foreach ($farmsDelivery as $farmDelivery) {
-                $herdDelivery = [];
-                if (!in_array($farmDelivery->getDelivery()->getHerd(), $herds, true)) {
-                    $herd = $farmDelivery->getDelivery()->getHerd();
-                    $eggsNumber = 0;
-                    $lightingsData = [];
-                    $transfersData = [];
-                    $selectionsData = [];
-                    foreach ($farmsDelivery as $farmDelivery) {
-                        if ($farmDelivery->getDelivery()->getHerd() === $herd) {
-                            array_push($herdDelivery, $farmDelivery->getDelivery());
-                            $eggsNumber += $farmDelivery->getEggsNumber();
-                            $lightings = $farmDelivery->getLighting();
-                            $transfers = $farmDelivery->getTransfers();
-                            $selections = $farmDelivery->getSelections();
-                            array_push($lightingsData, $lightings);
-                            array_push($transfersData, $transfers);
-                            array_push($selectionsData, $selections);
-                        }
-                    }
-
-                    $eggsLighting = 0;
-                    $eggsWasteLighting = 0;
-                    $wasteLighting = 0;
-
-                    foreach ($lightingsData as $lighting) {
-                        if(is_object($lighting)){
-                            $lightingDate = $lighting->getLightingDate();
-                            $eggsLighting = $eggsLighting + $lighting->getLightingEggs();
-                            $eggsWasteLighting = $eggsWasteLighting + $lighting->getWasteEggs();
-                            $wasteLighting = $wasteLighting + $lighting->getWasteLighting();
-                        } else {
-                            $lightingDate = null;
-                            $eggsLighting = null;
-                            $eggsWasteLighting = null;
-                            $wasteLighting = null;
-                        }
-                    }
-                    if($eggsLighting > 0){
-                        $eggsAllWasteLighting = round($eggsNumber / $eggsLighting * $eggsWasteLighting, 0);
-                        $fertilization = round((1 - ($eggsWasteLighting / $eggsLighting)) * 100, 1);
-                        $herdFertilization = round((1 - ($wasteLighting / $eggsNumber)) * 100, 1);
-                    } else {
-                        $eggsAllWasteLighting = null;
-                        $fertilization = null;
-                        $herdFertilization = null;
-                    }
-                    $lightings = [
-                        'lightingDate' => $lightingDate,
-                        'eggsLighting' => $eggsLighting,
-                        'eggsWasteLighting' => $eggsWasteLighting,
-                        'eggsAllWasteLighting' => $eggsAllWasteLighting,
-                        'wasteLighting' => $wasteLighting,
-                        'fertilization' => $fertilization,
-                        'herdFertilization' => $herdFertilization
-                    ];
-
-                    $eggsTransfers = 0;
-
-                    foreach ($transfersData as $transfer) {
-                        if(is_object($transfer)){
-                            $transferDate = $transfer->getTransferDate();
-                            $eggsTransfers = $eggsTransfers + $transfer->getTransfersEgg();
-                        } else {
-                            $transferDate = null;
-                            $eggsTransfers = null;
-                        }
-                    }
-                    $transfers = [
-                        'transferDate' => $transferDate,
-                        'eggsTransfer' => $eggsTransfers
-                    ];
-
-                    $selectionDate = null;
-                    $chicks = null;
-                    $cullChicks = null;
-                    $unhatched = null;
-
-                    foreach ($selectionsData as $selection) {
-                        if(is_object($selection)){
-                            $selectionDate = $selection->getSelectionDate();
-                            $chicks = $chicks + $selection->getChickNumber();
-                            $cullChicks = $cullChicks + $selection->getCullChicken();
-                            $unhatched = $unhatched + $selection->getUnhatched();
-                        }
-                    }
-                    $selections = [
-                        'selectionDate' => $selectionDate,
-                        'chicks' => $chicks,
-                        'cullChicks' => $cullChicks,
-                        'unhatched' => $unhatched
-                    ];
-
-
-                    array_push($herdsEggs,
-                        [
-                            'herd' => $herd,
-                            'eggsNumber' => $eggsNumber,
-                            'lighting' => $lightings,
-                            'transfer' => $transfers,
-                            'selection' => $selections
-                        ]);
-                    array_push($herds, $herd);
-                }
-            }
-        }
         return $this->render('eggs_inputs/show.html.twig', [
             'eggs_input' => $eggsInput,
             'farms' => $farms,
-            'herdsEggs' => $herdsEggs,
+            'herdsEggs' => $herdsData,
             'herds' => $herds
         ]);
     }

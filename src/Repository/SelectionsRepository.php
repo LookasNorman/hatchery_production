@@ -19,22 +19,24 @@ class SelectionsRepository extends ServiceEntityRepository
         parent::__construct($registry, Selections::class);
     }
 
-    // /**
-    //  * @return Selections[] Returns an array of Selections objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function herdSelectionInInput($herd, $input)
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('s')
+            ->select('s.selectionDate')
+            ->addSelect('SUM(s.chickNumber) as chickNumber')
+            ->addSelect('SUM(s.cullChicken) as cullChicken')
+            ->addSelect('SUM(s.unhatched) as unhatched')
+            ->join('s.inputsFarmDelivery', 'ifd')
+            ->join('ifd.delivery', 'd')
+            ->join('ifd.inputsFarm', 'if')
+            ->andWhere('d.herd = :herd')
+            ->andWhere('if.eggInput = :input')
+            ->setParameters(['herd' => $herd, 'input' => $input])
+            ->groupBy('s.selectionDate')
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Selections

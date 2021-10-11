@@ -67,23 +67,43 @@
                 {{ herdEgg.herd.name }}
             </td>
             <td class="text-center align-middle">
-                {{ herdEgg.eggsNumber }}
+                {{ herdEgg.inputEggs }}
             </td>
-            <td class="text-center align-middle">{{ herdEgg.lighting.lightingDate ? herdEgg.lighting.lightingDate|date('Y-m-d') : '' }}</td>
-            <td class="text-center align-middle">{{ herdEgg.lighting.eggsLighting }}</td>
-            <td class="text-center align-middle">{{ herdEgg.lighting.eggsWasteLighting }}
-                ({{ herdEgg.lighting.eggsAllWasteLighting }})
-            </td>
-            <td class="text-center align-middle">{{ herdEgg.lighting.wasteLighting }}</td>
-            <td class="text-center align-middle">{{ herdEgg.lighting.fertilization }}
-                ({{ herdEgg.lighting.herdFertilization }}) %
-            </td>
-            <td class="text-center align-middle bg-light">{{ herdEgg.transfer.transferDate ? herdEgg.transfer.transferDate|date('Y-m-d') : '' }}</td>
-            <td class="text-center align-middle bg-light">{{ herdEgg.transfer.eggsTransfer }}</td>
-            <td class="text-center align-middle bg-primary text-white">{{ herdEgg.selection.selectionDate ? herdEgg.selection.selectionDate|date('Y-m-d') : '' }}</td>
-            <td class="text-center align-middle bg-primary text-white">{{ herdEgg.selection.chicks }}</td>
-            <td class="text-center align-middle bg-primary text-white">{{ herdEgg.selection.cullChicks }}</td>
-            <td class="text-center align-middle bg-primary text-white">{{ herdEgg.selection.unhatched }}</td>
+            {% if herdEgg.lighting %}
+                <td class="text-center align-middle">{{ herdEgg.lighting.lightingDate|date('Y-m-d') }}</td>
+                <td class="text-center align-middle">{{ herdEgg.lighting.lightingEggs }}</td>
+                <td class="text-center align-middle">{{ herdEgg.lighting.wasteEggs }}</td>
+                <td class="text-center align-middle">{{ herdEgg.lighting.wasteLighting }}</td>
+                {% set fertility = (1 - herdEgg.lighting.wasteEggs / herdEgg.lighting.lightingEggs) * 100 %}
+                {% set fertilityCorrection = (1 - herdEgg.lighting.wasteLighting / herdEgg.inputEggs) * 100 %}
+                <td class="text-center align-middle">
+                    {{ fertility|number_format(1, ',', ' ') }} ({{ fertilityCorrection|number_format(1, ',', ' ') }}) %
+                </td>
+            {% else %}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            {% endif %}
+            {% if herdEgg.transfer %}
+                <td class="text-center align-middle bg-light">{{ herdEgg.transfer.transferDate ? herdEgg.transfer.transferDate|date('Y-m-d') : '' }}</td>
+                <td class="text-center align-middle bg-light">{{ herdEgg.transfer.transferEgg }}</td>
+            {% else %}
+                <td></td>
+                <td></td>
+            {% endif %}
+            {% if herdEgg.selection %}
+                <td class="text-center align-middle bg-primary text-white">{{ herdEgg.selection.selectionDate ? herdEgg.selection.selectionDate|date('Y-m-d') : '' }}</td>
+                <td class="text-center align-middle bg-primary text-white">{{ herdEgg.selection.chickNumber }}</td>
+                <td class="text-center align-middle bg-primary text-white">{{ herdEgg.selection.cullChicken }}</td>
+                <td class="text-center align-middle bg-primary text-white">{{ herdEgg.selection.unhatched }}</td>
+            {% else %}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            {% endif %}
         </tr>
 
     {% endfor %}

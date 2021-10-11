@@ -19,20 +19,44 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
         parent::__construct($registry, InputsFarmDelivery::class);
     }
 
-    public function findByExampleField($input, $herd)
+    public function herdInputEggsInInput($herd, $input)
+    {
+        return $this->createQueryBuilder('ifd')
+            ->select('SUM(ifd.eggsNumber)')
+            ->join('ifd.delivery', 'd')
+            ->join('ifd.inputsFarm', 'if')
+            ->andWhere('d.herd = :herd')
+            ->andWhere('if.eggInput = :input')
+            ->setParameters(['input' => $input, 'herd' => $herd])
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
+    public function herdInputFarmDelivery($herd, $input)
     {
         return $this->createQueryBuilder('ifd')
             ->join('ifd.inputsFarm', 'if')
-            ->join('if.eggInput', 'ei')
             ->join('ifd.delivery', 'd')
-            ->andWhere('ei.id = :input')
             ->andWhere('d.herd = :herd')
+            ->andWhere('if.eggInput = :input')
             ->setParameters(['input' => $input, 'herd' => $herd])
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
 
+    public function herdDelivery($herd)
+    {
+        return $this->createQueryBuilder('ifd')
+            ->join('ifd.inputsFarm', 'if')
+            ->join('ifd.delivery', 'd')
+            ->andWhere('d.herd = :herd')
+            ->setParameters(['herd' => $herd])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     /*
     public function findOneBySomeField($value): ?InputsFarmDelivery
     {

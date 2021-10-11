@@ -19,22 +19,22 @@ class TransfersRepository extends ServiceEntityRepository
         parent::__construct($registry, Transfers::class);
     }
 
-    // /**
-    //  * @return Transfers[] Returns an array of Transfers objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function herdTransferInInput($herd, $input)
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('t')
+            ->select('SUM(t.transfersEgg) as transferEgg')
+            ->addSelect('t.transferDate')
+            ->join('t.inputsFarmDelivery', 'ifd')
+            ->join('ifd.delivery', 'd')
+            ->join('ifd.inputsFarm', 'if')
+            ->andWhere('d.herd = :herd')
+            ->andWhere('if.eggInput = :input')
+            ->setParameters(['herd' => $herd, 'input' => $input])
+            ->groupBy('t.transferDate')
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Transfers
