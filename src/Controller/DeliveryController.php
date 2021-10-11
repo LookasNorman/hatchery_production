@@ -32,6 +32,16 @@ class DeliveryController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/all", name="eggs_delivery_all_index", methods={"GET"})
+     */
+    public function allDelivery(DeliveryRepository $eggsDeliveryRepository): Response
+    {
+        return $this->render('eggs_delivery/index.html.twig', [
+            'eggs_deliveries' => $eggsDeliveryRepository->findBy([], ['deliveryDate' => 'asc']),
+        ]);
+    }
+
     public function addHerd($name, $supplier, $breed)
     {
         $em = $this->getDoctrine()->getManager();
