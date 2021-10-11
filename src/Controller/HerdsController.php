@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Delivery;
 use App\Entity\Herds;
 use App\Entity\InputsDetails;
+use App\Entity\InputsFarmDelivery;
 use App\Form\HerdsType;
 use App\Repository\DetailsRepository;
 use App\Repository\SupplierRepository;
@@ -54,6 +55,7 @@ class HerdsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $herd->setActive(true);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($herd);
             $entityManager->flush();
@@ -67,87 +69,18 @@ class HerdsController extends AbstractController
         ]);
     }
 
-    public function herdsDelivery(Herds $herd)
-    {
-        $detailsRepository = $this->getDoctrine()->getRepository(InputsDetails::class);
-        $inputDetails = $detailsRepository->deliveriesHerd($herd);
-
-        $inputsDetails = [];
-        foreach ($inputDetails as $inputDetail) {
-            $totalEggs = 0;
-            $totalWasteLightings = 0;
-            $totalWasteTransfers = 0;
-            $totalChick = 0;
-            $totalCullChick = 0;
-
-            $detailDeliveries = $inputDetail->getEggsInputsDetailsEggsDeliveries();
-            foreach ($detailDeliveries as $detailDelivery) {
-                $totalEggs = $totalEggs + $detailDelivery->getEggsNumber();
-            }
-
-            $lightings = $inputDetail->getEggsInputsLightings();
-            foreach ($lightings as $lighting) {
-                $totalWasteLightings = $totalWasteLightings + $lighting->getWasteEggs();
-            }
-
-            $transfers = $inputDetail->getEggsInputsTransfers();
-            foreach ($transfers as $transfer) {
-                $totalWasteTransfers = $totalWasteTransfers + $transfer->getWasteEggs();
-            }
-
-            $selections = $inputDetail->getEggsSelections();
-            foreach ($selections as $selection){
-                $totalChick = $totalChick + $selection->getChickNumber();
-                $totalCullChick = $totalCullChick + $selection->getCullChicken();
-            }
-
-            foreach ($detailDeliveries as $detailDelivery) {
-                $delivery = $detailDelivery->getEggsDeliveries();
-                $deliveryEggs = $detailDelivery->getEggsNumber();
-                $wasteLighting = $deliveryEggs / $totalEggs * $totalWasteLightings;
-                $wasteTransfer = $deliveryEggs / $totalEggs * $totalWasteTransfers;
-                $chickNumber = $deliveryEggs / $totalEggs * $totalChick;
-                $cullChick = $deliveryEggs / $totalEggs * $totalCullChick;
-                if($chickNumber){
-                    $unhatched = $deliveryEggs - $wasteLighting - $wasteTransfer - $chickNumber - $cullChick;
-                } else {
-                    $unhatched = null;
-                }
-                $inputsDetails [] = [
-                    'inputId' => $inputDetail->getEggInput()->getId(),
-                    'inputName' => $inputDetail->getEggInput()->getName(),
-                    'deliveryId' => $delivery->getId(),
-                    'deliveryDate' => $delivery->getDeliveryDate(),
-                    'deliveryEggs' => $deliveryEggs,
-                    'wasteLighting' => $wasteLighting,
-                    'wasteTransfer' => $wasteTransfer,
-                    'chickNumber' => $chickNumber,
-                    'cullChick' => $cullChick,
-                    'unhatched' => $unhatched,
-                ];
-            }
-        }
-
-        return [
-            'inputDetails' => $inputDetails,
-            'inputsDetails' => $inputsDetails,
-        ];
-
-    }
-
     /**
      * @Route("/{id}", name="herds_show", methods={"GET"})
      */
     public function show(Herds $herd): Response
     {
-        $inputDetails = $this->herdsDelivery($herd);
-        $deliveries = $this->herdDeliveries($herd);
+        $detailsRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+
+        $inputDetails = $detailsRepository->herdDelivery($herd);
 
         return $this->render('herds/show.html.twig', [
             'herd' => $herd,
-            'deliveries' => $deliveries,
-            'inputDetails' => $inputDetails['inputDetails'],
-            'inputsDetails' => $inputDetails['inputsDetails'],
+            'inputDetails' => $inputDetails,
         ]);
     }
 
