@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PlanIndicators{% endblock %}
+
+{% block body %}
+    <h1>PlanIndicators</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ plan_indicator.id }}</td>
+            </tr>
+            <tr>
+                <th>Fertilization</th>
+                <td>{{ plan_indicator.fertilization }}</td>
+            </tr>
+            <tr>
+                <th>TransferHatchability</th>
+                <td>{{ plan_indicator.transferHatchability }}</td>
+            </tr>
+            <tr>
+                <th>Hatchability</th>
+                <td>{{ plan_indicator.hatchability }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('plan_indicators_index') }}">back to list</a>
+
+    <a href="{{ path('plan_indicators_edit', {'id': plan_indicator.id}) }}">edit</a>
+
+    {{ include('plan_indicators/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PlanIndicators index{% endblock %}
+
+{% block body %}
+    <h1>PlanIndicators index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fertilization</th>
+                <th>TransferHatchability</th>
+                <th>Hatchability</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for plan_indicator in plan_indicators %}
+            <tr>
+                <td>{{ plan_indicator.id }}</td>
+                <td>{{ plan_indicator.fertilization }}</td>
+                <td>{{ plan_indicator.transferHatchability }}</td>
+                <td>{{ plan_indicator.hatchability }}</td>
+                <td>
+                    <a href="{{ path('plan_indicators_show', {'id': plan_indicator.id}) }}">show</a>
+                    <a href="{{ path('plan_indicators_edit', {'id': plan_indicator.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('plan_indicators_new') }}">Create new</a>
+{% endblock %}

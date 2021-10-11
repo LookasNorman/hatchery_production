@@ -29,12 +29,12 @@
                 <td>{{ plan_delivery_chick.lightingDate ? plan_delivery_chick.lightingDate|format_datetime('full', 'short', locale='pl') : '' }}</td>
                 <td>{{ plan_delivery_chick.transferDate ? plan_delivery_chick.transferDate|format_datetime('full', 'short', locale='pl') : '' }}</td>
                 <td>
-                    {% set setterNumber = plan_delivery_chick.chickNumber / 46000 %}
-                    {{ setterNumber|number_format(1, ',') }}
+                    {% set setterNumber = plan_delivery_chick.chickNumber / (plan_indicators.hatchability / 100) / 57600 %}
+                    {{ setterNumber|number_format(1, ',', ' ') }}
                 </td>
                 <td>
-                    {% set hatcherNumber = plan_delivery_chick.chickNumber / 18200 %}
-                    {{ hatcherNumber|number_format(1, ',') }}
+                    {% set hatcherNumber = plan_delivery_chick.chickNumber / (plan_indicators.transferHatchability / 100) / 19200 %}
+                    {{ hatcherNumber|number_format(1, ',', ' ') }}
                 </td>
                 <td>
                     <a href="{{ path('plan_delivery_chick_show', {'id': plan_delivery_chick.id}) }}">show</a>

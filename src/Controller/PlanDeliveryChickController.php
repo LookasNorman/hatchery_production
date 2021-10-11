@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\PlanDeliveryChick;
 use App\Form\PlanDeliveryChickType;
 use App\Repository\PlanDeliveryChickRepository;
+use App\Repository\PlanIndicatorsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,11 @@ class PlanDeliveryChickController extends AbstractController
     /**
      * @Route("/", name="plan_delivery_chick_index", methods={"GET"})
      */
-    public function index(PlanDeliveryChickRepository $planDeliveryChickRepository): Response
+    public function index(PlanDeliveryChickRepository $planDeliveryChickRepository, PlanIndicatorsRepository $planIndicatorsRepository): Response
     {
         return $this->render('plan_delivery_chick/index.html.twig', [
             'plan_delivery_chicks' => $planDeliveryChickRepository->findAll(),
+            'plan_indicators' => $planIndicatorsRepository->findOneBy([])
         ]);
     }
 

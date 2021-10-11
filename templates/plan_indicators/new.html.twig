@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PlanIndicators{% endblock %}
+
+{% block body %}
+    <h1>Create new PlanIndicators</h1>
+
+    {{ include('plan_indicators/_form.html.twig') }}
+
+    <a href="{{ path('plan_indicators_index') }}">back to list</a>
+{% endblock %}
