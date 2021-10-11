@@ -87,6 +87,7 @@ class LightingController extends AbstractController
 
             $entityManager->persist($eggsInputLighting);
         }
+
         $entityManager->flush();
 
     }
@@ -110,7 +111,7 @@ class LightingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $inputsFarmDelivery = $inputsFarmDeliveryRepository->findByExampleField($inputs, $herd);
+            $inputsFarmDelivery = $inputsFarmDeliveryRepository->inputFarmDeliveryForLighting($herd, $inputs);
 
             $this->createLighting($form, $inputsFarmDelivery);
 

@@ -34,8 +34,8 @@ class InputsFarmDeliveryType extends AbstractType
 
                     return $eggSupplier->getName() . ' - stan jaj: ' . $eggs;
                 },
-                'label' => 'eggs_inputs_details.form.label.breeder',
-                'placeholder' => 'eggs_inputs_details.form.placeholder.breeder',
+                'label' => 'inputs_farm_delivery.form.label.breeder',
+                'placeholder' => 'inputs_farm_delivery.form.placeholder.breeder',
                 'mapped' => false,
                 'attr' => [
                     'class' => 'form-control'
@@ -50,8 +50,8 @@ class InputsFarmDeliveryType extends AbstractType
 
                 $form->getParent()->add('herd', EntityType::class, [
                     'class' => Herds::class,
-                    'label' => 'eggs_inputs_details.form.label.herd',
-                    'placeholder' => 'eggs_inputs_details.form.placeholder.herd',
+                    'label' => 'inputs_farm_delivery.form.label.herd',
+                    'placeholder' => 'inputs_farm_delivery.form.placeholder.herd',
                     'choices' => $form->getData()->getHerds(),
                     'choice_label' => function (Herds $herds) {
                         $eggs = 0;
@@ -69,7 +69,7 @@ class InputsFarmDeliveryType extends AbstractType
                 ]);
 
                 $form->getParent()->add('eggsNumber', IntegerType::class, [
-                    'label' => 'eggs_inputs_details.form.label.eggs_number',
+                    'label' => 'inputs_farm_delivery.form.label.eggs_number',
                     'attr' => [
                         'class' => 'form-control'
                     ]
