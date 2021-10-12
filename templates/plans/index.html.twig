@@ -5,11 +5,22 @@
     <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for weekPlans in weeksPlans %}
             <div class="col">
-                <div class="card" style="width: 18rem;">
+                <div class="card border-info">
                     <div class="card-body">
                         <h5 class="card-title">{% trans %}plans.index.week{% endtrans %} {{ weekPlans.week }}</h5>
                         {% for dayPlans in weekPlans.weekPlans %}
-                            <h6 class="card-subtitle mb-2 text-muted">{{ dayPlans.date ? dayPlans.date|format_datetime(pattern='eeee', locale='pl') : '' }}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                {{ dayPlans.date ? dayPlans.date|format_datetime(pattern='eeee', locale='pl') : '' }}
+                            </h6>
+                            <dl class="row">
+                                <dt class="col-sm-6">Chicks</dt>
+                                <dd class="col-sm-6">{{ dayPlans.chicks|number_format(0, ',', ' ') }}</dd>
+                                <dt class="col-sm-6">Eggs delivery</dt>
+                                <dd class="col-sm-6"></dd>
+                                <dt class="col-sm-6">Eggs warehouse</dt>
+                                <dd class="col-sm-6"></dd>
+                            </dl>
+
                             <a href="#myModal{{ dayPlans.date|date('Y-m-d') }}" data-bs-toggle="modal"
                                data-bs-target="#myModal{{ dayPlans.date|date('Y-m-d') }}">{% trans %}plans.index.details{% endtrans %}</a>
 
@@ -20,7 +31,8 @@
                                 <div class="modal-dialog modal-fullscreen">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel">{{ dayPlans.date ? dayPlans.date|date('Y-m-d') : '' }}</h5>
+                                            <h5 class="modal-title"
+                                                id="staticBackdropLabel">{{ dayPlans.date ? dayPlans.date|date('Y-m-d') : '' }}</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
@@ -41,16 +53,16 @@
                                                 </thead>
                                                 <tbody>
                                                 {% for plans in dayPlans.dayPlans %}
-                                                <tr>
-                                                    <td>{{ plans.chickFarm.name }}</td>
-                                                    <td>{{ plans.chickNumber }}</td>
-                                                    <td>{{ plans.inputDate|date('Y-m-d') }}</td>
-                                                    <td>{{ plans.lightingDate|date('Y-m-d') }}</td>
-                                                    <td>{{ plans.transferDate|date('Y-m-d') }}</td>
-                                                    <td>{{ plans.deliveryDate|date('Y-m-d') }}</td>
-                                                    {% set eggsNumber = plans.chickNumber / (indicators.hatchability / 100) %}
-                                                    <td>{{ eggsNumber }}</td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>{{ plans.chickFarm.name }}</td>
+                                                        <td>{{ plans.chickNumber }}</td>
+                                                        <td>{{ plans.inputDate|date('Y-m-d') }}</td>
+                                                        <td>{{ plans.lightingDate|date('Y-m-d') }}</td>
+                                                        <td>{{ plans.transferDate|date('Y-m-d') }}</td>
+                                                        <td>{{ plans.deliveryDate|date('Y-m-d') }}</td>
+                                                        {% set eggsNumber = plans.chickNumber / (indicators.hatchability / 100) %}
+                                                        <td>{{ eggsNumber }}</td>
+                                                    </tr>
                                                 {% endfor %}
                                                 </tbody>
                                             </table>

@@ -24,6 +24,15 @@ class PlanController extends AbstractController
         return $plans;
     }
 
+    public function chicksInPlans($plans)
+    {
+        $chicks = 0;
+        foreach ($plans as $plan){
+            $chicks = $chicks + $plan->getChickNumber();
+        }
+        return$chicks;
+    }
+
     /**
      * @Route("/", name="plan_week", methods={"GET"})
      */
@@ -42,13 +51,15 @@ class PlanController extends AbstractController
             $daysPlans = [];
             for ($j = 0; $j < 7; $j++) {
                 $dayPlans = $this->inputsInDay($date);
-                array_push($daysPlans, ['date' => $date, 'dayPlans' => $dayPlans]);
+                $chicks = $this->chicksInPlans($dayPlans);
+                array_push($daysPlans, ['date' => $date, 'dayPlans' => $dayPlans, 'chicks' => $chicks]);
                 $date = clone $date;
                 $date->modify('+1 days');
             }
+
             array_push($weeksPlans, ['week' => $i, 'weekPlans' => $daysPlans]);
         }
-//        dd($indicators);
+
         return $this->render('plans/index.html.twig', [
             'weeksPlans' => $weeksPlans,
             'indicators' => $indicators
