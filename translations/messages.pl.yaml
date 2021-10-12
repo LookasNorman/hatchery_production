@@ -908,6 +908,22 @@ plan_input_farm:
     button:
       delete: Usuń planowaną fermę
     confirm: Jesteś pewień że chcesz usnąć fermę z planowanego nakładu?
+plans:
+  index:
+    day: Dzień
+    details: Szczegóły
+    modal:
+      close: Zamknij
+    table:
+      farm: Ferma
+      chickNumber: Ilość piskląt
+      inputDate: Data nakładu
+      lightingDate: Data świetlenia
+      transferDate: Data przekładu
+      selectionDate: Data wybierania
+      eggsForInput: Ilość jaj do nakładu
+    title: Plan roczny
+    week: Tydzień
 registration:
   form:
     button:
