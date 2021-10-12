@@ -851,8 +851,12 @@ menu:
     login: Zaloguj
     plan_delivery_chick:
       index: Zamówienia - planowane
+    plan_delivery_egg:
+      index: Dostawy jaj - planowane
     plan_indicator:
       index: Wskaźniki do planów
+    plan_week:
+      index: Plan tygodniowy
     plans:
       title: Plany
     registration: Nowy użytkownik

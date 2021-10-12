@@ -23,7 +23,7 @@ class PlanController extends AbstractController
     }
 
     /**
-     * @Route("/", methods={"GET"})
+     * @Route("/", name="plan_week", methods={"GET"})
      */
     public function index()
     {
