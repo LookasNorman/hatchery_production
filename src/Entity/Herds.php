@@ -67,10 +67,16 @@ class Herds
      */
     private $lighting;
 
+    /**
+     * @ORM\OneToMany(targetEntity=PlanDeliveryEgg::class, mappedBy="herd")
+     */
+    private $planDeliveryEggs;
+
     public function __construct()
     {
         $this->eggsDeliveries = new ArrayCollection();
         $this->deliveries = new ArrayCollection();
+        $this->planDeliveryEggs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -176,6 +182,36 @@ class Herds
     public function setLighting(?int $lighting): self
     {
         $this->lighting = $lighting;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PlanDeliveryEgg[]
+     */
+    public function getPlanDeliveryEggs(): Collection
+    {
+        return $this->planDeliveryEggs;
+    }
+
+    public function addPlanDeliveryEgg(PlanDeliveryEgg $planDeliveryEgg): self
+    {
+        if (!$this->planDeliveryEggs->contains($planDeliveryEgg)) {
+            $this->planDeliveryEggs[] = $planDeliveryEgg;
+            $planDeliveryEgg->setHerd($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanDeliveryEgg(PlanDeliveryEgg $planDeliveryEgg): self
+    {
+        if ($this->planDeliveryEggs->removeElement($planDeliveryEgg)) {
+            // set the owning side to null (unless already changed)
+            if ($planDeliveryEgg->getHerd() === $this) {
+                $planDeliveryEgg->setHerd(null);
+            }
+        }
 
         return $this;
     }

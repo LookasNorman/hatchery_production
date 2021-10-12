@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PlanDeliveryEgg index{% endblock %}
+
+{% block body %}
+    <h1>PlanDeliveryEgg index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>EggsNumber</th>
+                <th>DeliveryDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for plan_delivery_egg in plan_delivery_eggs %}
+            <tr>
+                <td>{{ plan_delivery_egg.id }}</td>
+                <td>{{ plan_delivery_egg.eggsNumber }}</td>
+                <td>{{ plan_delivery_egg.deliveryDate ? plan_delivery_egg.deliveryDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('plan_delivery_egg_show', {'id': plan_delivery_egg.id}) }}">show</a>
+                    <a href="{{ path('plan_delivery_egg_edit', {'id': plan_delivery_egg.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('plan_delivery_egg_new') }}">Create new</a>
+{% endblock %}

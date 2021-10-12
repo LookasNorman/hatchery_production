@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PlanDeliveryEgg{% endblock %}
+
+{% block body %}
+    <h1>Create new PlanDeliveryEgg</h1>
+
+    {{ include('plan_delivery_egg/_form.html.twig') }}
+
+    <a href="{{ path('plan_delivery_egg_index') }}">back to list</a>
+{% endblock %}
