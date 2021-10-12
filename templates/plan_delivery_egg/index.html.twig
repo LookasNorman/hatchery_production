@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Herd</th>
                 <th>EggsNumber</th>
                 <th>DeliveryDate</th>
                 <th>actions</th>
@@ -18,6 +19,7 @@
         {% for plan_delivery_egg in plan_delivery_eggs %}
             <tr>
                 <td>{{ plan_delivery_egg.id }}</td>
+                <td>{{ plan_delivery_egg.herd.name }}</td>
                 <td>{{ plan_delivery_egg.eggsNumber }}</td>
                 <td>{{ plan_delivery_egg.deliveryDate ? plan_delivery_egg.deliveryDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>

@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\BreedStandard;
+use App\Entity\Herds;
 use App\Entity\PlanDeliveryEgg;
+use App\Form\PlanDeliveryEggForHerdType;
 use App\Form\PlanDeliveryEggType;
 use App\Repository\PlanDeliveryEggRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -24,6 +27,71 @@ class PlanDeliveryEggController extends AbstractController
     {
         return $this->render('plan_delivery_egg/index.html.twig', [
             'plan_delivery_eggs' => $planDeliveryEggRepository->findAll(),
+        ]);
+    }
+
+    public function getBreedStandard($breed)
+    {
+        $breedStandardRepository = $this->getDoctrine()->getRepository(BreedStandard::class);
+        $breedStandard = $breedStandardRepository->findBy(['breed' => $breed]);
+        return $breedStandard;
+    }
+
+    public function addPlanForHerd($herd, $weekDay, $eggsNumber)
+    {
+        $planDeliveryEgg = new PlanDeliveryEgg();
+        $planDeliveryEgg->setHerd($herd);
+        $planDeliveryEgg->setDeliveryDate($weekDay);
+        $planDeliveryEgg->setEggsNumber($eggsNumber);
+
+        return $planDeliveryEgg;
+    }
+
+    /**
+     * @Route("/herd/{id}", name="plan_delivery_egg_herd", methods={"GET","POST"})
+     */
+    public function herd(Herds $herd, Request $request): Response
+    {
+        $form = $this->createForm(PlanDeliveryEggForHerdType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $breedStandard = $this->getBreedStandard($herd->getBreed());
+            $hatchingDate = $herd->getHatchingDate();
+            $days = $form['day']->getData();
+            foreach ($breedStandard as $breedStandardWeek) {
+                $weekNumber = $breedStandardWeek->getWeek() - 1;
+                $weekDay = clone $hatchingDate;
+                $weekDay->modify('+' . $weekNumber . 'week')->modify('+1 day');
+
+                if (count($days) > 1) {
+                    foreach ($days as $day) {
+                        $date = clone $weekDay;
+                        $date->modify('next ' . $day);
+                        $eggsNumber = $herd->getHensNumber() * $breedStandardWeek->getHatchingEggsWeek() / count($days);
+
+                        $planDeliveryEgg = $this->addPlanForHerd($herd, $date, $eggsNumber);
+                        $entityManager->persist($planDeliveryEgg);
+                    }
+                } else {
+                    $dayName = $days[0];
+                    $weekDay->modify('next ' . $dayName);
+                    $eggsNumber = $herd->getHensNumber() * $breedStandardWeek->getHatchingEggsWeek();
+
+                    $planDeliveryEgg = $this->addPlanForHerd($herd, $weekDay, $eggsNumber);
+
+                    $entityManager->persist($planDeliveryEgg);
+                }
+            }
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('plan_delivery_egg_index');
+        }
+
+        return $this->render('plan_delivery_egg/new.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
@@ -85,7 +153,7 @@ class PlanDeliveryEggController extends AbstractController
      */
     public function delete(Request $request, PlanDeliveryEgg $planDeliveryEgg): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$planDeliveryEgg->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $planDeliveryEgg->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($planDeliveryEgg);
             $entityManager->flush();

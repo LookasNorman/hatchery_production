@@ -875,6 +875,15 @@ plan_delivery_chick:
       delivery_date: Data dostawy
   placeholder:
     chick_farm: Wybierz fermę z listy
+plan_delivery_egg_for_herd:
+  form:
+    monday: Poniedziałek
+    tuesday: Wtorek
+    wednesday: Środa
+    thursday: Czwartek
+    friday: Piątek
+    saturday: Sobota
+    sunday: Niedziela
 plan_input:
   form:
     button:
