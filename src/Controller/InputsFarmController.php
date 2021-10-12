@@ -6,6 +6,7 @@ use App\Entity\Inputs;
 use App\Entity\InputsFarm;
 use App\Form\InputsFarmType;
 use App\Repository\InputsFarmRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/inputs_farm")
+ * @IsGranted("ROLE_USER")
  */
 class InputsFarmController extends AbstractController
 {

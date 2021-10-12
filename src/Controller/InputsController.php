@@ -10,8 +10,6 @@ use App\Entity\Selections;
 use App\Entity\Transfers;
 use App\Form\InputsType;
 use App\Repository\DeliveryRepository;
-use App\Repository\DetailsDeliveryRepository;
-use App\Repository\DetailsRepository;
 use App\Repository\HerdsRepository;
 use App\Repository\InputsFarmDeliveryRepository;
 use App\Repository\InputsFarmRepository;

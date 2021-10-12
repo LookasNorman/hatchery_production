@@ -6,6 +6,7 @@ use App\Entity\PlanDeliveryChick;
 use App\Form\PlanDeliveryChickType;
 use App\Repository\PlanDeliveryChickRepository;
 use App\Repository\PlanIndicatorsRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/plan_delivery_chick")
+ * @IsGranted("ROLE_USER")
  */
 class PlanDeliveryChickController extends AbstractController
 {

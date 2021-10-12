@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\PlanDeliveryEgg;
 use App\Form\PlanDeliveryEggType;
 use App\Repository\PlanDeliveryEggRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/plan_delivery_egg")
+ * @IsGranted("ROLE_USER")
  */
 class PlanDeliveryEggController extends AbstractController
 {

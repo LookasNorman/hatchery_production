@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\PlanIndicators;
 use App\Form\PlanIndicatorsType;
 use App\Repository\PlanIndicatorsRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/plan_indicators")
+ * @IsGranted("ROLE_USER")
  */
 class PlanIndicatorsController extends AbstractController
 {

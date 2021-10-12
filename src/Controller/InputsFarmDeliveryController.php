@@ -7,6 +7,7 @@ use App\Entity\InputsFarmDelivery;
 use App\Form\InputsFarmDeliveryType;
 use App\Repository\DeliveryRepository;
 use App\Repository\InputsFarmDeliveryRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/inputs_farm_delivery")
+ * @IsGranted("ROLE_USER")
  */
 class InputsFarmDeliveryController extends AbstractController
 {

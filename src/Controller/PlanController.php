@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanIndicators;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("plans")
+ * @IsGranted("ROLE_USER")
  */
 class PlanController extends AbstractController
 {
