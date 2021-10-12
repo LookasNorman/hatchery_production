@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BreedStandard index{% endblock %}
+
+{% block body %}
+    <h1>BreedStandard index</h1>
+    <a href="{{ path('breed_standard_new') }}">Create new</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Breed</th>
+                <th>HatchingEggsWeek</th>
+                <th>Week</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for breed_standard in breed_standards %}
+            <tr>
+                <td>{{ breed_standard.id }}</td>
+                <td>{{ breed_standard.breed.name }}</td>
+                <td>{{ breed_standard.hatchingEggsWeek|number_format(1, ',', ' ') }}</td>
+                <td>{{ breed_standard.week }}</td>
+                <td>
+                    <a href="{{ path('breed_standard_show', {'id': breed_standard.id}) }}">show</a>
+                    <a href="{{ path('breed_standard_edit', {'id': breed_standard.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

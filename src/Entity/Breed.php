@@ -54,9 +54,15 @@ class Breed
      */
     private $lighting;
 
+    /**
+     * @ORM\OneToMany(targetEntity=BreedStandard::class, mappedBy="breed")
+     */
+    private $breedStandards;
+
     public function __construct()
     {
         $this->herds = new ArrayCollection();
+        $this->breedStandards = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,6 +132,36 @@ class Breed
     public function setLighting(?int $lighting): self
     {
         $this->lighting = $lighting;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BreedStandard[]
+     */
+    public function getBreedStandards(): Collection
+    {
+        return $this->breedStandards;
+    }
+
+    public function addBreedStandard(BreedStandard $breedStandard): self
+    {
+        if (!$this->breedStandards->contains($breedStandard)) {
+            $this->breedStandards[] = $breedStandard;
+            $breedStandard->setBreed($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBreedStandard(BreedStandard $breedStandard): self
+    {
+        if ($this->breedStandards->removeElement($breedStandard)) {
+            // set the owning side to null (unless already changed)
+            if ($breedStandard->getBreed() === $this) {
+                $breedStandard->setBreed(null);
+            }
+        }
 
         return $this;
     }

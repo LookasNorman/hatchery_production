@@ -8,14 +8,6 @@
     </div>
 </div>
 <div class="form-group">
-    <label>{{ form_label(form.hatchingDate) }}</label>
-    {{ form_widget(form.hatchingDate) }}
-    <small>{{ form_help(form.hatchingDate) }}</small>
-    <div class="form-text text-danger">
-        {{ form_errors(form.hatchingDate) }}
-    </div>
-</div>
-<div class="form-group">
     <label>{{ form_label(form.breeder) }}</label>
     {{ form_widget(form.breeder) }}
     <small>{{ form_help(form.breeder) }}</small>
@@ -29,6 +21,22 @@
     <small>{{ form_help(form.breed) }}</small>
     <div class="form-text text-danger">
         {{ form_errors(form.breed) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.hensNumber) }}</label>
+    {{ form_widget(form.hensNumber) }}
+    <small>{{ form_help(form.hensNumber) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.hensNumber) }}
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ form_label(form.hatchingDate) }}</label>
+    {{ form_widget(form.hatchingDate) }}
+    <small>{{ form_help(form.hatchingDate) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.hatchingDate) }}
     </div>
 </div>
 <div class="form-group">

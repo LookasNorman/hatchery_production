@@ -11,6 +11,9 @@
             {% trans %}herds.index.table.hatching_date{% endtrans %}
         </th>
         <th>
+            {% trans %}herds.index.table.hens_number{% endtrans %}
+        </th>
+        <th>
             {% trans %}herds.index.table.breed{% endtrans %}
         </th>
         {% if breeder is not defined %}
@@ -31,6 +34,7 @@
             <td>{{ herd.id }}</td>
             <td>{{ herd.name }}</td>
             <td>{{ herd.hatchingDate ? herd.hatchingDate|date('Y-m-d') : '' }}</td>
+            <td>{{ herd.hensNumber }}</td>
             <td>
                 <a href="{{ path('breed_show', {'id': herd.breed.id}) }}">
                     {{ herd.breed.name }} {{ herd.breed.type }}

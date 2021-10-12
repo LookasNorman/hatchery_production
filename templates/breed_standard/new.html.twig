@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New BreedStandard{% endblock %}
+
+{% block body %}
+    <h1>Create new BreedStandard</h1>
+
+    {{ include('breed_standard/_form.html.twig') }}
+
+    <a href="{{ path('breed_standard_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BreedStandard{% endblock %}
+
+{% block body %}
+    <h1>BreedStandard</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ breed_standard.id }}</td>
+            </tr>
+            <tr>
+                <th>HatchingEggsWeek</th>
+                <td>{{ breed_standard.hatchingEggsWeek }}</td>
+            </tr>
+            <tr>
+                <th>Week</th>
+                <td>{{ breed_standard.week }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('breed_standard_index') }}">back to list</a>
+
+    <a href="{{ path('breed_standard_edit', {'id': breed_standard.id}) }}">edit</a>
+
+    {{ include('breed_standard/_delete_form.html.twig') }}
+{% endblock %}

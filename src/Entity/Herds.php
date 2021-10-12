@@ -72,6 +72,11 @@ class Herds
      */
     private $planDeliveryEggs;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $hensNumber;
+
     public function __construct()
     {
         $this->eggsDeliveries = new ArrayCollection();
@@ -212,6 +217,18 @@ class Herds
                 $planDeliveryEgg->setHerd(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getHensNumber(): ?int
+    {
+        return $this->hensNumber;
+    }
+
+    public function setHensNumber(?int $hensNumber): self
+    {
+        $this->hensNumber = $hensNumber;
 
         return $this;
     }

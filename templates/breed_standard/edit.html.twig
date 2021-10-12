@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit BreedStandard{% endblock %}
+
+{% block body %}
+    <h1>Edit BreedStandard</h1>
+
+    {{ include('breed_standard/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('breed_standard_index') }}">back to list</a>
+
+    {{ include('breed_standard/_delete_form.html.twig') }}
+{% endblock %}

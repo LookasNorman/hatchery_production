@@ -1,4 +1,3 @@
-Thursday: Czwartek
 form:
   breed:
   chicks_recipient:
@@ -649,6 +648,7 @@ herds:
       breed: Rasa
       breeder: Hodowca
       hatching_date: Data wylęgu
+      hensNumber: Ilość kur
       lighting: Świetlenie
       name: Nazwa stada
   edit:
@@ -669,20 +669,22 @@ herds:
         show: Szczegóły
         edit: Edycja
   index:
-    title: Lista stad
+    button:
+      new: Utwórz stado
     table:
-      id: Indeks
-      name: Nazwa
-      hatching_date: Data wylęgu
-      breed: Rasa
-      breeders: Dostawca jaj / hodowca
       actions: Akcje
-      no_found: Brak stad
       badge:
         show: Szczegóły
         edit: Edycja
-    button:
-      new: Utwórz stado
+      breed: Rasa
+      breeders: Dostawca jaj / hodowca
+      hatching_date: Data wylęgu
+      hens_number: Ilość kur
+      id: Indeks
+      lighting: Korekta świetlenia
+      name: Nazwa
+      no_found: Brak stad
+    title: Lista stad
   new:
     title: Dodawanie nowego stada
     button:
@@ -812,6 +814,9 @@ menu:
   menu_top:
     breed:
       index: Rasy kur
+      title: Rasy
+    breed_standard:
+      index: Standardy list
     car:
       index: Samochody
     chicks_recipient:

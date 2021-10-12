@@ -25,6 +25,12 @@ class HerdsType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+            ->add('hensNumber', IntegerType::class, [
+                'label' => 'herds.form.label.hensNumber',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('lighting', IntegerType::class, [
                 'label' => 'herds.form.label.lighting',
                 'attr' => [
