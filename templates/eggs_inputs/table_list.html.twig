@@ -16,9 +16,9 @@
                 <table class="table table-sm table-bordered table-hover">
                     <thead class="bg-success text-white">
                     <tr>
-                        <th>{% trans %}eggs_inputs.table_list.table_detail.chick_number{% endtrans %}</th>
-                        <th>{% trans %}eggs_inputs.table_list.table_detail.chick_recipient{% endtrans %}</th>
-                        <th>{% trans %}eggs_inputs.table_list.table_detail.deliveries{% endtrans %}</th>
+                        <th class="col col-lg-2">{% trans %}eggs_inputs.table_list.table_detail.chick_number{% endtrans %}</th>
+                        <th class="col-md-auto">{% trans %}eggs_inputs.table_list.table_detail.chick_recipient{% endtrans %}</th>
+                        <th class="col col-lg-2">{% trans %}eggs_inputs.table_list.table_detail.deliveries{% endtrans %}</th>
                     </tr>
                     </thead>
                     {% for inputFarm in eggs_input.inputsFarms %}
