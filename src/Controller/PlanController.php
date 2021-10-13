@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PlanDeliveryChick;
+use App\Entity\PlanDeliveryEgg;
 use App\Entity\PlanIndicators;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,10 +28,29 @@ class PlanController extends AbstractController
     public function chicksInPlans($plans)
     {
         $chicks = 0;
-        foreach ($plans as $plan){
+        foreach ($plans as $plan) {
             $chicks = $chicks + $plan->getChickNumber();
         }
-        return$chicks;
+        return $chicks;
+    }
+
+    public function deliveryInDay($date)
+    {
+        $planeDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
+        $end = clone $date;
+        $end->modify('+1 day -1 second');
+        $deliveries = $planeDeliveryEggRepository->planDeliveryInDay($date, $end);
+
+        return $deliveries;
+    }
+
+    public function eggsInDeliveries($deliveries)
+    {
+        $eggs = 0;
+        foreach ($deliveries as $delivery) {
+            $eggs = $eggs + $delivery->getEggsNumber();
+        }
+        return $eggs;
     }
 
     /**
@@ -52,11 +72,18 @@ class PlanController extends AbstractController
             for ($j = 0; $j < 7; $j++) {
                 $dayPlans = $this->inputsInDay($date);
                 $chicks = $this->chicksInPlans($dayPlans);
-                array_push($daysPlans, ['date' => $date, 'dayPlans' => $dayPlans, 'chicks' => $chicks]);
+                $dayDeliveries = $this->deliveryInDay($date);
+                $eggs = $this->eggsInDeliveries($dayDeliveries);
+                array_push($daysPlans, [
+                    'date' => $date,
+                    'dayPlans' => $dayPlans,
+                    'chicks' => $chicks,
+                    'dayDeliveries' => $dayDeliveries,
+                    'eggs' => $eggs
+                ]);
                 $date = clone $date;
                 $date->modify('+1 days');
             }
-
             array_push($weeksPlans, ['week' => $i, 'weekPlans' => $daysPlans]);
         }
 

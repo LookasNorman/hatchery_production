@@ -19,22 +19,15 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
         parent::__construct($registry, PlanDeliveryEgg::class);
     }
 
-    // /**
-    //  * @return PlanDeliveryEgg[] Returns an array of PlanDeliveryEgg objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function planDeliveryInDay($start, $end)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('p.deliveryDate BETWEEN :start AND :end')
+            ->setParameters(['start' => $start, 'end' => $end])
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?PlanDeliveryEgg
