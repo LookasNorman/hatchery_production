@@ -674,8 +674,9 @@ herds:
     table:
       actions: Akcje
       badge:
-        show: Szczegóły
         edit: Edycja
+        plan: Wygeneruj plan dostaw
+        show: Szczegóły
       breed: Rasa
       breeders: Dostawca jaj / hodowca
       hatching_date: Data wylęgu

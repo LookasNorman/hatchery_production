@@ -54,18 +54,18 @@ class PlanController extends AbstractController
         return $eggs;
     }
 
-    public function eggsInWarehouse($eggsOnWarehouse, $chicks, $eggs)
+    public function eggsInWarehouse($eggsOnWarehouse, $chicks)
     {
         $planIndicatorsRepository = $this->getDoctrine()->getRepository(PlanIndicators::class);
         $planIndicators = $planIndicatorsRepository->findOneBy([]);
         $hatchability = $planIndicators->getHatchability();
         $eggsToProduction = $chicks / ($hatchability / 100);
-        if($eggsOnWarehouse == 0){
+        if ($eggsOnWarehouse == 0) {
             $deliveryRepository = $this->getDoctrine()->getRepository(Delivery::class);
             $eggsOnWarehouse = $deliveryRepository->eggsInWarehouse()[0]['eggsInWarehouse'];
         }
 
-        return $eggsOnWarehouse + $eggs - $eggsToProduction;
+        return $eggsOnWarehouse - $eggsToProduction;
     }
 
     /**
@@ -91,16 +91,18 @@ class PlanController extends AbstractController
                 $chicks = $this->chicksInPlans($dayPlans);
                 $dayDeliveries = $this->deliveryInDay($date);
                 $eggs = $this->eggsInDeliveries($dayDeliveries);
-                if($date >= $now){
-                    $eggsOnWarehouse = $this->eggsInWarehouse($eggsOnWarehouse, $chicks, $eggs);
+                if ($date >= $now) {
+                    $eggsOnWarehouse = $this->eggsInWarehouse($eggsOnWarehouse, $chicks);
                     array_push($daysPlans, [
-                    'date' => $date,
-                    'dayPlans' => $dayPlans,
-                    'chicks' => $chicks,
-                    'dayDeliveries' => $dayDeliveries,
-                    'eggs' => $eggs,
-                    'eggsOnWarehouse' => $eggsOnWarehouse
-                ]);}
+                        'date' => $date,
+                        'dayPlans' => $dayPlans,
+                        'chicks' => $chicks,
+                        'dayDeliveries' => $dayDeliveries,
+                        'eggs' => $eggs,
+                        'eggsOnWarehouse' => $eggsOnWarehouse
+                    ]);
+                    $eggsOnWarehouse = $eggsOnWarehouse + $eggs;
+                }
                 $date = clone $date;
                 $date->modify('+1 days');
             }
