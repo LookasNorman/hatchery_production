@@ -13,11 +13,11 @@
                                 {{ dayPlans.date ? dayPlans.date|format_datetime(pattern='eeee', locale='pl') : '' }}
                             </h6>
                             <dl class="row">
-                                <dt class="col-sm-6">Chicks</dt>
+                                <dt class="col-sm-6">{% trans %}plans.index.chicks{% endtrans %}</dt>
                                 <dd class="col-sm-6">{{ dayPlans.chicks|number_format(0, ',', ' ') }}</dd>
-                                <dt class="col-sm-6">Eggs delivery</dt>
+                                <dt class="col-sm-6">{% trans %}plans.index.eggs_delivery{% endtrans %}</dt>
                                 <dd class="col-sm-6">{{ dayPlans.eggs|number_format(0, ',', ' ') }}</dd>
-                                <dt class="col-sm-6">Eggs warehouse</dt>
+                                <dt class="col-sm-6">{% trans %}plans.index.eggs_warehouse{% endtrans %}</dt>
                                 <dd class="col-sm-6">{{ dayPlans.eggsOnWarehouse|number_format(0, ',', ' ') }}</dd>
                             </dl>
 

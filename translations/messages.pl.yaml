@@ -929,8 +929,11 @@ plan_input_farm:
     confirm: Jesteś pewień że chcesz usnąć fermę z planowanego nakładu?
 plans:
   index:
+    chicks: Ilość piskląt
     day: Dzień
     details: Szczegóły
+    eggs_delivery: Dostarczonych jaj
+    eggs_warehouse: Stan jaj
     modal:
       close: Zamknij
     table:
