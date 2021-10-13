@@ -68,7 +68,7 @@ class Herds
     private $lighting;
 
     /**
-     * @ORM\OneToMany(targetEntity=PlanDeliveryEgg::class, mappedBy="herd")
+     * @ORM\OneToMany(targetEntity=PlanDeliveryEgg::class, mappedBy="herd", orphanRemoval=true)
      */
     private $planDeliveryEggs;
 
