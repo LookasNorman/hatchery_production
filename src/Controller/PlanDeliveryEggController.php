@@ -47,11 +47,25 @@ class PlanDeliveryEggController extends AbstractController
         return $planDeliveryEgg;
     }
 
+    public function checkPlanForHerd($herd)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $planDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
+        $herdPlans = $planDeliveryEggRepository->findBy(['herd' => $herd]);
+        if (!empty($herdPlans)) {
+            foreach ($herdPlans as $herdPlan) {
+                $entityManager->remove($herdPlan);
+            }
+        }
+    }
+
     /**
      * @Route("/herd/{id}", name="plan_delivery_egg_herd", methods={"GET","POST"})
      */
     public function herd(Herds $herd, Request $request): Response
     {
+        $this->checkPlanForHerd($herd);
+
         $form = $this->createForm(PlanDeliveryEggForHerdType::class);
         $form->handleRequest($request);
 
@@ -87,7 +101,7 @@ class PlanDeliveryEggController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('plan_delivery_egg_index');
+            return $this->redirectToRoute('herd_delivery_plan_week', ['id' => $herd->getId()]);
         }
 
         return $this->render('plan_delivery_egg/new.html.twig', [
