@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Delivery;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanDeliveryEgg;
 use App\Entity\PlanIndicators;
@@ -53,6 +54,20 @@ class PlanController extends AbstractController
         return $eggs;
     }
 
+    public function eggsInWarehouse($eggsOnWarehouse, $chicks, $eggs)
+    {
+        $planIndicatorsRepository = $this->getDoctrine()->getRepository(PlanIndicators::class);
+        $planIndicators = $planIndicatorsRepository->findOneBy([]);
+        $hatchability = $planIndicators->getHatchability();
+        $eggsToProduction = $chicks / ($hatchability / 100);
+        if($eggsOnWarehouse == 0){
+            $deliveryRepository = $this->getDoctrine()->getRepository(Delivery::class);
+            $eggsOnWarehouse = $deliveryRepository->eggsInWarehouse()[0]['eggsInWarehouse'];
+        }
+
+        return $eggsOnWarehouse + $eggs - $eggsToProduction;
+    }
+
     /**
      * @Route("/", name="plan_week", methods={"GET"})
      */
@@ -62,6 +77,7 @@ class PlanController extends AbstractController
         $indicators = $indicatorsRepository->findOneBy([]);
         $now = new \DateTime('today midnight');
         $nowWeek = (int)$now->format('W');
+        $eggsOnWarehouse = 0;
 
         $weeksPlans = [];
         for ($i = $nowWeek; $i <= 52; $i++) {
@@ -74,12 +90,14 @@ class PlanController extends AbstractController
                 $chicks = $this->chicksInPlans($dayPlans);
                 $dayDeliveries = $this->deliveryInDay($date);
                 $eggs = $this->eggsInDeliveries($dayDeliveries);
+                $eggsOnWarehouse = $this->eggsInWarehouse($eggsOnWarehouse, $chicks, $eggs);
                 array_push($daysPlans, [
                     'date' => $date,
                     'dayPlans' => $dayPlans,
                     'chicks' => $chicks,
                     'dayDeliveries' => $dayDeliveries,
-                    'eggs' => $eggs
+                    'eggs' => $eggs,
+                    'eggsOnWarehouse' => $eggsOnWarehouse
                 ]);
                 $date = clone $date;
                 $date->modify('+1 days');

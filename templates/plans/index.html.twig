@@ -18,7 +18,7 @@
                                 <dt class="col-sm-6">Eggs delivery</dt>
                                 <dd class="col-sm-6">{{ dayPlans.eggs|number_format(0, ',', ' ') }}</dd>
                                 <dt class="col-sm-6">Eggs warehouse</dt>
-                                <dd class="col-sm-6"></dd>
+                                <dd class="col-sm-6">{{ dayPlans.eggsOnWarehouse|number_format(0, ',', ' ') }}</dd>
                             </dl>
 
                             <a href="#myModal{{ dayPlans.date|date('Y-m-d') }}" data-bs-toggle="modal"
