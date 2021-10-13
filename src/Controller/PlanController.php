@@ -86,19 +86,21 @@ class PlanController extends AbstractController
             $date = clone $monday;
             $daysPlans = [];
             for ($j = 0; $j < 7; $j++) {
+
                 $dayPlans = $this->inputsInDay($date);
                 $chicks = $this->chicksInPlans($dayPlans);
                 $dayDeliveries = $this->deliveryInDay($date);
                 $eggs = $this->eggsInDeliveries($dayDeliveries);
-                $eggsOnWarehouse = $this->eggsInWarehouse($eggsOnWarehouse, $chicks, $eggs);
-                array_push($daysPlans, [
+                if($date >= $now){
+                    $eggsOnWarehouse = $this->eggsInWarehouse($eggsOnWarehouse, $chicks, $eggs);
+                    array_push($daysPlans, [
                     'date' => $date,
                     'dayPlans' => $dayPlans,
                     'chicks' => $chicks,
                     'dayDeliveries' => $dayDeliveries,
                     'eggs' => $eggs,
                     'eggsOnWarehouse' => $eggsOnWarehouse
-                ]);
+                ]);}
                 $date = clone $date;
                 $date->modify('+1 days');
             }
