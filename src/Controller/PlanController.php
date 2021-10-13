@@ -114,25 +114,22 @@ class PlanController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/", name="plan_week", methods={"GET"})
-     */
-    public function index()
+    public function yearIndex($now)
     {
-        $indicatorsRepository = $this->getDoctrine()->getRepository(PlanIndicators::class);
-        $indicators = $indicatorsRepository->findOneBy([]);
-        $now = new \DateTime('today midnight');
+        if ($now->format('d') == 1 and $now->format('M') == 'Jan') {
+            $now->modify('Monday next week');
+        }
         $nowWeek = (int)$now->format('W');
+        $year = (int)$now->format('Y');
         $eggsOnWarehouse = 0;
 
         $weeksPlans = [];
         for ($i = $nowWeek; $i <= 52; $i++) {
             $monday = new \DateTime('midnight');
-            $monday->setISODate(2021, $i);
+            $monday->setISODate($year, $i);
             $date = clone $monday;
             $daysPlans = [];
             for ($j = 0; $j < 7; $j++) {
-
                 $dayPlans = $this->inputsInDay($date);
                 $chicks = $this->chicksInPlans($dayPlans);
                 $dayDeliveries = $this->deliveryInDay($date);
@@ -155,9 +152,41 @@ class PlanController extends AbstractController
             array_push($weeksPlans, ['week' => $i, 'weekPlans' => $daysPlans]);
         }
 
+        return $weeksPlans;
+    }
+
+    /**
+     * @Route("/", name="plan_week", methods={"GET"})
+     */
+    public function index()
+    {
+        $indicatorsRepository = $this->getDoctrine()->getRepository(PlanIndicators::class);
+        $indicators = $indicatorsRepository->findOneBy([]);
+
+        $now = new \DateTime('today midnight');
+        $thisYear = (int)$now->format('Y');
+
+        $next = clone $now;
+        $next->modify('first day of january next year');
+        $nextYear = (int)$next->format('Y');
+
+        $second = clone $next;
+        $second->modify('first day of january next year');
+        $secondYear = $second->format('Y');
+
+        $weeksPlans = $this->yearIndex($now);
+        $weeksPlansNextYear = $this->yearIndex($next);
+        $weeksPlansSecondYear = $this->yearIndex($second);
+
+        $yearsPlans = [
+            $thisYear => $weeksPlans,
+            $nextYear => $weeksPlansNextYear,
+            $secondYear => $weeksPlansSecondYear
+        ];;
+
         return $this->render('plans/index.html.twig', [
-            'weeksPlans' => $weeksPlans,
-            'indicators' => $indicators
+            'indicators' => $indicators,
+            'yearsPlans' => $yearsPlans
         ]);
     }
 }
