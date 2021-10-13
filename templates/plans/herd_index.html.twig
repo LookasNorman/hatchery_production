@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{% trans %}plans.index.title{% endtrans %}: {{ herd.name }}</h1>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for weekPlans in weeksPlans %}
+            <div class="col">
+                <div class="card-header text-white bg-info">{% trans %}plans.index.week{% endtrans %} {{ weekPlans.week }}</div>
+                <div class="card border-info">
+                    <div class="card-body">
+                        {% for dayPlans in weekPlans.weekPlans %}
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                {{ dayPlans.date ? dayPlans.date|format_datetime(pattern='eeee', locale='pl') : '' }}
+                            </h6>
+                            <dl class="row">
+                                <dt class="col-sm-6">{% trans %}plans.index.eggs_delivery{% endtrans %}</dt>
+                                <dd class="col-sm-6">{{ dayPlans.eggs|number_format(0, ',', ' ') }}</dd>
+                            </dl>
+                            <hr/>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

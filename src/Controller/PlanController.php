@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Delivery;
+use App\Entity\Herds;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanDeliveryEgg;
 use App\Entity\PlanIndicators;
@@ -45,6 +46,16 @@ class PlanController extends AbstractController
         return $deliveries;
     }
 
+    public function herdDeliveryInDay($date, $herd)
+    {
+        $planeDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
+        $end = clone $date;
+        $end->modify('+1 day -1 second');
+        $deliveries = $planeDeliveryEggRepository->herdPlanDeliveryInDay($date, $end, $herd);
+
+        return $deliveries;
+    }
+
     public function eggsInDeliveries($deliveries)
     {
         $eggs = 0;
@@ -66,6 +77,41 @@ class PlanController extends AbstractController
         }
 
         return $eggsOnWarehouse - $eggsToProduction;
+    }
+
+    /**
+     * @Route("/herd_delivery/{id}", name="herd_delivery_plan_week", methods={"GET"})
+     */
+    public function herdDeliveryIndex(Herds $herd)
+    {
+        $now = new \DateTime('today midnight');
+        $nowWeek = (int)$now->format('W');
+
+        $weeksPlans = [];
+        for ($i = $nowWeek; $i <= 52; $i++) {
+            $monday = new \DateTime('midnight');
+            $monday->setISODate(2021, $i);
+            $date = clone $monday;
+            $daysPlans = [];
+            for ($j = 0; $j < 7; $j++) {
+                $dayDeliveries = $this->herdDeliveryInDay($date, $herd);
+                $eggs = $this->eggsInDeliveries($dayDeliveries);
+                if ($date >= $now) {
+                    array_push($daysPlans, [
+                        'date' => $date,
+                        'dayDeliveries' => $dayDeliveries,
+                        'eggs' => $eggs,
+                    ]);
+                }
+                $date = clone $date;
+                $date->modify('+1 days');
+            }
+            array_push($weeksPlans, ['week' => $i, 'weekPlans' => $daysPlans]);
+        }
+        return $this->render('plans/herd_index.html.twig', [
+            'weeksPlans' => $weeksPlans,
+            'herd' => $herd
+        ]);
     }
 
     /**

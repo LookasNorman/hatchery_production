@@ -56,8 +56,10 @@
                 {{ include('layout/buttons/list_actions.html.twig',
                     {pathLink: path('herds_show', {'id': herd.id}), text: 'herds.index.table.badge.show' }) }}
                 {{ include('layout/buttons/list_actions.html.twig',
-                    {pathLink: path('plan_delivery_egg_herd', {'id': herd.id}), text: 'herds.index.table.badge.plan' }) }}
+                    {pathLink: path('herd_delivery_plan_week', {'id': herd.id}), text: 'herds.index.table.badge.show_plan' }) }}
                 {% if is_granted('ROLE_ADMIN') %}
+                    {{ include('layout/buttons/list_actions.html.twig',
+                        {pathLink: path('plan_delivery_egg_herd', {'id': herd.id}), text: 'herds.index.table.badge.plan' }) }}
                     {{ include('layout/buttons/list_actions.html.twig',
                         {pathLink: path('herds_edit', {'id': herd.id}), text: 'herds.index.table.badge.edit' }) }}
                 {% endif %}

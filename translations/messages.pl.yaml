@@ -677,6 +677,7 @@ herds:
         edit: Edycja
         plan: Wygeneruj plan dostaw
         show: Szczegóły
+        show_plan: Pokaż plan dostaw
       breed: Rasa
       breeders: Dostawca jaj / hodowca
       hatching_date: Data wylęgu
