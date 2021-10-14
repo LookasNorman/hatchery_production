@@ -19,6 +19,19 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
         parent::__construct($registry, InputsFarmDelivery::class);
     }
 
+    public function eggsBreedProduction($breed)
+    {
+        return $this->createQueryBuilder('ifd')
+            ->select('SUM(ifd.eggsNumber)')
+            ->join('ifd.delivery', 'd')
+            ->join('d.herd', 'h')
+            ->andWhere('h.breed = :breed')
+            ->setParameters(['breed' => $breed])
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
     public function inputFarmDeliveryForLighting($herd, $input)
     {
         return $this->createQueryBuilder('ifd')

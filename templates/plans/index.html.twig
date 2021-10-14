@@ -2,36 +2,36 @@
 
 {% block body %}
     <h1>{% trans %}plans.index.title{% endtrans %}</h1>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        {% for key, weeksPlans in yearsPlans %}
+    <ul class="nav nav-tabs" id="breedTab" role="tablist">
+        {% for key, breedPlans in breedsPlans %}
             <li class="nav-item" role="presentation">
                 {% if loop.first %}
-                    <button class="nav-link active" id="year-tab_{{ key }}" data-bs-toggle="tab"
-                            data-bs-target="#year_{{ key }}"
+                    <button class="nav-link active" id="breed-tab_{{ key }}" data-bs-toggle="tab"
+                            data-bs-target="#breed_{{ key }}"
                             type="button"
-                            role="tab" aria-controls="year_{{ key }}" aria-selected="true">{{ key }}
+                            role="tab" aria-controls="breed_{{ key }}" aria-selected="true">{{ breedPlans.breed.name }}
                     </button>
                 {% else %}
-                    <button class="nav-link" id="year-tab_{{ key }}" data-bs-toggle="tab"
-                            data-bs-target="#year_{{ key }}"
+                    <button class="nav-link" id="breed-tab_{{ key }}" data-bs-toggle="tab"
+                            data-bs-target="#breed_{{ key }}"
                             type="button"
-                            role="tab" aria-controls="year_{{ key }}" aria-selected="true">{{ key }}
+                            role="tab" aria-controls="breed_{{ key }}" aria-selected="true">{{ breedPlans.breed.name }}
                     </button>
                 {% endif %}
             </li>
         {% endfor %}
     </ul>
-    <div class="tab-content" id="myTabContent">
-        {% for key, weeksPlans in yearsPlans %}
+    <div class="tab-content" id="breedTabContent">
+        {% for key, breedPlans in breedsPlans %}
             {% if loop.first %}
-                <div class="tab-pane fade show active" id="year_{{ key }}" role="tabpanel"
-                     aria-labelledby="year-tab_{{ key }}">
-                    {% include('plans/year.html.twig') %}
+                <div class="tab-pane fade show active" id="breed_{{ key }}" role="tabpanel"
+                     aria-labelledby="breed-tab_{{ key }}">
+                    {% include('plans/breed.html.twig') %}
                 </div>
             {% else %}
-                <div class="tab-pane fade show" id="year_{{ key }}" role="tabpanel"
-                     aria-labelledby="year-tab_{{ key }}">
-                    {% include('plans/year.html.twig') %}
+                <div class="tab-pane fade show" id="breed_{{ key }}" role="tabpanel"
+                     aria-labelledby="breed-tab_{{ key }}">
+                    {% include('plans/breed.html.twig') %}
                 </div>
 
             {% endif %}

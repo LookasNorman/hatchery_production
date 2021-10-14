@@ -1,0 +1,35 @@
+<ul class="nav nav-tabs" id="yearTab" role="tablist">
+    {% for key, weeksPlans in breedPlans.yearsPlans %}
+        <li class="nav-item" role="presentation">
+            {% if loop.first %}
+                <button class="nav-link active" id="year-tab_{{ key }}{{ breedPlans.breed.id }}" data-bs-toggle="tab"
+                        data-bs-target="#year_{{ key }}{{ breedPlans.breed.id }}"
+                        type="button"
+                        role="tab" aria-controls="year_{{ key }}" aria-selected="true">{{ key }}
+                </button>
+            {% else %}
+                <button class="nav-link" id="year-tab_{{ key }}" data-bs-toggle="tab"
+                        data-bs-target="#year_{{ key }}{{ breedPlans.breed.id }}"
+                        type="button"
+                        role="tab" aria-controls="year_{{ key }}{{ breedPlans.breed.id }}" aria-selected="true">{{ key }}
+                </button>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+<div class="tab-content" id="yearTabContent">
+    {% for key, weeksPlans in breedPlans.yearsPlans %}
+        {% if loop.first %}
+            <div class="tab-pane fade show active" id="year_{{ key }}{{ breedPlans.breed.id }}" role="tabpanel"
+                 aria-labelledby="year-tab_{{ key }}{{ breedPlans.breed.id }}">
+                {% include('plans/year.html.twig') %}
+            </div>
+        {% else %}
+            <div class="tab-pane fade show" id="year_{{ key }}{{ breedPlans.breed.id }}" role="tabpanel"
+                 aria-labelledby="year-tab_{{ key }}{{ breedPlans.breed.id }}">
+                {% include('plans/year.html.twig') %}
+            </div>
+
+        {% endif %}
+    {% endfor %}
+</div>

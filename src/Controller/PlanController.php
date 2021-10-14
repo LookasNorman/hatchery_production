@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Breed;
 use App\Entity\Delivery;
 use App\Entity\Herds;
+use App\Entity\InputsFarmDelivery;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanDeliveryEgg;
 use App\Entity\PlanIndicators;
@@ -17,12 +19,22 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PlanController extends AbstractController
 {
-    public function inputsInDay($date)
+    public function inputsInDay($date, $breed)
     {
         $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
         $end = clone $date;
-        $end->modify('+1 day');
-        $plans = $planDeliveryChickRepository->planInputsInDay($date, $end);
+        $end->modify('+1 day -1 second');
+        $plans = $planDeliveryChickRepository->planInputsInDay($date, $end, $breed);
+
+        return $plans;
+    }
+
+    public function inputsInWeek($date, $breed)
+    {
+        $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
+        $end = clone $date;
+        $end->modify('next Monday -1 second');
+        $plans = $planDeliveryChickRepository->planInputsInDay($date, $end, $breed);
 
         return $plans;
     }
@@ -46,6 +58,16 @@ class PlanController extends AbstractController
         return $deliveries;
     }
 
+    public function deliveryInWeek($date, $breed)
+    {
+        $planeDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
+        $end = clone $date;
+        $end->modify('next Monday -1 second');
+        $deliveries = $planeDeliveryEggRepository->planDeliveryInDay($date, $end, $breed);
+
+        return $deliveries;
+    }
+
     public function herdDeliveryInDay($date, $herd)
     {
         $planeDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
@@ -65,7 +87,7 @@ class PlanController extends AbstractController
         return $eggs;
     }
 
-    public function eggsInWarehouse($eggsOnWarehouse, $chicks)
+    public function eggsInWarehouse($eggsOnWarehouse, $chicks, $breed)
     {
         $planIndicatorsRepository = $this->getDoctrine()->getRepository(PlanIndicators::class);
         $planIndicators = $planIndicatorsRepository->findOneBy([]);
@@ -73,7 +95,10 @@ class PlanController extends AbstractController
         $eggsToProduction = $chicks / ($hatchability / 100);
         if ($eggsOnWarehouse == 0) {
             $deliveryRepository = $this->getDoctrine()->getRepository(Delivery::class);
-            $eggsOnWarehouse = $deliveryRepository->eggsInWarehouse()[0]['eggsInWarehouse'];
+            $deliveredEggs = (int)$deliveryRepository->eggsBreedDelivered($breed);
+            $inputFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+            $productionsEggs = (int)$inputFarmDeliveryRepository->eggsBreedProduction($breed);
+            $eggsOnWarehouse = $deliveredEggs - $productionsEggs;
         }
 
         return $eggsOnWarehouse - $eggsToProduction;
@@ -112,6 +137,48 @@ class PlanController extends AbstractController
             'weeksPlans' => $weeksPlans,
             'herd' => $herd
         ]);
+    }
+
+    public function yearIndexByWeek($now, $breed)
+    {
+        if ($now->format('d') == 1 and $now->format('M') == 'Jan') {
+            $now->modify('Monday next week');
+        }
+        $nowWeek = (int)$now->format('W');
+        $year = (int)$now->format('Y');
+        $eggsOnWarehouse = 0;
+
+        $weeksPlans = [];
+        for ($i = $nowWeek; $i <= 52; $i++) {
+            if ($i === $nowWeek) {
+                $date = clone $now;
+            } else {
+                $monday = new \DateTime('midnight');
+                $monday->setISODate($year, $i);
+                $date = clone $monday;
+            }
+            $dayPlans = $this->inputsInWeek($date, $breed);
+            $chicks = $this->chicksInPlans($dayPlans);
+            $dayDeliveries = $this->deliveryInWeek($date, $breed);
+            $eggs = $this->eggsInDeliveries($dayDeliveries);
+            if ($date >= $now) {
+                $eggsOnWarehouse = $this->eggsInWarehouse($eggsOnWarehouse, $chicks, $breed);
+                $eggsOnWarehouse = $eggsOnWarehouse + $eggs;
+                $weekPlans = [
+                    'date' => $date,
+                    'dayPlans' => $dayPlans,
+                    'chicks' => $chicks,
+                    'dayDeliveries' => $dayDeliveries,
+                    'eggs' => $eggs,
+                    'eggsOnWarehouse' => $eggsOnWarehouse
+                ];
+            }
+            $date = clone $date;
+            $date->modify('+1 days');
+            array_push($weeksPlans, ['week' => $i, 'weekPlans' => $weekPlans]);
+        }
+
+        return $weeksPlans;
     }
 
     public function yearIndex($now)
@@ -155,6 +222,14 @@ class PlanController extends AbstractController
         return $weeksPlans;
     }
 
+    public function getBreed()
+    {
+        $breedRepository = $this->getDoctrine()->getRepository(Breed::class);
+        $breeds = $breedRepository->findAll();
+
+        return $breeds;
+    }
+
     /**
      * @Route("/", name="plan_week", methods={"GET"})
      */
@@ -162,6 +237,8 @@ class PlanController extends AbstractController
     {
         $indicatorsRepository = $this->getDoctrine()->getRepository(PlanIndicators::class);
         $indicators = $indicatorsRepository->findOneBy([]);
+
+        $breeds = $this->getBreed();
 
         $now = new \DateTime('today midnight');
         $thisYear = (int)$now->format('Y');
@@ -174,19 +251,25 @@ class PlanController extends AbstractController
         $second->modify('first day of january next year');
         $secondYear = $second->format('Y');
 
-        $weeksPlans = $this->yearIndex($now);
-        $weeksPlansNextYear = $this->yearIndex($next);
-        $weeksPlansSecondYear = $this->yearIndex($second);
+        $breedsPlans = [];
+        foreach ($breeds as $breed){
+            $weeksPlans = $this->yearIndexByWeek($now, $breed);
+            $weeksPlansNextYear = $this->yearIndexByWeek($next, $breed);
+            $weeksPlansSecondYear = $this->yearIndexByWeek($second, $breed);
 
-        $yearsPlans = [
-            $thisYear => $weeksPlans,
-            $nextYear => $weeksPlansNextYear,
-            $secondYear => $weeksPlansSecondYear
-        ];;
+            $yearsPlans = [
+                $thisYear => $weeksPlans,
+                $nextYear => $weeksPlansNextYear,
+                $secondYear => $weeksPlansSecondYear
+            ];
+            $breedPlans = ['breed' => $breed, 'yearsPlans' => $yearsPlans];
+
+            array_push($breedsPlans, $breedPlans);
+        }
 
         return $this->render('plans/index.html.twig', [
             'indicators' => $indicators,
-            'yearsPlans' => $yearsPlans
+            'breedsPlans' => $breedsPlans
         ]);
     }
 }

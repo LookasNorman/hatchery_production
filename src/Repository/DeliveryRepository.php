@@ -35,6 +35,18 @@ class DeliveryRepository extends ServiceEntityRepository
             ;
     }
 
+    public function eggsBreedDelivered($breed)
+    {
+        return $this->createQueryBuilder('ed')
+            ->select('SUM(ed.eggsNumber) as eggsInWarehouse')
+            ->join('ed.herd', 'h')
+            ->andWhere('h.breed = :breed')
+            ->setParameters(['breed' => $breed])
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
     public function eggsInWarehouse()
     {
         return $this->createQueryBuilder('ed')

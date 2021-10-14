@@ -59,10 +59,16 @@ class Breed
      */
     private $breedStandards;
 
+    /**
+     * @ORM\OneToMany(targetEntity=PlanDeliveryChick::class, mappedBy="breed")
+     */
+    private $planDeliveryChicks;
+
     public function __construct()
     {
         $this->herds = new ArrayCollection();
         $this->breedStandards = new ArrayCollection();
+        $this->planDeliveryChicks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +166,36 @@ class Breed
             // set the owning side to null (unless already changed)
             if ($breedStandard->getBreed() === $this) {
                 $breedStandard->setBreed(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PlanDeliveryChick[]
+     */
+    public function getPlanDeliveryChicks(): Collection
+    {
+        return $this->planDeliveryChicks;
+    }
+
+    public function addPlanDeliveryChick(PlanDeliveryChick $planDeliveryChick): self
+    {
+        if (!$this->planDeliveryChicks->contains($planDeliveryChick)) {
+            $this->planDeliveryChicks[] = $planDeliveryChick;
+            $planDeliveryChick->setBreed($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanDeliveryChick(PlanDeliveryChick $planDeliveryChick): self
+    {
+        if ($this->planDeliveryChicks->removeElement($planDeliveryChick)) {
+            // set the owning side to null (unless already changed)
+            if ($planDeliveryChick->getBreed() === $this) {
+                $planDeliveryChick->setBreed(null);
             }
         }
 

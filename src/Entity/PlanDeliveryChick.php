@@ -48,6 +48,11 @@ class PlanDeliveryChick
      */
     private $transferDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Breed::class, inversedBy="planDeliveryChicks")
+     */
+    private $breed;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +126,18 @@ class PlanDeliveryChick
     public function setTransferDate(\DateTimeInterface $transferDate): self
     {
         $this->transferDate = $transferDate;
+
+        return $this;
+    }
+
+    public function getBreed(): ?Breed
+    {
+        return $this->breed;
+    }
+
+    public function setBreed(?Breed $breed): self
+    {
+        $this->breed = $breed;
 
         return $this;
     }
