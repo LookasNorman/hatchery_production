@@ -1,0 +1,29 @@
+<table class="table table-sm">
+    <thead>
+    <th>
+        <tr>
+            <th>{% trans %}plans.index.table.farm{% endtrans %}</th>
+            <th>{% trans %}plans.index.table.chickNumber{% endtrans %}</th>
+            <th>{% trans %}plans.index.table.inputDate{% endtrans %}</th>
+            <th>{% trans %}plans.index.table.lightingDate{% endtrans %}</th>
+            <th>{% trans %}plans.index.table.transferDate{% endtrans %}</th>
+            <th>{% trans %}plans.index.table.selectionDate{% endtrans %}</th>
+            <th>{% trans %}plans.index.table.eggsForInput{% endtrans %}</th>
+        </tr>
+    </th>
+    </thead>
+    <tbody>
+    {% for plans in dayPlans.dayPlans %}
+        <tr>
+            <td>{{ plans.chickFarm.name }}</td>
+            <td>{{ plans.chickNumber }}</td>
+            <td>{{ plans.inputDate|date('Y-m-d') }}</td>
+            <td>{{ plans.lightingDate|date('Y-m-d') }}</td>
+            <td>{{ plans.transferDate|date('Y-m-d') }}</td>
+            <td>{{ plans.deliveryDate|date('Y-m-d') }}</td>
+            {% set eggsNumber = plans.chickNumber / (indicators.hatchability / 100) %}
+            <td>{{ eggsNumber }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

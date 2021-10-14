@@ -5,7 +5,7 @@
                 <button class="nav-link active" id="year-tab_{{ key }}{{ breedPlans.breed.id }}" data-bs-toggle="tab"
                         data-bs-target="#year_{{ key }}{{ breedPlans.breed.id }}"
                         type="button"
-                        role="tab" aria-controls="year_{{ key }}" aria-selected="true">{{ key }}
+                        role="tab" aria-controls="year_{{ key }}" aria-selected="true">{{ key|trans }}
                 </button>
             {% else %}
                 <button class="nav-link" id="year-tab_{{ key }}" data-bs-toggle="tab"
@@ -29,7 +29,6 @@
                  aria-labelledby="year-tab_{{ key }}{{ breedPlans.breed.id }}">
                 {% include('plans/year.html.twig') %}
             </div>
-
         {% endif %}
     {% endfor %}
 </div>

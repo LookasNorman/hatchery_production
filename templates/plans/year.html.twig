@@ -4,78 +4,13 @@
             <div class="card border-info">
                 <div class="card-body">
                     <h5 class="card-title">{% trans %}plans.index.week{% endtrans %} {{ weekPlans.week }}</h5>
-                    </h6>
-                    <dl class="row">
-                        <dt class="col-sm-6">{% trans %}plans.index.chicks{% endtrans %}</dt>
-                        <dd class="col-sm-6">{{ weekPlans.weekPlans.chicks|number_format(0, ',', ' ') }}</dd>
-                        <dt class="col-sm-6">{% trans %}plans.index.eggs_delivery{% endtrans %}</dt>
-                        <dd class="col-sm-6">{{ weekPlans.weekPlans.eggs|number_format(0, ',', ' ') }}</dd>
-                        <dt class="col-sm-6">{% trans %}plans.index.eggs_warehouse{% endtrans %}</dt>
-                        <dd class="col-sm-6">{{ weekPlans.weekPlans.eggsOnWarehouse|number_format(0, ',', ' ') }}</dd>
-                    </dl>
+                    {% if weekPlans.weekPlans.chicks is defined %}
+                        {% include('plans/weekPlansWeekly.html.twig') %}
+                    {% else %}
+                        {% include('plans/weekPlansDaily.html.twig') %}
+                    {% endif %}
                 </div>
             </div>
         </div>
     {% endfor %}
-
-    {# <a href="#myModal{{ dayPlans.date|date('Y-m-d') }}" data-bs-toggle="modal" #}
-    {# data-bs-target="#myModal{{ dayPlans.date|date('Y-m-d') }}">{% trans %}plans.index.details{% endtrans %}</a> #}
-
-    {# <!-- Modal --> #}
-    {# <div class="modal fade" id="myModal{{ dayPlans.date|date('Y-m-d') }}" #}
-    {# data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" #}
-    {# aria-labelledby="staticBackdropLabel" aria-hidden="true"> #}
-    {# <div class="modal-dialog modal-fullscreen"> #}
-    {# <div class="modal-content"> #}
-    {# <div class="modal-header"> #}
-    {# <h5 class="modal-title" #}
-    {# id="staticBackdropLabel">{{ dayPlans.date ? dayPlans.date|date('Y-m-d') : '' }}</h5> #}
-    {# <button type="button" class="btn-close" data-bs-dismiss="modal" #}
-    {# aria-label="Close"></button> #}
-    {# </div> #}
-    {# <div class="modal-body"> #}
-    {# <table class="table table-sm"> #}
-    {# <thead> #}
-    {# <th> #}
-    {# <tr> #}
-    {# <th>{% trans %}plans.index.table.farm{% endtrans %}</th> #}
-    {# <th>{% trans %}plans.index.table.chickNumber{% endtrans %}</th> #}
-    {# <th>{% trans %}plans.index.table.inputDate{% endtrans %}</th> #}
-    {# <th>{% trans %}plans.index.table.lightingDate{% endtrans %}</th> #}
-    {# <th>{% trans %}plans.index.table.transferDate{% endtrans %}</th> #}
-    {# <th>{% trans %}plans.index.table.selectionDate{% endtrans %}</th> #}
-    {# <th>{% trans %}plans.index.table.eggsForInput{% endtrans %}</th> #}
-    {# </tr> #}
-    {# </th> #}
-    {# </thead> #}
-    {# <tbody> #}
-    {# {% for plans in dayPlans.dayPlans %} #}
-    {# <tr> #}
-    {# <td>{{ plans.chickFarm.name }}</td> #}
-    {# <td>{{ plans.chickNumber }}</td> #}
-    {# <td>{{ plans.inputDate|date('Y-m-d') }}</td> #}
-    {# <td>{{ plans.lightingDate|date('Y-m-d') }}</td> #}
-    {# <td>{{ plans.transferDate|date('Y-m-d') }}</td> #}
-    {# <td>{{ plans.deliveryDate|date('Y-m-d') }}</td> #}
-    {# {% set eggsNumber = plans.chickNumber / (indicators.hatchability / 100) %} #}
-    {# <td>{{ eggsNumber }}</td> #}
-    {# </tr> #}
-    {# {% endfor %} #}
-    {# </tbody> #}
-    {# </table> #}
-    {# </div> #}
-    {# <div class="modal-footer"> #}
-    {# <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> #}
-    {# {% trans %}plans.index.modal.close{% endtrans %} #}
-    {# </button> #}
-    {# </div> #}
-    {# </div> #}
-    {# </div> #}
-    {# </div> #}
-    {# <hr/> #}
-    {# {% endfor %} #}
-    {# </div> #}
-    {# </div> #}
-    {# </div> #}
-    {# {% endfor %} #}
 </div>

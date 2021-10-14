@@ -1,0 +1,18 @@
+<table class="table table-sm">
+    <thead>
+    <th>
+        <tr>
+            <th>{% trans %}plans.index.table.herd{% endtrans %}</th>
+            <th>{% trans %}plans.index.table.deliveryEggsNumber{% endtrans %}</th>
+        </tr>
+    </th>
+    </thead>
+    <tbody>
+    {% for plans in dayPlans.dayDeliveries %}
+        <tr>
+            <td>{{ plans.herd.name }}</td>
+            <td>{{ plans.eggsNumber }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

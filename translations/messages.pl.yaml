@@ -1,3 +1,4 @@
+details: 3 tygodnie
 form:
   breed:
   chicks_recipient:
@@ -938,6 +939,8 @@ plans:
     modal:
       close: Zamknij
     table:
+      herd: Stado
+      deliveryEggsNumber: Planowane jaja
       farm: Ferma
       chickNumber: Ilość piskląt
       inputDate: Data nakładu

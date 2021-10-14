@@ -9,13 +9,13 @@
                     <button class="nav-link active" id="breed-tab_{{ key }}" data-bs-toggle="tab"
                             data-bs-target="#breed_{{ key }}"
                             type="button"
-                            role="tab" aria-controls="breed_{{ key }}" aria-selected="true">{{ breedPlans.breed.name }}
+                            role="tab" aria-controls="breed_{{ key }}" aria-selected="true">{{ breedPlans.breed.name }} {{ breedPlans.breed.type }}
                     </button>
                 {% else %}
                     <button class="nav-link" id="breed-tab_{{ key }}" data-bs-toggle="tab"
                             data-bs-target="#breed_{{ key }}"
                             type="button"
-                            role="tab" aria-controls="breed_{{ key }}" aria-selected="true">{{ breedPlans.breed.name }}
+                            role="tab" aria-controls="breed_{{ key }}" aria-selected="true">{{ breedPlans.breed.name }} {{ breedPlans.breed.type }}
                     </button>
                 {% endif %}
             </li>
@@ -33,7 +33,6 @@
                      aria-labelledby="breed-tab_{{ key }}">
                     {% include('plans/breed.html.twig') %}
                 </div>
-
             {% endif %}
         {% endfor %}
     </div>

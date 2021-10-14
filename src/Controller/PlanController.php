@@ -48,12 +48,12 @@ class PlanController extends AbstractController
         return $chicks;
     }
 
-    public function deliveryInDay($date)
+    public function deliveryInDay($date, $breed)
     {
         $planeDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
         $end = clone $date;
         $end->modify('+1 day -1 second');
-        $deliveries = $planeDeliveryEggRepository->planDeliveryInDay($date, $end);
+        $deliveries = $planeDeliveryEggRepository->planDeliveryInDay($date, $end, $breed);
 
         return $deliveries;
     }
@@ -139,6 +139,46 @@ class PlanController extends AbstractController
         ]);
     }
 
+    public function details($now, $breed)
+    {
+        $end = clone $now;
+        $end->modify('+ 2 week');
+        $end->modify('Monday next week');
+
+        $eggsOnWarehouse = 0;
+
+        $weeksPlans = [];
+        for ($i = clone $now; $i <= $end; $i->modify('Monday next week')) {
+            $dateStart = clone $i;
+            $endDate = clone $dateStart;
+            $endDate->modify('next Monday -1 second');
+            $daysPlans = [];
+            for ($j = clone $dateStart; $j < $endDate; $j->modify('+1 day')) {
+                $dayPlans = $this->inputsInDay($j, $breed);
+                $chicks = $this->chicksInPlans($dayPlans);
+                $dayDeliveries = $this->deliveryInDay($j, $breed);
+                $eggs = $this->eggsInDeliveries($dayDeliveries);
+                if ($j >= $now) {
+                    $date = clone $j;
+                    $eggsOnWarehouse = $this->eggsInWarehouse($eggsOnWarehouse, $chicks, $breed);
+                    array_push($daysPlans, [
+                        'date' => $date,
+                        'dayPlans' => $dayPlans,
+                        'chicks' => $chicks,
+                        'dayDeliveries' => $dayDeliveries,
+                        'eggs' => $eggs,
+                        'eggsOnWarehouse' => $eggsOnWarehouse
+                    ]);
+                    $eggsOnWarehouse = $eggsOnWarehouse + $eggs;
+                }
+            }
+            $weekNumber = (int)$i->format('W');
+            array_push($weeksPlans, ['week' => $weekNumber, 'weekPlans' => $daysPlans]);
+        }
+
+        return $weeksPlans;
+    }
+
     public function yearIndexByWeek($now, $breed)
     {
         if ($now->format('d') == 1 and $now->format('M') == 'Jan') {
@@ -181,47 +221,6 @@ class PlanController extends AbstractController
         return $weeksPlans;
     }
 
-    public function yearIndex($now)
-    {
-        if ($now->format('d') == 1 and $now->format('M') == 'Jan') {
-            $now->modify('Monday next week');
-        }
-        $nowWeek = (int)$now->format('W');
-        $year = (int)$now->format('Y');
-        $eggsOnWarehouse = 0;
-
-        $weeksPlans = [];
-        for ($i = $nowWeek; $i <= 52; $i++) {
-            $monday = new \DateTime('midnight');
-            $monday->setISODate($year, $i);
-            $date = clone $monday;
-            $daysPlans = [];
-            for ($j = 0; $j < 7; $j++) {
-                $dayPlans = $this->inputsInDay($date);
-                $chicks = $this->chicksInPlans($dayPlans);
-                $dayDeliveries = $this->deliveryInDay($date);
-                $eggs = $this->eggsInDeliveries($dayDeliveries);
-                if ($date >= $now) {
-                    $eggsOnWarehouse = $this->eggsInWarehouse($eggsOnWarehouse, $chicks);
-                    array_push($daysPlans, [
-                        'date' => $date,
-                        'dayPlans' => $dayPlans,
-                        'chicks' => $chicks,
-                        'dayDeliveries' => $dayDeliveries,
-                        'eggs' => $eggs,
-                        'eggsOnWarehouse' => $eggsOnWarehouse
-                    ]);
-                    $eggsOnWarehouse = $eggsOnWarehouse + $eggs;
-                }
-                $date = clone $date;
-                $date->modify('+1 days');
-            }
-            array_push($weeksPlans, ['week' => $i, 'weekPlans' => $daysPlans]);
-        }
-
-        return $weeksPlans;
-    }
-
     public function getBreed()
     {
         $breedRepository = $this->getDoctrine()->getRepository(Breed::class);
@@ -253,11 +252,13 @@ class PlanController extends AbstractController
 
         $breedsPlans = [];
         foreach ($breeds as $breed){
+            $detailsPlans = $this->details($now, $breed);
             $weeksPlans = $this->yearIndexByWeek($now, $breed);
             $weeksPlansNextYear = $this->yearIndexByWeek($next, $breed);
             $weeksPlansSecondYear = $this->yearIndexByWeek($second, $breed);
 
             $yearsPlans = [
+                'details' => $detailsPlans,
                 $thisYear => $weeksPlans,
                 $nextYear => $weeksPlansNextYear,
                 $secondYear => $weeksPlansSecondYear

@@ -1,0 +1,43 @@
+{% for dayPlans in weekPlans.weekPlans %}
+    <h6 class="card-subtitle mb-2 text-muted">
+        {{ dayPlans.date ? dayPlans.date|format_datetime(pattern='eeee', locale='pl') : '' }}
+    </h6>
+    <dl class="row">
+        <dt class="col-sm-6">{% trans %}plans.index.chicks{% endtrans %}</dt>
+        <dd class="col-sm-6">{{ dayPlans.chicks|number_format(0, ',', ' ') }} </dd>
+        <dt class="col-sm-6">{% trans %}plans.index.eggs_delivery{% endtrans %}</dt>
+        <dd class="col-sm-6">{{ dayPlans.eggs|number_format(0, ',', ' ') }}</dd>
+        <dt class="col-sm-6">{% trans %}plans.index.eggs_warehouse{% endtrans %}</dt>
+        <dd class="col-sm-6">{{ dayPlans.eggsOnWarehouse|number_format(0, ',', ' ') }}</dd>
+    </dl>
+
+    <a href="#myModal{{ dayPlans.date|date('Y-m-d') }}_{{ breedPlans.breed.name }}" data-bs-toggle="modal"
+       data-bs-target="#myModal{{ dayPlans.date|date('Y-m-d') }}">{% trans %}plans.index.details{% endtrans %}</a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal{{ dayPlans.date|date('Y-m-d') }}"
+         data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        id="staticBackdropLabel">{{ dayPlans.date ? dayPlans.date|date('Y-m-d') : '' }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% include('plans/tables/chicks.html.twig') %}
+                    {% include('plans/tables/deliveries.html.twig') %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        {% trans %}plans.index.modal.close{% endtrans %}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+{% endfor %}
+
