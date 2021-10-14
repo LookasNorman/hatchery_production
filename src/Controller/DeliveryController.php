@@ -24,6 +24,7 @@ class DeliveryController extends AbstractController
 {
     /**
      * @Route("/", name="eggs_delivery_index", methods={"GET"})
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function index(DeliveryRepository $eggsDeliveryRepository): Response
     {
@@ -110,7 +111,7 @@ class DeliveryController extends AbstractController
 
     /**
      * @Route("/new", name="eggs_delivery_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function new(Request $request): Response
     {
@@ -135,6 +136,7 @@ class DeliveryController extends AbstractController
 
     /**
      * @Route("/{id}", name="eggs_delivery_show", methods={"GET"})
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function show(Delivery $eggsDelivery): Response
     {
@@ -145,7 +147,7 @@ class DeliveryController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="eggs_delivery_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function edit(Request $request, Delivery $eggsDelivery): Response
     {

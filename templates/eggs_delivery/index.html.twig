@@ -4,7 +4,7 @@
     <h1>
         {% trans %}eggs_delivery.index.title{% endtrans %}
     </h1>
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_PRODUCTION') %}
         {{ include('layout/buttons/new.html.twig', {pathLink: path('eggs_delivery_new'), text: 'eggs_delivery.index.button.new' }) }}
     {% endif %}
 
@@ -62,7 +62,7 @@
             <td>{{ eggs_delivery.lastLayingDate ? eggs_delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
             <td>
                 {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('eggs_delivery_show', {'id': eggs_delivery.id}), text: 'eggs_delivery.index.table.badge.show' }) }}
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_PRODUCTION') %}
                     {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('eggs_delivery_edit', {'id': eggs_delivery.id}), text: 'eggs_delivery.index.table.badge.edit' }) }}
                 {% endif %}
             </td>
