@@ -2,14 +2,18 @@
 
 {% block body %}
     {% if customer is defined %}
-    <h1>{% trans %}chicks_recipient.index.short_title{% endtrans %}: {{ customer.name }}</h1>
+        <h1>{% trans %}chicks_recipient.index.short_title{% endtrans %}: {{ customer.name }}</h1>
     {% else %}
-    <h1>
-        {% trans %}chicks_recipient.index.title{% endtrans %}
-    </h1>
+        <h1>
+            {% trans %}chicks_recipient.index.title{% endtrans %}
+        </h1>
     {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
-        {{ include('layout/buttons/new.html.twig', {pathLink: path('chicks_recipient_new'), text: 'chicks_recipient.index.button.new' }) }}
+        {% if customer is defined %}
+            {{ include('layout/buttons/new.html.twig', {pathLink: path('chicks_recipient_new', {'id' : customer.id}), text: 'chicks_recipient.index.button.new' }) }}
+        {% else %}
+            {{ include('layout/buttons/new.html.twig', {pathLink: path('chicks_recipient_new'), text: 'chicks_recipient.index.button.new' }) }}
+        {% endif %}
     {% endif %}
 
     {% include 'layout/tables/thead.html.twig' %}

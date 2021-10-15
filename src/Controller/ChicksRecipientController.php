@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ChicksRecipient;
+use App\Entity\Customer;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanIndicators;
 use App\Form\ChicksRecipientType;
@@ -45,12 +46,15 @@ class ChicksRecipientController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="chicks_recipient_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="chicks_recipient_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, $id = null): Response
     {
+        $customerRepository = $this->getDoctrine()->getRepository(Customer::class);
+        $customer = $customerRepository->find($id);
         $chicksRecipient = new ChicksRecipient();
+        $chicksRecipient->setCustomer($customer);
         $form = $this->createForm(ChicksRecipientType::class, $chicksRecipient);
         $form->handleRequest($request);
 
@@ -59,7 +63,9 @@ class ChicksRecipientController extends AbstractController
             $entityManager->persist($chicksRecipient);
             $entityManager->flush();
 
-            return $this->redirectToRoute('chicks_recipient_index');
+            return $this->redirectToRoute('chick_recipient_customer_index', [
+                'id' => $chicksRecipient->getCustomer()->getId()
+            ]);
         }
 
         return $this->render('chicks_recipient/new.html.twig', [
