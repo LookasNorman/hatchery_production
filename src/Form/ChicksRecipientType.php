@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\ChicksRecipient;
 use App\Entity\Customer;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,6 +19,10 @@ class ChicksRecipientType extends AbstractType
             ->add('customer', EntityType::class, [
                 'class' => Customer::class,
                 'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $entityRepository) {
+                    return $entityRepository->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
                 'placeholder' => 'chicks_recipient.form.placeholder.customer',
                 'label' => 'chicks_recipient.form.label.customer',
                 'attr' => [

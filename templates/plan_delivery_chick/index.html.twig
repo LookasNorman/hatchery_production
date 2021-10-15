@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}PlanDeliveryChick index{% endblock %}
-
 {% block body %}
-    <h1>PlanDeliveryChick index</h1>
+    <h1>{% trans %}plan_delivery_chick.index.title{% endtrans %}</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('layout/buttons/new.html.twig',
+            { pathLink: path('plan_delivery_chick_new'), text: 'plan_delivery_chick.index.button.new' }) }}
+    {% endif %}
 
-    <a href="{{ path('plan_delivery_chick_new') }}">Create new</a>
     {{ include('plan_delivery_chick/list_plan_chick.html.twig') }}
 {% endblock %}

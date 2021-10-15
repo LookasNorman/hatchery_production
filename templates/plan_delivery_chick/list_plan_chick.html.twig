@@ -20,7 +20,7 @@
             <td>{{ plan_delivery_chick.id }}</td>
             <td>
                 {% for breed in plan_delivery_chick.breed %}
-                {{ breed.name }} {{ breed.type }}
+                    {{ breed.name }} {{ breed.type }}
                 {% endfor %}
             </td>
             <td>{{ plan_delivery_chick.chickFarm.name }}</td>
@@ -38,8 +38,10 @@
                 {{ hatcherNumber|number_format(1, ',', ' ') }}
             </td>
             <td>
-                <a href="{{ path('plan_delivery_chick_show', {'id': plan_delivery_chick.id}) }}">show</a>
-                <a href="{{ path('plan_delivery_chick_edit', {'id': plan_delivery_chick.id}) }}">edit</a>
+                {{ include('plan_delivery_chick/_delete_form.html.twig') }}
+                {{ include('layout/buttons/list_actions.html.twig',
+                    {pathLink: path('plan_delivery_chick_edit', {'id': plan_delivery_chick.id}), text: 'plan_delivery_chick.list_plan_chick.table.badge.edit' }) }}
+
             </td>
         </tr>
     {% else %}

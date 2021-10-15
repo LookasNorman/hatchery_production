@@ -879,17 +879,25 @@ plan_delivery_chick:
       chick_farm: Ferma
       chick_number: Ilość piskląt
       delivery_date: Data dostawy
+  index:
+    button:
+      new: Dodaj zamówienie
+    title: Lista planowanych wstawień
   list_plan_chick:
     actions: Akcje
     breed: Rasa
     chick_farm: Ferma
     chick_number: Ilość piskląt
     delivery_date: Data wybierania
-    hatchers: Aparaty klujnikowe
+    hatchers: KK
     input_date: Data nakładu
     id: Lp.
     lighting_date: Data świetlenia
-    setters: Aparaty wylęgowe
+    setters: KL
+    table:
+      badge:
+        show: Szczegóły
+        edit: Edycja
     transfer_date: Data przekładu
   placeholder:
     chick_farm: Wybierz fermę z listy

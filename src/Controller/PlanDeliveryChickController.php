@@ -24,7 +24,7 @@ class PlanDeliveryChickController extends AbstractController
     public function index(PlanDeliveryChickRepository $planDeliveryChickRepository, PlanIndicatorsRepository $planIndicatorsRepository): Response
     {
         return $this->render('plan_delivery_chick/index.html.twig', [
-            'plan_delivery_chicks' => $planDeliveryChickRepository->findAll(),
+            'plan_delivery_chicks' => $planDeliveryChickRepository->findBy([], ['inputDate' => 'ASC']),
             'plan_indicators' => $planIndicatorsRepository->findOneBy([])
         ]);
     }
