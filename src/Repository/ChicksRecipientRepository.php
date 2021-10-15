@@ -19,13 +19,12 @@ class ChicksRecipientRepository extends ServiceEntityRepository
         parent::__construct($registry, ChicksRecipient::class);
     }
 
-    public function inputsDelicery($recipient)
+    public function inputsDelivery($recipient)
     {
         return $this->createQueryBuilder('cr')
-            ->addSelect('eid', 'es', 'eided')
-            ->join('cr.eggsInputsDetails', 'eid')
-            ->leftJoin('eid.eggsSelections', 'es')
-            ->join('eid.eggsInputsDetailsEggsDeliveries', 'eided')
+            ->addSelect('if', 'ifd')
+            ->join('cr.inputsFarms', 'if')
+            ->join('if.inputsFarmDeliveries', 'ifd')
             ->where('cr.id = :recipient')
             ->setParameter('recipient', $recipient)
             ->getQuery()

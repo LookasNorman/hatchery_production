@@ -9,24 +9,24 @@
         <th class="text-center">{% trans %}eggs_inputs.show.table.delivery.eggs_number{% endtrans %}</th>
     </tr>
     {% include 'layout/tables/tbody.html.twig' %}
-    {% for delivery in detail.eggsInputsDetailsEggsDeliveries %}
+    {% for inputFarmDelivery in detail.inputsFarmDeliveries %}
         <tr>
             <td>
-                {{ delivery.eggsDeliveries.herd.breeder.name }}
+                {{ inputFarmDelivery.delivery.herd.breeder.name }}
             </td>
             <td class="text-center">
-                {{ delivery.eggsDeliveries.herd.name }}
+                {{ inputFarmDelivery.delivery.herd.name }}
             </td>
             <td class="text-center">
-                {{ delivery.eggsDeliveries.deliveryDate ? delivery.eggsDeliveries.deliveryDate|date('Y-m-d') : '' }}
+                {{ inputFarmDelivery.delivery.deliveryDate ? inputFarmDelivery.delivery.deliveryDate|date('Y-m-d') : '' }}
             </td>
             <td class="text-center">
-                {{ delivery.eggsDeliveries.firstLayingDate ? delivery.eggsDeliveries.firstLayingDate|date('Y-m-d') : '' }}
+                {{ inputFarmDelivery.delivery.firstLayingDate ? inputFarmDelivery.delivery.firstLayingDate|date('Y-m-d') : '' }}
                 -
-                {{ delivery.eggsDeliveries.lastLayingDate ? delivery.eggsDeliveries.lastLayingDate|date('Y-m-d') : '' }}
+                {{ inputFarmDelivery.delivery.lastLayingDate ? inputFarmDelivery.delivery.lastLayingDate|date('Y-m-d') : '' }}
             </td>
             <td class="text-center">
-                {{ delivery.eggsNumber|number_format(0, ',', ' ') }}
+                {{ inputFarmDelivery.eggsNumber|number_format(0, ',', ' ') }}
             </td>
         </tr>
     {% endfor %}

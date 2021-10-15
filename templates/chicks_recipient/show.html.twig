@@ -29,47 +29,34 @@
         {% include 'layout/cards/cend.html.twig' %}
     </div>
     <hr>
-    {% include 'layout/tables/thead.html.twig' %}
-    <tr>
-        <th rowspan="2" class="align-middle">
-            {% trans %}chicks_recipient.show.table.inputs{% endtrans %}
-        </th>
-        <th colspan="2" class="text-center align-middle">
-            {% trans %}chicks_recipient.show.table.chicks{% endtrans %}
-        </th>
-        <th rowspan="2" class="text-center align-middle">
-            {% trans %}chicks_recipient.show.table.deliveries{% endtrans %}
-        </th>
-    </tr>
-    <tr>
-        <th class="text-center">
-            {% trans %}chicks_recipient.show.table.chicks_plan{% endtrans %}
-        </th>
-        <th class="text-center">
-            {% trans %}chicks_recipient.show.table.chicks_real{% endtrans %}
-        </th>
-    </tr>
-    {% include 'layout/tables/tbody.html.twig' %}
-    {% if inputsDetail.eggsInputsDetails is defined %}
-        {% for detail in inputsDetail.eggsInputsDetails %}
-            <tr>
-                <td class="align-middle">
-                    <a href="{{ path('eggs_inputs_show', {'id': detail.eggInput.id}) }}">
-                        {{ detail.eggInput.name }}
-                    </a>
-                </td>
-                <td class="text-center align-middle">{{ detail.chickNumber }}</td>
-                <td class="text-center align-middle">
-                    {% for selection in detail.eggsSelections %}
-                        {{ selection.chickNumber }}
-                    {% endfor %}
-                </td>
-                <td>
-                    {% include('eggs_delivery/inputs_delivery.html.twig') %}
-                </td>
-            </tr>
-        {% endfor %}
-    {% endif %}
-    {% include 'layout/tables/tfooter.html.twig' %}
-    {% include 'layout/tables/tend.html.twig' %}
+    <div class="accordion accordion-flush" id="accordionFlushShow">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    {% trans %}chicks_recipient.show.accordion.inputs{% endtrans %}
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                 data-bs-parent="#accordionFlushShow">
+                <div class="accordion-body">
+                    {% include('chicks_recipient/inputs_list.html.twig') %}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    {% trans %}chicks_recipient.show.accordion.chicks_plan{% endtrans %}
+                </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                 data-bs-parent="#accordionFlushShow">
+                <div class="accordion-body">
+                    {% include('plan_delivery_chick/list_plan_chick.html.twig') %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

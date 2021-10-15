@@ -24,7 +24,7 @@ class CustomerController extends AbstractController
     public function index(CustomerRepository $customerRepository): Response
     {
         return $this->render('customer/index.html.twig', [
-            'customers' => $customerRepository->findAll(),
+            'customers' => $customerRepository->findBy([], ['name' => 'ASC']),
         ]);
     }
 

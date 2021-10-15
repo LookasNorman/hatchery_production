@@ -122,7 +122,9 @@ chicks_recipient:
     button:
       back: Lista ferm odbiorców
   show:
-    title: Ferma odbiorcy piskląt
+    accordion:
+      inputs: Wykaz nakładów do hodowcy
+      chicks_plan: Planowane zamówienia
     button:
       edit: Edytuj
       back: Lista ferm odbiorców
@@ -132,6 +134,7 @@ chicks_recipient:
       deliveries: Dostawy
       chicks_plan: Planowane
       chicks_real: Rzeczywiste
+    title: Ferma odbiorcy piskląt
 customer:
   delete:
     button:
@@ -876,6 +879,17 @@ plan_delivery_chick:
       chick_farm: Ferma
       chick_number: Ilość piskląt
       delivery_date: Data dostawy
+  list_plan_chick:
+    actions: Akcje
+    chick_farm: Ferma
+    chick_number: Ilość piskląt
+    delivery_date: Data wybierania
+    hatchers: Aparaty klujnikowe
+    input_date: Data nakładu
+    id: Lp.
+    lighting_date: Data świetlenia
+    setters: Aparaty wylęgowe
+    transfer_date: Data przekładu
   placeholder:
     chick_farm: Wybierz fermę z listy
 plan_delivery_egg_for_herd:

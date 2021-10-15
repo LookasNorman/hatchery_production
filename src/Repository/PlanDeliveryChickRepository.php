@@ -19,6 +19,17 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
         parent::__construct($registry, PlanDeliveryChick::class);
     }
 
+    public function planDeliveryByCustomer($customer)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.chickFarm', 'cf')
+            ->andWhere('cf.customer = :customer')
+            ->setParameters(['customer' => $customer])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function planInputsInDay($start, $end, $breed)
     {
         return $this->createQueryBuilder('p')

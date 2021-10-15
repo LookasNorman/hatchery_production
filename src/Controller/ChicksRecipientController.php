@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\ChicksRecipient;
+use App\Entity\PlanDeliveryChick;
+use App\Entity\PlanIndicators;
 use App\Form\ChicksRecipientType;
 use App\Repository\ChicksRecipientRepository;
 use App\Repository\CustomerRepository;
@@ -24,7 +26,7 @@ class ChicksRecipientController extends AbstractController
     public function index(ChicksRecipientRepository $chicksRecipientRepository): Response
     {
         return $this->render('chicks_recipient/index.html.twig', [
-            'chicks_recipients' => $chicksRecipientRepository->findAll(),
+            'chicks_recipients' => $chicksRecipientRepository->findBy([], ['name' => 'ASC']),
         ]);
     }
 
@@ -71,11 +73,18 @@ class ChicksRecipientController extends AbstractController
      */
     public function show(ChicksRecipient $chicksRecipient, ChicksRecipientRepository $repository): Response
     {
-        $inputsDetail = $repository->inputsDelicery($chicksRecipient->getId());
+        $inputsDetail = $repository->inputsDelivery($chicksRecipient->getId());
+        $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
+        $planDelivery = $planDeliveryChickRepository->findBy(['chickFarm' => $chicksRecipient], ['inputDate' => 'ASC']);
+        $planIndicatorsRepository = $this->getDoctrine()->getRepository(PlanIndicators::class);
+        $planIndicators = $planIndicatorsRepository->findOneBy([]);
+        //        dd($planDelivery);
 
         return $this->render('chicks_recipient/show.html.twig', [
             'chicks_recipient' => $chicksRecipient,
             'inputsDetail' => $inputsDetail,
+            'plan_delivery_chicks' => $planDelivery,
+            'plan_indicators' => $planIndicators
         ]);
     }
 
@@ -106,7 +115,7 @@ class ChicksRecipientController extends AbstractController
      */
     public function delete(Request $request, ChicksRecipient $chicksRecipient): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$chicksRecipient->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $chicksRecipient->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($chicksRecipient);
             $entityManager->flush();
