@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Breed;
 use App\Entity\ChicksRecipient;
 use App\Entity\PlanDeliveryChick;
 use Doctrine\ORM\EntityRepository;
@@ -17,6 +18,15 @@ class PlanDeliveryChickType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('breed', EntityType::class, [
+                'class' => Breed::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('chickNumber', IntegerType::class, [
                 'label' => 'plan_delivery_chick.form.label.chick_number',
                 'attr' => [

@@ -3,6 +3,7 @@
     <tr>
         <th>{% trans %}plan_delivery_chick.list_plan_chick.id{% endtrans %}</th>
         <th>{% trans %}plan_delivery_chick.list_plan_chick.chick_farm{% endtrans %}</th>
+        <th>{% trans %}plan_delivery_chick.list_plan_chick.breed{% endtrans %}</th>
         <th>{% trans %}plan_delivery_chick.list_plan_chick.chick_number{% endtrans %}</th>
         <th>{% trans %}plan_delivery_chick.list_plan_chick.delivery_date{% endtrans %}</th>
         <th>{% trans %}plan_delivery_chick.list_plan_chick.input_date{% endtrans %}</th>
@@ -17,6 +18,11 @@
     {% for plan_delivery_chick in plan_delivery_chicks %}
         <tr>
             <td>{{ plan_delivery_chick.id }}</td>
+            <td>
+                {% for breed in plan_delivery_chick.breed %}
+                {{ breed.name }} {{ breed.type }}
+                {% endfor %}
+            </td>
             <td>{{ plan_delivery_chick.chickFarm.name }}</td>
             <td>{{ plan_delivery_chick.chickNumber }}</td>
             <td>{{ plan_delivery_chick.deliveryDate ? plan_delivery_chick.deliveryDate|format_datetime('full', 'short', locale='pl') : '' }}</td>

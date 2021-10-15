@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\PlanDeliveryChick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -33,7 +34,8 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
     public function planInputsInDay($start, $end, $breed)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.breed = :breed')
+            ->innerJoin('p.breed', 'b')
+            ->andWhere('b = :breed')
             ->andWhere('p.inputDate BETWEEN :start AND :end')
             ->setParameters(['start' => $start, 'end' => $end, 'breed' => $breed])
             ->getQuery()

@@ -60,7 +60,7 @@ class Breed
     private $breedStandards;
 
     /**
-     * @ORM\OneToMany(targetEntity=PlanDeliveryChick::class, mappedBy="breed")
+     * @ORM\ManyToMany(targetEntity=PlanDeliveryChick::class, mappedBy="breed")
      */
     private $planDeliveryChicks;
 
@@ -173,32 +173,20 @@ class Breed
     }
 
     /**
-     * @return Collection|PlanDeliveryChick[]
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function getPlanDeliveryChicks(): Collection
+    public function getPlanDeliveryChicks(): ArrayCollection
     {
         return $this->planDeliveryChicks;
     }
 
-    public function addPlanDeliveryChick(PlanDeliveryChick $planDeliveryChick): self
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $planDeliveryChicks
+     */
+    public function setPlanDeliveryChicks(ArrayCollection $planDeliveryChicks): void
     {
-        if (!$this->planDeliveryChicks->contains($planDeliveryChick)) {
-            $this->planDeliveryChicks[] = $planDeliveryChick;
-            $planDeliveryChick->setBreed($this);
-        }
-
-        return $this;
+        $this->planDeliveryChicks = $planDeliveryChicks;
     }
 
-    public function removePlanDeliveryChick(PlanDeliveryChick $planDeliveryChick): self
-    {
-        if ($this->planDeliveryChicks->removeElement($planDeliveryChick)) {
-            // set the owning side to null (unless already changed)
-            if ($planDeliveryChick->getBreed() === $this) {
-                $planDeliveryChick->setBreed(null);
-            }
-        }
 
-        return $this;
-    }
 }

@@ -49,7 +49,8 @@ class PlanDeliveryChick
     private $transferDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Breed::class, inversedBy="planDeliveryChicks")
+     * @ORM\ManyToMany(targetEntity=Breed::class, inversedBy="planDeliveryChicks")
+     * @ORM\JoinTable("plans_breeds")
      */
     private $breed;
 
@@ -130,15 +131,20 @@ class PlanDeliveryChick
         return $this;
     }
 
-    public function getBreed(): ?Breed
+    /**
+     * @return mixed
+     */
+    public function getBreed()
     {
         return $this->breed;
     }
 
-    public function setBreed(?Breed $breed): self
+    /**
+     * @param mixed $breed
+     */
+    public function setBreed($breed): void
     {
         $this->breed = $breed;
-
-        return $this;
     }
+
 }

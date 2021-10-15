@@ -881,6 +881,7 @@ plan_delivery_chick:
       delivery_date: Data dostawy
   list_plan_chick:
     actions: Akcje
+    breed: Rasa
     chick_farm: Ferma
     chick_number: Ilość piskląt
     delivery_date: Data wybierania
