@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>
+            {% trans %}main_page.index.title{% endtrans %}
+        </h1>
+    </div>
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-primary p-5 m-5 w-50" href="{{ path('eggs_delivery_index') }}">
+            <h1>{% trans %}main_page.production.button.delivery{% endtrans %}</h1>
+        </a>
+        <a class="btn btn-info p-5 m-5 w-50" href="{{ path('eggs_inputs_index') }}">
+            <h1>{% trans %}main_page.production.button.inputs{% endtrans %}</h1>
+        </a>
+    </div>
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-success p-5 m-5 w-50" href="{{ path('eggs_inputs_lighting_index') }}">
+            <h1>{% trans %}main_page.production.button.lighting{% endtrans %}</h1>
+        </a>
+        <a class="btn btn-warning p-5 m-5 w-50" href="{{ path('eggs_inputs_transfers_index') }}">
+            <h1>{% trans %}main_page.production.button.transfer{% endtrans %}</h1>
+        </a>
+    </div>
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-danger p-5 m-5 w-50" href="{{ path('eggs_selections_index') }}">
+            <h1>{% trans %}main_page.production.button.selection{% endtrans %}</h1>
+        </a>
+    </div>
+{% endblock %}

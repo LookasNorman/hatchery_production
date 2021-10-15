@@ -48,9 +48,6 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @param \App\Repository\SettersRepository $settersRepository
-     * @param \App\Repository\HatchersRepository $hatchersRepository
-     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/incubators", name="incubators_index")
      * @IsGranted("ROLE_USER")
      */
@@ -62,5 +59,14 @@ class DefaultController extends AbstractController
             'setters' => $setters,
             'hatchers' => $hatchers,
         ]);
+    }
+
+    /**
+     * @Route("/production", name="production_index")
+     * @IsGranted("ROLE_PRODUCTION")
+     */
+    public function productionSite()
+    {
+        return $this->render('main_page/production.html.twig');
     }
 }

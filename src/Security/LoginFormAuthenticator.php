@@ -30,13 +30,21 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $security;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(
+        EntityManagerInterface       $entityManager,
+        UrlGeneratorInterface        $urlGenerator,
+        CsrfTokenManagerInterface    $csrfTokenManager,
+        UserPasswordEncoderInterface $passwordEncoder,
+        Security                     $security
+    )
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->security = $security;
     }
 
     public function supports(Request $request)
@@ -93,11 +101,17 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
+            if ($targetPath != 'http://localhost:8000/') {
+                return new RedirectResponse($targetPath);
+            }
+        }
+        $user = $this->security->getUser();
+        if (in_array('ROLE_PRODUCTION', $user->getRoles())) {
+            return new RedirectResponse($this->urlGenerator->generate('production_index'));
         }
 
         return new RedirectResponse($this->urlGenerator->generate('main_page'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
     }
 
     protected function getLoginUrl()

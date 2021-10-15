@@ -769,45 +769,52 @@ layout:
     close: Zamknij
 main_page:
   eggs_transfer:
-    title: Przekłady
     list: Wykaz
     table:
-      inputs_name: Nakład
       date: Data
       eggs_number: Ilość jaj
+      inputs_name: Nakład
+    title: Przekłady
   index:
     title: Zarządzanie produkcją na wylęgarni
   inputs:
-    title: Nakłady
-    list: Wykaz
-    new: Dodaj
     body:
       recipient_number: Liczba nakładów
       eggs_number: Nałożonych jaj
       chicks_number: Piskląt w nakładach
       inputs_number: Ilość nakładów
+    list: Wykaz
+    new: Dodaj
+    title: Nakłady
   lighting:
-    title: Świetlenia
+    list: Wykaz
     table:
       inputs_name: Nakład
       date: Data
       eggs_number: Ilość jaj
-    list: Wykaz
+    title: Świetlenia
   picking:
-    title: Wybierania
     list: Wykaz
     table:
       inputs_name: Nakład
       date: Data
       chicks_number: Ilość kurcząt
+    title: Wybierania
+  production:
+    button:
+      delivery: Przyjęcie jaj
+      inputs: Nakład
+      lighting: Świetlenie
+      selection: Wybieranie
+      transfer: Przekład
   supplier:
-    title: Dostawcy jaj
-    list: Wykaz
-    new: Dodaj
     body:
       supplier_number: Liczba dostawców
       eggs_number: Jaja magazyn
       eggs_machines: Jaja w aparatach
+    list: Wykaz
+    new: Dodaj
+    title: Dostawcy jaj
   recipient:
     title: Odbiorcy piskląt
     list: Wykaz
