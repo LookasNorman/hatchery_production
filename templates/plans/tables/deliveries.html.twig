@@ -1,18 +1,50 @@
-<table class="table table-sm">
-    <thead>
-    <th>
-        <tr>
-            <th>{% trans %}plans.index.table.herd{% endtrans %}</th>
-            <th>{% trans %}plans.index.table.deliveryEggsNumber{% endtrans %}</th>
-        </tr>
-    </th>
-    </thead>
-    <tbody>
-    {% for plans in dayPlans.dayDeliveries %}
-        <tr>
-            <td>{{ plans.herd.name }}</td>
-            <td>{{ plans.eggsNumber }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<hr/>
+<div class="accordion accordion-flush" id="accordionFlushDeliveries">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                {% trans %}plans.index.modal.title.eggs{% endtrans %}
+            </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+             data-bs-parent="#accordionFlushDeliveries">
+            <div class="accordion-body">
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>{% trans %}plans.index.table.herd{% endtrans %}</th>
+                        <th>{% trans %}plans.index.table.deliveryEggsNumber{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for plans in dayPlans.dayDeliveries %}
+                        <tr>
+                            <td>{{ plans.herd.name }}</td>
+                            <td>{{ plans.eggsNumber }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{#<h6 class="alert alert-info">{% trans %}plans.index.modal.title.eggs{% endtrans %}</h6>#}
+{#<table class="table table-sm">#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>{% trans %}plans.index.table.herd{% endtrans %}</th>#}
+{#        <th>{% trans %}plans.index.table.deliveryEggsNumber{% endtrans %}</th>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for plans in dayPlans.dayDeliveries %}#}
+{#        <tr>#}
+{#            <td>{{ plans.herd.name }}</td>#}
+{#            <td>{{ plans.eggsNumber }}</td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}

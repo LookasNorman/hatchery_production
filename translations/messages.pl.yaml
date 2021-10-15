@@ -938,6 +938,9 @@ plans:
     eggs_warehouse: Stan jaj
     modal:
       close: Zamknij
+      title:
+        chicks: Zamówienia piskląt
+        eggs: Planowane dostawy
     table:
       herd: Stado
       deliveryEggsNumber: Planowane jaja
