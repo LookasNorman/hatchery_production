@@ -34,6 +34,34 @@ class CustomerType extends AbstractType
                 'label' => 'customer.form.label.phone_number',
                 'required' => false
             ])
+            ->add('postCode', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'customer.form.label.post_code',
+                'required' => false
+            ])
+            ->add('city', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'customer.form.label.city',
+                'required' => false
+            ])
+            ->add('street', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'customer.form.label.street',
+                'required' => false
+            ])
+            ->add('streetNumber', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'customer.form.label.street_number',
+                'required' => false
+            ])
         ;
     }
 

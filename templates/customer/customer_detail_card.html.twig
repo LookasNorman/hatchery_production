@@ -1,0 +1,24 @@
+{% include 'layout/cards/chead.html.twig' %}
+    {% trans %}customer.show.header{% endtrans %} - <span class="h3">{{ customer.name }}</span>
+{% include 'layout/cards/cbody.html.twig' %}
+<h5 class="card-title"></h5>
+<dl class="row">
+    <dt class="col-sm-5">{% trans %}customer.show.email{% endtrans %}:</dt>
+    <dd class="col-sm-7">{{ customer.email }}</dd>
+    <dt class="col-sm-5">{% trans %}customer.show.phone_number{% endtrans %}:</dt>
+    <dd class="col-sm-7">{{ customer.phoneNumber }}</dd>
+</dl>
+<hr />
+<dl class="row">
+    <dt class="col-sm-5">{% trans %}customer.show.street{% endtrans %}</dt>
+    <dd class="col-sm-7">{{ customer.street }} {{ customer.streetNumber }}</dd>
+    <dt class="col-sm-5">{% trans %}customer.show.city{% endtrans %}</dt>
+    <dd class="col-sm-7">{{ customer.postCode }} {{ customer.city }}</dd>
+</dl>
+{% include 'layout/cards/cfooter.html.twig' %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('customer/_delete_form.html.twig') }}
+        {{ include('layout/buttons/edit.html.twig', {pathLink: path('customer_edit', {'id': customer.id}), text: 'customer.show.button.edit'}) }}
+        {{ include('layout/buttons/back.html.twig', {pathLink: path('chick_recipient_customer_index', {'id': customer.id}), text: 'customer.show.button.farm'}) }}
+    {% endif %}
+{% include 'layout/cards/cend.html.twig' %}

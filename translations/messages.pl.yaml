@@ -144,14 +144,19 @@ customer:
     button:
       back: Wykaz odbiorców piskląt
       upddate: Aktualizuj
+    header: Aktualizacja danych odbiorcy
     title: Edycja odbiorcy
   form:
     button:
       save: Zapisz
     label:
+      city: Miejscowość
       email: Email
       name: Nazwa
       phone_number: Numer telefonu
+      post_code: Kod pocztowy
+      street: Ulica
+      street_number: Numer domu / mieszkania
   index:
     button:
       new: Dodaj odbiorcę
@@ -175,9 +180,12 @@ customer:
     button:
       back: Wykaz odbiorców piskląt
       edit: Edycja odbiorcy
+      farm: Fermy
+    city: Miejscowość
     email: Adres email
     header: Dane odbiorcy
     phone_number: Numer telefonu
+    street: Ulica
     title: Szczegóły odbiorcy
 driver:
   delete:
