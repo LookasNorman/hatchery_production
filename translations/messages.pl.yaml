@@ -131,8 +131,9 @@ chicks_recipient:
       chicks_plan: Planowane zamówienia
     address: Miejscowość
     button:
-      edit: Edytuj
       back: Lista ferm odbiorcy
+      edit: Edytuj
+      show: Szczegóły odbiorcy
     customer:
       title: Hodowca
     farm:
