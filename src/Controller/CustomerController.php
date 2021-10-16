@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
+use App\Entity\PlanDeliveryChick;
+use App\Entity\PlanIndicators;
 use App\Form\CustomerType;
 use App\Repository\ChicksRecipientRepository;
 use App\Repository\CustomerRepository;
@@ -51,13 +53,33 @@ class CustomerController extends AbstractController
         ]);
     }
 
+    public function customerPlanDelivery($customer)
+    {
+        $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
+        $plansDelivery = $planDeliveryChickRepository->planDeliveryByCustomer($customer);
+
+        return $plansDelivery;
+    }
+
+    public function planIndicators()
+    {
+        $planIndicatorsRepository = $this->getDoctrine()->getRepository(PlanIndicators::class);
+        $planIndicators = $planIndicatorsRepository->findOneBy([]);
+        return $planIndicators;
+    }
+
     /**
      * @Route("/{id}", name="customer_show", methods={"GET"})
      */
     public function show(Customer $customer): Response
     {
+        $planDelivery = $this->customerPlanDelivery($customer);
+        $planIndicators = $this->planIndicators();
+
         return $this->render('customer/show.html.twig', [
             'customer' => $customer,
+            'plan_delivery_chicks' => $planDelivery,
+            'plan_indicators' => $planIndicators,
         ]);
     }
 

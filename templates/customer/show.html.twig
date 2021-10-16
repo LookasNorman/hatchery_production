@@ -15,4 +15,36 @@
 {{ include('customer/customer_detail_card.html.twig') }}
     </div>
     {{ include('layout/buttons/back.html.twig', { pathLink: path('customer_index'), text: 'customer.show.button.back' }) }}
+
+    <hr>
+    <div class="accordion accordion-flush" id="accordionFlushShow">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    {% trans %}chicks_recipient.show.accordion.inputs{% endtrans %}
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                 data-bs-parent="#accordionFlushShow">
+                <div class="accordion-body">
+{#                    {% include('chicks_recipient/inputs_list.html.twig') %}#}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    {% trans %}chicks_recipient.show.accordion.chicks_plan{% endtrans %}
+                </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                 data-bs-parent="#accordionFlushShow">
+                <div class="accordion-body">
+                    {% include('plan_delivery_chick/list_plan_chick.html.twig') %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

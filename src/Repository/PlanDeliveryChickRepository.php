@@ -26,6 +26,7 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->join('p.chickFarm', 'cf')
             ->andWhere('cf.customer = :customer')
             ->setParameters(['customer' => $customer])
+            ->orderBy('p.inputDate')
             ->getQuery()
             ->getResult()
             ;
@@ -42,16 +43,4 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-    /*
-    public function findOneBySomeField($value): ?PlanDeliveryChick
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
