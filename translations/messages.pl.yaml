@@ -90,16 +90,20 @@ chicks_recipient:
   edit:
     title: Edycja fermy odbiorcy
     button:
-      back: Lista ferm odbiorców
+      back: Lista ferm odbiorcy
       update: Zaktualizuj
   form:
     button:
       save: Zapisz
     label:
+      city: Miejscowość
       customer: Nazwa odbiorcy
       name: Nazwa fermy odbiorcy
       email: Adres email
       phone_number: Numer telefonu
+      post_code: Kod pocztowy
+      street: Ulica
+      street_number: Number domu / mieszkania
     placeholder:
       customer: Wybierz odbiorcę z listy
   index:
@@ -125,9 +129,15 @@ chicks_recipient:
     accordion:
       inputs: Wykaz nakładów do hodowcy
       chicks_plan: Planowane zamówienia
+    address: Miejscowość
     button:
       edit: Edytuj
-      back: Lista ferm odbiorców
+      back: Lista ferm odbiorcy
+    customer:
+      title: Hodowca
+    farm:
+      title: Ferma
+    street: Ulica
     table:
       inputs: Nakład
       chicks: Pisklęta

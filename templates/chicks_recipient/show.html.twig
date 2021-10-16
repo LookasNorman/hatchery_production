@@ -8,19 +8,28 @@
             padding: 6px 6px;
         }
     </style>
-    {{ include('layout/buttons/back.html.twig', { pathLink: path('chicks_recipient_index'), text: 'chicks_recipient.show.button.back' }) }}
+    {{ include('layout/buttons/back.html.twig',
+        { pathLink: path('chick_recipient_customer_index', {'id': chicks_recipient.customer.id}), text: 'chicks_recipient.show.button.back' }) }}
 
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
-        {% trans %}chicks_recipient.show.title{% endtrans %}
+        <p>{% trans %}chicks_recipient.show.customer.title{% endtrans %} <span class="h3">{{ chicks_recipient.customer.name}}</span></p>
+        <p>{% trans %}chicks_recipient.show.farm.title{% endtrans %} <span class="h3">{{ chicks_recipient.name }}</span></p>
         {% include 'layout/cards/cbody.html.twig' %}
-        <h5 class="card-title">{{ chicks_recipient.name }}</h5>
-        <p class="card-text">
-            {% trans %}egg_supplier.show.email{% endtrans %}: {{ chicks_recipient.email }}
-        </p>
-        <p class="card-text">
-            {% trans %}egg_supplier.show.phone_number{% endtrans %}: {{ chicks_recipient.phoneNumber }}
-        </p>
+        <h5 class="card-title"></h5>
+        <dl class="row">
+            <dt class="col-sm-5">{% trans %}egg_supplier.show.email{% endtrans %}:</dt>
+            <dd class="col-sm-7">{{ chicks_recipient.email }}</dd>
+            <dt class="col-sm-5">{% trans %}egg_supplier.show.phone_number{% endtrans %}:</dt>
+            <dd class="col-sm-7">{{ chicks_recipient.phoneNumber }}</dd>
+        </dl>
+        <hr/>
+        <dl class="row">
+            <dt class="col-sm-5">{% trans %}chicks_recipient.show.address{% endtrans %}:</dt>
+            <dd class="col-sm-7">{{ chicks_recipient.postcode }} {{ chicks_recipient.city }}</dd>
+            <dt class="col-sm-5">{% trans %}chicks_recipient.show.street{% endtrans %}:</dt>
+            <dd class="col-sm-7">{{ chicks_recipient.street }} {{ chicks_recipient.streetNumber }}</dd>
+        </dl>
         {% include 'layout/cards/cfooter.html.twig' %}
         {% if is_granted('ROLE_ADMIN') %}
             {{ include('chicks_recipient/_delete_form.html.twig') }}

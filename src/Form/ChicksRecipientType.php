@@ -49,6 +49,34 @@ class ChicksRecipientType extends AbstractType
                 ],
                 'required' => false,
             ])
+            ->add('postcode', TextType::class, [
+                'label' => 'chicks_recipient.form.label.post_code',
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'required' => false,
+            ])
+            ->add('city', TextType::class, [
+                'label' => 'chicks_recipient.form.label.city',
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'required' => false,
+            ])
+            ->add('street', TextType::class, [
+                'label' => 'chicks_recipient.form.label.street',
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'required' => false,
+            ])
+            ->add('streetNumber', TextType::class, [
+                'label' => 'chicks_recipient.form.label.street_number',
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'required' => false,
+            ])
         ;
     }
 
