@@ -876,7 +876,7 @@ menu:
       index: Wybieranie
     eggs_supplier:
       index: Dostawcy jaj
-      title: Dostawy
+      title: Hodowcy
     herds:
       index: Stada
     incubators:

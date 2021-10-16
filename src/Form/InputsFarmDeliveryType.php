@@ -28,10 +28,14 @@ class InputsFarmDeliveryType extends AbstractType
                     foreach ($herds as $herd) {
                         $deliveries = $herd->getEggsDeliveries();
                         foreach ($deliveries as $delivery) {
-                            $eggs = $eggs + $delivery->getEggsOnWarehouse();
+                            $inputDeliveries = $delivery->getInputsFarmDeliveries();
+                            $eggsInput = 0;
+                            foreach ($inputDeliveries as $inputDelivery){
+                                $eggsInput = $eggsInput + $inputDelivery->getEggsNumber();
+                            }
+                            $eggs = $eggs + $delivery->getEggsNumber() - $eggsInput;
                         }
                     }
-
                     return $eggSupplier->getName() . ' - stan jaj: ' . $eggs;
                 },
                 'label' => 'inputs_farm_delivery.form.label.breeder',
