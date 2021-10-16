@@ -32,11 +32,11 @@
                 <table class="table table-sm">
                     <thead class="bg-success text-white">
                     <tr>
-                        <td>Hodowca</td>
-                        <td>Stado</td>
-                        <td>Data dostawy</td>
-                        <td>Data zniesienia</td>
-                        <td>Ilość jaj</td>
+                        <td>{% trans %}eggs_inputs.show_customer_delivery.table.breeder{% endtrans %}</td>
+                        <td>{% trans %}eggs_inputs.show_customer_delivery.table.herd{% endtrans %}</td>
+                        <td>{% trans %}eggs_inputs.show_customer_delivery.table.delivery_date{% endtrans %}</td>
+                        <td>{% trans %}eggs_inputs.show_customer_delivery.table.laying_date{% endtrans %}</td>
+                        <td>{% trans %}eggs_inputs.show_customer_delivery.table.eggs_number{% endtrans %}</td>
                     </tr>
                     </thead>
                     {% for delivery in inputFarm.inputsFarmDeliveries %}
@@ -53,7 +53,12 @@
                         {% set lastLayingColor = lastLayingDays > 7 ? 'text-danger' : 'text-dark' %}
                         <tr>
                             <td>{{ delivery.delivery.herd.breeder.name }}</td>
-                            <td>{{ delivery.delivery.herd.name }}</td>
+                            <td>
+                                {{ delivery.delivery.herd.name }}
+                                <a href="{{ path('inputs_farm_delivery_delete', {'id': delivery.id}) }}">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
                             <td>{{ delivery.delivery.deliveryDate|date('Y-m-d') }}
                                 <span class="{{ hatcheryColor }}"> ({{ hatcheryDays }})</span></td>
                             <td>{{ delivery.delivery.firstLayingDate|date('Y-m-d') }}

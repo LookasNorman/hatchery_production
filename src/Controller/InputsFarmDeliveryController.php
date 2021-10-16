@@ -63,44 +63,92 @@ class InputsFarmDeliveryController extends AbstractController
         $entityManager->flush();
     }
 
+    public function eggsOnWareHouseInDelivery($delivery)
+    {
+        $inputsEggs = $delivery->getInputsFarmDeliveries();
+        $eggsInput = 0;
+        foreach ($inputsEggs as $inputEggs) {
+            $eggsInput = $eggsInput + $inputEggs->getEggsNumber();
+        }
+        $eggsOnWarehouse = $delivery->getEggsNumber() - $eggsInput;
+        return $eggsOnWarehouse;
+    }
+
     public function getEggsNumberInDeliveries($deliveries)
     {
         $eggsNumber = 0;
         foreach ($deliveries as $delivery) {
-            $eggsNumber = $eggsNumber + $delivery->getEggsNumber();
+            $eggsNumber = $eggsNumber + $delivery['eggsOnWarehouse'];
         }
         return $eggsNumber;
+    }
+
+    public function deliveriesAndEggs($deliveries)
+    {
+        $deliveries = [];
+        foreach ($deliveries as $delivery) {
+            $eggsOnWarehouse = $delivery->getEggsNumber() - $this->eggsOnWareHouseInDelivery($delivery);
+            array_push($deliveries, ['delivery' => $delivery, 'eggsOnWarehouse' => $eggsOnWarehouse]);
+        }
+        return $deliveries;
     }
 
     /**
      * @Route("/new/{id}", name="inputs_farm_delivery_new", methods={"GET","POST"})
      */
-    public function new(Request $request, InputsFarm $farm, DeliveryRepository $deliveryRepository): Response
+    public function new(
+        Request                      $request,
+        InputsFarm                   $farm,
+        DeliveryRepository           $deliveryRepository,
+        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
+    ): Response
     {
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        $inputsFarmDelivery = new InputsFarmDelivery();
-        $inputsFarmDelivery->setInputsFarm($farm);
-        $form = $this->createForm(InputsFarmDeliveryType::class, $inputsFarmDelivery);
+        $form = $this->createForm(InputsFarmDeliveryType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $herd = $form['herd']->getData();
             $totalEggs = $form['eggsNumber']->getData();
-            $deliveries = $deliveryRepository->eggsOnWarehouse($herd);
-
+            $deliveries = [];
+            $eggsDeliveries = $deliveryRepository->findBy(['herd' => $herd], ['deliveryDate' => 'ASC']);
+            foreach ($eggsDeliveries as $eggsDelivery) {
+                $eggsInputs = $inputsFarmDeliveryRepository->eggsFromDelivery($eggsDelivery);
+                $eggsOnWarehouse = $this->eggsOnWareHouseInDelivery($eggsDelivery);
+                if ($eggsInputs > 0 or is_null($eggsInputs)) {
+                    array_push($deliveries, ['delivery' => $eggsDelivery, 'eggsOnWarehouse' => $eggsOnWarehouse]);
+                }
+            }
             $eggsNumber = $this->getEggsNumberInDeliveries($deliveries);
 
             if ($eggsNumber >= $totalEggs) {
-                $this->addDelivery($deliveries, $totalEggs, $farm);
-                return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputsFarmDelivery->getInputsFarm()->getEggInput()->getId()]);
+                foreach ($deliveries as $delivery) {
+                    $inputsFarmDelivery = new InputsFarmDelivery();
+                    $inputsFarmDelivery->setInputsFarm($farm);
+                    if ($totalEggs > 0) {
+                        if ($totalEggs > $delivery['eggsOnWarehouse']) {
+                            $inputsFarmDelivery->setDelivery($delivery['delivery']);
+                            $inputsFarmDelivery->setEggsNumber($delivery['eggsOnWarehouse']);
+                            dump($delivery['eggsOnWarehouse']);
+                            $totalEggs = $totalEggs - (int)$delivery['eggsOnWarehouse'];
+                        } else {
+                            $inputsFarmDelivery->setDelivery($delivery['delivery']);
+                            $inputsFarmDelivery->setEggsNumber($totalEggs);
+                            $totalEggs = 0;
+                        }
+                    }
+                    $entityManager->persist($inputsFarmDelivery);
+                }
+                $entityManager->flush();
+                return $this->redirectToRoute('eggs_inputs_show', ['id' => $farm->getEggInput()->getId()]);
             }
         }
 
 
         return $this->render('inputs_farm_delivery/new.html.twig', [
-            'inputs_farm_delivery' => $inputsFarmDelivery,
+            'farm' => $farm,
             'form' => $form->createView(),
         ]);
     }
@@ -146,6 +194,6 @@ class InputsFarmDeliveryController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('inputs_farm_delivery_index');
+        return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputsFarmDelivery->getInputsFarm()->getEggInput()->getId()]);
     }
 }

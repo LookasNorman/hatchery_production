@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Delivery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,22 +18,6 @@ class DeliveryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Delivery::class);
-    }
-
-    /**
-     * @param $herd
-     * @return int|mixed|string
-     */
-    public function eggsOnWarehouse($herd)
-    {
-        return $this->createQueryBuilder('ed')
-            ->where('ed.herd = :herd')
-            ->andWhere('ed.eggsOnWarehouse > 0')
-            ->setParameter('herd', $herd)
-            ->orderBy('ed.deliveryDate', 'asc')
-            ->getQuery()
-            ->getResult()
-            ;
     }
 
     public function eggsBreedDelivered($breed)

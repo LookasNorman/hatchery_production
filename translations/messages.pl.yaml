@@ -432,6 +432,13 @@ eggs_inputs:
       badge:
         fertilization: Zapłodnienie
         hatchability: Wylęgowość
+  show_customer_delivery:
+    table:
+      breeder: Hodowca
+      herd: Stado
+      eggs_number: Ilość jaj
+      delivery_date: Data dostawy
+      laying_date: Data zniesienia
   show_delivery:
     table:
       badge:
@@ -772,6 +779,9 @@ inputs_farm:
     header: Dodawanie do nakładu
     title: Dodawanie dostawy na fermę do nakładu
 inputs_farm_delivery:
+  delete:
+    button:
+      delete: Usuń
   form:
     label:
       breader: Dostawca jaj
@@ -783,6 +793,11 @@ inputs_farm_delivery:
   new:
     header: Odbiorca piskląt
     title: Dodawanie dostawy do nakładu
+  show:
+    button:
+      back: Szczegóły nakładu
+    eggs_number: Nałożonych jaj
+    title: Szczegóły dostawy jaj na fermę w nakładzie
 layout:
   button:
     close: Zamknij

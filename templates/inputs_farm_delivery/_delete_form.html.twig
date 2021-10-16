@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('inputs_farm_delivery_delete', {'id': inputs_farm_delivery.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ inputs_farm_delivery.id) }}">
-    <button class="btn">Delete</button>
+    {{ include('layout/buttons/delete.html.twig', { text: 'inputs_farm_delivery.delete.button.delete' }) }}
 </form>

@@ -30,7 +30,7 @@ class InputsFarmDeliveryType extends AbstractType
                         foreach ($deliveries as $delivery) {
                             $inputDeliveries = $delivery->getInputsFarmDeliveries();
                             $eggsInput = 0;
-                            foreach ($inputDeliveries as $inputDelivery){
+                            foreach ($inputDeliveries as $inputDelivery) {
                                 $eggsInput = $eggsInput + $inputDelivery->getEggsNumber();
                             }
                             $eggs = $eggs + $delivery->getEggsNumber() - $eggsInput;
@@ -44,8 +44,7 @@ class InputsFarmDeliveryType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ]
-            ])
-            ;
+            ]);
 
         $builder->get('breeder')->addEventListener(
             FormEvents::POST_SUBMIT,
@@ -61,7 +60,12 @@ class InputsFarmDeliveryType extends AbstractType
                         $eggs = 0;
                         $deliveries = $herds->getEggsDeliveries();
                         foreach ($deliveries as $delivery) {
-                            $eggs = $eggs + $delivery->getEggsOnWarehouse();
+                            $inputDeliveries = $delivery->getInputsFarmDeliveries();
+                            $eggsInput = 0;
+                            foreach ($inputDeliveries as $inputDelivery) {
+                                $eggsInput = $eggsInput + $inputDelivery->getEggsNumber();
+                            }
+                            $eggs = $eggs + $delivery->getEggsNumber() - $eggsInput;
                         }
                         return $herds->getName() . ' - stan jaj: ' . $eggs;
                     },
