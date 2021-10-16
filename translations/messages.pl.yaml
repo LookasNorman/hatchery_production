@@ -863,7 +863,8 @@ menu:
       index: Dostawy jaj na magazynie
       title: Jaja
     eggs_inputs:
-      index: Nakłady
+      new: Dodaj nakład
+      index: Wykaz nakładów
       title: Nakłady
     eggs_inputs_details:
       index: Dostawy nakładu
