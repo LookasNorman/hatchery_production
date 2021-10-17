@@ -61,12 +61,15 @@
             <td>{{ eggs_delivery.delivery.firstLayingDate ? eggs_delivery.delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
             <td>{{ eggs_delivery.delivery.lastLayingDate ? eggs_delivery.delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
             <td>
-                {{ include('layout/buttons/list_actions.html.twig',
-                    {pathLink: path('eggs_delivery_show', {'id': eggs_delivery.delivery.id}), text: 'eggs_delivery.index.table.badge.show' }) }}
-                {% if is_granted('ROLE_PRODUCTION') %}
-                    {{ include('layout/buttons/list_actions.html.twig',
-                        {pathLink: path('eggs_delivery_edit', {'id': eggs_delivery.delivery.id}), text: 'eggs_delivery.index.table.badge.edit' }) }}
-                {% endif %}
+                <span class="btn-group">
+                    {{ include('layout/buttons/list_show.html.twig',
+                        {pathLink: path('eggs_delivery_show', {'id': eggs_delivery.delivery.id})}) }}
+                    {% if is_granted('ROLE_PRODUCTION') %}
+                        {{ include('layout/buttons/list_edit.html.twig',
+                            {pathLink: path('eggs_delivery_edit', {'id': eggs_delivery.delivery.id})}) }}
+                        {{ include('eggs_delivery/_delete_trash_form.html.twig', {'id': eggs_delivery.delivery.id}) }}
+                    {% endif %}
+                    </span>
             </td>
         </tr>
     {% else %}

@@ -52,7 +52,7 @@
         {% include 'layout/cards/cfooter.html.twig' %}
         {% if is_granted('ROLE_PRODUCTION') %}
                     {{ include('eggs_delivery/_delete_form.html.twig') }}
-                    <a class="btn btn-warning" href="{{ path('eggs_delivery_edit', {'id': eggs_delivery.id}) }}">
+                    <a class="btn btn-warning m-2" href="{{ path('eggs_delivery_edit', {'id': eggs_delivery.id}) }}">
                         {% trans %}eggs_delivery.show.button.edit{% endtrans %}
                     </a>
                 {% endif %}

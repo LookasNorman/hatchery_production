@@ -48,7 +48,7 @@ class ProductionController extends AbstractController
     public function deliveryHerd(Supplier $supplier)
     {
         $herdsRepository = $this->getDoctrine()->getRepository(Herds::class);
-        $herds = $herdsRepository->findBy(['breeder' => $supplier],['name' => 'ASC']);
+        $herds = $herdsRepository->findBy(['breeder' => $supplier], ['name' => 'ASC']);
 
         return $this->render('eggs_delivery/production/herd.html.twig', [
             'herds' => $herds
@@ -58,7 +58,7 @@ class ProductionController extends AbstractController
     /**
      * @Route("/new/{id}", name="production_delivery_new", methods={"GET","POST"})
      */
-    public function deliveryNew(Herds $herd, Request $request): Response
+    public function deliveryNew(Herds $herd, Request $request, \Swift_Mailer $mailer): Response
     {
         $deliveryRepository = $this->getDoctrine()->getRepository(Delivery::class);
         $firstLaying = new \DateTime($deliveryRepository->lastHerdDelivery($herd));
@@ -76,6 +76,22 @@ class ProductionController extends AbstractController
             $eggsDelivery->setEggsOnWarehouse($eggsDelivery->getEggsNumber());
             $entityManager->persist($eggsDelivery);
             $entityManager->flush();
+
+            $message = (new \Swift_Message('Przyjęto jaja'))
+                ->setFrom('lookassymfony@gmail.com')
+                ->setTo('lookasziebice@gmail.com')
+                ->setBody(
+                    $this->renderView(
+                    // templates/emails/registration.html.twig
+                        'emails/deliveryEgg.html.twig',
+                        ['eggs_delivery' => $eggsDelivery]
+                    ),
+                    'text/html'
+                );
+
+            $mailer->send($message);
+
+
 
             return $this->redirectToRoute('production_index');
         }

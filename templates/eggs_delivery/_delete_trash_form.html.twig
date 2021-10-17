@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('eggs_delivery_delete', {'id': id}) }}"
+      onsubmit="return confirm('{% trans %}eggs_delivery.delete.confirm{% endtrans %}');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ id) }}">
+    <button class="btn"><i class="fa fa-trash"></i> </button>
+{#    {{ include('layout/buttons/delete.html.twig', { text: 'eggs_delivery.delete.button.delete' }) }}#}
+</form>
