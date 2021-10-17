@@ -60,13 +60,4 @@ class DefaultController extends AbstractController
             'hatchers' => $hatchers,
         ]);
     }
-
-    /**
-     * @Route("/production", name="production_index")
-     * @IsGranted("ROLE_PRODUCTION")
-     */
-    public function productionSite()
-    {
-        return $this->render('main_page/production.html.twig');
-    }
 }

@@ -20,6 +20,17 @@ class DeliveryRepository extends ServiceEntityRepository
         parent::__construct($registry, Delivery::class);
     }
 
+    public function lastHerdDelivery($herd)
+    {
+        return $this->createQueryBuilder('ed')
+            ->select('MAX(ed.deliveryDate)')
+            ->andWhere('ed.herd = :herd')
+            ->setParameters(['herd' => $herd])
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
     public function eggsBreedDelivered($breed)
     {
         return $this->createQueryBuilder('ed')

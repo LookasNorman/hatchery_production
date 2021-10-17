@@ -285,6 +285,11 @@ eggs_delivery:
     confirm: Jesteś pewien, że chcesz usunąć dostawę?
     button:
       delete: Usuń
+  edit:
+    title: Edycja dostawy jaj
+    button:
+      back: Lista dostaw jaj
+      update: Zaktualizuj
   form:
     button:
       save: Zapisz
@@ -299,11 +304,6 @@ eggs_delivery:
       herd: Stado
       last_laying_date: Data zniesienia do
       part_index: Indeks partii
-  edit:
-    title: Edycja dostawy jaj
-    button:
-      back: Lista dostaw jaj
-      update: Zaktualizuj
   index:
     button:
       new: Dodaj dostawę
@@ -333,6 +333,9 @@ eggs_delivery:
     title: Dodawanie dostawy
     button:
       back: Lista dostaw
+  production:
+    breed:
+      title: Wybierz dostawcę jaj
   show:
     id: Index
     title: Szczegóły dostawy
