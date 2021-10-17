@@ -110,4 +110,20 @@ class InputsFarmController extends AbstractController
 
         return $this->redirectToRoute('inputs_farm_index');
     }
+
+    /**
+     * @Route("/plan_delete/{id}", name="inputs_farm_plan_delete", methods={"POST"})
+     */
+    public function deletePlan(Request $request, InputsFarm $inputsFarm): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$inputsFarm->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($inputsFarm);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('eggs_inputs_plan_show', [
+            'id' => $inputsFarm->getEggInput()->getId()
+        ]);
+    }
 }

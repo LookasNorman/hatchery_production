@@ -24,7 +24,13 @@
                 </div>
             </td>
             <td class="align-middle">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    {% if inputFarm.inputsFarmDeliveries is empty %}
+                {{ include('inputs_farm/_delete_trash_form.html.twig', {'inputs_farm': inputFarm}) }}
+                        <a class="btn" href=""><i class="fa fa-pencil"></i></a>
+                {% endif %}
                 {{ inputFarm.chicksFarm.customer.name }}: {{ inputFarm.chicksFarm.name }}
+                </div>
             </td>
             <td class="text-center align-middle">{{ inputFarm.chickNumber|number_format(0, ',', ' ') }}
             </td>
