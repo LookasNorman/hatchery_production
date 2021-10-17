@@ -4,11 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Delivery;
 use App\Entity\Herds;
+use App\Entity\Inputs;
 use App\Entity\Supplier;
 use App\Form\DeliveryProductionType;
-use App\Form\DeliveryType;
-use App\Repository\BreedRepository;
-use App\Repository\HerdsRepository;
+use App\Repository\InputsRepository;
 use App\Repository\SupplierRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,6 +27,20 @@ class ProductionController extends AbstractController
     public function productionSite()
     {
         return $this->render('main_page/production.html.twig');
+    }
+
+    /**
+     * @Route("/inputs", name="production_inputs_index")
+     */
+    public function inputsSite(InputsRepository $inputsRepository)
+    {
+        $date = new \DateTime();
+        $date->modify('-22 days');
+        $inputs = $inputsRepository->inputsInProduction($date);
+
+        return $this->render('eggs_inputs/production/index.html.twig', [
+            'inputs' => $inputs
+        ]);
     }
 
     /**

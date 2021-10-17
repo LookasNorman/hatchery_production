@@ -14,16 +14,17 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class InputsRepository extends ServiceEntityRepository
 {
-//    public function herdDelivery()
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->join('i.inputsFarms', 'if')
-//            ->join('if.inputsFarmDeliveries', 'ifd')
-//            ->join('ifd.delivery' ,'d')
-//            ->getQuery()
-//            ->getResult()
-//            ;
-//    }
+
+    public function inputsInProduction($date)
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.inputDate > :date')
+            ->setParameters(['date' => $date])
+            ->orderBy('i.inputDate', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
 
     public function __construct(ManagerRegistry $registry)
