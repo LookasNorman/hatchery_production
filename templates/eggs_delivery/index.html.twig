@@ -42,28 +42,30 @@
     {% for eggs_delivery in eggs_deliveries %}
         <tr>
             <td>
-                {% if eggs_delivery.partIndex %}
-                    {{ eggs_delivery.partIndex }}
+                {% if eggs_delivery.delivery.partIndex %}
+                    {{ eggs_delivery.delivery.partIndex }}
                 {% else %}
                     {% if is_granted('ROLE_ADMIN') %}
                         {{ include('layout/buttons/list_actions.html.twig',
-                            {pathLink: path('eggs_delivery_add', {'id': eggs_delivery.id}), text: 'eggs_delivery.index.table.badge.add_part_index' }) }}
+                            {pathLink: path('eggs_delivery_add', {'id': eggs_delivery.delivery.id}), text: 'eggs_delivery.index.table.badge.add_part_index' }) }}
                     {% else %}
                         ------
                     {% endif %}
                 {% endif %}
             </td>
-            <td>{{ eggs_delivery.herd.breeder.name }}</td>
-            <td>{{ eggs_delivery.herd.name }}</td>
-            <td>{{ eggs_delivery.deliveryDate ? eggs_delivery.deliveryDate|date('Y-m-d') : '' }}</td>
-            <td>{{ eggs_delivery.eggsNumber }}</td>
-            <td>{{ eggs_delivery.eggsOnWarehouse }}</td>
-            <td>{{ eggs_delivery.firstLayingDate ? eggs_delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
-            <td>{{ eggs_delivery.lastLayingDate ? eggs_delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
+            <td>{{ eggs_delivery.delivery.herd.breeder.name }}</td>
+            <td>{{ eggs_delivery.delivery.herd.name }}</td>
+            <td>{{ eggs_delivery.delivery.deliveryDate ? eggs_delivery.delivery.deliveryDate|date('Y-m-d') : '' }}</td>
+            <td>{{ eggs_delivery.delivery.eggsNumber }}</td>
+            <td>{{ eggs_delivery.eggs }}</td>
+            <td>{{ eggs_delivery.delivery.firstLayingDate ? eggs_delivery.delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
+            <td>{{ eggs_delivery.delivery.lastLayingDate ? eggs_delivery.delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
             <td>
-                {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('eggs_delivery_show', {'id': eggs_delivery.id}), text: 'eggs_delivery.index.table.badge.show' }) }}
+                {{ include('layout/buttons/list_actions.html.twig',
+                    {pathLink: path('eggs_delivery_show', {'id': eggs_delivery.delivery.id}), text: 'eggs_delivery.index.table.badge.show' }) }}
                 {% if is_granted('ROLE_PRODUCTION') %}
-                    {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('eggs_delivery_edit', {'id': eggs_delivery.id}), text: 'eggs_delivery.index.table.badge.edit' }) }}
+                    {{ include('layout/buttons/list_actions.html.twig',
+                        {pathLink: path('eggs_delivery_edit', {'id': eggs_delivery.delivery.id}), text: 'eggs_delivery.index.table.badge.edit' }) }}
                 {% endif %}
             </td>
         </tr>

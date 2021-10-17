@@ -10,6 +10,7 @@ use App\Form\DeliveryPartIndexType;
 use App\Form\DeliveryType;
 use App\Repository\DeliveryRepository;
 use App\Repository\DetailsDeliveryRepository;
+use App\Repository\InputsFarmDeliveryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,10 +27,21 @@ class DeliveryController extends AbstractController
      * @Route("/", name="eggs_delivery_index", methods={"GET"})
      * @IsGranted("ROLE_PRODUCTION")
      */
-    public function index(DeliveryRepository $eggsDeliveryRepository): Response
+    public function index(DeliveryRepository $eggsDeliveryRepository, InputsFarmDeliveryRepository $inputsFarmDeliveryRepository): Response
     {
+        $deliveries = $eggsDeliveryRepository->findAll();
+        $eggsDeliveries = [];
+        foreach ($deliveries as $delivery){
+            $inputsDeliveries = $inputsFarmDeliveryRepository->eggsFromDelivery($delivery);
+            if($inputsDeliveries > 0){
+             array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$inputsDeliveries]);
+            } elseif(is_null($inputsDeliveries)){
+                array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$delivery->getEggsNumber()]);
+            }
+        }
+
         return $this->render('eggs_delivery/index.html.twig', [
-            'eggs_deliveries' => $eggsDeliveryRepository->deliveryOnWarehouse(),
+            'eggs_deliveries' => $eggsDeliveries,
         ]);
     }
 

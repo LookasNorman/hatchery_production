@@ -36,33 +36,6 @@ class InputsFarmDeliveryController extends AbstractController
         ]);
     }
 
-    public function addDelivery($deliveries, $totalEggs, $inputFarm)
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-
-        foreach ($deliveries as $delivery) {
-
-            $eggsNumber = $delivery->getEggsOnWarehouse();
-
-            if ($totalEggs > 0 && $eggsNumber > 0) {
-                $inputsFarmDelivery = new InputsFarmDelivery();
-                $inputsFarmDelivery->setDelivery($delivery);
-                $inputsFarmDelivery->setInputsFarm($inputFarm);
-                if ($eggsNumber >= $totalEggs) {
-                    $inputsFarmDelivery->setEggsNumber($totalEggs);
-                    $delivery->setEggsOnWarehouse($eggsNumber - $totalEggs);
-                    $totalEggs = 0;
-                } else {
-                    $inputsFarmDelivery->setEggsNumber($eggsNumber);
-                    $delivery->setEggsOnWarehouse(0);
-                    $totalEggs = $totalEggs - $eggsNumber;
-                }
-                $entityManager->persist($inputsFarmDelivery);
-            }
-        }
-        $entityManager->flush();
-    }
-
     public function eggsOnWareHouseInDelivery($delivery)
     {
         $inputsEggs = $delivery->getInputsFarmDeliveries();
@@ -81,16 +54,6 @@ class InputsFarmDeliveryController extends AbstractController
             $eggsNumber = $eggsNumber + $delivery['eggsOnWarehouse'];
         }
         return $eggsNumber;
-    }
-
-    public function deliveriesAndEggs($deliveries)
-    {
-        $deliveries = [];
-        foreach ($deliveries as $delivery) {
-            $eggsOnWarehouse = $delivery->getEggsNumber() - $this->eggsOnWareHouseInDelivery($delivery);
-            array_push($deliveries, ['delivery' => $delivery, 'eggsOnWarehouse' => $eggsOnWarehouse]);
-        }
-        return $deliveries;
     }
 
     /**
