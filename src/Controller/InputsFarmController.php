@@ -44,6 +44,30 @@ class InputsFarmController extends AbstractController
     }
 
     /**
+     * @Route("/new_plan/{id}", name="inputs_farm_plan_new", methods={"GET","POST"})
+     */
+    public function newPlan(Request $request, Inputs $inputs = null): Response
+    {
+        $inputsFarm = new InputsFarm();
+        $inputsFarm->setEggInput($inputs);
+        $form = $this->createForm(InputsFarmType::class, $inputsFarm);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($inputsFarm);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('eggs_inputs_plan_show', ['id' => $inputs->getId()]);
+        }
+
+        return $this->render('inputs_farm/new.html.twig', [
+            'inputs_farm' => $inputsFarm,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="inputs_farm_show", methods={"GET"})
      */
     public function show(InputsFarm $inputsFarm): Response

@@ -807,6 +807,9 @@ inputs_farm_delivery:
   new:
     header: Odbiorca piskląt
     title: Dodawanie dostawy do nakładu
+  plan:
+    index:
+      title: Wybierz planowany nakład
   show:
     button:
       back: Szczegóły nakładu
@@ -922,6 +925,8 @@ menu:
       index: Dostawy jaj - planowane
     plan_indicator:
       index: Wskaźniki do planów
+    plan_inputs_delivery:
+      index: Dodaj planowane dostawy
     plan_week:
       index: Plan tygodniowy
     plans:

@@ -19,32 +19,80 @@ class InputsFarmDeliveryPlanRepository extends ServiceEntityRepository
         parent::__construct($registry, InputsFarmDeliveryPlan::class);
     }
 
-    // /**
-    //  * @return InputsFarmDeliveryPlan[] Returns an array of InputsFarmDeliveryPlan objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function eggsFromDelivery($delivery)
     {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('ifd')
+            ->select('d.eggsNumber - SUM(ifd.eggsNumber)')
+            ->join('ifd.delivery', 'd')
+            ->andWhere('ifd.delivery = :delivery')
+            ->setParameters(['delivery' => $delivery])
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
+    public function eggsBreedProduction($breed)
+    {
+        return $this->createQueryBuilder('ifd')
+            ->select('SUM(ifd.eggsNumber)')
+            ->join('ifd.delivery', 'd')
+            ->join('d.herd', 'h')
+            ->andWhere('h.breed = :breed')
+            ->setParameters(['breed' => $breed])
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
+    public function inputFarmDeliveryForLighting($herd, $input)
+    {
+        return $this->createQueryBuilder('ifd')
+            ->join('ifd.inputsFarm', 'if')
+            ->join('ifd.delivery', 'd')
+            ->andWhere('if.eggInput = :input')
+            ->andWhere('d.herd = :herd')
+            ->setParameters(['input' => $input, 'herd' => $herd])
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?InputsFarmDeliveryPlan
+    public function herdInputEggsInInput($herd, $input)
     {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('ifd')
+            ->select('SUM(ifd.eggsNumber)')
+            ->join('ifd.delivery', 'd')
+            ->join('ifd.inputsFarm', 'if')
+            ->andWhere('d.herd = :herd')
+            ->andWhere('if.eggInput = :input')
+            ->setParameters(['input' => $input, 'herd' => $herd])
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getSingleScalarResult()
+            ;
     }
-    */
+
+    public function herdInputFarmDelivery($herd, $input)
+    {
+        return $this->createQueryBuilder('ifd')
+            ->join('ifd.inputsFarm', 'if')
+            ->join('ifd.delivery', 'd')
+            ->andWhere('d.herd = :herd')
+            ->andWhere('if.eggInput = :input')
+            ->setParameters(['input' => $input, 'herd' => $herd])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function herdDelivery($herd)
+    {
+        return $this->createQueryBuilder('ifd')
+            ->join('ifd.inputsFarm', 'if')
+            ->join('ifd.delivery', 'd')
+            ->andWhere('d.herd = :herd')
+            ->setParameters(['herd' => $herd])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

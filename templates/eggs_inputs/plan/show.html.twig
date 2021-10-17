@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <h1>{% trans %}eggs_inputs.show.title{% endtrans %}</h1>
+    {{ include('layout/buttons/back.html.twig', { pathLink: path('eggs_inputs_index'), text: 'eggs_inputs.show.button.back' }) }}
+
+    <div class="d-flex justify-content-center card-group">
+        {% include 'layout/cards/chead.html.twig' %}
+        {{ eggs_input.name }}
+        {% include 'layout/cards/cbody.html.twig' %}
+        <p class="card-text">
+            {% trans %}eggs_inputs.show.input_date{% endtrans %}
+            : {{ eggs_input.inputDate ? eggs_input.inputDate|date('Y-m-d') : '' }}
+        </p>
+        {% include 'layout/cards/cfooter.html.twig' %}
+        <ul>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="d-flex">
+                    {{ include('eggs_inputs/_delete_form.html.twig') }}
+                    {{ include('layout/buttons/edit.html.twig',
+                        {pathLink: path('eggs_inputs_edit', {'id': eggs_input.id}), text: 'eggs_inputs.show.button.edit'}) }}
+                    {{ include('layout/buttons/add.html.twig',
+                        {pathLink: path('inputs_farm_plan_new', {'id': eggs_input.id}), text: 'eggs_inputs.show.button.add_farm'}) }}
+                </li>
+            {% endif %}
+        </ul>
+        {% include 'layout/cards/cend.html.twig' %}
+    </div>
+    <hr>
+    <h5>Planowane pisklęta</h5>
+    {% include 'eggs_inputs/show_customer_delivery.html.twig' %}
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{% trans %}inputs_farm_delivery.plan.index.title{% endtrans %}</h1>
+
+    <div class="d-flex justify-content-center flex-wrap">
+        <a class="btn btn-info p-4 m-2 col-sm-3 disabled" href="">
+            <i class="fa fa-plus"></i>
+        </a>
+        {% for input in inputs %}
+            <a class="btn btn-info p-4 m-2 col-sm-3" href="{{ path('eggs_inputs_plan_show', {'id': input.id}) }}">
+                {{ input.name }} - {{ input.inputDate|date('Y-m-d') }}
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
