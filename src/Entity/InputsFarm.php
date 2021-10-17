@@ -41,9 +41,15 @@ class InputsFarm
      */
     private $inputsFarmDeliveries;
 
+    /**
+     * @ORM\OneToMany(targetEntity=InputsFarmDeliveryPlan::class, mappedBy="inputsFarm")
+     */
+    private $inputsFarmDeliveryPlans;
+
     public function __construct()
     {
         $this->inputsFarmDeliveries = new ArrayCollection();
+        $this->inputsFarmDeliveryPlans = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,6 +117,36 @@ class InputsFarm
             // set the owning side to null (unless already changed)
             if ($inputsFarmDelivery->getInputsFarm() === $this) {
                 $inputsFarmDelivery->setInputsFarm(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InputsFarmDeliveryPlan[]
+     */
+    public function getInputsFarmDeliveryPlans(): Collection
+    {
+        return $this->inputsFarmDeliveryPlans;
+    }
+
+    public function addInputsFarmDeliveryPlan(InputsFarmDeliveryPlan $inputsFarmDeliveryPlan): self
+    {
+        if (!$this->inputsFarmDeliveryPlans->contains($inputsFarmDeliveryPlan)) {
+            $this->inputsFarmDeliveryPlans[] = $inputsFarmDeliveryPlan;
+            $inputsFarmDeliveryPlan->setInputsFarm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInputsFarmDeliveryPlan(InputsFarmDeliveryPlan $inputsFarmDeliveryPlan): self
+    {
+        if ($this->inputsFarmDeliveryPlans->removeElement($inputsFarmDeliveryPlan)) {
+            // set the owning side to null (unless already changed)
+            if ($inputsFarmDeliveryPlan->getInputsFarm() === $this) {
+                $inputsFarmDeliveryPlan->setInputsFarm(null);
             }
         }
 
