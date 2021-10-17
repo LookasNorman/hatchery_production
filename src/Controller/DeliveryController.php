@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Breed;
 use App\Entity\Delivery;
 use App\Entity\Herds;
+use App\Entity\InputsFarmDelivery;
 use App\Entity\Supplier;
 use App\Form\DeliveryPartIndexType;
 use App\Form\DeliveryType;
@@ -23,22 +24,46 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class DeliveryController extends AbstractController
 {
-    /**
-     * @Route("/", name="eggs_delivery_index", methods={"GET"})
-     * @IsGranted("ROLE_PRODUCTION")
-     */
-    public function index(DeliveryRepository $eggsDeliveryRepository, InputsFarmDeliveryRepository $inputsFarmDeliveryRepository): Response
+    public function eggsOnWarehouse($deliveries)
     {
-        $deliveries = $eggsDeliveryRepository->findAll();
+        $inputsFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
         $eggsDeliveries = [];
         foreach ($deliveries as $delivery){
             $inputsDeliveries = $inputsFarmDeliveryRepository->eggsFromDelivery($delivery);
             if($inputsDeliveries > 0){
-             array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$inputsDeliveries]);
+                array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$inputsDeliveries]);
             } elseif(is_null($inputsDeliveries)){
                 array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$delivery->getEggsNumber()]);
             }
         }
+
+        return $eggsDeliveries;
+    }
+
+    public function eggsWarehouse($deliveries)
+    {
+        $inputsFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+        $eggsDeliveries = [];
+        foreach ($deliveries as $delivery){
+            $inputsDeliveries = $inputsFarmDeliveryRepository->eggsFromDelivery($delivery);
+            if(is_null($inputsDeliveries)){
+                array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$delivery->getEggsNumber()]);
+            } else {
+                array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$inputsDeliveries]);
+            }
+        }
+
+        return $eggsDeliveries;
+    }
+
+    /**
+     * @Route("/", name="eggs_delivery_index", methods={"GET"})
+     * @IsGranted("ROLE_PRODUCTION")
+     */
+    public function index(DeliveryRepository $eggsDeliveryRepository): Response
+    {
+        $deliveries = $eggsDeliveryRepository->findAll();
+        $eggsDeliveries = $this->eggsOnWarehouse($deliveries);
 
         return $this->render('eggs_delivery/index.html.twig', [
             'eggs_deliveries' => $eggsDeliveries,
@@ -50,8 +75,11 @@ class DeliveryController extends AbstractController
      */
     public function allDelivery(DeliveryRepository $eggsDeliveryRepository): Response
     {
+        $deliveries = $eggsDeliveryRepository->findAll();
+        $eggsDeliveries = $this->eggsWarehouse($deliveries);
+
         return $this->render('eggs_delivery/index.html.twig', [
-            'eggs_deliveries' => $eggsDeliveryRepository->findBy([], ['deliveryDate' => 'asc']),
+            'eggs_deliveries' => $eggsDeliveries,
         ]);
     }
 
