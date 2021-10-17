@@ -25,6 +25,7 @@ class LightingType extends AbstractType
             ->add('lightingDate', DateType::class, [
                 'widget' => 'single_text',
                 'label' => 'eggs_inputs_lighting.form.label.lighting_date',
+                'data' => new \DateTime(),
                 'attr' => [
                     'class' => 'form-control'
                 ]

@@ -336,6 +336,8 @@ eggs_delivery:
   production:
     breed:
       title: Wybierz dostawcę jaj
+    herd:
+      title: Wybierz stado
   show:
     id: Index
     title: Szczegóły dostawy
@@ -388,6 +390,9 @@ eggs_inputs:
     title: Wykaz nakładów przed przekładem
   no_selection:
     title: Wykaz nakładów przed wybieraniem
+  production:
+    inputs:
+      title: Wybierz nakład
   show:
     title: Szczegóły nakładu
     input_date: Data nakładu
@@ -511,8 +516,14 @@ eggs_inputs_lighting:
   new:
     button:
       back: Szczegóły nakładu
+      herds: Świetlenie stad w nakładzie
     herd: Stado
     title: Dodawanie świetlenia
+  production:
+    herd:
+      title: Wybierz stado do wpisania świetlenia
+    inputs:
+      title: Wybierz świetlony nakład
   show:
     title: Szczegóły świetlenia
     waste_eggs: Odpad jaj

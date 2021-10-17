@@ -94,7 +94,7 @@ class LightingController extends AbstractController
 
     /**
      * @Route("/new/{inputs}/{herd}", name="eggs_inputs_lighting_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function new(
         $inputs,
@@ -115,6 +115,11 @@ class LightingController extends AbstractController
 
             $this->createLighting($form, $inputsFarmDelivery);
 
+            $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+            if(in_array('ROLE_PRODUCTION', $user->getRoles(), true)){
+                return $this->redirectToRoute('production_lighting_herd', ['id' => $inputs->getId()]);
+            }
             return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputs->getId()]);
         }
 

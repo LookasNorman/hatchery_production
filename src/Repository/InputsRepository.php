@@ -22,8 +22,7 @@ class InputsRepository extends ServiceEntityRepository
             ->setParameters(['date' => $date])
             ->orderBy('i.inputDate', 'DESC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
 

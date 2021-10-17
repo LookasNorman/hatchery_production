@@ -44,6 +44,41 @@ class ProductionController extends AbstractController
     }
 
     /**
+     * @Route("/lightings", name="production_lightings_index")
+     */
+    public function lightingsSite(InputsRepository $inputsRepository)
+    {
+        $date = new \DateTime();
+        $date->modify('-22 days');
+        $inputs = $inputsRepository->inputsInProduction($date);
+
+        return $this->render('eggs_inputs_lighting/production/index.html.twig', [
+            'inputs' => $inputs
+        ]);
+    }
+
+    public function herdInInput($input)
+    {
+        $herdRepository = $this->getDoctrine()->getRepository(Herds::class);
+        $herds = $herdRepository->herdInInput($input);
+
+        return $herds;
+    }
+
+    /**
+     * @Route("/lightings/herd/{id}", name="production_lighting_herd")
+     */
+    public function lightingHerd(Inputs $inputs)
+    {
+        $herds = $this->herdInInput($inputs);
+
+        return $this->render('eggs_inputs_lighting/production/herd.html.twig', [
+            'herds' => $herds,
+            'inputs' => $inputs,
+        ]);
+    }
+
+    /**
      * @Route("/delivery/supplier", name="production_delivery_supplier")
      */
     public function deliverySupplier(SupplierRepository $supplierRepository)
@@ -103,7 +138,6 @@ class ProductionController extends AbstractController
                 );
 
             $mailer->send($message);
-
 
 
             return $this->redirectToRoute('production_index');
