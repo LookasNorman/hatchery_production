@@ -101,7 +101,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            if ($targetPath != 'http://localhost:8000/') {
+            if ($targetPath != 'https://zwdmalec.lookaskonieczny.com/') {
                 return new RedirectResponse($targetPath);
             }
         }

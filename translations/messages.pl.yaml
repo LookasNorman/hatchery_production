@@ -1015,7 +1015,7 @@ plan_input_farm:
     confirm: Jesteś pewień że chcesz usnąć fermę z planowanego nakładu?
 plans:
   index:
-    chicks: Ilość piskląt
+    chicks: Piskląt do nałożenia
     day: Dzień
     details: Szczegóły
     eggs_delivery: Dostarczonych jaj

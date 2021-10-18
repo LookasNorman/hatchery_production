@@ -26,12 +26,12 @@
             {% if loop.first %}
                 <div class="tab-pane fade show active" id="breed_{{ key }}" role="tabpanel"
                      aria-labelledby="breed-tab_{{ key }}">
-                    {% include('plans/supplier.html.twig') %}
+                    {% include('plans/breed.html.twig') %}
                 </div>
             {% else %}
                 <div class="tab-pane fade show" id="breed_{{ key }}" role="tabpanel"
                      aria-labelledby="breed-tab_{{ key }}">
-                    {% include('plans/supplier.html.twig') %}
+                    {% include('plans/breed.html.twig') %}
                 </div>
             {% endif %}
         {% endfor %}
