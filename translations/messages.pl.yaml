@@ -1029,7 +1029,11 @@ plans:
         chicks: Zamówienia piskląt
         eggs: Planowane dostawy
     table:
-      herd: Stado
+      herd:
+        age: Wiek
+        day: dni
+        name: Stado
+        week: tygodni
       deliveryEggsNumber: Planowane jaja
       farm: Ferma
       chickNumber: Ilość piskląt

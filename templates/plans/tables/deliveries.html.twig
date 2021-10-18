@@ -13,7 +13,8 @@
                 <table class="table table-sm">
                     <thead>
                     <tr>
-                        <th>{% trans %}plans.index.table.herd{% endtrans %}</th>
+                        <th>{% trans %}plans.index.table.herd.name{% endtrans %}</th>
+                        <th>{% trans %}plans.index.table.herd.age{% endtrans %}</th>
                         <th>{% trans %}plans.index.table.deliveryEggsNumber{% endtrans %}</th>
                     </tr>
                     </thead>
@@ -21,6 +22,13 @@
                     {% for plans in dayPlans.dayDeliveries %}
                         <tr>
                             <td>{{ plans.herd.name }}</td>
+                            {% set difference = date(plans.deliveryDate).diff(plans.herd.hatchingDate) %}
+                            {% set days = difference.days %}
+                            {% set weeks = days / 7 %}
+                            <td>
+                                {{ days }} {% trans %}plans.index.table.herd.day{% endtrans %}
+                                {{ weeks|round(0, 'floor') }} {% trans %}plans.index.table.herd.week{% endtrans %}
+                            </td>
                             <td>{{ plans.eggsNumber }}</td>
                         </tr>
                     {% endfor %}
@@ -31,20 +39,20 @@
     </div>
 </div>
 
-{#<h6 class="alert alert-info">{% trans %}plans.index.modal.title.eggs{% endtrans %}</h6>#}
-{#<table class="table table-sm">#}
-{#    <thead>#}
-{#    <tr>#}
-{#        <th>{% trans %}plans.index.table.herd{% endtrans %}</th>#}
-{#        <th>{% trans %}plans.index.table.deliveryEggsNumber{% endtrans %}</th>#}
-{#    </tr>#}
-{#    </thead>#}
-{#    <tbody>#}
-{#    {% for plans in dayPlans.dayDeliveries %}#}
-{#        <tr>#}
-{#            <td>{{ plans.herd.name }}</td>#}
-{#            <td>{{ plans.eggsNumber }}</td>#}
-{#        </tr>#}
-{#    {% endfor %}#}
-{#    </tbody>#}
-{#</table>#}
+{# <h6 class="alert alert-info">{% trans %}plans.index.modal.title.eggs{% endtrans %}</h6> #}
+{# <table class="table table-sm"> #}
+{# <thead> #}
+{# <tr> #}
+{# <th>{% trans %}plans.index.table.herd{% endtrans %}</th> #}
+{# <th>{% trans %}plans.index.table.deliveryEggsNumber{% endtrans %}</th> #}
+{# </tr> #}
+{# </thead> #}
+{# <tbody> #}
+{# {% for plans in dayPlans.dayDeliveries %} #}
+{# <tr> #}
+{# <td>{{ plans.herd.name }}</td> #}
+{# <td>{{ plans.eggsNumber }}</td> #}
+{# </tr> #}
+{# {% endfor %} #}
+{# </tbody> #}
+{# </table> #}
