@@ -1020,6 +1020,9 @@ plans:
     details: Szczegóły
     eggs_delivery: Dostarczonych jaj
     eggs_warehouse: Stan jaj
+    herd:
+      eggs_delivery: Planowanych jaj
+      week: Wiek kur
     modal:
       close: Zamknij
       title:

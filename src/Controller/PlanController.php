@@ -68,6 +68,16 @@ class PlanController extends AbstractController
         return $deliveries;
     }
 
+    public function herdDeliveryInWeek($date, $herd)
+    {
+        $planeDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
+        $end = clone $date;
+        $end->modify('next Monday -1 second');
+        $deliveries = $planeDeliveryEggRepository->herdPlanDeliveryInDay($date, $end, $herd);
+
+        return $deliveries;
+    }
+
     public function herdDeliveryInDay($date, $herd)
     {
         $planeDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
@@ -109,30 +119,27 @@ class PlanController extends AbstractController
      */
     public function herdDeliveryIndex(Herds $herd)
     {
-        $now = new \DateTime('today midnight');
-        $nowWeek = (int)$now->format('W');
+        $hatchingDate = $herd->getHatchingDate();
 
+        $startDelivery = clone $hatchingDate;
+        $startDelivery->modify('+25 week');
+        $startDelivery->modify('previous monday');
+        $date = clone $startDelivery;
         $weeksPlans = [];
-        for ($i = $nowWeek; $i <= 52; $i++) {
-            $monday = new \DateTime('midnight');
-            $monday->setISODate(2021, $i);
-            $date = clone $monday;
-            $daysPlans = [];
-            for ($j = 0; $j < 7; $j++) {
-                $dayDeliveries = $this->herdDeliveryInDay($date, $herd);
-                $eggs = $this->eggsInDeliveries($dayDeliveries);
-                if ($date >= $now) {
-                    array_push($daysPlans, [
-                        'date' => $date,
-                        'dayDeliveries' => $dayDeliveries,
-                        'eggs' => $eggs,
-                    ]);
-                }
+        for ($i = 1; $i <= 40; $i++) {
+
+            $dayDeliveries = $this->herdDeliveryInWeek($date, $herd);
+            $eggs = $this->eggsInDeliveries($dayDeliveries);
+            $weekPlans = [
+                'date' => $date,
+                'dayDeliveries' => $dayDeliveries,
+                'eggs' => $eggs,
+            ];
                 $date = clone $date;
-                $date->modify('+1 days');
-            }
-            array_push($weeksPlans, ['week' => $i, 'weekPlans' => $daysPlans]);
+                $date->modify('next Monday');
+            array_push($weeksPlans, ['week' => $i, 'weekPlans' => $weekPlans]);
         }
+
         return $this->render('plans/herd_index.html.twig', [
             'weeksPlans' => $weeksPlans,
             'herd' => $herd

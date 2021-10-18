@@ -24,7 +24,7 @@ class InputsFarmDeliveryPlan
     private $inputsFarm;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Delivery::class, inversedBy="inputsFarmDelivryPlans")
+     * @ORM\ManyToOne(targetEntity=Delivery::class, inversedBy="inputsFarmDeliveryPlans")
      * @ORM\JoinColumn(nullable=false)
      */
     private $delivery;
