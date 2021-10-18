@@ -971,6 +971,20 @@ plan_delivery_egg_for_herd:
     friday: Piątek
     saturday: Sobota
     sunday: Niedziela
+plan_indicators:
+  show:
+    table:
+      id: Lp.
+      fertilization: Zapłodnienie
+      transfer_hatchability: Wylęgowość z zapłodnionych
+      hatchability: Wylęgowość
+      setters:
+        number: Ilość KL
+        capacity: Pojemność KL
+      hatchers:
+        number: Ilość KK
+        capacity: Pojemność KK
+    title: Wskaźniki do planowania
 plan_input:
   form:
     button:

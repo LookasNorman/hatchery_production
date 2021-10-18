@@ -1,34 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}PlanIndicators{% endblock %}
-
 {% block body %}
-    <h1>PlanIndicators</h1>
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ plan_indicator.id }}</td>
-            </tr>
-            <tr>
-                <th>Fertilization</th>
-                <td>{{ plan_indicator.fertilization }}</td>
-            </tr>
-            <tr>
-                <th>TransferHatchability</th>
-                <td>{{ plan_indicator.transferHatchability }}</td>
-            </tr>
-            <tr>
-                <th>Hatchability</th>
-                <td>{{ plan_indicator.hatchability }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('plan_indicators_index') }}">back to list</a>
-
-    <a href="{{ path('plan_indicators_edit', {'id': plan_indicator.id}) }}">edit</a>
-
+        {{ include('layout/cards/chead.html.twig') }}
+        <h1>{% trans %}plan_indicators.show.title{% endtrans %}</h1>
+        {{ include('layout/cards/cbody.html.twig') }}
+        <dl class="row">
+            <dt class="col-sm-9">{% trans %}plan_indicators.show.table.id{% endtrans %}</dt>
+            <dd class="col-sm-3">{{ plan_indicator.id }}</dd>
+            <dt class="col-sm-9">{% trans %}plan_indicators.show.table.fertilization{% endtrans %}</dt>
+            <dd class="col-sm-3">{{ plan_indicator.fertilization }}</dd>
+            <dt class="col-sm-9">{% trans %}plan_indicators.show.table.transfer_hatchability{% endtrans %}</dt>
+            <dd class="col-sm-3">{{ plan_indicator.transferHatchability }}</dd>
+            <dt class="col-sm-9">{% trans %}plan_indicators.show.table.hatchability{% endtrans %}</dt>
+            <dd class="col-sm-3">{{ plan_indicator.hatchability }}</dd>
+            <hr/>
+            <dt class="col-sm-9">{% trans %}plan_indicators.show.table.setters.number{% endtrans %}</dt>
+            <dd class="col-sm-3">{{ plan_indicator.settersNumber }}</dd>
+            <dt class="col-sm-9">{% trans %}plan_indicators.show.table.setters.capacity{% endtrans %}</dt>
+            <dd class="col-sm-3">{{ plan_indicator.settersCapacity }}</dd>
+            <hr/>
+            <dt class="col-sm-9">{% trans %}plan_indicators.show.table.hatchers.number{% endtrans %}</dt>
+            <dd class="col-sm-3">{{ plan_indicator.hatchersNumber }}</dd>
+            <dt class="col-sm-9">{% trans %}plan_indicators.show.table.hatchers.capacity{% endtrans %}</dt>
+            <dd class="col-sm-3">{{ plan_indicator.hatchersCapacity }}</dd>
+        </dl>
+        {{ include('layout/cards/cfooter.html.twig') }}
+<div class="btn-group" role="group">
+    <a class="btn btn-primary m-2 p-2" href="{{ path('plan_indicators_index') }}">back to list</a>
+    <a class="btn btn-warning m-2 p-2" href="{{ path('plan_indicators_edit', {'id': plan_indicator.id}) }}">edit</a>
     {{ include('plan_indicators/_delete_form.html.twig') }}
+
+</div>
+        {{ include('layout/cards/cend.html.twig') }}
+    </div>
+
+
+
 {% endblock %}

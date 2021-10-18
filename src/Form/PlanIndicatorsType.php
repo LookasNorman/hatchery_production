@@ -28,6 +28,26 @@ class PlanIndicatorsType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+            ->add('settersNumber', IntegerType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('settersCapacity', IntegerType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('hatchersNumber', IntegerType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('hatchersCapacity', IntegerType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
         ;
 
     }

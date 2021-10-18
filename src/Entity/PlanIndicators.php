@@ -32,6 +32,26 @@ class PlanIndicators
      */
     private $hatchability;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $hatchersNumber;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $hatchersCapacity;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $settersNumber;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $settersCapacity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +89,54 @@ class PlanIndicators
     public function setHatchability(int $hatchability): self
     {
         $this->hatchability = $hatchability;
+
+        return $this;
+    }
+
+    public function getHatchersNumber(): ?int
+    {
+        return $this->hatchersNumber;
+    }
+
+    public function setHatchersNumber(?int $hatchersNumber): self
+    {
+        $this->hatchersNumber = $hatchersNumber;
+
+        return $this;
+    }
+
+    public function getHatchersCapacity(): ?int
+    {
+        return $this->hatchersCapacity;
+    }
+
+    public function setHatchersCapacity(?int $hatchersCapacity): self
+    {
+        $this->hatchersCapacity = $hatchersCapacity;
+
+        return $this;
+    }
+
+    public function getSettersNumber(): ?int
+    {
+        return $this->settersNumber;
+    }
+
+    public function setSettersNumber(?int $settersNumber): self
+    {
+        $this->settersNumber = $settersNumber;
+
+        return $this;
+    }
+
+    public function getSettersCapacity(): ?int
+    {
+        return $this->settersCapacity;
+    }
+
+    public function setSettersCapacity(?int $settersCapacity): self
+    {
+        $this->settersCapacity = $settersCapacity;
 
         return $this;
     }
