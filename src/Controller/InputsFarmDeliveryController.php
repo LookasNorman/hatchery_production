@@ -92,17 +92,17 @@ class InputsFarmDeliveryController extends AbstractController
                     $inputsFarmDelivery->setInputsFarm($farm);
                     if ($totalEggs > 0) {
                         if ($totalEggs > $delivery['eggsOnWarehouse']) {
+
                             $inputsFarmDelivery->setDelivery($delivery['delivery']);
                             $inputsFarmDelivery->setEggsNumber($delivery['eggsOnWarehouse']);
-                            dump($delivery['eggsOnWarehouse']);
                             $totalEggs = $totalEggs - (int)$delivery['eggsOnWarehouse'];
                         } else {
                             $inputsFarmDelivery->setDelivery($delivery['delivery']);
                             $inputsFarmDelivery->setEggsNumber($totalEggs);
                             $totalEggs = 0;
                         }
+                        $entityManager->persist($inputsFarmDelivery);
                     }
-                    $entityManager->persist($inputsFarmDelivery);
                 }
                 $entityManager->flush();
                 return $this->redirectToRoute('eggs_inputs_show', ['id' => $farm->getEggInput()->getId()]);
