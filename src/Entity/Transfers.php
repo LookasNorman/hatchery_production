@@ -46,7 +46,7 @@ class Transfers
     {
         return $this->id;
     }
-    
+
     public function getTransferDate(): ?DateTimeInterface
     {
         return $this->transferDate;

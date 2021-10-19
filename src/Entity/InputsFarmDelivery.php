@@ -44,7 +44,6 @@ class InputsFarmDelivery
 
     /**
      * @ORM\ManyToOne(targetEntity=Transfers::class, inversedBy="inputsFarmDelivery")
-     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $transfers;
 

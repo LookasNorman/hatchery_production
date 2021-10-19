@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Inputs;
+use App\Entity\InputsFarm;
+use App\Entity\InputsFarmDelivery;
 use App\Entity\Transfers;
 use App\Form\TransfersType;
 use App\Repository\HerdsRepository;
@@ -145,8 +147,14 @@ class TransfersController extends AbstractController
      */
     public function delete(Request $request, Transfers $eggsInputsTransfer): Response
     {
+        $inputFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+        $inputsFarmDelivery = $inputFarmDeliveryRepository->findBy(['transfers' => $eggsInputsTransfer]);
+
         if ($this->isCsrfTokenValid('delete' . $eggsInputsTransfer->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            foreach ($inputsFarmDelivery as $delivery) {
+                $delivery->getTransfers()->removeInputsFarmDelivery($delivery);
+            }
             $entityManager->remove($eggsInputsTransfer);
             $entityManager->flush();
         }
