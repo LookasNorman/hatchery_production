@@ -54,7 +54,7 @@ class TransfersController extends AbstractController
             $transfersEgg = $form['transfersEgg']->getData();
             $transferDate = $form['transferDate']->getData();
             $entityManager = $this->getDoctrine()->getManager();
-            $inputsFarmDelivery = $inputsFarmDeliveryRepository->findByExampleField($inputs, $herd);
+            $inputsFarmDelivery = $inputsFarmDeliveryRepository->herdInputsFarmInInput($inputs, $herd);
 
             foreach ($inputsFarmDelivery as $inputFarmDelivery) {
                 $totalEggs = $totalEggs + $inputFarmDelivery->getEggsNumber() - $inputFarmDelivery->getLighting()->getWasteEggs();

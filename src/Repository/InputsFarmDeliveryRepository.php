@@ -19,6 +19,21 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
         parent::__construct($registry, InputsFarmDelivery::class);
     }
 
+    public function herdInputsFarmInInput($input, $herd)
+    {
+        return $this->createQueryBuilder('ifd')
+            ->join('ifd.inputsFarm', 'if')
+            ->join('if.eggInput', 'ei')
+            ->join('ifd.delivery', 'd')
+            ->andWhere('ei.id = :input')
+            ->andWhere('d.herd = :herd')
+            ->andWhere('if.eggInput = :input')
+            ->setParameters(['input' => $input, 'herd' => $herd])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function eggsFromDelivery($delivery)
     {
         return $this->createQueryBuilder('ifd')
@@ -27,8 +42,7 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
             ->andWhere('ifd.delivery = :delivery')
             ->setParameters(['delivery' => $delivery])
             ->getQuery()
-            ->getSingleScalarResult()
-            ;
+            ->getSingleScalarResult();
     }
 
     public function eggsBreedProduction($breed)
@@ -40,8 +54,7 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
             ->andWhere('h.breed = :breed')
             ->setParameters(['breed' => $breed])
             ->getQuery()
-            ->getSingleScalarResult()
-            ;
+            ->getSingleScalarResult();
     }
 
     public function inputFarmDeliveryForLighting($herd, $input)
@@ -53,8 +66,7 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
             ->andWhere('d.herd = :herd')
             ->setParameters(['input' => $input, 'herd' => $herd])
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function herdInputEggsInInput($herd, $input)
@@ -67,8 +79,7 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
             ->andWhere('if.eggInput = :input')
             ->setParameters(['input' => $input, 'herd' => $herd])
             ->getQuery()
-            ->getSingleScalarResult()
-            ;
+            ->getSingleScalarResult();
     }
 
     public function herdInputFarmDelivery($herd, $input)
@@ -80,8 +91,7 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
             ->andWhere('if.eggInput = :input')
             ->setParameters(['input' => $input, 'herd' => $herd])
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function herdDelivery($herd)
@@ -92,8 +102,7 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
             ->andWhere('d.herd = :herd')
             ->setParameters(['herd' => $herd])
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
 }

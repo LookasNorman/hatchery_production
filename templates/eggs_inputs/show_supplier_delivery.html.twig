@@ -87,7 +87,11 @@
                 <td></td>
             {% endif %}
             {% if herdEgg.transfer %}
-                <td class="text-center align-middle bg-light">{{ herdEgg.transfer.transferDate ? herdEgg.transfer.transferDate|date('Y-m-d') : '' }}</td>
+                <td class="text-center align-middle bg-light">
+                    <a href="{{ path('eggs_inputs_transfers_index') }}">
+                        {{ herdEgg.transfer.transferDate ? herdEgg.transfer.transferDate|date('Y-m-d') : '' }}
+                    </a>
+                </td>
                 <td class="text-center align-middle bg-light">{{ herdEgg.transfer.transferEgg }}</td>
             {% else %}
                 <td></td>

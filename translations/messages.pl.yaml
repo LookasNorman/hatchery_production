@@ -560,14 +560,15 @@ eggs_inputs_transfer:
   index:
     title: Przekłady jaj
     table:
-      id: Indeks
-      waste_eggs: Odpad jaj
-      transfer_date: Data przekładu
       action: Akcje
-      no_found: Brak danych o przekładach
       badge:
         show: Szczegóły
         edit: Edytuj
+      id: Indeks
+      no_found: Brak danych o przekładach
+      transfer_date: Data przekładu
+      transfers_egg: Przełożonych jaj
+      waste_eggs: Odpad jaj
     button:
       new: Wpisz dane przekładu
   new:

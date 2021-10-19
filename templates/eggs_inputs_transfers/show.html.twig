@@ -11,21 +11,20 @@
     <h1>{% trans %}eggs_inputs_transfer.show.title{% endtrans %}</h1>
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
-        {{ eggs_inputs_transfer.eggsInputsDetail.eggInput.name }}:
         {{ eggs_inputs_transfer.transferDate ? eggs_inputs_transfer.transferDate|date('Y-m-d') : '' }}
         {% include 'layout/cards/cbody.html.twig' %}
         <p class="card-text">
             {% trans %}eggs_inputs_transfer.show.waste_eggs{% endtrans %}
-            {{ eggs_inputs_transfer.wasteEggs }}
+            {{ eggs_inputs_transfer.transfersEgg }}
         </p>
-    </div>
-    {% include 'layout/cards/cfooter.html.twig' %}
+        {% include 'layout/cards/cfooter.html.twig' %}
     {% if is_granted('ROLE_ADMIN') %}
         {{ include('eggs_inputs_transfers/_delete_form.html.twig') }}
         {{ include('layout/buttons/edit.html.twig',
             {pathLink: path('eggs_inputs_transfers_edit', {'id': eggs_inputs_transfer.id}), text: 'eggs_inputs_transfer.show.button.edit'}) }}
     {% endif %}
-    {% include 'layout/cards/cend.html.twig' %}
+        {% include 'layout/cards/cend.html.twig' %}
+    </div>
     </div>
     {{ include('layout/buttons/back.html.twig',
         { pathLink: path('eggs_inputs_transfers_index'), text: 'eggs_inputs_transfer.show.button.back' }) }}
