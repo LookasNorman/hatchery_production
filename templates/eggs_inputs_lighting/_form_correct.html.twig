@@ -1,0 +1,12 @@
+{{ form_start(form) }}
+<div class="form-group">
+    <label>{{ form_label(form.correctPercent) }}</label>
+    {{ form_widget(form.correctPercent) }}
+    <small>{{ form_help(form.correctPercent) }}</small>
+    <div class="form-text text-danger">
+        {{ form_errors(form.correctPercent) }}
+    </div>
+</div>
+
+{{ include('layout/buttons/create.html.twig', {text: 'eggs_inputs_lighting.form.button.save'}) }}
+{{ form_end(form) }}

@@ -11,7 +11,7 @@
             <div class="modal-body">
                 {% for herd in herds %}
                     <a class="dropdown-item"
-                       href="{{ path(pathLink, {'inputs': eggs_input.id, 'herd': herd.id}) }}"
+                       href="{{ path(pathLink, {'inputs': eggs_input.id, 'herd': herd.id, 'id': eggs_inputs_lighting.id}) }}"
                     >{{ herd.name }}</a>
                 {% endfor %}
             </div>

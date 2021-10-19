@@ -33,11 +33,14 @@
                 <li class="d-flex">{% trans %}eggs_inputs.show.card.footer.add{% endtrans %}</li>
                 <li class="d-flex">
                     {{ include('layout/modals/production_modal.html.twig',
-                        { title: 'eggs_inputs.show.button.lighting', body: herdsEggs, pathLink: 'eggs_inputs_lighting_new' }) }}
+                        { title: 'eggs_inputs.show.button.lighting.new', body: herdsEggs, pathLink: 'eggs_inputs_lighting_new', class: 'btn-warning' }) }}
                     {{ include('layout/modals/production_modal.html.twig',
-                        { title: 'eggs_inputs.show.button.transfer', body: herdsEggs, pathLink: 'eggs_inputs_transfers_new' }) }}
+                        { title: 'eggs_inputs.show.button.lighting.correct',
+                            body: herdsEggs, pathLink: 'eggs_inputs_lighting_correct', class: 'btn-warning' }) }}
                     {{ include('layout/modals/production_modal.html.twig',
-                        { title: 'eggs_inputs.show.button.selection', body: herdsEggs, pathLink: 'eggs_selections_new' }) }}
+                        { title: 'eggs_inputs.show.button.transfer', body: herdsEggs, pathLink: 'eggs_inputs_transfers_new', class: 'btn-success' }) }}
+                    {{ include('layout/modals/production_modal.html.twig',
+                        { title: 'eggs_inputs.show.button.selection', body: herdsEggs, pathLink: 'eggs_selections_new', class: 'btn-danger' }) }}
                 </li>
             {% endif %}
         </ul>

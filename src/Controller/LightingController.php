@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Herds;
 use App\Entity\Inputs;
+use App\Entity\InputsFarmDelivery;
 use App\Entity\Lighting;
+use App\Form\LightingCorrectType;
 use App\Form\LightingType;
 use App\Repository\HerdsRepository;
 use App\Repository\InputsFarmDeliveryRepository;
@@ -40,7 +43,7 @@ class LightingController extends AbstractController
         return $totalEggs;
     }
 
-    public function createLighting($form, $inputsFarmDelivery )
+    public function createLighting($form, $inputsFarmDelivery)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -80,16 +83,61 @@ class LightingController extends AbstractController
                 $eggsInputLighting->setWasteEggs($setWaste);
             }
 
-            $fertility = round($setWaste / $setEggs + $inputFarmDelivery->getDelivery()->getHerd()->getLighting() / 100, 3);
-
-            $wasteLighting = $inputFarmDelivery->getEggsNumber() * $fertility;
-            $eggsInputLighting->setWasteLighting($wasteLighting);
-
             $entityManager->persist($eggsInputLighting);
         }
 
         $entityManager->flush();
 
+    }
+
+    /**
+     * @Route("/correct/{inputs}/{herd}", name="eggs_inputs_lighting_correct", methods={"GET","POST"})
+     * @IsGranted("ROLE_PRODUCTION")
+     */
+    public function correct(
+        Request $request,
+                $inputs,
+                $herd
+    ): Response
+    {
+        $inputs = $this->getDoctrine()->getRepository(Inputs::class)->find($inputs);
+        $herd = $this->getDoctrine()->getRepository(Herds::class)->find($herd);
+
+        $inputsFarmDeliveries = $this->getDoctrine()->getRepository(InputsFarmDelivery::class)->inputFarmDeliveryForLighting($herd, $inputs);
+        $lightinsEggs = 0;
+        $wasteEggs = 0;
+        foreach ($inputsFarmDeliveries as $inputsFarmDelivery) {
+            $lightinsEggs = $lightinsEggs + $inputsFarmDelivery->getLighting()->getLightingEggs();
+            $wasteEggs = $wasteEggs + $inputsFarmDelivery->getLighting()->getWasteEggs();
+        }
+        $fertilization = round((1 - $wasteEggs / $lightinsEggs) * 100, 1);
+        $lightings = ['lightingEggs' => $lightinsEggs, 'wasteEggs' => $wasteEggs, 'fertilization' => $fertilization];
+
+        $form = $this->createForm(LightingCorrectType::class);
+        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $correctPercent = 1 - $form['correctPercent']->getData();
+
+            foreach ($inputsFarmDeliveries as $inputsFarmDelivery) {
+
+                $eggs = $inputsFarmDelivery->getEggsNumber();
+                $eggsLighting = $inputsFarmDelivery->getLighting();
+                $lightinsEggs = $eggs * $correctPercent;
+                $eggsLighting->setWasteLighting($lightinsEggs);
+                $em->persist($eggsLighting);
+            }
+            $em->flush();
+
+            return $this->redirectToRoute('eggs_inputs_lighting_index');
+        }
+
+        return $this->render('eggs_inputs_lighting/correct.html.twig', [
+            'form' => $form->createView(),
+            'input' => $inputs,
+            'herd' => $herd,
+            'lightings' => $lightings
+        ]);
     }
 
     /**
@@ -117,7 +165,7 @@ class LightingController extends AbstractController
 
             $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
-            if(in_array('ROLE_PRODUCTION', $user->getRoles(), true)){
+            if (in_array('ROLE_PRODUCTION', $user->getRoles(), true)) {
                 return $this->redirectToRoute('production_lighting_herd', ['id' => $inputs->getId()]);
             }
             return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputs->getId()]);
