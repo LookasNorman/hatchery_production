@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Herds;
 use App\Entity\Inputs;
+use App\Entity\InputsFarm;
 use App\Entity\Selections;
 use App\Entity\Transfers;
 use App\Form\SelectionsType;
@@ -33,20 +35,17 @@ class SelectionsController extends AbstractController
     }
 
     /**
-     * @Route("/new/{inputs}/{herd}", name="eggs_selections_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @Route("/new/{inputs}/{farm}/{herd}", name="eggs_selections_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function new(
-        $inputs,
-        $herd,
+        Inputs $inputs,
+        InputsFarm $farm,
+        Herds $herd,
         Request $request,
-        InputsRepository $eggsInputsRepository,
-        HerdsRepository $herdsRepository,
         InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
     ): Response
     {
-        $inputs = $eggsInputsRepository->find($inputs);
-        $herd = $herdsRepository->find($herd);
         $form = $this->createForm(SelectionsType::class);
         $form->handleRequest($request);
 
@@ -56,7 +55,7 @@ class SelectionsController extends AbstractController
             $cullChickPercent = $form['cullChickenPercent']->getData();
             $selectionDate = $form['selectionDate']->getData();
             $entityManager = $this->getDoctrine()->getManager();
-            $inputsFarmDelivery = $inputsFarmDeliveryRepository->findByExampleField($inputs, $herd);
+            $inputsFarmDelivery = $inputsFarmDeliveryRepository->herdInputsFarmInInput($farm, $herd);
 
             foreach ($inputsFarmDelivery as $inputFarmDelivery) {
                 $totalEggs = $totalEggs
