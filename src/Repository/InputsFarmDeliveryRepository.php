@@ -19,16 +19,13 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
         parent::__construct($registry, InputsFarmDelivery::class);
     }
 
-    public function herdInputsFarmInInput($input, $herd)
+    public function herdInputsFarmInInput($farm, $herd)
     {
         return $this->createQueryBuilder('ifd')
-            ->join('ifd.inputsFarm', 'if')
-            ->join('if.eggInput', 'ei')
             ->join('ifd.delivery', 'd')
-            ->andWhere('ei.id = :input')
+            ->andWhere('ifd.inputsFarm = :farm')
             ->andWhere('d.herd = :herd')
-            ->andWhere('if.eggInput = :input')
-            ->setParameters(['input' => $input, 'herd' => $herd])
+            ->setParameters(['farm' => $farm, 'herd' => $herd])
             ->getQuery()
             ->getResult()
             ;

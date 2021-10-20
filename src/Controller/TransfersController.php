@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Herds;
 use App\Entity\Inputs;
 use App\Entity\InputsFarm;
 use App\Entity\InputsFarmDelivery;
@@ -9,6 +10,7 @@ use App\Entity\Transfers;
 use App\Form\TransfersType;
 use App\Repository\HerdsRepository;
 use App\Repository\InputsFarmDeliveryRepository;
+use App\Repository\InputsFarmRepository;
 use App\Repository\InputsRepository;
 use App\Repository\TransfersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,20 +36,17 @@ class TransfersController extends AbstractController
     }
 
     /**
-     * @Route("/new/{inputs}/{herd}", name="eggs_inputs_transfers_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @Route("/new/{inputs}/{farm}/{herd}", name="eggs_inputs_transfers_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function new(
-        $inputs,
-        $herd,
-        Request $request,
-        InputsRepository $eggsInputsRepository,
-        HerdsRepository $herdsRepository,
+        Inputs                       $inputs,
+        InputsFarm                   $farm,
+        Herds                        $herd,
+        Request                      $request,
         InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
     ): Response
     {
-        $inputs = $eggsInputsRepository->find($inputs);
-        $herd = $herdsRepository->find($herd);
         $form = $this->createForm(TransfersType::class);
         $form->handleRequest($request);
 
@@ -56,13 +55,11 @@ class TransfersController extends AbstractController
             $transfersEgg = $form['transfersEgg']->getData();
             $transferDate = $form['transferDate']->getData();
             $entityManager = $this->getDoctrine()->getManager();
-            $inputsFarmDelivery = $inputsFarmDeliveryRepository->herdInputsFarmInInput($inputs, $herd);
-
+            $inputsFarmDelivery = $inputsFarmDeliveryRepository->herdInputsFarmInInput($farm, $herd);
             foreach ($inputsFarmDelivery as $inputFarmDelivery) {
                 $totalEggs = $totalEggs + $inputFarmDelivery->getEggsNumber() - $inputFarmDelivery->getLighting()->getWasteEggs();
             }
 
-            $totalWaste = 0;
             $totalEggsNumber = 0;
             $length = count($inputsFarmDelivery) - 1;
 

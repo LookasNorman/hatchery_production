@@ -19,6 +19,18 @@ class HerdsRepository extends ServiceEntityRepository
         parent::__construct($registry, Herds::class);
     }
 
+    public function herdInInputFarm($farm)
+    {
+        return $this->createQueryBuilder('h')
+            ->join('h.eggsDeliveries', 'ed')
+            ->join('ed.inputsFarmDeliveries', 'ifd')
+            ->andWhere('ifd.inputsFarm = :farm')
+            ->setParameters(['farm' => $farm])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function herdInInput($input)
     {
         return $this->createQueryBuilder('h')

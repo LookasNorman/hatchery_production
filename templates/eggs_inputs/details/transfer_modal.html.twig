@@ -1,0 +1,38 @@
+<button type="button" class="btn {{ class }} m-1" data-bs-toggle="modal" data-bs-target="#{{ title|trans }}">
+    {{ title|trans }}
+</button>
+<div class="modal fade" id="{{ title|trans }}" tabindex="-1" aria-labelledby="transferModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-white bg-info">
+                <h5 class="modal-title" id="transferModal">{{ title|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    {% for farmHerds in farmsHerds %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-heading{{ farmHerds.farm.id }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ farmHerds.farm.id }}" aria-expanded="false" aria-controls="flush-collapse{{ farmHerds.farm.id }}">
+                                    {{ farmHerds.farm.chicksFarm.name }}
+                                </button>
+                            </h2>
+                            <div id="flush-collapse{{ farmHerds.farm.id }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ farmHerds.farm.id }}" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    {% for herd in farmHerds.herds %}
+                                        <a href="{{ path(pathLink, {'inputs': eggs_input.id ,'farm': farmHerds.farm.id, 'herd': herd.id}) }}">
+                                            <p class="text-dark">{{ herd.name }}</p>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                {% endfor %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                {{ include('layout/buttons/close_modal.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>

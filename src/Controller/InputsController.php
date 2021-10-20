@@ -142,18 +142,25 @@ class InputsController extends AbstractController
     public function show(
         Inputs                       $eggsInput,
         InputsFarmRepository         $farmRepository,
-        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
+        HerdsRepository              $herdsRepository
     ): Response
     {
         $farms = $farmRepository->findBy(['eggInput' => $eggsInput]);
         $herds = $this->herdInInput($eggsInput);
         $herdsData = $this->herdInInputData($eggsInput);
 
+        $farmsHerds = [];
+        foreach ($farms as $farm) {
+            $herds = $herdsRepository->herdInInputFarm($farm);
+            array_push($farmsHerds, ['farm' => $farm, 'herds' => $herds]);
+        }
+//        dd($farmsHerds);
         return $this->render('eggs_inputs/show.html.twig', [
             'eggs_input' => $eggsInput,
             'farms' => $farms,
             'herdsEggs' => $herdsData,
-            'herds' => $herds
+            'herds' => $herds,
+            'farmsHerds' => $farmsHerds
         ]);
     }
 
