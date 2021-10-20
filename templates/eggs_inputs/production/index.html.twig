@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-center flex-wrap">
         {% for input in inputs %}
             <a class="btn btn-info p-4 m-2 col-sm-3" href="{{ path('eggs_inputs_show', {'id': input.id}) }}">
-                {{ input.name }} - {{ input.inputDate|date('Y-m-d') }}
+                <i class="fas fa-egg"></i> {{ input.name }} - {{ input.inputDate|date('Y-m-d') }}
             </a>
         {% endfor %}
     </div>

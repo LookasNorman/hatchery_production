@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-center flex-wrap">
         {% for herd in herds %}
             <a class="btn btn-primary p-4 m-2 col-sm-3" href="{{ path('production_delivery_new', {'id': herd.id}) }}">
-                {{ herd.name }}
+                <i class="fas fa-truck"></i> <i class="fas fa-egg"></i> {{ herd.name }}
             </a>
         {% endfor %}
     </div>
