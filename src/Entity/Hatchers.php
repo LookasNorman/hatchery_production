@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\HatchersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -42,6 +44,16 @@ class Hatchers
      */
     private $shortname;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ChickTemperature::class, mappedBy="hatcher")
+     */
+    private $chickTemperatures;
+
+    public function __construct()
+    {
+        $this->chickTemperatures = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -67,6 +79,36 @@ class Hatchers
     public function setShortname(string $shortname): self
     {
         $this->shortname = $shortname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ChickTemperature[]
+     */
+    public function getChickTemperatures(): Collection
+    {
+        return $this->chickTemperatures;
+    }
+
+    public function addChickTemperature(ChickTemperature $chickTemperature): self
+    {
+        if (!$this->chickTemperatures->contains($chickTemperature)) {
+            $this->chickTemperatures[] = $chickTemperature;
+            $chickTemperature->setHatcher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChickTemperature(ChickTemperature $chickTemperature): self
+    {
+        if ($this->chickTemperatures->removeElement($chickTemperature)) {
+            // set the owning side to null (unless already changed)
+            if ($chickTemperature->getHatcher() === $this) {
+                $chickTemperature->setHatcher(null);
+            }
+        }
 
         return $this;
     }

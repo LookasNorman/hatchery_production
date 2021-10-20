@@ -82,6 +82,56 @@ car:
       edit: Edytuj
     registration_number: Numer rejestracyjny
     title: Szczegóły pojazdu
+chick_temperature:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Na pewno chcesz usunąć pomiar temperatury?
+  edit:
+    button:
+      back: Lista temperatur
+    title: Edycja temperatury piskląt
+  form:
+    label:
+      button:
+        new: Zapisz
+        new_hatcher: Zapisz i nowa (temperatura)
+        new_input: Zapisz i nowy (Klujnik)
+      date: Data
+      hatcher: Klujnik
+      input: Nakład
+      temperature: Temperatura
+    placeholder:
+      hatcher: Wybierz klujnik z listy
+      input: Wybierz nakład z listy
+  index:
+    button:
+      new: Dodaj wpis
+    table:
+      actions: Akcje
+      badge:
+        edit: Edytuj
+        show: Szczegóły
+      date: Data pomiaru
+      hatcher: Klujnik
+      id: Lp.
+      input: Nakład
+      no_found: Brak zapisów
+      temperature: Temperatura
+    title: Wykaz temperatur piskląt
+  new:
+    button:
+      back: Lista pomiarów temperatury
+    title: Dodawanie temperatury
+    header: Pomiar temperatury
+  show:
+    button:
+      back: Lista pomiarów
+      delete: Usuń
+      edit: Edytuj
+    date: Data
+    temperature: Temperatura
+    title: Temperatura piskląt
 chicks_recipient:
   delete:
     confirm: Czy na pewno chcesz usunąć fermę odbiorcy piskląt?
@@ -897,6 +947,8 @@ menu:
       index: Standardy list
     car:
       index: Samochody
+    chick_temperature:
+      index: Temperatury piskląt
     chicks_recipient:
       index: Fermy odbiorców piskląt
     customer:

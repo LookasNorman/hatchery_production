@@ -45,9 +45,15 @@ class Inputs
      */
     private $inputsFarms;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ChickTemperature::class, mappedBy="input")
+     */
+    private $chickTemperatures;
+
     public function __construct()
     {
         $this->inputsFarms = new ArrayCollection();
+        $this->chickTemperatures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,6 +109,36 @@ class Inputs
             // set the owning side to null (unless already changed)
             if ($inputsFarm->getEggInput() === $this) {
                 $inputsFarm->setEggInput(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ChickTemperature[]
+     */
+    public function getChickTemperatures(): Collection
+    {
+        return $this->chickTemperatures;
+    }
+
+    public function addChickTemperature(ChickTemperature $chickTemperature): self
+    {
+        if (!$this->chickTemperatures->contains($chickTemperature)) {
+            $this->chickTemperatures[] = $chickTemperature;
+            $chickTemperature->setInput($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChickTemperature(ChickTemperature $chickTemperature): self
+    {
+        if ($this->chickTemperatures->removeElement($chickTemperature)) {
+            // set the owning side to null (unless already changed)
+            if ($chickTemperature->getInput() === $this) {
+                $chickTemperature->setInput(null);
             }
         }
 
