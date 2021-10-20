@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Delivery;
 use App\Entity\Herds;
 use App\Entity\Inputs;
+use App\Entity\InputsFarm;
 use App\Entity\Supplier;
 use App\Form\DeliveryProductionType;
 use App\Repository\InputsRepository;
@@ -52,6 +53,19 @@ class ProductionController extends AbstractController
     }
 
     /**
+     * @Route("/transfers/farm/{id}", name="production_transfer_farm")
+     */
+    public function transferFarm(Inputs $input)
+    {
+        $farms = $this->farmInInput($input);
+
+        return $this->render('eggs_inputs_transfers/production/farm.html.twig', [
+            'farms' => $farms,
+            'inputs' => $input,
+        ]);
+    }
+
+    /**
      * @Route("/transfers", name="production_transfers_index")
      */
     public function transfersSite()
@@ -64,15 +78,16 @@ class ProductionController extends AbstractController
     }
 
     /**
-     * @Route("/transfers/herd/{id}", name="production_transfer_herd")
+     * @Route("/transfers/herd/{farm}/{inputs}", name="production_transfer_herd")
      */
-    public function transferHerd(Inputs $inputs)
+    public function transferHerd(InputsFarm $farm, Inputs $inputs)
     {
-        $herds = $this->herdInInput($inputs);
+        $herds = $this->herdInInputFarm($farm);
 
         return $this->render('eggs_inputs_transfers/production/herd.html.twig', [
             'herds' => $herds,
             'inputs' => $inputs,
+            'farm' => $farm
         ]);
     }
 
@@ -88,12 +103,20 @@ class ProductionController extends AbstractController
         ]);
     }
 
-    public function herdInInput($input)
+    public function herdInInputFarm($farm)
     {
         $herdRepository = $this->getDoctrine()->getRepository(Herds::class);
-        $herds = $herdRepository->herdInInput($input);
+        $herds = $herdRepository->herdInInputFarm($farm);
 
         return $herds;
+    }
+
+    public function farmInInput($input)
+    {
+        $herdRepository = $this->getDoctrine()->getRepository(InputsFarm::class);
+        $farm = $herdRepository->findBy(['eggInput' => $input]);
+
+        return $farm;
     }
 
     /**

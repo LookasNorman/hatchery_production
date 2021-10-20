@@ -154,7 +154,6 @@ class InputsController extends AbstractController
             $herds = $herdsRepository->herdInInputFarm($farm);
             array_push($farmsHerds, ['farm' => $farm, 'herds' => $herds]);
         }
-//        dd($farmsHerds);
         return $this->render('eggs_inputs/show.html.twig', [
             'eggs_input' => $eggsInput,
             'farms' => $farms,

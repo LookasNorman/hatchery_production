@@ -638,8 +638,11 @@ eggs_inputs_transfer:
     herd: Stado
     title: Dodawanie danych z przekładu
   production:
+    farm:
+      title: Wybierz fermę do przekładu
     herd:
-      title: Wybierz przekładane stado
+      farm: ferma
+      title: Wybierz stado do przekładu
     inputs:
       title: Wybierz nakład do przekładu
   show:
