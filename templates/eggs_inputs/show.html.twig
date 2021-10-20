@@ -47,9 +47,31 @@
         {% include 'layout/cards/cend.html.twig' %}
     </div>
     <hr>
-    <h5>Planowane pisklęta</h5>
-    {% include 'eggs_inputs/show_customer_delivery.html.twig' %}
-    <h5>Nakład</h5>
-    {% include 'eggs_inputs/show_supplier_delivery.html.twig' %}
+    <div class="accordion accordion-flush" id="InputsDetails">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingChicks">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseChicks" aria-expanded="false" aria-controls="flush-collapseChicks">
+                    {% trans %}eggs_inputs.show.accordion.chick{% endtrans %}
+                </button>
+            </h2>
+            <div id="flush-collapseChicks" class="accordion-collapse collapse" aria-labelledby="flush-headingChicks" data-bs-parent="#InputsDetails">
+                <div class="accordion-body">
+                    {% include 'eggs_inputs/show_customer_delivery.html.twig' %}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingEggs">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEggs" aria-expanded="false" aria-controls="flush-collapseEggs">
+                    {% trans %}eggs_inputs.show.accordion.production{% endtrans %}
+                </button>
+            </h2>
+            <div id="flush-collapseEggs" class="accordion-collapse collapse" aria-labelledby="flush-headingEggs" data-bs-parent="#InputsDetails">
+                <div class="accordion-body">
+                    {% include 'eggs_inputs/show_supplier_delivery.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

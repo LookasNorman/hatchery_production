@@ -413,27 +413,27 @@ eggs_inputs:
       name: Nazwa nakładu
       input_date: Data i godzina wybierania
   edit:
-    title: Tworzenie nowego nakładu
     button:
       back: Lista nakładów
       update: Zaktualizuj
+    title: Tworzenie nowego nakładu
   index:
-    title: Wykaz nakładów
     button:
       new: Utwórz nakład
     table:
-      id: Indeks
-      name: Nazwa
-      input_date: Data nałożenia
       actions: Akcje
-      no_found: Brak nakładów
       badge:
         show: Szczegóły
         edit: Edycja
+      id: Indeks
+      input_date: Data nałożenia
+      name: Nazwa
+      no_found: Brak nakładów
+    title: Wykaz nakładów
   new:
-    title: Dodawanie nakładu
     button:
       back: Lista nakładów
+    title: Dodawanie nakładu
   no_lighting:
     title: Wykaz nakładów przed świetleniem
   no_transfer:
@@ -444,7 +444,9 @@ eggs_inputs:
     inputs:
       title: Wybierz nakład
   show:
-    title: Szczegóły nakładu
+    accordion:
+      chick: Pisklęta - odbiorcy
+      production: Jaja - dostawcy (nakład, świetlenie, przekład, wybieranie)
     input_date: Data nakładu
     button:
       add_delivery: Dodaj dostawy
@@ -492,6 +494,7 @@ eggs_inputs:
       badge:
         fertilization: Zapłodnienie
         hatchability: Wylęgowość
+    title: Szczegóły nakładu
   show_customer_delivery:
     table:
       breeder: Hodowca
