@@ -697,6 +697,14 @@ eggs_inputs_selections:
       back: Szczegóły nakładu
     herd: Stado
     title: Dodawanie danych z wybierania
+  production:
+    farm:
+      title: Wybierz fermę do wybierania w nakładzie
+    herd:
+      title: Wybierz stado do wybierania w nakładzie
+      farm: ferma
+    inputs:
+      title: Wybierz nakład do wybierania
   show:
     title: Szczegóły wybierania
     button:

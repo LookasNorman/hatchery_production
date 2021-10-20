@@ -52,18 +52,6 @@ class ProductionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/transfers/farm/{id}", name="production_transfer_farm")
-     */
-    public function transferFarm(Inputs $input)
-    {
-        $farms = $this->farmInInput($input);
-
-        return $this->render('eggs_inputs_transfers/production/farm.html.twig', [
-            'farms' => $farms,
-            'inputs' => $input,
-        ]);
-    }
 
     /**
      * @Route("/transfers", name="production_transfers_index")
@@ -78,6 +66,19 @@ class ProductionController extends AbstractController
     }
 
     /**
+     * @Route("/transfers/farm/{id}", name="production_transfer_farm")
+     */
+    public function transferFarm(Inputs $input)
+    {
+        $farms = $this->farmInInput($input);
+
+        return $this->render('eggs_inputs_transfers/production/farm.html.twig', [
+            'farms' => $farms,
+            'inputs' => $input,
+        ]);
+    }
+
+    /**
      * @Route("/transfers/herd/{farm}/{inputs}", name="production_transfer_herd")
      */
     public function transferHerd(InputsFarm $farm, Inputs $inputs)
@@ -85,6 +86,45 @@ class ProductionController extends AbstractController
         $herds = $this->herdInInputFarm($farm);
 
         return $this->render('eggs_inputs_transfers/production/herd.html.twig', [
+            'herds' => $herds,
+            'inputs' => $inputs,
+            'farm' => $farm
+        ]);
+    }
+
+    /**
+     * @Route("/selections", name="production_selections_index")
+     */
+    public function selectionsSite()
+    {
+        $inputs = $this->inputsList();
+
+        return $this->render('eggs_selections/production/index.html.twig', [
+            'inputs' => $inputs
+        ]);
+    }
+
+    /**
+     * @Route("/selections/farm/{id}", name="production_selections_farm")
+     */
+    public function selectionsFarm(Inputs $input)
+    {
+        $farms = $this->farmInInput($input);
+
+        return $this->render('eggs_selections/production/farm.html.twig', [
+            'farms' => $farms,
+            'inputs' => $input,
+        ]);
+    }
+
+    /**
+     * @Route("/selections/herd/{farm}/{inputs}", name="production_selections_herd")
+     */
+    public function selectionsHerd(InputsFarm $farm, Inputs $inputs)
+    {
+        $herds = $this->herdInInputFarm($farm);
+
+        return $this->render('eggs_selections/production/herd.html.twig', [
             'herds' => $herds,
             'inputs' => $inputs,
             'farm' => $farm
