@@ -8,8 +8,9 @@
     </div>
     <div class="d-flex justify-content-center flex-wrap">
         {% for herd in herds %}
-            <a class="btn btn-warning p-4 m-2 col-sm-3" href="{{ path('eggs_inputs_lighting_new', {'herd': herd.id, 'inputs': inputs.id}) }}">
-                <i class="far fa-lightbulb fa-2x"></i> {{ herd.name }}
+            <a class="btn btn-warning p-2 m-2 col-sm-3" href="{{ path('eggs_inputs_lighting_new', {'herd': herd.id, 'inputs': inputs.id}) }}">
+                <span class="m-4"><i class="far fa-lightbulb fa-2x"></i></span>
+                <span class="h1">{{ herd.name }}</span>
             </a>
         {% endfor %}
     </div>

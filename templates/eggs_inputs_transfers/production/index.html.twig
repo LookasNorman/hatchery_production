@@ -8,8 +8,9 @@
     </div>
     <div class="d-flex justify-content-center flex-wrap">
         {% for input in inputs %}
-            <a class="btn btn-success p-4 m-2 col-sm-3" href="{{ path('production_transfer_herd', {'id': input.id}) }}">
-                <i class="fa fa-exchange fa-2x"></i> {{ input.name }} - {{ input.inputDate|date('Y-m-d') }}
+            <a class="btn btn-success p-2 m-2 col-sm-3" href="{{ path('production_transfer_herd', {'id': input.id}) }}">
+                <span class="m-4"><i class="fa fa-exchange fa-2x"></i></span>
+                <span class="h1">{{ input.name }} - {{ input.inputDate|date('Y-m-d') }}</span>
             </a>
         {% endfor %}
     </div>
