@@ -1,0 +1,47 @@
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
+import Day from './day';
+
+function Item(props) {
+    const { sx, ...other } = props;
+    return (
+        <Box
+            sx={{
+                bgcolor: 'primary.main',
+                color: 'white',
+                p: 1,
+                borderRadius: 1,
+                textAlign: 'center',
+                fontSize: 19,
+                fontWeight: '700',
+                ...sx,
+            }}
+            {...other}
+        />
+    );
+}
+
+Item.propTypes = {
+    sx: PropTypes.object,
+};
+
+export default function Week() {
+    return (
+        <div style={{ width: '100%' }}>
+            <Box
+                sx={{
+                    display: 'grid',
+                    columnGap: 3,
+                    rowGap: 1,
+                    gridTemplateColumns: 'repeat(2, 1fr)',
+                }}
+            >
+                <Day/>
+                <Day/>
+                <Day/>
+                <Day/>
+            </Box>
+        </div>
+    );
+}
