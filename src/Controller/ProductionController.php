@@ -21,6 +21,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProductionController extends AbstractController
 {
+    public function inputsList()
+    {
+        $inputsRepository = $this->getDoctrine()->getRepository(Inputs::class);
+        $date = new \DateTime();
+        $date->modify('-22 days');
+        $inputs = $inputsRepository->inputsInProduction($date);
+
+        return $inputs;
+    }
+
     /**
      * @Route("/", name="production_index")
      */
@@ -32,11 +42,9 @@ class ProductionController extends AbstractController
     /**
      * @Route("/inputs", name="production_inputs_index")
      */
-    public function inputsSite(InputsRepository $inputsRepository)
+    public function inputsSite()
     {
-        $date = new \DateTime();
-        $date->modify('-22 days');
-        $inputs = $inputsRepository->inputsInProduction($date);
+        $inputs = $this->inputsList();
 
         return $this->render('eggs_inputs/production/index.html.twig', [
             'inputs' => $inputs
@@ -44,13 +52,36 @@ class ProductionController extends AbstractController
     }
 
     /**
+     * @Route("/transfers", name="production_transfers_index")
+     */
+    public function transfersSite()
+    {
+        $inputs = $this->inputsList();
+
+        return $this->render('eggs_inputs_transfers/production/index.html.twig', [
+            'inputs' => $inputs
+        ]);
+    }
+
+    /**
+     * @Route("/transfers/herd/{id}", name="production_transfer_herd")
+     */
+    public function transferHerd(Inputs $inputs)
+    {
+        $herds = $this->herdInInput($inputs);
+
+        return $this->render('eggs_inputs_transfers/production/herd.html.twig', [
+            'herds' => $herds,
+            'inputs' => $inputs,
+        ]);
+    }
+
+    /**
      * @Route("/lightings", name="production_lightings_index")
      */
-    public function lightingsSite(InputsRepository $inputsRepository)
+    public function lightingsSite()
     {
-        $date = new \DateTime();
-        $date->modify('-22 days');
-        $inputs = $inputsRepository->inputsInProduction($date);
+        $inputs = $this->inputsList();
 
         return $this->render('eggs_inputs_lighting/production/index.html.twig', [
             'inputs' => $inputs
@@ -96,7 +127,7 @@ class ProductionController extends AbstractController
     public function deliveryHerd(Supplier $supplier)
     {
         $herdsRepository = $this->getDoctrine()->getRepository(Herds::class);
-        $herds = $herdsRepository->findBy(['breeder' => $supplier], ['name' => 'ASC']);
+        $herds = $herdsRepository->findBy(['breeder' => $supplier, 'active' => true], ['name' => 'ASC']);
 
         return $this->render('eggs_delivery/production/herd.html.twig', [
             'herds' => $herds
