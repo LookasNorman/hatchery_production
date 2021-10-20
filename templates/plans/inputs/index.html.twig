@@ -1,95 +1,97 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
-    </style>
-    <div class="row m-2">
-        <div class="col-sm-6">
-            <div class="card">
-                {% set hatcher = 0 %}
-                {% for deliveryChicks in deliveriesChicks %}
-                {% set hatcher = hatcher + (deliveryChicks.chickNumber / (indicators.transferHatchability / 100)) / indicators.hatchersCapacity %}
-                {% endfor %}
-                {% set hatchersColor = hatcher > indicators.hatchersNumber ? 'text-danger' : 'text-dark' %}
-                <h5 class="card-header">Poniedziałek
-                    <span class="{{ hatchersColor }}">KK - {{ hatcher|round(1) }} z {{ indicators.hatchersNumber }}</span>
-                </h5>
-                <div class="card-body">
-                    <div class="card">
-                        <div class="accordion accordion-flush" id="accordionFlushExample">
-                            {% for key, deliveryChicks in deliveriesChicks %}
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-heading{{ key }}">
-                                    <button
-                                            class="accordion-button collapsed"
-                                            type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapse{{ key }}"
-                                            aria-expanded="false"
-                                            aria-controls="flush-collapse{{ key }}"
-                                    >
-                                        {{deliveryChicks.chickFarm.name}} - {{ deliveryChicks.chickNumber }}
-                                    </button>
-                                </h2>
-                                <div
-                                        id="flush-collapse{{ key }}"
-                                        class="accordion-collapse collapse"
-                                        aria-labelledby="flush-heading{{ key }}"
-                                        data-bs-parent="#accordionFlushExample"
-                                >
-                                    <div class="accordion-body">
-                                        <dl class="row">
-                                            <dt class="col-sm-9">Czaplin 9-14</dt>
-                                            <dd class="col-sm-3">48000</dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <a href="#" class="btn btn-primary">Zatwierdź nakład</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <h5 class="card-header">Wtorek KK - 14 z 14</h5>
-                <div class="card-body">
-                    <h5 class="card-title"></h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-    </div>
+{#    <style>#}
+{#        .card {#}
+{#            max-width: 500px;#}
+{#            min-width: 380px;#}
+{#            padding: 6px 6px;#}
+{#        }#}
+{#    </style>#}
+{#    <div class="row m-2">#}
+{#        <div class="col-sm-6">#}
+{#            <div class="card">#}
+{#                {% set hatcher = 0 %}#}
+{#                {% for deliveryChicks in deliveriesChicks %}#}
+{#                {% set hatcher = hatcher + (deliveryChicks.chickNumber / (indicators.transferHatchability / 100)) / indicators.hatchersCapacity %}#}
+{#                {% endfor %}#}
+{#                {% set hatchersColor = hatcher > indicators.hatchersNumber ? 'text-danger' : 'text-dark' %}#}
+{#                <h5 class="card-header">Poniedziałek#}
+{#                    <span class="{{ hatchersColor }}">KK - {{ hatcher|round(1) }} z {{ indicators.hatchersNumber }}</span>#}
+{#                </h5>#}
+{#                <div class="card-body">#}
+{#                    <div class="card">#}
+{#                        <div class="accordion accordion-flush" id="accordionFlushExample">#}
+{#                            {% for key, deliveryChicks in deliveriesChicks %}#}
+{#                            <div class="accordion-item">#}
+{#                                <h2 class="accordion-header" id="flush-heading{{ key }}">#}
+{#                                    <button#}
+{#                                            class="accordion-button collapsed"#}
+{#                                            type="button"#}
+{#                                            data-bs-toggle="collapse"#}
+{#                                            data-bs-target="#flush-collapse{{ key }}"#}
+{#                                            aria-expanded="false"#}
+{#                                            aria-controls="flush-collapse{{ key }}"#}
+{#                                    >#}
+{#                                        {{deliveryChicks.chickFarm.name}} - {{ deliveryChicks.chickNumber }}#}
+{#                                    </button>#}
+{#                                </h2>#}
+{#                                <div#}
+{#                                        id="flush-collapse{{ key }}"#}
+{#                                        class="accordion-collapse collapse"#}
+{#                                        aria-labelledby="flush-heading{{ key }}"#}
+{#                                        data-bs-parent="#accordionFlushExample"#}
+{#                                >#}
+{#                                    <div class="accordion-body">#}
+{#                                        <dl class="row">#}
+{#                                            <dt class="col-sm-9">Czaplin 9-14</dt>#}
+{#                                            <dd class="col-sm-3">48000</dd>#}
+{#                                        </dl>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            {% endfor %}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <a href="#" class="btn btn-primary">Zatwierdź nakład</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="col-sm-6">#}
+{#            <div class="card">#}
+{#                <h5 class="card-header">Wtorek KK - 14 z 14</h5>#}
+{#                <div class="card-body">#}
+{#                    <h5 class="card-title"></h5>#}
+{#                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>#}
+{#                    <a href="#" class="btn btn-primary">Go somewhere</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
-    <div class="row m-2">
-        <div class="col-sm-6">
-            <div class="card">
-                <h5 class="card-header">Czwartek</h5>
-                <div class="card-body">
-                    <h5 class="card-title">KK - 11</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <h5 class="card-header">Piątek</h5>
-                <div class="card-body">
-                    <h5 class="card-title">KK - 11</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-    </div>
+{#    <div class="row m-2">#}
+{#        <div class="col-sm-6">#}
+{#            <div class="card">#}
+{#                <h5 class="card-header">Czwartek</h5>#}
+{#                <div class="card-body">#}
+{#                    <h5 class="card-title">KK - 11</h5>#}
+{#                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>#}
+{#                    <a href="#" class="btn btn-primary">Go somewhere</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="col-sm-6">#}
+{#            <div class="card">#}
+{#                <h5 class="card-header">Piątek</h5>#}
+{#                <div class="card-body">#}
+{#                    <h5 class="card-title">KK - 11</h5>#}
+{#                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>#}
+{#                    <a href="#" class="btn btn-primary">Go somewhere</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
+
+<div id="plan_inputs"></div>
 {% endblock %}
