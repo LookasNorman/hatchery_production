@@ -883,7 +883,7 @@ inputs_farm_delivery:
       delete: Usuń
   form:
     label:
-      breader: Dostawca jaj
+      breeder: Dostawca jaj
       eggs_number: Ilość jaj
       herd: Stado
     placeholder:
