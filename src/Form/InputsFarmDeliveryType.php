@@ -7,6 +7,7 @@ use App\Entity\Herds;
 use App\Entity\InputsFarm;
 use App\Entity\InputsFarmDelivery;
 use App\Entity\Supplier;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -37,6 +38,10 @@ class InputsFarmDeliveryType extends AbstractType
                         }
                     }
                     return $eggSupplier->getName() . ' - stan jaj: ' . $eggs;
+                },
+                'query_builder' => function (EntityRepository $entityRepository) {
+                    return $entityRepository->createQueryBuilder('es')
+                        ->orderBy('es.name', 'ASC');
                 },
                 'label' => 'inputs_farm_delivery.form.label.breeder',
                 'placeholder' => 'inputs_farm_delivery.form.placeholder.breeder',
