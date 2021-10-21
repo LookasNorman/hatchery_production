@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ChickTemperature;
 use App\Entity\Hatchers;
 use App\Form\HatchersType;
 use App\Repository\HatchersRepository;
@@ -51,13 +52,23 @@ class HatchersController extends AbstractController
         ]);
     }
 
+    public function getChickTemperatureInHatcher(Hatchers $hatcher)
+    {
+        $chickTemperatureRepository = $this->getDoctrine()->getRepository(ChickTemperature::class);
+        $chickTemperatures = $chickTemperatureRepository->findBy(['hatcher' => $hatcher],['date' => 'DESC']);
+        return $chickTemperatures;
+    }
+
     /**
      * @Route("/{id}", name="hatchers_show", methods={"GET"})
      */
     public function show(Hatchers $hatcher): Response
     {
+        $chickTemperatires = $this->getChickTemperatureInHatcher($hatcher);
+
         return $this->render('hatchers/show.html.twig', [
             'hatcher' => $hatcher,
+            'chick_temperatures' => $chickTemperatires
         ]);
     }
 

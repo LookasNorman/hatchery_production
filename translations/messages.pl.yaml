@@ -755,11 +755,13 @@ hatchers:
     button:
       back: Lista aparatów klujnikowych
   show:
-    title: Szczegóły aparatu
-    shortname: Kod
+    accordion:
+      chick_temperature: Temperatury piskląt przy wybieraniu
     button:
       edit: Edytuj
       back: Lista aparatów klujnikowych
+    shortname: Kod
+    title: Szczegóły aparatu
 herds:
   delete:
     confirm: Na pewno chcesz usunąć stado?
