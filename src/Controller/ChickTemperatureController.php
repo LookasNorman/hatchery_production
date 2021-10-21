@@ -63,7 +63,7 @@ class ChickTemperatureController extends AbstractController
             }
 
             if ($form->get('saveInput')->isClicked()) {
-                return $this->redirectToRoute('chick_temperature_new', [
+                return $this->redirectToRoute('production_chick_temperature_hatcher', [
                     'input' => $chickTemperature->getInput()->getId(),
                 ]);
             }

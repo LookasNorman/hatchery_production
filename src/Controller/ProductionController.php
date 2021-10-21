@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Delivery;
+use App\Entity\Hatchers;
 use App\Entity\Herds;
 use App\Entity\Inputs;
 use App\Entity\InputsFarm;
@@ -91,6 +92,32 @@ class ProductionController extends AbstractController
             'farm' => $farm
         ]);
     }
+
+    /**
+     * @Route("/chick_temperature", name="production_chick_temperature_index")
+     */
+    public function chickTemperatureSite()
+    {
+        $inputs = $this->inputsList();
+
+        return $this->render('chick_temperature/production/index.html.twig', [
+            'inputs' => $inputs
+        ]);
+    }
+
+    /**
+     * @Route("/chick_temperature/hatcher/{input}", name="production_chick_temperature_hatcher")
+     */
+    public function chickTemperatureHatcher(Inputs $input)
+    {
+        $hatchers = $this->getDoctrine()->getRepository(Hatchers::class)->findAll();
+
+        return $this->render('chick_temperature/production/hatcher.html.twig', [
+            'hatchers' => $hatchers,
+            'inputs' => $input,
+        ]);
+    }
+
 
     /**
      * @Route("/selections", name="production_selections_index")

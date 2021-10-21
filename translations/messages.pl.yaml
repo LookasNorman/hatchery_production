@@ -124,6 +124,11 @@ chick_temperature:
       back: Lista pomiarów temperatury
     title: Dodawanie temperatury
     header: Pomiar temperatury
+  production:
+    hatcher:
+      title: Wybierz aparat klujnikowy w nakładzie
+    inputs:
+      title: Wybierz nakład do wpisania temperatury
   show:
     button:
       back: Lista pomiarów
@@ -931,6 +936,7 @@ main_page:
     title: Wybierania
   production:
     button:
+      chick_temperature: Pomiar temperatury piskląt
       delivery: Przyjęcie jaj
       inputs: Nakład
       lighting: Świetlenie
