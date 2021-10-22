@@ -19,6 +19,23 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
         parent::__construct($registry, PlanDeliveryEgg::class);
     }
 
+    public function planInputsInWeekHerd($breed, $date, $dateEnd)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('WEEK(p.deliveryDate) as yearWeek', 'SUM(p.eggsNumber) as eggs', 'h.name')
+            ->innerJoin('p.herd', 'h')
+            ->innerJoin('h.breed', 'b')
+            ->andWhere('b = :breed')
+            ->andWhere('p.deliveryDate BETWEEN :date AND :dateEnd')
+            ->setParameters(['breed' => $breed, 'date' => $date, 'dateEnd' => $dateEnd])
+            ->orderBy('yearWeek', 'asc')
+            ->groupBy('yearWeek')
+            ->addGroupBy('p.herd')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function planDeliveryInDay($start, $end, $breed)
     {
         return $this->createQueryBuilder('p')

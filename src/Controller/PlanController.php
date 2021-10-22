@@ -9,8 +9,10 @@ use App\Entity\InputsFarmDelivery;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanDeliveryEgg;
 use App\Entity\PlanIndicators;
+use App\Form\Plan\ChooseYearPlan;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -135,8 +137,8 @@ class PlanController extends AbstractController
                 'dayDeliveries' => $dayDeliveries,
                 'eggs' => $eggs,
             ];
-                $date = clone $date;
-                $date->modify('next Monday');
+            $date = clone $date;
+            $date->modify('next Monday');
             array_push($weeksPlans, ['week' => $i, 'weekPlans' => $weekPlans]);
         }
 
@@ -237,6 +239,138 @@ class PlanController extends AbstractController
     }
 
     /**
+     * @Route("/choose_year_plan", name="plan_choose_year_plan", methods={"GET", "POST"})
+     */
+    public function chooseYearPlan(Request $request)
+    {
+        $form = $this->createForm(ChooseYearPlan::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $year = $form['year']->getData();
+            return $this->showYearPlans($year);
+
+        }
+
+        return $this->render('plans/form/chooseYearPlan.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    public function weekChicksPlanBreed($year, $breed)
+    {
+        $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
+        $now = new \DateTime();
+        if ($year < $now) {
+            $firstWeekStart = $now;
+            if ($firstWeekStart->format('l') != 'Monday') {
+                $firstWeekStart->modify('previous Monday');
+            }
+        } else {
+            $firstWeekStart = clone $year;
+            if ($firstWeekStart->format('l') != 'Monday') {
+                $firstWeekStart->modify('next Monday');
+            }
+        }
+
+
+
+        $firstWeekEnd = clone($firstWeekStart);
+        $firstWeekEnd->modify('first day of january next year');
+
+        if ($firstWeekEnd->format('l') != 'Monday') {
+            $firstWeekEnd->modify('next Monday');
+        }
+
+        $plans = $planDeliveryChickRepository->planInputsInWeekCustomer($breed, $firstWeekStart, $firstWeekEnd);
+
+        return $plans;
+    }
+
+    public function weekEggsPlanBreed($year, $breed)
+    {
+        $planDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
+        $now = new \DateTime();
+        if ($year < $now) {
+            $firstWeekStart = $now;
+            if ($firstWeekStart->format('l') != 'Monday') {
+                $firstWeekStart->modify('previous Monday');
+            }
+        } else {
+            $firstWeekStart = clone $year;
+            if ($firstWeekStart->format('l') != 'Monday') {
+                $firstWeekStart->modify('next Monday');
+            }
+        }
+
+        $firstWeekEnd = clone($firstWeekStart);
+        $firstWeekEnd->modify('first day of january next year');
+
+        if ($firstWeekEnd->format('l') != 'Monday') {
+            $firstWeekEnd->modify('next Monday');
+        }
+
+        $plans = $planDeliveryEggRepository->planInputsInWeekHerd($breed, $firstWeekStart, $firstWeekEnd);
+
+        return $plans;
+    }
+
+    public function sortPlansByWeek($year, $breed)
+    {
+        $now = new \DateTime();
+        if ($year < $now) {
+            $firstWeekStart = $now;
+            if ($firstWeekStart->format('l') != 'Monday') {
+                $firstWeekStart->modify('previous Monday');
+            }
+        } else {
+            $firstWeekStart = clone $year;
+            if ($firstWeekStart->format('l') != 'Monday') {
+                $firstWeekStart->modify('next Monday');
+            }
+        }
+
+        $chickPlans = $this->weekChicksPlanBreed($year, $breed);
+        $eggsPlans = $this->weekEggsPlanBreed($year, $breed);
+
+        $firstWeekNumber = (int)$firstWeekStart->format('W');
+        $plansArray = [];
+        for ($i = $firstWeekNumber; $i <= 52; $i++) {
+            $weekChicksArray = [];
+            $weekEggsArray = [];
+            $weekChicks = 0;
+            foreach ($chickPlans as $chickPlan) {
+                if ($chickPlan['yearWeek'] == $i) {
+                    $weekChicks = $weekChicks + $chickPlan['chicks'];
+                    array_push($weekChicksArray, $chickPlan);
+                }
+            }
+            $weekEggs = 0;
+            foreach ($eggsPlans as $eggPlan) {
+                if($eggPlan['yearWeek'] == $i) {
+                    $weekEggs = $weekEggs + $eggPlan['eggs'];
+                    array_push($weekEggsArray, $eggPlan);
+                }
+            }
+            $plansArray[$i] = ['chickPlans' => $weekChicksArray, 'eggPlans' => $weekEggsArray, 'chicks' => $weekChicks, 'eggs' => $weekEggs];
+        }
+        return $plansArray;
+    }
+
+    public function showYearPlans($year)
+    {
+        $breeds = $this->getBreed();
+
+        foreach ($breeds as $breed) {
+            $plans[$breed->getName() . $breed->getType()] = $this->sortPlansByWeek($year, $breed);
+        }
+
+        return $this->render('plans/yearPlanSite.html.twig', [
+            'year' => $year,
+            'plans' => $plans
+        ]);
+    }
+
+    /**
      * @Route("/", name="plan_week", methods={"GET"})
      */
     public function index()
@@ -258,7 +392,7 @@ class PlanController extends AbstractController
         $secondYear = $second->format('Y');
 
         $breedsPlans = [];
-        foreach ($breeds as $breed){
+        foreach ($breeds as $breed) {
             $detailsPlans = $this->details($now, $breed);
             $weeksPlans = $this->yearIndexByWeek($now, $breed);
             $weeksPlansNextYear = $this->yearIndexByWeek($next, $breed);

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
+        {% include 'layout/cards/chead.html.twig' %}
+        {% trans %}hatchers.new.title{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% include 'layout/cards/cend.html.twig' %}
+    </div>
+{% endblock %}

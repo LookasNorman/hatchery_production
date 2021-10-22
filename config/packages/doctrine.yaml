@@ -17,3 +17,9 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+        dql:
+            datetime_functions:
+                date_format: DoctrineExtensions\Query\Mysql\DateFormat
+                weekofyear: DoctrineExtensions\Query\Mysql\WeekOfYear
+                week: DoctrineExtensions\Query\Mysql\Week
+                yearweek: DoctrineExtensions\Query\Mysql\YearWeek

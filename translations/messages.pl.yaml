@@ -1130,6 +1130,7 @@ plans:
       title:
         chicks: Zamówienia piskląt
         eggs: Planowane dostawy
+    selection_eggs: Piskląt do wybierania
     table:
       herd:
         age: Wiek
@@ -1146,6 +1147,13 @@ plans:
       eggsForInput: Ilość jaj do nakładu
     title: Plan roczny
     week: Tydzień
+  week_plan_site:
+    week:
+      insert: Tydzień nakładu
+      number: Tydzień
+      selection: Tydzień wybierania
+  year_plan_site:
+    title: Plan na rok
 registration:
   form:
     button:

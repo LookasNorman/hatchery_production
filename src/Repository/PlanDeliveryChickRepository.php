@@ -6,6 +6,7 @@ use App\Entity\PlanDeliveryChick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use DoctrineExtensions\Query\Mysql;
 
 /**
  * @method PlanDeliveryChick|null find($id, $lockMode = null, $lockVersion = null)
@@ -27,6 +28,23 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->andWhere('cf.customer = :customer')
             ->setParameters(['customer' => $customer])
             ->orderBy('p.inputDate')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function planInputsInWeekCustomer($breed, $date, $dateEnd)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('WEEK(p.inputDate) as yearWeek', 'SUM(p.chickNumber) as chicks', 'c.name')
+            ->innerJoin('p.breed', 'b')
+            ->innerJoin('p.chickFarm', 'c')
+            ->andWhere('b = :breed')
+            ->andWhere('p.inputDate BETWEEN :date AND :dateEnd')
+            ->setParameters(['breed' => $breed, 'date' => $date, 'dateEnd' => $dateEnd])
+            ->orderBy('yearWeek', 'asc')
+            ->groupBy('yearWeek')
+            ->addGroupBy('p.chickFarm')
             ->getQuery()
             ->getResult()
             ;
