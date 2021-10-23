@@ -1,3 +1,5 @@
 framework:
     mailer:
+        envelope:
+            sender: 'System zarządzania produkcją wylęgarnii <app_sender@zwdmalec.pl>'
         dsn: '%env(MAILER_DSN)%'

@@ -1,50 +1,117 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    {#        <meta charset="UTF-8">#}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>{% block title %}{% trans %}base.site.title{% endtrans %}!{% endblock %}</title>
-    {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-    {% block stylesheets %}
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
-        {#{{ encore_entry_link_tags('app') }}#}
-    {% endblock %}
+    <title>A Simple Responsive HTML Email</title>
+    <style type="text/css">
+        body {
+            margin: 10px;
+            padding: 10px;
+            min-width: 100% !important;
+            background-color: #00FFFF;
+        }
 
-    {% block javascripts %}
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
-        {#{{ encore_entry_script_tags('app') }}#}
-    {% endblock %}
+        .content {
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
 </head>
 <body>
-{% block body %}
-    <div class="d-flex justify-content-center card-group">
-        {% include 'layout/cards/chead.html.twig' %}
-        {{ eggs_delivery.herd.breeder.name }} - {{ eggs_delivery.herd.name }}
-        {% include 'layout/cards/cbody.html.twig' %}
-        <p class="card-text">
-            {% trans %}eggs_delivery.show.delivery_date{% endtrans %}
-            : {{ eggs_delivery.deliveryDate ? eggs_delivery.deliveryDate|date('Y-m-d') : '' }}
-        </p>
-        <p class="card-text">
-            {% trans %}eggs_delivery.show.eggs_number{% endtrans %}
-            : {{ eggs_delivery.eggsNumber }}
-        </p>
-        <p class="card-text">
-            {% trans %}eggs_delivery.show.first_laying_date{% endtrans %}
-            : {{ eggs_delivery.firstLayingDate ? eggs_delivery.firstLayingDate|date('Y-m-d') : '' }}
-        </p>
-        <p class="card-text">
-            {% trans %}eggs_delivery.show.last_laying_date{% endtrans %}
-            : {{ eggs_delivery.lastLayingDate ? eggs_delivery.lastLayingDate|date('Y-m-d') : '' }}
-        </p>
-        {% include 'layout/cards/cfooter.html.twig' %}
-        {% include 'layout/cards/cend.html.twig' %}
+<div class="card">
+    <h1 style="text-align: center">{% trans %}emails.egg_delivery.header{% endtrans %}</h1>
+
+    <table class="content" align="center" cellpadding="0" cellspacing="0" border="0"
+           style="background-color: #ffffff; text-align: center">
+        <tr>
+            <td style="padding-top: 10px"><h3>{% trans %}emails.egg_delivery.breeder{% endtrans %}</h3></td>
+            <td style="padding-top: 10px"><h3>{% trans %}emails.egg_delivery.farm{% endtrans %}</h3></td>
+        </tr>
+        <tr>
+            <td><b>{{ eggs_delivery.herd.breeder.name }}</b></td>
+            <td><b>{{ eggs_delivery.herd.name }}</b></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr/>
+            </td>
+        </tr>
+        <tr>
+            <td><h3>{% trans %}emails.egg_delivery.date{% endtrans %}</h3></td>
+            <td><h3>{% trans %}emails.egg_delivery.eggs{% endtrans %}</h3></td>
+        </tr>
+        <tr>
+            <td style="padding-bottom: 10px">{{ eggs_delivery.deliveryDate|date("Y-m-d") }}</td>
+            <td style="padding-bottom: 10px">{{ eggs_delivery.eggsNumber }}</td>
+        </tr>
+    </table>
+    <hr/>
+    <div style="background-color: #ffffff; text-align: center">
+        <h3>{% trans %}emails.egg_delivery.information.title{% endtrans %}</h3>
+        <p>{% trans %}emails.egg_delivery.information.body{% endtrans %}</p>
     </div>
-{% endblock %}
+    <hr/>
+    <table class="content" align="center" cellpadding="0" cellspacing="0" border="0"
+           style="background-color: #ffffff; text-align: center">
+        <tr>
+            <td>
+                <table class="content" align="center" cellpadding="0" cellspacing="0" border="0"
+                       style="background-color: #ffffff; text-align: center">
+                    <tr>
+                        <td style="padding-top: 10px;"><h3>{% trans %}emails.egg_delivery.sales.title{% endtrans %}</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ sales.person }}</b></td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ sales.phoneNumber|number_format(0, '', ' ') }}</b></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 10px"><b>{{ sales.email }}</b></td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table class="content" align="center" cellpadding="0" cellspacing="0" border="0"
+                       style="background-color: #d3d3d3; text-align: center">
+                    <tr>
+                        <td style="padding-top: 10px">
+                            <h3>{% trans %}emails.egg_delivery.hatchery.title{% endtrans %}</h3></td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ hatchery.person }}</b></td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ hatchery.phoneNumber|number_format(0, '', ' ') }}</b></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 10px"><b>{{ hatchery.email }}</b></td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table class="content" align="center" cellpadding="0" cellspacing="0" border="0"
+                       style="background-color: #ffffff; text-align: center">
+                    <tr>
+                        <td style="padding-top: 10px">
+                            <h3>{% trans %}emails.egg_delivery.accounting.title{% endtrans %}</h3></td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ accounting.person }}</b></td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ accounting.phoneNumber|number_format(0, '', ' ') }}</b></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 10px"><b>{{ accounting.email }}</b></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br/>
+</div>
 </body>
 </html>
-

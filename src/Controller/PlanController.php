@@ -238,24 +238,6 @@ class PlanController extends AbstractController
         return $breeds;
     }
 
-    /**
-     * @Route("/choose_year_plan", name="plan_choose_year_plan", methods={"GET", "POST"})
-     */
-    public function chooseYearPlan(Request $request)
-    {
-        $form = $this->createForm(ChooseYearPlan::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $year = $form['year']->getData();
-            return $this->showYearPlans($year);
-
-        }
-
-        return $this->render('plans/form/chooseYearPlan.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
-
     public function weekChicksPlanBreed($year, $breed)
     {
         $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
@@ -271,8 +253,6 @@ class PlanController extends AbstractController
                 $firstWeekStart->modify('next Monday');
             }
         }
-
-
 
         $firstWeekEnd = clone($firstWeekStart);
         $firstWeekEnd->modify('first day of january next year');
@@ -346,7 +326,7 @@ class PlanController extends AbstractController
             }
             $weekEggs = 0;
             foreach ($eggsPlans as $eggPlan) {
-                if($eggPlan['yearWeek'] == $i) {
+                if ($eggPlan['yearWeek'] == $i) {
                     $weekEggs = $weekEggs + $eggPlan['eggs'];
                     array_push($weekEggsArray, $eggPlan);
                 }
@@ -356,8 +336,32 @@ class PlanController extends AbstractController
         return $plansArray;
     }
 
-    public function showYearPlans($year)
+    public function yearLink()
     {
+        $first = new \DateTime();
+        $second = new \DateTime('1st January next Year');
+        $third = new \DateTime('1st January +2 year');
+
+        return [
+            $first->format('Y'),
+            $second->format('Y'),
+            $third->format('Y'),
+        ];
+    }
+
+    /**
+     * @Route("/year_plan/{yearN}", name="plan_year_plan", methods={"GET", "POST"})
+     */
+    public function showYearPlans($yearN = null)
+    {
+        $links = $this->yearLink();
+
+        if (isset($yearN)) {
+            $year = new \DateTime();
+            $year->modify('1st January ' . $yearN);
+        } else {
+            $year = new \DateTime();
+        }
         $breeds = $this->getBreed();
 
         foreach ($breeds as $breed) {
@@ -366,7 +370,8 @@ class PlanController extends AbstractController
 
         return $this->render('plans/yearPlanSite.html.twig', [
             'year' => $year,
-            'plans' => $plans
+            'plans' => $plans,
+            'links' => $links,
         ]);
     }
 

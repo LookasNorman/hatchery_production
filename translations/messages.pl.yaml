@@ -718,6 +718,22 @@ eggs_inputs_selections:
     selection_date: Data wybierania
     chick_number: Ilość piskląt
     cull_chick: Wybrakowane pisklęta
+emails:
+  egg_delivery:
+    accounting:
+      title: Dział księgowości
+    breeder: Hodowca
+    date: Data dostawy
+    eggs: Ilość jaj
+    farm: Stado
+    hatchery:
+      title: Wylęgarnia
+    header: Dziękujemy za dostawę jaj
+    information:
+      body: W przypadku niezgodności w dostawie prosimy o niezwłoczny kontakt.
+      title: Informacje
+    sales:
+      title: Dział handlowy
 hatchers:
   delete:
     confirm: Na pewno chcesz usunąć aparat klujnikowy?

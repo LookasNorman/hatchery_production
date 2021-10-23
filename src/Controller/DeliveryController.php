@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Breed;
+use App\Entity\ContactInfo;
 use App\Entity\Delivery;
 use App\Entity\Herds;
 use App\Entity\InputsFarmDelivery;
@@ -12,9 +13,12 @@ use App\Form\DeliveryType;
 use App\Repository\DeliveryRepository;
 use App\Repository\DetailsDeliveryRepository;
 use App\Repository\InputsFarmDeliveryRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -28,11 +32,11 @@ class DeliveryController extends AbstractController
     {
         $inputsFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
         $eggsDeliveries = [];
-        foreach ($deliveries as $delivery){
+        foreach ($deliveries as $delivery) {
             $inputsDeliveries = $inputsFarmDeliveryRepository->eggsFromDelivery($delivery);
-            if($inputsDeliveries > 0){
+            if ($inputsDeliveries > 0) {
                 array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$inputsDeliveries]);
-            } elseif(is_null($inputsDeliveries)){
+            } elseif (is_null($inputsDeliveries)) {
                 array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$delivery->getEggsNumber()]);
             }
         }
@@ -44,9 +48,9 @@ class DeliveryController extends AbstractController
     {
         $inputsFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
         $eggsDeliveries = [];
-        foreach ($deliveries as $delivery){
+        foreach ($deliveries as $delivery) {
             $inputsDeliveries = $inputsFarmDeliveryRepository->eggsFromDelivery($delivery);
-            if(is_null($inputsDeliveries)){
+            if (is_null($inputsDeliveries)) {
                 array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$delivery->getEggsNumber()]);
             } else {
                 array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$inputsDeliveries]);
@@ -83,77 +87,37 @@ class DeliveryController extends AbstractController
         ]);
     }
 
-    public function addHerd($name, $supplier, $breed)
+    public function sendEmail($eggsDelivery)
     {
-        $em = $this->getDoctrine()->getManager();
-        $herd = new Herds();
-        $herd->setName($name);
-        $herd->setBreeder($supplier);
-        $herd->setBreed($breed);
-        $hatchingDate = new \DateTime('2019-03-31');
-        $herd->setHatchingDate($hatchingDate);
-        $em->persist($herd);
-        $em->flush();
+        $contactInfoRepository = $this->getDoctrine()->getRepository(ContactInfo::class);
+        $hatchery = $contactInfoRepository->findOneBy(['department' => 'Wylęgarnia']);
+        $sales = $contactInfoRepository->findOneBy(['department' => 'Handel']);
+        $accounting = $contactInfoRepository->findOneBy(['department' => 'Księgowość']);
+        $emailAddress = $eggsDelivery->getHerd()->getBreeder()->getEmail();
+        $date = $eggsDelivery->getDeliveryDate();
 
-        return $herd;
-    }
-
-    public function addSupplier($name)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $supplier = new Supplier();
-        $supplier->setName($name);
-        $em->persist($supplier);
-        $em->flush();
-
-        return $supplier;
-    }
-
-    /**
-     * @Route("/import", name="delivery_import", methods={"GET"})
-     * @throws \Exception
-     */
-    public function importDeliveryXls()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-        $spreadsheet = $reader->load("delivery.xls");
-        $worksheet = $spreadsheet->getActiveSheet();
-        foreach ($worksheet->getRowIterator() as $row) {
-            $deliveryDate = new \DateTime($worksheet->getCell('A' . $row->getRowIndex())->getFormattedValue());
-            $name = $worksheet->getCell('B' . $row->getRowIndex())->getFormattedValue();
-            $firstLayingDate = new \DateTime($worksheet->getCell('C' . $row->getRowIndex())->getFormattedValue());
-            $lastLayingDate = new \DateTime($worksheet->getCell('D' . $row->getRowIndex())->getFormattedValue());
-            $eggsNumber = $worksheet->getCell('E' . $row->getRowIndex())->getValue();
-
-            $herd = $em->getRepository(Herds::class)->findOneBy(['name' => $name]);
-            if (!$herd instanceof Herds) {
-                $nameArr = explode(' ', $name);
-                $supplier = $em->getRepository(Supplier::class)->findOneBy(['name' => $nameArr[0]]);
-                if (!$supplier instanceof Supplier) {
-                    $supplier = $this->addSupplier($nameArr[0]);
-                }
-                $breed = $em->getRepository(Breed::class)->find(3);
-                $herd = $this->addHerd($name, $supplier, $breed);
-            }
-            $delivery = new Delivery();
-            $delivery->setHerd($herd);
-            $delivery->setDeliveryDate($deliveryDate);
-            $delivery->setFirstLayingDate($firstLayingDate);
-            $delivery->setLastLayingDate($lastLayingDate);
-            $delivery->setEggsNumber($eggsNumber);
-            $delivery->setEggsOnWarehouse($eggsNumber);
-            $em->persist($delivery);
+        if(!$emailAddress){
+            return;
         }
-        $em->flush();
-        die();
+        $email = (new TemplatedEmail())
+            ->to($emailAddress)
+            ->subject('Przyjęcie jaj w dniu ' . $date->format('Y-m-d'))
+            ->htmlTemplate('emails/deliveryEgg.html.twig')
+            ->context([
+                'eggs_delivery' => $eggsDelivery,
+                'hatchery' => $hatchery,
+                'sales' => $sales,
+                'accounting' => $accounting
+            ])
+        ;
+        return $email;
     }
 
     /**
      * @Route("/new", name="eggs_delivery_new", methods={"GET","POST"})
      * @IsGranted("ROLE_PRODUCTION")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, MailerInterface $mailer): Response
     {
         $eggsDelivery = new Delivery();
         $form = $this->createForm(DeliveryType::class, $eggsDelivery);
@@ -163,6 +127,11 @@ class DeliveryController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $eggsDelivery->setEggsOnWarehouse($eggsDelivery->getEggsNumber());
             $entityManager->persist($eggsDelivery);
+            $email = $this->sendEmail($eggsDelivery);
+            if($email){
+                $mailer->send($email);
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('eggs_delivery_index');
