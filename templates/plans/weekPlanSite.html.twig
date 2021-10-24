@@ -20,6 +20,12 @@
                                 {{ plans.eggs|number_format(0, ',', ' ') }}
                             </a>
                         </dt>
+                        <dd class="col-sm-9">{% trans %}plans.index.eggs_stock{% endtrans %}</dd>
+                        <dt class="col-sm-3">
+                            <a type="button" class="" data-bs-toggle="modal" data-bs-target="#eggs{{ breed }}{{ key }}Modal">
+                                {{ plans.eggsInStock|number_format(0, ',', ' ') }}
+                            </a>
+                        </dt>
                     </dl>
                     <div class="modal fade" id="chicks{{ breed }}{{ key }}Modal" tabindex="-1" aria-labelledby="chicks{{ breed }}{{ key }}ModalLabel" aria-hidden="true">
                         <div class="modal-dialog">

@@ -334,9 +334,51 @@ class PlanController extends AbstractController
             $date = new \DateTime();
             $date->setISODate($year->format('Y'), $i);
             $date->modify('midnight');
-            $plansArray[$i] = ['date' => $date, 'chickPlans' => $weekChicksArray, 'eggPlans' => $weekEggsArray, 'chicks' => $weekChicks, 'eggs' => $weekEggs];
+            $eggsInStock = $this->eggsInStock($breed, $date);
+
+            $plansArray[$i] = [
+                'eggsInStock' => $eggsInStock,
+                'date' => $date,
+                'chickPlans' => $weekChicksArray,
+                'eggPlans' => $weekEggsArray,
+                'chicks' => $weekChicks,
+                'eggs' => $weekEggs
+            ];
+
         }
+
         return $plansArray;
+    }
+
+    public function planEggs(Breed $breed, $dateEnd)
+    {
+        $indicators = $this->getDoctrine()->getRepository(PlanIndicators::class)->findOneBy([]);
+
+        $dateStart = new \DateTime();
+        $eggsRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
+        $chicksRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
+        $eggs = $eggsRepository->planBreedBeetwenDate($breed, $dateStart, $dateEnd);
+
+        $chicks = $chicksRepository->planBreedBetweenDate($breed, $dateStart, $dateEnd);
+        $planEgg = $eggs - ($chicks / ($indicators->getHatchability() / 100));
+
+        return $planEgg;
+    }
+
+    public function eggsInStock(Breed $breed, $date)
+    {
+        $dateEnd = clone $date;
+        $dateEnd->modify('-1 second');
+        $planEggs = $this->planEggs($breed, $dateEnd);
+
+        $deliveryRepository = $this->getDoctrine()->getRepository(Delivery::class);
+        $inputDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+        $eggsDelivered = $deliveryRepository->eggsBreedDelivered($breed);
+        $eggsInProduction = $inputDeliveryRepository->eggsBreedProduction($breed);
+        $eggsStock = $eggsDelivered - $eggsInProduction + $planEggs;
+
+        return $eggsStock;
+
     }
 
     public function yearLink()

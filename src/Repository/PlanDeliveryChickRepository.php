@@ -43,6 +43,19 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ;
     }
 
+    public function planBreedBetweenDate($breed, $date, $dateEnd)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('SUM(p.chickNumber) as chicks')
+            ->innerJoin('p.breed', 'b')
+            ->andWhere('b = :breed')
+            ->andWhere('p.inputDate BETWEEN :date AND :dateEnd')
+            ->setParameters(['breed' => $breed, 'date' => $date, 'dateEnd' => $dateEnd])
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
     public function planInputsInWeekCustomer($breed, $date, $dateEnd)
     {
         return $this->createQueryBuilder('p')

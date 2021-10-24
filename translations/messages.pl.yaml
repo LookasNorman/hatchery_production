@@ -1137,6 +1137,7 @@ plans:
     day: Dzień
     details: Szczegóły
     eggs_delivery: Dostarczonych jaj
+    eggs_stock: Stan jaj na początek tygodnia
     eggs_warehouse: Stan jaj
     herd:
       eggs_delivery: Planowanych jaj
