@@ -331,7 +331,10 @@ class PlanController extends AbstractController
                     array_push($weekEggsArray, $eggPlan);
                 }
             }
-            $plansArray[$i] = ['chickPlans' => $weekChicksArray, 'eggPlans' => $weekEggsArray, 'chicks' => $weekChicks, 'eggs' => $weekEggs];
+            $date = new \DateTime();
+            $date->setISODate($year->format('Y'), $i);
+            $date->modify('midnight');
+            $plansArray[$i] = ['date' => $date, 'chickPlans' => $weekChicksArray, 'eggPlans' => $weekEggsArray, 'chicks' => $weekChicks, 'eggs' => $weekEggs];
         }
         return $plansArray;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ChicksRecipient;
 use App\Entity\PlanDeliveryChick;
 use App\Form\PlanDeliveryChickType;
 use App\Repository\PlanDeliveryChickRepository;
@@ -18,6 +19,19 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PlanDeliveryChickController extends AbstractController
 {
+    public function yearLink()
+    {
+        $first = new \DateTime();
+        $second = new \DateTime('1st January next Year');
+        $third = new \DateTime('1st January +2 year');
+
+        return [
+            $first->format('Y'),
+            $second->format('Y'),
+            $third->format('Y'),
+        ];
+    }
+
     /**
      * @Route("/", name="plan_delivery_chick_index", methods={"GET"})
      */
@@ -25,7 +39,30 @@ class PlanDeliveryChickController extends AbstractController
     {
         return $this->render('plan_delivery_chick/index.html.twig', [
             'plan_delivery_chicks' => $planDeliveryChickRepository->findBy([], ['inputDate' => 'ASC']),
-            'plan_indicators' => $planIndicatorsRepository->findOneBy([])
+            'plan_indicators' => $planIndicatorsRepository->findOneBy([]),
+            'yearLink' => $this->yearLink()
+        ]);
+    }
+
+    /**
+     * @Route("/weekFarm/{date}/{farm}", name="plan_week_farm")
+     */
+    public function weekCustomer(
+        ChicksRecipient $farm,
+        $date,
+        PlanDeliveryChickRepository $planDeliveryChickRepository,
+        PlanIndicatorsRepository $planIndicatorsRepository
+    )
+    {
+        $date = new \DateTime($date);
+        $dateEnd = clone $date;
+        $dateEnd->modify('+7 days -1 second');
+        $plans = $planDeliveryChickRepository->planCustomerWeek($farm, $date, $dateEnd);
+
+        return $this->render('plan_delivery_chick/index.html.twig', [
+            'plan_delivery_chicks' => $plans,
+            'plan_indicators' => $planIndicatorsRepository->findOneBy([]),
+            'yearLink' => $this->yearLink()
         ]);
     }
 

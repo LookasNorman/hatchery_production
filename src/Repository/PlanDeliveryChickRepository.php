@@ -21,6 +21,16 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
         parent::__construct($registry, PlanDeliveryChick::class);
     }
 
+    public function planCustomerWeek($farm, $date, $dateEnd)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.chickFarm = :farm')
+            ->andWhere('p.inputDate BETWEEN :date AND :dateEnd')
+            ->setParameters(['farm' => $farm, 'date' => $date, 'dateEnd' => $dateEnd])
+            ->getQuery()
+            ->getResult();
+    }
+
     public function planDeliveryByCustomer($customer)
     {
         return $this->createQueryBuilder('p')
@@ -36,7 +46,7 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
     public function planInputsInWeekCustomer($breed, $date, $dateEnd)
     {
         return $this->createQueryBuilder('p')
-            ->select('WEEK(p.inputDate) as yearWeek', 'SUM(p.chickNumber) as chicks', 'c.name')
+            ->select('WEEK(p.inputDate) as yearWeek', 'SUM(p.chickNumber) as chicks', 'c.name', 'c.id')
             ->innerJoin('p.breed', 'b')
             ->innerJoin('p.chickFarm', 'c')
             ->andWhere('b = :breed')

@@ -33,7 +33,11 @@
                                 <div class="modal-body">
                                     <dl class="row">
                                     {% for farm in plans.chickPlans %}
-                                        <dd class="col-sm-9">{{ farm.name }}:</dd>
+                                        <dd class="col-sm-9">
+                                            <a href="{{ path('plan_week_farm', {"date": plans.date|date("Y-m-d"), "farm": farm.id}) }}">
+                                            {{ farm.name }}</a>:
+
+                                        </dd>
                                         <dt class="col-sm-3">{{ farm.chicks|number_format(0, ',', ' ') }}</dt>
                                     {% endfor %}
                                     </dl>

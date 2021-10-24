@@ -2,6 +2,13 @@
 
 {% block body %}
     <h1>{% trans %}plan_delivery_chick.index.title{% endtrans %}</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            {% for year in yearLink %}
+            <li class="breadcrumb-item"><a href="{{path('plan_year_plan', {'yearN': year}) }}">{{ year }}</a></li>
+            {% endfor %}
+        </ol>
+    </nav>
     {% if is_granted('ROLE_ADMIN') %}
         {{ include('layout/buttons/new.html.twig',
             { pathLink: path('plan_delivery_chick_new'), text: 'plan_delivery_chick.index.button.new' }) }}
