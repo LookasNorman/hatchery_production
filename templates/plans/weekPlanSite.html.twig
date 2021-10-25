@@ -10,58 +10,63 @@
                     <dl class="row">
                         <dd class="col-sm-9">{% trans %}plans.index.chicks{% endtrans %}</dd>
                         <dt class="col-sm-3">
-                            <a type="button" class="" data-bs-toggle="modal" data-bs-target="#chicks{{ breed }}{{ key }}Modal">
+                            <a type="button" class="" data-bs-toggle="modal"
+                               data-bs-target="#chicks{{ breed }}{{ key }}Modal">
                                 {{ plans.chicks|number_format(0, ',', ' ') }}
                             </a>
                         </dt>
                         <dd class="col-sm-9">{% trans %}plans.index.eggs_delivery{% endtrans %}</dd>
                         <dt class="col-sm-3">
-                            <a type="button" class="" data-bs-toggle="modal" data-bs-target="#eggs{{ breed }}{{ key }}Modal">
+                            <a type="button" class="" data-bs-toggle="modal"
+                               data-bs-target="#eggs{{ breed }}{{ key }}Modal">
                                 {{ plans.eggs|number_format(0, ',', ' ') }}
                             </a>
                         </dt>
                         <dd class="col-sm-9">{% trans %}plans.index.eggs_stock{% endtrans %}</dd>
                         <dt class="col-sm-3">
-                            <a type="button" class="" data-bs-toggle="modal" data-bs-target="#eggs{{ breed }}{{ key }}Modal">
-                                {{ plans.eggsInStock|number_format(0, ',', ' ') }}
-                            </a>
+                            {{ plans.eggsInStock|number_format(0, ',', ' ') }}
                         </dt>
                     </dl>
-                    <div class="modal fade" id="chicks{{ breed }}{{ key }}Modal" tabindex="-1" aria-labelledby="chicks{{ breed }}{{ key }}ModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="chicks{{ breed }}{{ key }}Modal" tabindex="-1"
+                         aria-labelledby="chicks{{ breed }}{{ key }}ModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="chicks{{ breed }}{{ key }}ModalLabel">
                                         {% trans %}plans.index.chicks{% endtrans %}
                                     </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <dl class="row">
-                                    {% for farm in plans.chickPlans %}
-                                        <dd class="col-sm-9">
-                                            <a href="{{ path('plan_week_farm', {"date": plans.date|date("Y-m-d"), "farm": farm.id}) }}">
-                                            {{ farm.name }}</a>:
+                                        {% for farm in plans.chickPlans %}
+                                            <dd class="col-sm-9">
+                                                <a href="{{ path('plan_week_farm', {"date": plans.date|date("Y-m-d"), "farm": farm.id}) }}">
+                                                    {{ farm.name }}</a>:
 
-                                        </dd>
-                                        <dt class="col-sm-3">{{ farm.chicks|number_format(0, ',', ' ') }}</dt>
-                                    {% endfor %}
+                                            </dd>
+                                            <dt class="col-sm-3">{{ farm.chicks|number_format(0, ',', ' ') }}</dt>
+                                        {% endfor %}
                                     </dl>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="eggs{{ breed }}{{ key }}Modal" tabindex="-1" aria-labelledby="eggs{{ breed }}{{ key }}ModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="eggs{{ breed }}{{ key }}Modal" tabindex="-1"
+                         aria-labelledby="eggs{{ breed }}{{ key }}ModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="eggs{{ breed }}{{ key }}ModalLabel">
                                         {% trans %}plans.index.chicks{% endtrans %}
                                     </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <dl class="row">
@@ -72,7 +77,8 @@
                                     </dl>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
                                 </div>
                             </div>
                         </div>
