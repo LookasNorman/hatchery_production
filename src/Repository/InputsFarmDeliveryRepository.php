@@ -54,6 +54,14 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function eggsProduction()
+    {
+        return $this->createQueryBuilder('ifd')
+            ->select('SUM(ifd.eggsNumber)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function inputFarmDeliveryForLighting($herd, $input)
     {
         return $this->createQueryBuilder('ifd')

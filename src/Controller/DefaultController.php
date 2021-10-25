@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\InputsFarmDelivery;
 use App\Repository\ChicksRecipientRepository;
 use App\Repository\DeliveryRepository;
+use App\Repository\InputsFarmDeliveryRepository;
 use App\Repository\InputsRepository;
 use App\Repository\SupplierRepository;
 use App\Repository\HatchersRepository;
@@ -23,14 +25,16 @@ class DefaultController extends AbstractController
         SupplierRepository $supplierRepository,
         ChicksRecipientRepository $recipientRepository,
         InputsRepository $inputsRepository,
-        DeliveryRepository $deliveryRepository
+        DeliveryRepository $deliveryRepository,
+        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
     ): Response
     {
         $suppliers = [];
         $eggsSuppliers = $supplierRepository->findAll();
         $suppliers['suppliersNumber'] = count($eggsSuppliers);
-        $eggsInWarehouse = $deliveryRepository->eggsInWarehouse();
-        $suppliers['eggsInWarehouse'] = $eggsInWarehouse[0]['eggsInWarehouse'];
+        $eggsInWarehouse = $deliveryRepository->eggsDelivered() - $inputsFarmDeliveryRepository->eggsProduction();
+
+        $suppliers['eggsInWarehouse'] = $eggsInWarehouse;
 
         $recipients = [];
         $chicksRecipients = $recipientRepository->findAll();
