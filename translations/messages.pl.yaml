@@ -848,18 +848,20 @@ herds:
     title: Szczegóły stada
   show_delivery:
     table:
-      input_name: Nakład
-      delivery: Dostawy
-      delivery_id: Indeks dostawy
-      id: Indeks
-      delivery_date: Data dostawy
-      delivery_eggs: Dostarczonych jaj
-      eggs_number: Wykorzystanych jaj
-      waste_lighting: Odpad po świetleniu
-      waste_transfer: Odpad po przekładzie
       chick_number: Wyklute pisklęta
       cull_chick: Wybrakowane pisklęta
+      delivery: Dostawy
+      delivery_date: Data dostawy
+      delivery_eggs: Dostarczonych jaj
+      delivery_id: Indeks dostawy
+      eggs_number: Wykorzystanych jaj
+      farm: Ferma
+      id: Indeks
+      input_name: Nakład
+      transfer_eggs: Przełożonych jaj
       unhatched: Niewyklute pisklęta
+      waste_lighting: Odpad po świetleniu
+      waste_transfer: Odpad po przekładzie
 incubators:
   index:
     title: Wykaz aparatów wylęgowych i klujnikowych

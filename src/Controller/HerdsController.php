@@ -9,6 +9,7 @@ use App\Entity\InputsFarmDelivery;
 use App\Form\HerdsType;
 use App\Repository\DeliveryRepository;
 use App\Repository\DetailsRepository;
+use App\Repository\InputsFarmDeliveryRepository;
 use App\Repository\SupplierRepository;
 use App\Repository\HerdsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -73,13 +74,19 @@ class HerdsController extends AbstractController
     /**
      * @Route("/{id}", name="herds_show", methods={"GET"})
      */
-    public function show(Herds $herd, DeliveryRepository $deliveryRepository): Response
+    public function show(
+        Herds $herd,
+        DeliveryRepository $deliveryRepository,
+        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
+    ): Response
     {
         $deliveries = $deliveryRepository->herdDeliveryWithStock($herd);
-
+        $inputs = $inputsFarmDeliveryRepository->herdDelivery($herd);
+//dd($inputs);
         return $this->render('herds/show.html.twig', [
             'herd' => $herd,
-            'deliveries' => $deliveries
+            'deliveries' => $deliveries,
+            'inputs' => $inputs
         ]);
     }
 

@@ -106,6 +106,7 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
             ->join('ifd.delivery', 'd')
             ->andWhere('d.herd = :herd')
             ->setParameters(['herd' => $herd])
+            ->orderBy('ifd.inputsFarm')
             ->getQuery()
             ->getResult();
     }
