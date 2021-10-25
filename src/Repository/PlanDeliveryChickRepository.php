@@ -73,6 +73,20 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ;
     }
 
+    public function planInputsDetail($start, $end, $breed)
+    {
+        return $this->createQueryBuilder('p')
+            ->addSelect('WEEK(p.inputDate) as week')
+            ->innerJoin('p.breed', 'b')
+            ->andWhere('b = :breed')
+            ->andWhere('p.inputDate BETWEEN :start AND :end')
+            ->setParameters(['start' => $start, 'end' => $end, 'breed' => $breed])
+            ->addOrderBy('p.inputDate', 'asc')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function planInputsInDay($start, $end, $breed)
     {
         return $this->createQueryBuilder('p')

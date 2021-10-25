@@ -1027,6 +1027,8 @@ menu:
       index: Zamówienia - planowane
     plan_delivery_egg:
       index: Dostawy jaj - planowane
+    plan_details:
+      index: Plan na 3 tygodnie
     plan_indicator:
       index: Wskaźniki do planów
     plan_inputs_delivery:

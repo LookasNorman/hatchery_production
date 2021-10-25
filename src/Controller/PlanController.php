@@ -270,6 +270,7 @@ class PlanController extends AbstractController
     {
         $planDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
         $now = new \DateTime();
+        $now->modify('midnight -1 second');
         if ($year < $now) {
             $firstWeekStart = $now;
             if ($firstWeekStart->format('l') != 'Monday') {
@@ -288,6 +289,7 @@ class PlanController extends AbstractController
         if ($firstWeekEnd->format('l') != 'Monday') {
             $firstWeekEnd->modify('next Monday');
         }
+
 
         $plans = $planDeliveryEggRepository->planInputsInWeekHerd($breed, $firstWeekStart, $firstWeekEnd);
 
@@ -444,15 +446,9 @@ class PlanController extends AbstractController
         $breedsPlans = [];
         foreach ($breeds as $breed) {
             $detailsPlans = $this->details($now, $breed);
-            $weeksPlans = $this->yearIndexByWeek($now, $breed);
-            $weeksPlansNextYear = $this->yearIndexByWeek($next, $breed);
-            $weeksPlansSecondYear = $this->yearIndexByWeek($second, $breed);
 
             $yearsPlans = [
                 'details' => $detailsPlans,
-                $thisYear => $weeksPlans,
-                $nextYear => $weeksPlansNextYear,
-                $secondYear => $weeksPlansSecondYear
             ];
             $breedPlans = ['breed' => $breed, 'yearsPlans' => $yearsPlans];
 

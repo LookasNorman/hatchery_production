@@ -50,6 +50,19 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
             ;
     }
 
+    public function planDeliveryDetails($start, $end, $breed)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.herd', 'h')
+            ->andWhere('h.breed = :breed')
+            ->andWhere('p.deliveryDate BETWEEN :start AND :end')
+            ->setParameters(['start' => $start, 'end' => $end, 'breed' => $breed])
+            ->addOrderBy('p.deliveryDate', 'asc')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function planDeliveryInDay($start, $end, $breed)
     {
         return $this->createQueryBuilder('p')
