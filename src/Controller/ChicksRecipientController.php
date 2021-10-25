@@ -52,9 +52,11 @@ class ChicksRecipientController extends AbstractController
     public function new(Request $request, $id = null): Response
     {
         $customerRepository = $this->getDoctrine()->getRepository(Customer::class);
-        $customer = $customerRepository->find($id);
         $chicksRecipient = new ChicksRecipient();
-        $chicksRecipient->setCustomer($customer);
+        if($id){
+            $customer = $customerRepository->find($id);
+            $chicksRecipient->setCustomer($customer);
+        }
         $form = $this->createForm(ChicksRecipientType::class, $chicksRecipient);
         $form->handleRequest($request);
 
