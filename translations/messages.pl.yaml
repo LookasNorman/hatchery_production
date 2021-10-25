@@ -837,12 +837,15 @@ herds:
     button:
       back: Lista stad
   show:
-    title: Szczegóły stada
-    hatching_date: Data wylęgu
+    accordion:
+      delivery: Lista dostaw
+      inputs: Dostawy w nakładach
     button:
       edit: Edytuj
       back: Lista stad
       breeder_herds: Stada dostawcy / hodowcy
+    hatching_date: Data wylęgu
+    title: Szczegóły stada
   show_delivery:
     table:
       input_name: Nakład

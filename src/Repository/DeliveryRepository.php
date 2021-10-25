@@ -20,6 +20,19 @@ class DeliveryRepository extends ServiceEntityRepository
         parent::__construct($registry, Delivery::class);
     }
 
+    public function herdDeliveryWithStock($herd)
+    {
+        return $this->createQueryBuilder('d')
+            ->addSelect('d.eggsNumber - SUM(ifd.eggsNumber) as eggsStock')
+            ->join('d.inputsFarmDeliveries', 'ifd')
+            ->andWhere('d.herd = :herd')
+            ->setParameters(['herd' => $herd])
+            ->groupBy('d')
+            ->orderBy('d.deliveryDate', 'desc')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function lastHerdDelivery($herd)
     {
         return $this->createQueryBuilder('ed')

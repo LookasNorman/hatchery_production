@@ -30,6 +30,30 @@
             { pathLink: path('herds_breeder_index', {'id': herd.breeder.id}), text: 'herds.show.button.breeder_herds' }) }}
         {% include 'layout/cards/cend.html.twig' %}
     </div>
-    {% include('herds/herd_deliveries.html.twig') %}
-    {% include('herds/show_supplier_delivery.html.twig') %}
+<div class="accordion accordion-flush" id="accordionFlushHerdShow">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingDelivery">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDelivery" aria-expanded="false" aria-controls="flush-collapseDelivery">
+                {% trans %}herds.show.accordion.delivery{% endtrans %}
+            </button>
+        </h2>
+        <div id="flush-collapseDelivery" class="accordion-collapse collapse" aria-labelledby="flush-headingDelivery" data-bs-parent="#accordionFlushHerdShow">
+            <div class="accordion-body">
+                {% include('herds/herd_deliveries.html.twig') %}
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingInputs">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseInputs" aria-expanded="false" aria-controls="flush-collapseInputs">
+                {% trans %}herds.show.accordion.inputs{% endtrans %}
+            </button>
+        </h2>
+        <div id="flush-collapseInputs" class="accordion-collapse collapse" aria-labelledby="flush-headingInputs" data-bs-parent="#accordionFlushHerdShow">
+            <div class="accordion-body">
+                {% include('herds/inputs_deliveries.html.twig') %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

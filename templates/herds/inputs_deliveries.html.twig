@@ -1,0 +1,72 @@
+{% block herdDeliveries %}
+
+    {% include 'layout/tables/thead.html.twig' %}
+    <tr>
+        <th class="text-center align-middle">
+            {% trans %}herds.show_delivery.table.input_name{% endtrans %}
+        </th>
+        <th class="text-center align-middle">
+            {% trans %}herds.show_delivery.table.delivery_id{% endtrans %}
+        </th>
+        <th class="text-center align-middle">
+            {% trans %}herds.show_delivery.table.delivery_date{% endtrans %}
+        </th>
+        <th class="text-center align-middle">
+            {% trans %}herds.show_delivery.table.eggs_number{% endtrans %}
+        </th>
+        <th class="text-center align-middle">
+            {% trans %}herds.show_delivery.table.waste_lighting{% endtrans %}
+        </th>
+        <th class="text-center align-middle">
+            {% trans %}herds.show_delivery.table.waste_transfer{% endtrans %}
+        </th>
+        <th class="text-center align-middle">
+            {% trans %}herds.show_delivery.table.chick_number{% endtrans %}
+        </th>
+        <th class="text-center align-middle">
+            {% trans %}herds.show_delivery.table.cull_chick{% endtrans %}
+        </th>
+        <th class="text-center align-middle">
+            {% trans %}herds.show_delivery.table.unhatched{% endtrans %}
+        </th>
+    </tr>
+    {% include 'layout/tables/tbody.html.twig' %}
+    {#    {% for delivery in deliveries %}#}
+    {#        <tr>#}
+    {#            <td class="text-center align-middle">#}
+    {#                <a href="{{ path('eggs_inputs_show', {'id': inputsDetail.inputId}) }}">#}
+    {#                    {{ inputsDetail.inputName }}#}
+    {#                </a>#}
+    {#            </td>#}
+    {#            <td class="text-center align-middle">#}
+    {#                <a href="{{ path('eggs_delivery_show', {'id': inputsDetail.deliveryId}) }}">#}
+    {#                    {{ inputsDetail.deliveryId }}#}
+    {#                </a>#}
+    {#            </td>#}
+    {#            <td class="text-center align-middle">#}
+    {#                {{ inputsDetail.deliveryDate ? inputsDetail.deliveryDate|date('Y-m-d') : '' }}#}
+    {#            </td>#}
+    {#            <td class="text-center align-middle">#}
+    {#                {{ inputsDetail.deliveryEggs|number_format(0, '', ' ') }}#}
+    {#            </td>#}
+    {#            <td class="text-center align-middle">#}
+    {#                {{ inputsDetail.wasteLighting ? inputsDetail.wasteLighting|number_format(0, '', ' ') : '' }}#}
+    {#            </td>#}
+    {#            <td class="text-center align-middle">#}
+    {#                {{ inputsDetail.wasteTransfer ? inputsDetail.wasteTransfer|number_format(0, '', ' ') : '' }}#}
+    {#            </td>#}
+    {#            <td class="text-center align-middle">#}
+    {#                {{ inputsDetail.chickNumber ? inputsDetail.chickNumber|number_format(0, '', ' ') : '' }}#}
+    {#            </td>#}
+    {#            <td class="text-center align-middle">#}
+    {#                {{ inputsDetail.cullChick ? inputsDetail.cullChick|number_format(0, '', ' ') : '' }}#}
+    {#            </td>#}
+    {#            <td class="text-center align-middle">#}
+    {#                {{ inputsDetail.unhatched ? inputsDetail.unhatched|number_format(0, '', ' ') : '' }}#}
+    {#            </td>#}
+    {#        </tr>#}
+    {#    {% endfor %}#}
+    {% include 'layout/tables/tfooter.html.twig' %}
+    {% include 'layout/tables/tend.html.twig' %}
+
+{% endblock %}

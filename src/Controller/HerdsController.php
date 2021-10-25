@@ -7,6 +7,7 @@ use App\Entity\Herds;
 use App\Entity\InputsDetails;
 use App\Entity\InputsFarmDelivery;
 use App\Form\HerdsType;
+use App\Repository\DeliveryRepository;
 use App\Repository\DetailsRepository;
 use App\Repository\SupplierRepository;
 use App\Repository\HerdsRepository;
@@ -72,15 +73,13 @@ class HerdsController extends AbstractController
     /**
      * @Route("/{id}", name="herds_show", methods={"GET"})
      */
-    public function show(Herds $herd): Response
+    public function show(Herds $herd, DeliveryRepository $deliveryRepository): Response
     {
-        $detailsRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
-
-        $inputDetails = $detailsRepository->herdDelivery($herd);
+        $deliveries = $deliveryRepository->herdDeliveryWithStock($herd);
 
         return $this->render('herds/show.html.twig', [
             'herd' => $herd,
-            'inputDetails' => $inputDetails,
+            'deliveries' => $deliveries
         ]);
     }
 
