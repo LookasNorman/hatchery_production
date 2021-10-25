@@ -43,9 +43,9 @@ class DefaultController extends AbstractController
         $recipients['recipientsNumber'] = count($chicksRecipients);
 
         $inputs = [];
-        $eggsInputs = $inputsRepository->findAll();
+        $eggsInputs = $inputsRepository->inputsNoSelection();
         $inputs['inputsNumber'] = count($eggsInputs);
-
+        
         $lightings = $inputsRepository->lightingInputs();
         $transfers = $inputsRepository->transferInputs();
         $selectionsResult = $inputsRepository->inputsNoSelection();
