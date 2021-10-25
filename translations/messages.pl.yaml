@@ -162,20 +162,22 @@ chicks_recipient:
     placeholder:
       customer: Wybierz odbiorcę z listy
   index:
-    short_title: Fermy odbiorcy
-    title: Fermy odbiorców piskląt
-    table:
-      id: Indeks
-      name: Nazwa
-      email: Adres email
-      phone_number: Numer telefonu
-      actions: Akcje
-      no_records: Brak ferm odbiorców
-      badge:
-        show: Szczegóły
-        edit: Edytuj
     button:
       new: Dodaj fermę odbiorcy
+    short_title: Fermy odbiorcy
+    table:
+      actions: Akcje
+      badge:
+        edit: Edytuj
+        show: Szczegóły
+      customer: Nazwa odbiorcy
+      email: Adres email
+      farm: Nazwa fermy
+      id: Indeks
+      name: Nazwa
+      no_records: Brak ferm odbiorców
+      phone_number: Numer telefonu
+    title: Fermy odbiorców piskląt
   new:
     title: Dodawanie nowej fermy odbiorcy
     button:

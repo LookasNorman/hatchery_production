@@ -22,7 +22,10 @@
             {% trans %}chicks_recipient.index.table.id{% endtrans %}
         </th>
         <th>
-            {% trans %}chicks_recipient.index.table.name{% endtrans %}
+            {% trans %}chicks_recipient.index.table.customer{% endtrans %}
+        </th>
+        <th>
+            {% trans %}chicks_recipient.index.table.farm{% endtrans %}
         </th>
         <th>
             {% trans %}chicks_recipient.index.table.email{% endtrans %}
@@ -38,6 +41,7 @@
     {% for chicks_recipient in chicks_recipients %}
         <tr>
             <td>{{ chicks_recipient.id }}</td>
+            <td>{{ chicks_recipient.customer.name }}</td>
             <td>{{ chicks_recipient.name }}</td>
             <td>{{ chicks_recipient.email }}</td>
             <td>{{ chicks_recipient.phoneNumber }}</td>
