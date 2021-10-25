@@ -19,32 +19,13 @@ class InputsFarmRepository extends ServiceEntityRepository
         parent::__construct($registry, InputsFarm::class);
     }
 
-    // /**
-    //  * @return InputsFarm[] Returns an array of InputsFarm objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function chickInInput($input)
     {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('if')
+            ->select('SUM(if.chickNumber)')
+            ->andWhere('if.eggInput = :input')
+            ->setParameters(['input' => $input])
             ->getQuery()
-            ->getResult()
-        ;
+            ->getSingleScalarResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?InputsFarm
-    {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -6,6 +6,7 @@ use App\Entity\InputsFarmDelivery;
 use App\Repository\ChicksRecipientRepository;
 use App\Repository\DeliveryRepository;
 use App\Repository\InputsFarmDeliveryRepository;
+use App\Repository\InputsFarmRepository;
 use App\Repository\InputsRepository;
 use App\Repository\SupplierRepository;
 use App\Repository\HatchersRepository;
@@ -26,7 +27,8 @@ class DefaultController extends AbstractController
         ChicksRecipientRepository $recipientRepository,
         InputsRepository $inputsRepository,
         DeliveryRepository $deliveryRepository,
-        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
+        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository,
+        InputsFarmRepository $inputsFarmRepository
     ): Response
     {
         $suppliers = [];
@@ -44,10 +46,23 @@ class DefaultController extends AbstractController
         $eggsInputs = $inputsRepository->findAll();
         $inputs['inputsNumber'] = count($eggsInputs);
 
+        $lightings = $inputsRepository->lightingInputs();
+        $transfers = $inputsRepository->transferInputs();
+        $selectionsResult = $inputsRepository->inputsNoSelection();
+
+        $selections = [];
+        foreach ($selectionsResult as $selection){
+            $chicks = $inputsFarmRepository->chickInInput($selection);
+            array_push($selections, ['chicks' => $chicks, $selection]);
+        }
+
         return $this->render('main_page/index.html.twig', [
             'suppliers' => $suppliers,
             'recipients' => $recipients,
             'inputs' => $inputs,
+            'lightings' => $lightings,
+            'transfers' => $transfers,
+            'selections' => $selections
         ]);
     }
 

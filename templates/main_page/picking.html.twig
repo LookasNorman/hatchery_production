@@ -27,15 +27,15 @@
                     </tr>
                     </thead>
                     <tbody>
-{#                    {% for data in picking %}#}
-{#                        <tr>#}
-{#                            <th scope="row">#}
-{#                                <a href="{{ path('eggs_inputs_show', {'id': data.0.id}) }}">{{ data.0.name }}</a>#}
-{#                            </th>#}
-{#                            <td>{{ data.0.inputDate ? data.0.inputDate|date_modify("+21 day")|date('Y-m-d') : '' }}</td>#}
-{#                            <td>{{ data.chickNumber }}</td>#}
-{#                        </tr>#}
-{#                    {% endfor %}#}
+                    {% for selection in selections %}
+                        <tr>
+                            <th scope="row">
+                                <a href="{{ path('eggs_inputs_show', {'id': selection.0.id}) }}">{{ selection.0.name }}</a>
+                            </th>
+                            <td>{{ selection.0.inputDate ? selection.0.inputDate|date_modify("+21 day")|date('Y-m-d') : '' }}</td>
+                            <td>{{ selection.chicks|number_format(0, ',', ' ') }}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
