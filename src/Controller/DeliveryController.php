@@ -66,7 +66,7 @@ class DeliveryController extends AbstractController
      */
     public function index(DeliveryRepository $eggsDeliveryRepository): Response
     {
-        $deliveries = $eggsDeliveryRepository->findAll();
+        $deliveries = $eggsDeliveryRepository->findBy([], ['deliveryDate' => 'desc']);
         $eggsDeliveries = $this->eggsOnWarehouse($deliveries);
 
         return $this->render('eggs_delivery/index.html.twig', [
