@@ -967,6 +967,15 @@ main_page:
       lighting: Świetlenie
       selection: Wybieranie
       transfer: Przekład
+  recipient:
+    body:
+      farm_number: Liczba ferm
+      recipient_number: Liczba odbiorców
+      eggs_number: Nałożonych jaj
+      chicks_number: Piskląt w nakładach
+    list: Wykaz
+    new: Dodaj
+    title: Odbiorcy piskląt
   supplier:
     body:
       supplier_number: Liczba dostawców
@@ -975,14 +984,6 @@ main_page:
     list: Wykaz
     new: Dodaj
     title: Dostawcy jaj
-  recipient:
-    title: Odbiorcy piskląt
-    list: Wykaz
-    new: Dodaj
-    body:
-      recipient_number: Liczba odbiorców
-      eggs_number: Nałożonych jaj
-      chicks_number: Piskląt w nakładach
 menu:
   menu_top:
     breed:
