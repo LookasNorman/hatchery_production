@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ContactInfo;
 use App\Entity\Delivery;
 use App\Entity\Hatchers;
 use App\Entity\Herds;
@@ -12,6 +13,7 @@ use App\Form\DeliveryProductionType;
 use App\Repository\InputsRepository;
 use App\Repository\SupplierRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -224,6 +226,35 @@ class ProductionController extends AbstractController
         ]);
     }
 
+
+    public function sendEmail($eggsDelivery)
+    {
+        $contactInfoRepository = $this->getDoctrine()->getRepository(ContactInfo::class);
+        $hatchery = $contactInfoRepository->findOneBy(['department' => 'Wylęgarnia']);
+        $sales = $contactInfoRepository->findOneBy(['department' => 'Handel']);
+        $accounting = $contactInfoRepository->findOneBy(['department' => 'Księgowość']);
+        $emailAddress = $eggsDelivery->getHerd()->getBreeder()->getEmail();
+        $date = $eggsDelivery->getDeliveryDate();
+
+        if(!$emailAddress){
+            return;
+        }
+        $email = (new TemplatedEmail())
+            ->to($emailAddress)
+            ->addTo('rgolec@zwdmalec.pl')
+            ->addBcc('lkonieczny@zwdmalec.pl')
+            ->subject('Przyjęcie jaj w dniu ' . $date->format('Y-m-d'))
+            ->htmlTemplate('emails/deliveryEgg.html.twig')
+            ->context([
+                'eggs_delivery' => $eggsDelivery,
+                'hatchery' => $hatchery,
+                'sales' => $sales,
+                'accounting' => $accounting
+            ])
+        ;
+        return $email;
+    }
+
     /**
      * @Route("/new/{id}", name="production_delivery_new", methods={"GET","POST"})
      */
@@ -246,20 +277,10 @@ class ProductionController extends AbstractController
             $entityManager->persist($eggsDelivery);
             $entityManager->flush();
 
-            $message = (new \Swift_Message('Przyjęto jaja'))
-                ->setFrom('lookassymfony@gmail.com')
-                ->setTo('lookasziebice@gmail.com')
-                ->setBody(
-                    $this->renderView(
-                    // templates/emails/registration.html.twig
-                        'emails/deliveryEgg.html.twig',
-                        ['eggs_delivery' => $eggsDelivery]
-                    ),
-                    'text/html'
-                );
-
-            $mailer->send($message);
-
+            $email = $this->sendEmail($eggsDelivery);
+            if($email){
+                $mailer->send($email);
+            }
 
             return $this->redirectToRoute('production_index');
         }
