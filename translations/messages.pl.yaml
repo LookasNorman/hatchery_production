@@ -1174,6 +1174,11 @@ plans:
       eggsForInput: Ilość jaj do nakładu
     title: Plan roczny
     week: Tydzień
+  pdf:
+    herd_delivery:
+      date: Planowana data dostawy
+      eggs_number: Planowana ilość jaj
+      title: Plan dostaw dla stada
   week_plan_site:
     week:
       insert: Tydzień nakładu

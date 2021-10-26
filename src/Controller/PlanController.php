@@ -9,11 +9,13 @@ use App\Entity\InputsFarmDelivery;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanDeliveryEgg;
 use App\Entity\PlanIndicators;
-use App\Form\Plan\ChooseYearPlan;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Snappy\Pdf;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("plans")
@@ -146,6 +148,25 @@ class PlanController extends AbstractController
             'weeksPlans' => $weeksPlans,
             'herd' => $herd
         ]);
+    }
+
+    /**
+     * @Route("/herd_delivery/{id}/pdf", name="herd_delivery_plan_week_pdf", methods={"GET"})
+     */
+    public function herdDeliveryPdf(Herds $herd, Pdf $pdf, TranslatorInterface $translator)
+    {
+        $planDeliveryRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
+        $plans = $planDeliveryRepository->findBy(['herd' => $herd], ['deliveryDate' => 'ASC']);
+        $html = $this->renderView('plans/pdf/herd_deliver.html.twig', [
+            'plans' => $plans,
+            'herd' => $herd
+        ]);
+        $title = $translator->trans('plans.pdf.herd_delivery.title') . ' ' . $herd->getName();
+
+        return new PdfResponse(
+            $pdf->getOutputFromHtml($html),
+            $title
+        );
     }
 
     public function details($now, $breed)

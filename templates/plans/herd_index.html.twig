@@ -2,6 +2,7 @@
 
 {% block body %}
     <h1>{% trans %}plans.index.title{% endtrans %}: {{ herd.name }}</h1>
+    <a href="{{ path('herd_delivery_plan_week_pdf', {'id': herd.id}) }}">pdf</a>
     <div class="row row-cols-1 row-cols-md-5 g-4">
         {% for weekPlans in weeksPlans %}
             <div class="col">
