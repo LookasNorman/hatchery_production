@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>{{ supplier.name }}</h1>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th>Tydzień</th>
+                <th>Ilość jaj</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for plan in plans %}
+                <tr>
+                    <td>{{ plan.weekYear|slice(4, 2) }} / {{ plan.weekYear|slice(0, 4) }}</td>
+                    <td>{{ plan.eggsNumber|number_format(0, ',', ' ' ) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

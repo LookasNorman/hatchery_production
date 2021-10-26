@@ -161,7 +161,7 @@ class PlanController extends AbstractController
             'plans' => $plans,
             'herd' => $herd
         ]);
-        $title = $translator->trans('plans.pdf.herd_delivery.title') . ' ' . $herd->getName();
+        $title = $translator->trans('plans.pdf.herd_delivery.title');
 
         return new PdfResponse(
             $pdf->getOutputFromHtml($html),

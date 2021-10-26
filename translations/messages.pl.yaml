@@ -329,14 +329,17 @@ egg_supplier:
     button:
       back: Lista dostawców jaj
   show:
-    title: Dostawca jaj
-    email: Email
-    phone_number: Telefon
     button:
-      edit: Edytuj
       back: Lista dostawców jaj
+      edit: Edytuj
+      plans:
+        day: Plan dzienny
+        week: Plan tygodniowy
+    email: Email
     herds:
       list: Stada dostawcy
+    phone_number: Telefon
+    title: Dostawca jaj
 eggs_delivery:
   delete:
     confirm: Jesteś pewien, że chcesz usunąć dostawę?

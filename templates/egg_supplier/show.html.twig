@@ -26,7 +26,11 @@
         {% endif %}
         {% include 'layout/cards/cend.html.twig' %}
     </div>
-    {{ include('layout/buttons/back.html.twig', { pathLink: path('egg_supplier_index'), text: 'egg_supplier.show.button.back' }) }}
+    <div class="btn-group" role="group" aria-label="Basic example">
+        {{ include('layout/buttons/back.html.twig', { pathLink: path('egg_supplier_index'), text: 'egg_supplier.show.button.back' }) }}
+        {{ include('layout/buttons/back.html.twig', { pathLink: path('plan_breeder', {'id': egg_supplier.id}), text: 'egg_supplier.show.button.plans.day' }) }}
+        {{ include('layout/buttons/back.html.twig', { pathLink: path('plan_breeder_week', {'id': egg_supplier.id}), text: 'egg_supplier.show.button.plans.week' }) }}
+    </div>
     <h3>{% trans %}egg_supplier.show.herds.list{% endtrans %}</h3>
     {% include 'herds/list.html.twig' with {'herds': egg_supplier.herds, 'breeder': egg_supplier} %}
 {% endblock %}

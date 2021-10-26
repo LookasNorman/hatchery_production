@@ -1,20 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PlanBreederController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/lookas/Workspace/GitHub/hatchery_production/src/Controller/PlanBreederController.php'|file_link(0) }}">src/Controller/PlanBreederController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/lookas/Workspace/GitHub/hatchery_production/templates/plan_breeder/index.html.twig'|file_link(0) }}">templates/plan_breeder/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="example-wrapper">
+        <h1>{{ supplier.name }}</h1>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Ilość jaj</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for plan in plans %}
+                <tr>
+                    <td>{{ plan.deliveryDate|date("Y-m-d") }}</td>
+                    <td>{{ plan.eggsNumber|number_format(0, ',', ' ' ) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
