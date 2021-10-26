@@ -825,6 +825,7 @@ herds:
       new: Utwórz stado
     table:
       actions: Akcje
+      active: Aktywne
       badge:
         edit: Edycja
         plan: Wygeneruj plan dostaw

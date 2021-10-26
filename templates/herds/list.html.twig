@@ -25,6 +25,9 @@
             {% trans %}herds.index.table.lighting{% endtrans %}
         </th>
         <th>
+            {% trans %}herds.index.table.active{% endtrans %}
+        </th>
+        <th>
             {% trans %}herds.index.table.actions{% endtrans %}
         </th>
     </tr>
@@ -52,6 +55,13 @@
             {% else %}
                 <td></td>
             {% endif %}
+            <td class="text-center">
+                {% if herd.active %}
+                    <i class="fa fa-check-square" aria-hidden="true"></i>
+                {% else %}
+                    <i class="far fa-square"></i>
+                {% endif %}
+            </td>
             <td>
                 {{ include('layout/buttons/list_actions.html.twig',
                     {pathLink: path('herds_show', {'id': herd.id}), text: 'herds.index.table.badge.show' }) }}
