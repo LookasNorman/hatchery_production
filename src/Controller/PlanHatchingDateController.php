@@ -22,10 +22,12 @@ class PlanHatchingDateController extends AbstractController
      */
     public function index(HerdsRepository $herdsRepository)
     {
-        $date = $herdsRepository->hatchingDate();
+        $hatchingDates = $herdsRepository->hatchingDate();
+        $now = new \DateTime();
 
         return $this->render('plan_breeder/hatching_date.html.twig', [
-            'dates' => $date
+            'dates' => $hatchingDates,
+            'now' => $now
         ]);
     }
 

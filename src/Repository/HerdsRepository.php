@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Herds;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Herds|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,9 +22,12 @@ class HerdsRepository extends ServiceEntityRepository
 
     public function hatchingDate()
     {
-        return $this->createQueryBuilder('h')
+        $qb = $this->createQueryBuilder('h');
+        return $qb
             ->select('h.hatchingDate')
+            ->join('h.planDeliveryEggs', 'pde')
             ->groupBy('h.hatchingDate')
+            ->orderBy('h.hatchingDate')
             ->getQuery()
             ->getResult();
     }

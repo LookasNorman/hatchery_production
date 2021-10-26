@@ -1055,6 +1055,7 @@ menu:
       title: Transport
 plan_breeder:
   hatching_date:
+    age: Tygodni
     title:
       day: Dzienny plan dostaw jaj (wybierz datę wylęgu)
       week: Tygodniowy plan dostaw jaj (wybierz datę wylęgu)

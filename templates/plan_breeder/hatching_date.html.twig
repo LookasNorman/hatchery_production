@@ -16,19 +16,36 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>{% trans %}plan_breeder.hatching_date.title.day{% endtrans %}</h1>
-        <div class="btn-group flex-wrap" role="group" aria-label="Hatching date day">
-            {% for date in dates %}
-                <a href="{{ path('plan_hatching_date_day', {"date": date.hatchingDate|date("Y-m-d")}) }}" type="button"
-                   class="btn btn-outline-primary m-2">{{ date.hatchingDate|date("Y-m-d") }}</a>
-            {% endfor %}
-        </div>
-        <h1>{% trans %}plan_breeder.hatching_date.title.day{% endtrans %}</h1>
-        <div class="btn-group flex-wrap" role="group" aria-label="Hatching date week">
-            {% for date in dates %}
-                <a href="{{ path('plan_hatching_week', {"date": date.hatchingDate|date("Y-m-d")}) }}" type="button"
-                   class="btn btn-outline-primary m-2">{{ date.hatchingDate|date("Y-m-d") }}</a>
-            {% endfor %}
-        </div>
+        <h3>{% trans %}plan_breeder.hatching_date.title.day{% endtrans %}</h1>
+            <div class="btn-group flex-wrap" role="group" aria-label="Hatching date day">
+                {% for date in dates %}
+                    {% if  now > date.hatchingDate %}
+                        {% set difference = date(now).diff(date(date.hatchingDate)) %}
+                        {% set leftWeeks = difference.days / 7 %}
+                    {% else %}
+                        {% set leftWeeks = null %}
+                    {% endif %}
+                    <a href="{{ path('plan_hatching_date_day', {"date": date.hatchingDate|date("Y-m-d")}) }}"
+                       type="button"
+                       class="btn btn-outline-primary m-2">{{ date.hatchingDate|date("Y-m-d") }}<br/>
+                        {% trans %}plan_breeder.hatching_date.age{% endtrans %} {{ leftWeeks ? leftWeeks|round(0, 'floor') : '' }}
+                    </a>
+                {% endfor %}
+            </div>
+            <h3>{% trans %}plan_breeder.hatching_date.title.day{% endtrans %}</h3>
+            <div class="btn-group flex-wrap" role="group" aria-label="Hatching date week">
+                {% for date in dates %}
+                    {% if  now > date.hatchingDate %}
+                        {% set difference = date(now).diff(date(date.hatchingDate)) %}
+                        {% set leftWeeks = difference.days / 7 %}
+                    {% else %}
+                        {% set leftWeeks = null %}
+                    {% endif %}
+                    <a href="{{ path('plan_hatching_week', {"date": date.hatchingDate|date("Y-m-d")}) }}" type="button"
+                       class="btn btn-outline-primary m-2">{{ date.hatchingDate|date("Y-m-d") }}<br/>
+                        {% trans %}plan_breeder.hatching_date.age{% endtrans %} {{ leftWeeks ? leftWeeks|round(0, 'floor') : '' }}
+                    </a>
+                {% endfor %}
+            </div>
     </div>
 {% endblock %}
