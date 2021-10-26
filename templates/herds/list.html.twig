@@ -56,13 +56,7 @@
                 <td></td>
             {% endif %}
             <td class="text-center">
-                <a href="{{ path('herds_edit_active', {'id': herd.id}) }}">
-                    {% if herd.active %}
-                        <i class="fa fa-check-square" aria-hidden="true"></i>
-                    {% else %}
-                        <i class="far fa-square"></i>
-                    {% endif %}
-                </a>
+                {{ include('herds/_active_form.html.twig') }}
             </td>
             <td>
                 {{ include('layout/buttons/list_actions.html.twig',

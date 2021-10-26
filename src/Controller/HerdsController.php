@@ -31,7 +31,7 @@ class HerdsController extends AbstractController
     public function index(HerdsRepository $herdsRepository): Response
     {
         return $this->render('herds/index.html.twig', [
-            'herds' => $herdsRepository->findBy([] , ['name' => 'ASC']),
+            'herds' => $herdsRepository->findBy([] , ['active' => 'DESC', 'name' => 'ASC']),
         ]);
     }
 
@@ -126,19 +126,13 @@ class HerdsController extends AbstractController
      */
     public function active(Request $request, Herds $herd): Response
     {
-        $form = $this->createForm(HerdActiveType::class, $herd);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('herds_index');
+        if ($this->isCsrfTokenValid('active_herd' . $herd->getId(), $request->request->get('_token_active'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $herd->setActive(!$herd->getActive());
+            $entityManager->flush();
         }
 
-        return $this->render('herds/edit.html.twig', [
-            'herd' => $herd,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('herds_index');
     }
 
     /**

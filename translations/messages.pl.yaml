@@ -784,6 +784,8 @@ hatchers:
     shortname: Kod
     title: Szczegóły aparatu
 herds:
+  active:
+    confirm: Czy na pewno chcesz zmienić status aktywny / nie aktywny
   delete:
     confirm: Na pewno chcesz usunąć stado?
     button:

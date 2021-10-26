@@ -1,0 +1,11 @@
+<form method="post" action="{{ path('herds_edit_active', {'id': herd.id}) }}"
+      onsubmit="return confirm('{% trans %}herds.active.confirm{% endtrans %}');">
+    <input type="hidden" name="_token_active" value="{{ csrf_token('active_herd' ~ herd.id) }}">
+    <button class="btn">
+        {% if herd.active %}
+            <i class="fa fa-check-square" aria-hidden="true"></i>
+        {% else %}
+            <i class="far fa-square"></i>
+        {% endif %}
+    </button>
+</form>
