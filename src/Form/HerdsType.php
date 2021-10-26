@@ -20,31 +20,6 @@ class HerdsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'herds.form.label.name',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('hensNumber', IntegerType::class, [
-                'label' => 'herds.form.label.hensNumber',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('lighting', IntegerType::class, [
-                'label' => 'herds.form.label.lighting',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('hatchingDate', DateType::class, [
-                'widget' => 'single_text',
-                'label' => 'herds.form.label.hatching_date',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
             ->add('breeder', EntityType::class, [
                 'class' => Supplier::class,
                 'choice_label' => 'name',
@@ -69,8 +44,34 @@ class HerdsType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+            ->add('hatchingDate', DateType::class, [
+                'widget' => 'single_text',
+                'label' => 'herds.form.label.hatching_date',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('name', TextType::class, [
+                'label' => 'herds.form.label.name',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('hensNumber', IntegerType::class, [
+                'label' => 'herds.form.label.hensNumber',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('lighting', IntegerType::class, [
+                'label' => 'herds.form.label.lighting',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('active', CheckboxType::class, [
                 'label' => 'herds.form.label.active',
+                'required' => false,
                 'attr' => [
                     'class' => 'form-check-input'
                 ]

@@ -6,6 +6,7 @@ use App\Entity\Delivery;
 use App\Entity\Herds;
 use App\Entity\InputsDetails;
 use App\Entity\InputsFarmDelivery;
+use App\Form\HerdActiveType;
 use App\Form\HerdsType;
 use App\Repository\DeliveryRepository;
 use App\Repository\DetailsRepository;
@@ -105,6 +106,27 @@ class HerdsController extends AbstractController
     public function edit(Request $request, Herds $herd): Response
     {
         $form = $this->createForm(HerdsType::class, $herd);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('herds_index');
+        }
+
+        return $this->render('herds/edit.html.twig', [
+            'herd' => $herd,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/active", name="herds_edit_active", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function active(Request $request, Herds $herd): Response
+    {
+        $form = $this->createForm(HerdActiveType::class, $herd);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
