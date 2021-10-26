@@ -1044,6 +1044,8 @@ menu:
       index: Wskaźniki do planów
     plan_inputs_delivery:
       index: Dodaj planowane dostawy
+    plan_hatching:
+      index: Plan wg wieku
     plan_week:
       index: Plan tygodniowy
     plans:
@@ -1051,6 +1053,17 @@ menu:
     registration: Nowy użytkownik
     transport:
       title: Transport
+plan_breeder:
+  hatching_date:
+    title:
+      day: Dzienny plan dostaw jaj (wybierz datę wylęgu)
+      week: Tygodniowy plan dostaw jaj (wybierz datę wylęgu)
+  index:
+    date: Data dostawy
+    eggs_number: Ilość jaj
+    hatching_date: Data wylęgu
+    supplier: Dostawcy jaj
+    week: Tydzień / rok
 plan_delivery_chick:
   form:
     label:

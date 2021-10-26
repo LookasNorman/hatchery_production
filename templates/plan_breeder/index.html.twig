@@ -16,12 +16,30 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>{{ supplier.name }}</h1>
+        <h1>
+            {% if supplier is defined %}
+                {{ supplier.name }}
+            {% else %}
+            {% trans %}plan_breeder.index.hatching_date{% endtrans %} {{ date|date("Y-m-d") }}
+            {% endif %}
+            {% if suppliers is defined %}
+                <h3>{% trans %}plan_breeder.index.supplier{% endtrans %}
+                    <br/>
+                    {% for supplierHerd in suppliers %}
+                        {{ supplierHerd.name }}:
+                        {% for herd in supplierHerd.herds %}
+                            <span class="h4"> {{ herd.name }}</span>
+                        {% endfor %}
+                        <br/>
+                    {% endfor %}
+                </h3>
+            {% endif %}
+        </h1>
         <table class="table table-sm">
             <thead>
             <tr>
-                <th>Data</th>
-                <th>Ilość jaj</th>
+                <th>{% trans %}plan_breeder.index.date{% endtrans %}</th>
+                <th>{% trans %}plan_breeder.index.eggs_number{% endtrans %}</th>
             </tr>
             </thead>
             <tbody>

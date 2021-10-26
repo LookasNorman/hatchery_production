@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>{% trans %}plan_breeder.hatching_date.title.day{% endtrans %}</h1>
+        <div class="btn-group flex-wrap" role="group" aria-label="Hatching date day">
+            {% for date in dates %}
+                <a href="{{ path('plan_hatching_date_day', {"date": date.hatchingDate|date("Y-m-d")}) }}" type="button"
+                   class="btn btn-outline-primary m-2">{{ date.hatchingDate|date("Y-m-d") }}</a>
+            {% endfor %}
+        </div>
+        <h1>{% trans %}plan_breeder.hatching_date.title.day{% endtrans %}</h1>
+        <div class="btn-group flex-wrap" role="group" aria-label="Hatching date week">
+            {% for date in dates %}
+                <a href="{{ path('plan_hatching_week', {"date": date.hatchingDate|date("Y-m-d")}) }}" type="button"
+                   class="btn btn-outline-primary m-2">{{ date.hatchingDate|date("Y-m-d") }}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

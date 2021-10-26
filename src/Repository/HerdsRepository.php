@@ -19,6 +19,15 @@ class HerdsRepository extends ServiceEntityRepository
         parent::__construct($registry, Herds::class);
     }
 
+    public function hatchingDate()
+    {
+        return $this->createQueryBuilder('h')
+            ->select('h.hatchingDate')
+            ->groupBy('h.hatchingDate')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function herdInInputFarm($farm)
     {
         return $this->createQueryBuilder('h')

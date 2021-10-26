@@ -19,6 +19,16 @@ class SupplierRepository extends ServiceEntityRepository
         parent::__construct($registry, Supplier::class);
     }
 
+    public function supplierByHatchingDate($date)
+    {
+        return $this->createQueryBuilder('s')
+            ->addSelect('h')
+            ->join('s.herds', 'h')
+            ->andWhere('h.hatchingDate = :date')
+            ->setParameters(['date' => $date])
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return Supplier[] Returns an array of Supplier objects
     //  */
