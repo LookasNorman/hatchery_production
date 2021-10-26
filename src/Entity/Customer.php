@@ -59,6 +59,11 @@ class Customer
      */
     private $streetNumber;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ChickIntegration::class, inversedBy="customer")
+     */
+    private $chickIntegration;
+
     public function __construct()
     {
         $this->chicksRecipients = new ArrayCollection();
@@ -179,6 +184,18 @@ class Customer
     public function setStreetNumber(?string $streetNumber): self
     {
         $this->streetNumber = $streetNumber;
+
+        return $this;
+    }
+
+    public function getChickIntegration(): ?ChickIntegration
+    {
+        return $this->chickIntegration;
+    }
+
+    public function setChickIntegration(?ChickIntegration $chickIntegration): self
+    {
+        $this->chickIntegration = $chickIntegration;
 
         return $this;
     }

@@ -82,6 +82,39 @@ car:
       edit: Edytuj
     registration_number: Numer rejestracyjny
     title: Szczegóły pojazdu
+chick_integration:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Jesteś pewien, że chcesz usunąć integrację? Jeżeli są w niej odbiorcy piskląt zostaną oni z niej usunięci.
+  edit:
+    header: Edytuj
+    title: Edycja integracji
+  form:
+    button:
+      save: Zapisz
+    label:
+      name: Nazwa integracji
+  index:
+    button:
+      new: Dodaj integrację
+    table:
+      actions: Akcje
+      id: Lp.
+      name: Nazwa integracji
+      no_found: Brak integracji
+    title: Integracje odbiorców piskląt
+  new:
+    button:
+      back: Lista integracji
+    title: Dodawanie nowej integracji
+  show:
+    button:
+      back: Lista integracji
+      edit: Edytuj
+    header: Karta szczegółów
+    name: Nazwa integracji
+    title: Szczegóły integracji
 chick_temperature:
   delete:
     button:
@@ -1002,10 +1035,12 @@ menu:
       index: Standardy list
     car:
       index: Samochody
-    chick_temperature:
-      index: Temperatury piskląt
+    chicks_integration:
+      index: Integracje
     chicks_recipient:
       index: Fermy odbiorców piskląt
+    chick_temperature:
+      index: Temperatury piskląt
     customer:
       title: Odbiorcy
       index: Odbiorcy piskląt
@@ -1036,10 +1071,10 @@ menu:
       index: Aparaty
     inputs_farm:
       index: Nakłady na fermy
-    main_page:
-      index: Strona główna
     logout: Wyloguj
     login: Zaloguj
+    main_page:
+      index: Strona główna
     plan_delivery_chick:
       index: Zamówienia - planowane
     plan_delivery_egg:

@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('chick_integration_delete', {'id': chick_integration.id}) }}"
+      onsubmit="return confirm('{% trans %}chick_integration.delete.confirm{% endtrans %}');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ chick_integration.id) }}">
+    {{ include('layout/buttons/delete.html.twig', { text: 'chick_integration.delete.button.delete' }) }}
+</form>
