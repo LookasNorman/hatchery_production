@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\ChicksRecipient;
+use App\Entity\Customer;
+use App\Entity\Inputs;
+use App\Entity\InputsFarm;
 use App\Repository\ChicksRecipientRepository;
 use App\Repository\DeliveryRepository;
 use App\Repository\InputsFarmDeliveryRepository;
@@ -35,13 +39,49 @@ class DefaultController extends AbstractController
         );
     }
 
+    public function farmCount()
+    {
+        $chickRecipientRepository = $this->getDoctrine()->getRepository(ChicksRecipient::class);
+        $farm = [];
+        $chicksRecipients = $chickRecipientRepository->findAll();
+        $farm['farmNumber'] = count($chicksRecipients);
+        return $farm;
+    }
+
+    public function customerCount()
+    {
+        $customerRepository = $this->getDoctrine()->getRepository(Customer::class);
+        $customer = [];
+        $customers = $customerRepository->findAll();
+        $customer['recipientsNumber'] = count($customers);
+        return $customer;
+    }
+
+    public function chicksInputsProduction($inputs)
+    {
+        $inputsFarmRepository = $this->getDoctrine()->getRepository(InputsFarm::class);
+        $chicks = 0;
+        foreach ($inputs as $input){
+            $chicks = $chicks + $inputsFarmRepository->chickInInput($input);
+        }
+        return $chicks;
+    }
+
+    public function inputsCount()
+    {
+        $inputsRepository = $this->getDoctrine()->getRepository(Inputs::class);
+        $eggsInputs = $inputsRepository->inputsNoSelection();
+        $chicks = $this->chicksInputsProduction($eggsInputs);
+        $inputs = ['inputsNumber' => count($eggsInputs), 'chicks' => $chicks];
+        return $inputs;
+    }
+
     /**
      * @Route("/", name="main_page")
      * @IsGranted("ROLE_USER")
      */
     public function index(
         SupplierRepository           $supplierRepository,
-        ChicksRecipientRepository    $recipientRepository,
         InputsRepository             $inputsRepository,
         DeliveryRepository           $deliveryRepository,
         InputsFarmDeliveryRepository $inputsFarmDeliveryRepository,
@@ -54,14 +94,9 @@ class DefaultController extends AbstractController
         $eggsInWarehouse = $deliveryRepository->eggsDelivered() - $inputsFarmDeliveryRepository->eggsProduction();
 
         $suppliers['eggsInWarehouse'] = $eggsInWarehouse;
-
-        $recipients = [];
-        $chicksRecipients = $recipientRepository->findAll();
-        $recipients['recipientsNumber'] = count($chicksRecipients);
-
-        $inputs = [];
-        $eggsInputs = $inputsRepository->inputsNoSelection();
-        $inputs['inputsNumber'] = count($eggsInputs);
+        $farm = $this->farmCount();
+        $recipients = $this->customerCount();
+        $inputs = $this->inputsCount();
 
         $lightings = $inputsRepository->lightingInputs();
         $transfers = $inputsRepository->transferInputs();
@@ -76,6 +111,7 @@ class DefaultController extends AbstractController
         return $this->render('main_page/index.html.twig', [
             'suppliers' => $suppliers,
             'recipients' => $recipients,
+            'farms' => $farm,
             'inputs' => $inputs,
             'lightings' => $lightings,
             'transfers' => $transfers,

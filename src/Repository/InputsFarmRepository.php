@@ -28,4 +28,5 @@ class InputsFarmRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
 }
