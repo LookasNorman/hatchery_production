@@ -6,6 +6,7 @@ use App\Entity\ChicksRecipient;
 use App\Entity\Customer;
 use App\Entity\Inputs;
 use App\Entity\InputsFarm;
+use App\Entity\InputsFarmDelivery;
 use App\Repository\ChicksRecipientRepository;
 use App\Repository\DeliveryRepository;
 use App\Repository\InputsFarmDeliveryRepository;
@@ -61,10 +62,18 @@ class DefaultController extends AbstractController
     {
         $inputsFarmRepository = $this->getDoctrine()->getRepository(InputsFarm::class);
         $chicks = 0;
-        foreach ($inputs as $input){
+        foreach ($inputs as $input) {
             $chicks = $chicks + $inputsFarmRepository->chickInInput($input);
         }
         return $chicks;
+    }
+
+    public function eggsInProduction()
+    {
+        $inputsFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+        $eggs = $inputsFarmDeliveryRepository->eggsInSetters() + $inputsFarmDeliveryRepository->eggsInHatchers();
+
+        return $eggs;
     }
 
     public function inputsCount()
@@ -72,7 +81,9 @@ class DefaultController extends AbstractController
         $inputsRepository = $this->getDoctrine()->getRepository(Inputs::class);
         $eggsInputs = $inputsRepository->inputsNoSelection();
         $chicks = $this->chicksInputsProduction($eggsInputs);
-        $inputs = ['inputsNumber' => count($eggsInputs), 'chicks' => $chicks];
+        $eggs = $this->eggsInProduction();
+        $inputs = ['inputsNumber' => count($eggsInputs), 'chicks' => $chicks, 'eggsProduction' => $eggs];
+
         return $inputs;
     }
 

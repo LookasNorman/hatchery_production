@@ -54,6 +54,26 @@ class InputsFarmDeliveryRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function eggsInSetters()
+    {
+        return $this->createQueryBuilder('ifd')
+            ->select('SUM(ifd.eggsNumber) - SUM(l.wasteLighting)')
+            ->leftJoin('ifd.lighting', 'l')
+            ->andWhere('ifd.transfers IS NULL')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function eggsInHatchers()
+    {
+        return $this->createQueryBuilder('ifd')
+            ->select('SUM(t.transfersEgg)')
+            ->join('ifd.transfers', 't')
+            ->andWhere('ifd.selections IS NULL')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function eggsProduction()
     {
         return $this->createQueryBuilder('ifd')

@@ -20,7 +20,7 @@
                     </tr>
                     <tr>
                         <th scope="row">{% trans %}main_page.inputs.body.eggs_number{% endtrans %}</th>
-                        <td></td>
+                        <td>{{ inputs.eggsProduction|number_format(0, ',', ' ') }}</td>
                     </tr>
                     </tbody>
                 </table>
