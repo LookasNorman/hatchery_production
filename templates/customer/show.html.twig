@@ -12,9 +12,10 @@
     <h1>{% trans %}customer.show.title{% endtrans %}</h1>
 
     <div class="d-flex justify-content-center card-group">
-{{ include('customer/customer_detail_card.html.twig') }}
+        {{ include('customer/customer_detail_card.html.twig') }}
     </div>
     {{ include('layout/buttons/back.html.twig', { pathLink: path('customer_index'), text: 'customer.show.button.back' }) }}
+    {{ include('layout/buttons/add.html.twig', { pathLink: path('chicks_recipient_new', {'id': customer.id}), text: 'customer.show.button.add' }) }}
 
     <hr>
     <div class="accordion accordion-flush" id="accordionFlushShow">
@@ -28,7 +29,7 @@
             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
                  data-bs-parent="#accordionFlushShow">
                 <div class="accordion-body">
-{#                    {% include('chicks_recipient/inputs_list.html.twig') %}#}
+                    {# {% include('chicks_recipient/inputs_list.html.twig') %} #}
                 </div>
             </div>
         </div>

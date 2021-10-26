@@ -246,6 +246,7 @@ customer:
     title: Dodaj odbiorcę
   show:
     button:
+      add: Dodaj fermę do odbiorcy
       back: Wykaz odbiorców piskląt
       edit: Edycja odbiorcy
       farm: Fermy
