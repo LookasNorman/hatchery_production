@@ -790,11 +790,13 @@ herds:
       delete: Usuń stado
   form:
     placeholder:
+      active: Stado aktywne
       breeder: Wybierz hodowcę z listy
       breed: Wybierz rasę z listy
     button:
       save: Zapisz
     label:
+      active: Stado aktywne
       breed: Rasa
       breeder: Hodowca
       hatching_date: Data wylęgu

@@ -53,6 +53,7 @@ class HerdsController extends AbstractController
     public function new(Request $request): Response
     {
         $herd = new Herds();
+        $herd->setActive(true);
         $form = $this->createForm(HerdsType::class, $herd);
         $form->handleRequest($request);
 
@@ -82,7 +83,7 @@ class HerdsController extends AbstractController
     {
         $deliveries = $deliveryRepository->herdDeliveryWithStock($herd);
         $inputs = $inputsFarmDeliveryRepository->herdDelivery($herd);
-//dd($inputs);
+
         return $this->render('herds/show.html.twig', [
             'herd' => $herd,
             'deliveries' => $deliveries,

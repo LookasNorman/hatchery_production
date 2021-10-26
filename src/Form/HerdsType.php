@@ -8,6 +8,7 @@ use App\Entity\Herds;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -47,7 +48,7 @@ class HerdsType extends AbstractType
             ->add('breeder', EntityType::class, [
                 'class' => Supplier::class,
                 'choice_label' => 'name',
-                'query_builder' => function(EntityRepository $entityRepository) {
+                'query_builder' => function (EntityRepository $entityRepository) {
                     return $entityRepository->createQueryBuilder('s')
                         ->orderBy('s.name', 'ASC');
                 },
@@ -59,8 +60,8 @@ class HerdsType extends AbstractType
             ])
             ->add('breed', EntityType::class, [
                 'class' => Breed::class,
-                'choice_label' => function(Breed $breed) {
-                return $breed->getName() . ' ' . $breed->getType();
+                'choice_label' => function (Breed $breed) {
+                    return $breed->getName() . ' ' . $breed->getType();
                 },
                 'placeholder' => 'herds.form.placeholder.breed',
                 'label' => 'herds.form.label.breed',
@@ -68,7 +69,12 @@ class HerdsType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-        ;
+            ->add('active', CheckboxType::class, [
+                'label' => 'herds.form.label.active',
+                'attr' => [
+                    'class' => 'form-check-input'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
