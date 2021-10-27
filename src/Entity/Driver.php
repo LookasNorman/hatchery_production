@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DriverRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Driver
      * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $phoneNumber;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=TransportList::class, mappedBy="driver")
+     */
+    private $transportLists;
+
+    public function __construct()
+    {
+        $this->transportLists = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +81,33 @@ class Driver
     public function setPhoneNumber(?string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TransportList[]
+     */
+    public function getTransportLists(): Collection
+    {
+        return $this->transportLists;
+    }
+
+    public function addTransportList(TransportList $transportList): self
+    {
+        if (!$this->transportLists->contains($transportList)) {
+            $this->transportLists[] = $transportList;
+            $transportList->addDriver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransportList(TransportList $transportList): self
+    {
+        if ($this->transportLists->removeElement($transportList)) {
+            $transportList->removeDriver($this);
+        }
 
         return $this;
     }
