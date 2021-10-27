@@ -93,12 +93,18 @@ class ChicksRecipient
      */
     private $planDeliveryChicks;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Vaccination::class, mappedBy="farm")
+     */
+    private $vaccinations;
+
     public function __construct()
     {
         $this->customerBuildings = new ArrayCollection();
         $this->inputsFarms = new ArrayCollection();
         $this->planInputFarms = new ArrayCollection();
         $this->planDeliveryChicks = new ArrayCollection();
+        $this->vaccinations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -286,6 +292,36 @@ class ChicksRecipient
             // set the owning side to null (unless already changed)
             if ($planDeliveryChick->getChickFarm() === $this) {
                 $planDeliveryChick->setChickFarm(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Vaccination[]
+     */
+    public function getVaccinations(): Collection
+    {
+        return $this->vaccinations;
+    }
+
+    public function addVaccination(Vaccination $vaccination): self
+    {
+        if (!$this->vaccinations->contains($vaccination)) {
+            $this->vaccinations[] = $vaccination;
+            $vaccination->setFarm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVaccination(Vaccination $vaccination): self
+    {
+        if ($this->vaccinations->removeElement($vaccination)) {
+            // set the owning side to null (unless already changed)
+            if ($vaccination->getFarm() === $this) {
+                $vaccination->setFarm(null);
             }
         }
 

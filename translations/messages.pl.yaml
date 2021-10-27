@@ -1094,6 +1094,8 @@ menu:
     registration: Nowy użytkownik
     transport:
       title: Transport
+    vaccination:
+      index: Szczepienia / przekład
 plan_breeder:
   hatching_date:
     age: Tygodni
@@ -1336,3 +1338,43 @@ setters:
     button:
       edit: Edytuj
       back: Lista aparatów wylęgowych
+vaccination:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Jesteś pewien że chcesz usunąć szczepienie?
+  edit:
+    button:
+      back: Wykaz szczepień / przekładów
+    header: Karta edycji
+    title: Edycja szczepienia
+  form:
+    button:
+      save: Zapisz
+    label:
+      eggs_number: Ilość jaj
+      farm: Ferma
+      herd: Stado
+  index:
+    button:
+      new: Utwórz nowe
+    table:
+      actions: Akcje
+      eggs_number: Ilość jaj
+      farm: Ferma
+      herd: Stado
+      id: Lp.
+      no_found: Brak zapisów
+    title: Wykaz szczepień / przekładów
+  new:
+    button:
+      back: Wykaz szczepień / przekładów
+    header: Formularz szczepień / przekładów
+    title: Dodawanie szczepień / przekładów
+  show:
+    button:
+      back: Lista szczepień
+      edit: Edytuj
+    eggs_number: Ilość jaj
+    header: Karta szczepienia
+    title: Szczegóły szczepienia

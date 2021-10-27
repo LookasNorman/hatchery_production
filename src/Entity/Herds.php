@@ -77,11 +77,17 @@ class Herds
      */
     private $hensNumber;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Vaccination::class, mappedBy="herd")
+     */
+    private $vaccinations;
+
     public function __construct()
     {
         $this->eggsDeliveries = new ArrayCollection();
         $this->deliveries = new ArrayCollection();
         $this->planDeliveryEggs = new ArrayCollection();
+        $this->vaccinations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -229,6 +235,36 @@ class Herds
     public function setHensNumber(?int $hensNumber): self
     {
         $this->hensNumber = $hensNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Vaccination[]
+     */
+    public function getVaccinations(): Collection
+    {
+        return $this->vaccinations;
+    }
+
+    public function addVaccination(Vaccination $vaccination): self
+    {
+        if (!$this->vaccinations->contains($vaccination)) {
+            $this->vaccinations[] = $vaccination;
+            $vaccination->setHerd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVaccination(Vaccination $vaccination): self
+    {
+        if ($this->vaccinations->removeElement($vaccination)) {
+            // set the owning side to null (unless already changed)
+            if ($vaccination->getHerd() === $this) {
+                $vaccination->setHerd(null);
+            }
+        }
 
         return $this;
     }
