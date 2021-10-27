@@ -96,12 +96,8 @@ class DeliveryController extends AbstractController
         $emailAddress = $eggsDelivery->getHerd()->getBreeder()->getEmail();
         $date = $eggsDelivery->getDeliveryDate();
 
-        if(!$emailAddress){
-            return;
-        }
         $email = (new TemplatedEmail())
-            ->to($emailAddress)
-            ->addTo('rgolec@zwdmalec.pl')
+            ->to('rgolec@zwdmalec.pl')
             ->addBcc('lkonieczny@zwdmalec.pl')
             ->subject('Przyjęcie jaj w dniu ' . $date->format('Y-m-d'))
             ->htmlTemplate('emails/deliveryEgg.html.twig')
@@ -110,8 +106,10 @@ class DeliveryController extends AbstractController
                 'hatchery' => $hatchery,
                 'sales' => $sales,
                 'accounting' => $accounting
-            ])
-        ;
+            ]);
+        if ($emailAddress) {
+            $email->addTo($emailAddress);
+        }
         return $email;
     }
 
@@ -130,7 +128,7 @@ class DeliveryController extends AbstractController
             $eggsDelivery->setEggsOnWarehouse($eggsDelivery->getEggsNumber());
             $entityManager->persist($eggsDelivery);
             $email = $this->sendEmail($eggsDelivery);
-            if($email){
+            if ($email) {
                 $mailer->send($email);
             }
 
