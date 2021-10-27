@@ -151,9 +151,10 @@ class InputsController extends AbstractController
 
         $farmsHerds = [];
         foreach ($farms as $farm) {
-            $herds = $herdsRepository->herdInInputFarm($farm);
-            array_push($farmsHerds, ['farm' => $farm, 'herds' => $herds]);
+            $herdsFarm = $herdsRepository->herdInInputFarm($farm);
+            array_push($farmsHerds, ['farm' => $farm, 'herds' => $herdsFarm]);
         }
+
         return $this->render('eggs_inputs/show.html.twig', [
             'eggs_input' => $eggsInput,
             'farms' => $farms,
