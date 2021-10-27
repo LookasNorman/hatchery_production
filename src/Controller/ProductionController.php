@@ -17,6 +17,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -180,6 +181,14 @@ class ProductionController extends AbstractController
         return $herds;
     }
 
+    public function herdInInput($input)
+    {
+        $herdRepository = $this->getDoctrine()->getRepository(Herds::class);
+        $herds = $herdRepository->herdInInput($input);
+
+        return $herds;
+    }
+
     public function farmInInput($input)
     {
         $herdRepository = $this->getDoctrine()->getRepository(InputsFarm::class);
@@ -256,7 +265,7 @@ class ProductionController extends AbstractController
     /**
      * @Route("/new/{id}", name="production_delivery_new", methods={"GET","POST"})
      */
-    public function deliveryNew(Herds $herd, Request $request, \Swift_Mailer $mailer): Response
+    public function deliveryNew(Herds $herd, Request $request, MailerInterface $mailer): Response
     {
         $deliveryRepository = $this->getDoctrine()->getRepository(Delivery::class);
         $firstLaying = new \DateTime($deliveryRepository->lastHerdDelivery($herd));
@@ -276,7 +285,7 @@ class ProductionController extends AbstractController
             $entityManager->flush();
 
             $email = $this->sendEmail($eggsDelivery);
-            if($email){
+            if ($email) {
                 $mailer->send($email);
             }
 
