@@ -28,6 +28,7 @@ class CustomerType extends AbstractType
                 'attr' => [
                     'class' => 'form-select'
                 ],
+                'required' => false,
                 'label' => 'customer.form.label.chick_integration',
                 'placeholder' => 'customer.form.placeholder.chick_integration'
             ])
