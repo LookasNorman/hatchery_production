@@ -251,6 +251,7 @@ customer:
     button:
       save: Zapisz
     label:
+      chick_integration: Integracja
       city: Miejscowość
       email: Email
       name: Nazwa
@@ -258,6 +259,8 @@ customer:
       post_code: Kod pocztowy
       street: Ulica
       street_number: Numer domu / mieszkania
+    placeholder:
+      chick_integration: Wybierz integrację z listy
   index:
     button:
       new: Dodaj odbiorcę
@@ -1145,6 +1148,21 @@ plan_delivery_egg_for_herd:
     friday: Piątek
     saturday: Sobota
     sunday: Niedziela
+plan_detail:
+  index:
+    table:
+      chicks: Pisklęta
+      eggs: Jaja
+      farm:
+        chick: Pisklęta
+        name: Ferma
+      herd:
+        eggs: Jaja
+        name: Stado
+        week: Wiek
+      stock: Stan magazynowy (SP)
+      week: Tydzień / rok
+    title: Plan przychodów i rozchodów
 plan_indicators:
   show:
     table:

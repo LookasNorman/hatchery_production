@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\ChickIntegration;
 use App\Entity\Customer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,6 +21,15 @@ class CustomerType extends AbstractType
                     'class' => 'form-control'
                 ],
                 'label' => 'customer.form.label.name'
+            ])
+            ->add('chickIntegration', EntityType::class, [
+                'class' => ChickIntegration::class,
+                'choice_label' => 'name',
+                'attr' => [
+                    'class' => 'form-select'
+                ],
+                'label' => 'customer.form.label.chick_integration',
+                'placeholder' => 'customer.form.placeholder.chick_integration'
             ])
             ->add('email', EmailType::class, [
                 'attr' => [
