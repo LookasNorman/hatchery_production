@@ -116,6 +116,12 @@ class PlanDeliveryChickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $inputDate = clone $planDeliveryChick->getDeliveryDate();
+            $lightingDate = clone $planDeliveryChick->getDeliveryDate();
+            $transferDate = clone $planDeliveryChick->getDeliveryDate();
+            $planDeliveryChick->setInputDate($inputDate->sub(new \DateInterval('P21DT5H')));
+            $planDeliveryChick->setLightingDate($lightingDate->sub(new \DateInterval('P6DT21H')));
+            $planDeliveryChick->setTransferDate($transferDate->sub(new \DateInterval('P2DT17H')));
 
             return $this->redirectToRoute('plan_delivery_chick_index');
         }

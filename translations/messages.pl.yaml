@@ -1158,6 +1158,7 @@ plan_detail:
         name: Ferma
       herd:
         eggs: Jaja
+        eggs_week: Jaja tydzień
         name: Stado
         week: Wiek
       stock: Stan magazynowy (SP)

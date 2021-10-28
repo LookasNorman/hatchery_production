@@ -86,7 +86,6 @@ class ChicksRecipientController extends AbstractController
         $planDelivery = $planDeliveryChickRepository->findBy(['chickFarm' => $chicksRecipient], ['inputDate' => 'ASC']);
         $planIndicatorsRepository = $this->getDoctrine()->getRepository(PlanIndicators::class);
         $planIndicators = $planIndicatorsRepository->findOneBy([]);
-        //        dd($planDelivery);
 
         return $this->render('chicks_recipient/show.html.twig', [
             'chicks_recipient' => $chicksRecipient,

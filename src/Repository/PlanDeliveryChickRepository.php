@@ -37,7 +37,7 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->join('p.chickFarm', 'cf')
             ->andWhere('cf.customer = :customer')
             ->setParameters(['customer' => $customer])
-            ->orderBy('p.inputDate')
+            ->orderBy('p.deliveryDate', 'asc')
             ->getQuery()
             ->getResult()
             ;
@@ -53,6 +53,22 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->setParameters(['breed' => $breed, 'date' => $date, 'dateEnd' => $dateEnd])
             ->getQuery()
             ->getSingleScalarResult()
+            ;
+    }
+
+    public function planBreedFarm($breed, $now)
+    {
+        return $this->createQueryBuilder('p')
+            ->addSelect('YEARWEEK(p.inputDate, 1) as weekYear')
+            ->join('p.chickFarm', 'f')
+            ->join('p.breed', 'b')
+            ->andWhere('b = :breed')
+            ->andWhere('p.inputDate > :date')
+            ->setParameters(['breed' => $breed, 'date' => $now])
+            ->orderBy('weekYear', 'asc')
+            ->addOrderBy('f.name', 'asc')
+            ->getQuery()
+            ->getResult()
             ;
     }
 

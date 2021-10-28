@@ -56,6 +56,20 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function planBreed($breed, $now)
+    {
+        return $this->createQueryBuilder('p')
+            ->addSelect('YEARWEEK(p.deliveryDate, 1) as weekYear')
+            ->join('p.herd', 'h')
+            ->andWhere('h.breed = :breed')
+            ->andWhere('p.deliveryDate > :date')
+            ->setParameters(['breed' => $breed, 'date' => $now])
+            ->orderBy('weekYear', 'asc')
+            ->addOrderBy('h.name', 'asc')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function planBreederWeek($breeder)
     {
         return $this->createQueryBuilder('p')
@@ -63,6 +77,20 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
             ->join('p.herd', 'h')
             ->andWhere('h.breeder = :breeder')
             ->setParameters(['breeder' => $breeder])
+            ->orderBy('weekYear', 'asc')
+            ->groupBy('weekYear')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function planHerdWeekAfterDate($herd, $date)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('SUM(p.eggsNumber) as eggsNumber', 'YEARWEEK(p.deliveryDate) as weekYear', 'herd.name')
+            ->join('p.herd', 'herd')
+            ->andWhere('p.herd = :herd')
+            ->andWhere('p.deliveryDate > :date')
+            ->setParameters(['herd' => $herd, 'date' => $date])
             ->orderBy('weekYear', 'asc')
             ->groupBy('weekYear')
             ->getQuery()
@@ -79,8 +107,7 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
             ->andWhere('p.deliveryDate BETWEEN :date AND :dateEnd')
             ->setParameters(['breed' => $breed, 'date' => $date, 'dateEnd' => $dateEnd])
             ->getQuery()
-            ->getSingleScalarResult()
-            ;
+            ->getSingleScalarResult();
     }
 
     public function planInputsInWeekHerd($breed, $date, $dateEnd)
@@ -96,8 +123,7 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
             ->groupBy('yearWeek')
             ->addGroupBy('p.herd')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function planDeliveryDetails($start, $end, $breed)
@@ -109,8 +135,7 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
             ->setParameters(['start' => $start, 'end' => $end, 'breed' => $breed])
             ->addOrderBy('p.deliveryDate', 'asc')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function planDeliveryInDay($start, $end, $breed)
@@ -121,8 +146,7 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
             ->andWhere('p.deliveryDate BETWEEN :start AND :end')
             ->setParameters(['start' => $start, 'end' => $end, 'breed' => $breed])
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function herdPlanDeliveryInDay($start, $end, $herd)
@@ -132,19 +156,7 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
             ->andWhere('p.herd = :herd')
             ->setParameters(['start' => $start, 'end' => $end, 'herd' => $herd])
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
-    /*
-    public function findOneBySomeField($value): ?PlanDeliveryEgg
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
