@@ -22,7 +22,10 @@
             <tr>
                 <th scope="row" class="col-1">{% trans %}plan_detail.index.table.week{% endtrans %}</th>
                 <th scope="row" class="col-4">{% trans %}plan_detail.index.table.eggs{% endtrans %}</th>
-                <th scope="row" class="col-3">{% trans %}plan_detail.index.table.chicks{% endtrans %}</th>
+                <th scope="row" class="col-3">
+                    {% trans %}plan_detail.index.table.chicks{% endtrans %}<br/>
+                    {% trans %}plan_detail.index.table.chick_input_date{% endtrans %}
+                </th>
                 <th scope="row" class="col-4">{% trans %}plan_detail.index.table.stock{% endtrans %}</th>
             </tr>
             </thead>
@@ -37,43 +40,73 @@
                                 <th>{% trans %}plan_detail.index.table.herd.eggs_week{% endtrans %}</th>
                                 <th colspan="2">{{ plan.eggsStock.0.eggsStock|number_format(0, ',', ' ') }}</th>
                             </tr>
-                            <th/>
                             <tr>
                                 <th class="col-8 text-start">{% trans %}plan_detail.index.table.herd.name{% endtrans %}</th>
                                 <th class="col text-center">{% trans %}plan_detail.index.table.herd.week{% endtrans %}</th>
                                 <th class="col text-end">{% trans %}plan_detail.index.table.herd.eggs{% endtrans %}</th>
                             </tr>
                             </thead>
-                        {% for egg in plan.eggs %}
-                            <tr>
-                                <td class=" text-start">{{ egg.name }}</td>
-                                <td>---</td>
-                                <td class=" text-end">{{ egg.eggsNumber }}</td>
-                            </tr>
-                        {% endfor %}
+                            <tbody class="table-bordered">
+                            {% for egg in plan.eggs %}
+                                <tr>
+                                    <td class=" text-start">{{ egg.name }}</td>
+                                    <td>---</td>
+                                    <td class=" text-end">{{ egg.eggsNumber }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
                         </table>
                     </td>
                     <td>
                         <table class="table-sm">
                             <thead>
                             <tr>
+                                <th>{% trans %}plan_detail.index.table.farm.chicks_week{% endtrans %}</th>
+                                <th colspan="2">
+                                    {% if plan.chicksStock is defined %}
+                                        {{ plan.chicksStock.0|number_format(0, ',', ' ') }}
+                                    {% endif %}
+                                </th>
+                            </tr>
+                            <tr>
                                 <th class="col-10 text-start">{% trans %}plan_detail.index.table.farm.name{% endtrans %}</th>
                                 <th class="col text-end">{% trans %}plan_detail.index.table.farm.chick{% endtrans %}</th>
                             </tr>
                             </thead>
+                            <tbody class="table-bordered">
                             {% if plan.chicks is defined %}
-                            {% for chick in plan.chicks %}
-                                <tr>
-                                    <td class="text-start">{{ chick.chickFarm.name }}</td>
-                                    <td class="text-end">{{ chick.chickNumber }}</td>
-                                </tr>
-                            {% endfor %}
-                            {% else %}
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                {% for chick in plan.chicks %}
+                                    <tr>
+                                        <td class="text-start">{{ chick.chickFarm.customer.name }}
+                                            - {{ chick.chickFarm.name }}</td>
+                                        <td class="text-end">{{ chick.chickNumber }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="table-sm">
+                            <thead>
+                            <tr>
+                                <th class="col-10 text-start">{% trans %}plan_detail.index.table.herd.name{% endtrans %}</th>
+                                <th class="col text-end">{% trans %}plan_detail.index.table.herd.eggs{% endtrans %}</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-bordered">
+                            {% if loop.first %}
+                                {% if eggsStock is defined %}
+                                    {% for key, eggStock in eggsStock %}
+                                        <tr>
+                                            <td class="text-start">{{ key }}</td>
+                                            <td class="text-end">{{ eggStock }}</td>
+                                        </tr>
+                                    {% endfor %}
                                 {% endif %}
+                                {# {% else %} #}
+                            {% endif %}
+                            </tbody>
                         </table>
                     </td>
                 </tr>

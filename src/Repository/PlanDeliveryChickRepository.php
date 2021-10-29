@@ -72,6 +72,21 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ;
     }
 
+    public function planBreedWeek($breed, $now)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('YEARWEEK(p.inputDate, 1) as weekYear', 'SUM(p.chickNumber) as chickNumber')
+            ->join('p.breed', 'b')
+            ->andWhere('b = :breed')
+            ->andWhere('p.inputDate > :date')
+            ->setParameters(['breed' => $breed, 'date' => $now])
+            ->groupBy('weekYear')
+            ->orderBy('weekYear', 'asc')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function planInputsInWeekCustomer($breed, $date, $dateEnd)
     {
         return $this->createQueryBuilder('p')

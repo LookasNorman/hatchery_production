@@ -1151,10 +1151,12 @@ plan_delivery_egg_for_herd:
 plan_detail:
   index:
     table:
+      chick_input_date: Tydzień nakładu
       chicks: Pisklęta
       eggs: Jaja
       farm:
         chick: Pisklęta
+        chicks_week: Pisklęta tydzień
         name: Ferma
       herd:
         eggs: Jaja

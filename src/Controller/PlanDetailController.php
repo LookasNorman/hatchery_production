@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Breed;
+use App\Entity\Delivery;
 use App\Entity\Herds;
+use App\Entity\InputsFarmDelivery;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanDeliveryEgg;
 use App\Repository\DeliveryRepository;
@@ -31,7 +33,7 @@ class PlanDetailController extends AbstractController
         $planEggs = [];
         foreach ($planHerds as $planHerd) {
             $planHerdEggs = $planDeliveryEggRepository->planHerdWeekAfterDate($planHerd, $now);
-            foreach ($planHerdEggs as $planHerdEgg){
+            foreach ($planHerdEggs as $planHerdEgg) {
                 array_push($planEggs, ['weekYear' => $planHerdEgg['weekYear'], $planHerdEgg]);
             }
         }
@@ -41,12 +43,49 @@ class PlanDetailController extends AbstractController
 
     public function sumWeekEggs($planEggs)
     {
-        $eggs= [];
-        foreach ($planEggs as $planEgg){
+        $eggs = [];
+        foreach ($planEggs as $planEgg) {
             $eggsSum = array_sum(array_column($planEgg['eggs'], 'eggsNumber'));
             array_push($eggs, ["weekYear" => $planEgg['weekYear'], 0 => ['eggsStock' => $eggsSum]]);
         }
         return $eggs;
+    }
+
+    public function eggsOnWarehouse($deliveries)
+    {
+        $inputsFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+        $eggsDeliveries = [];
+        foreach ($deliveries as $delivery) {
+            $inputsDeliveries = $inputsFarmDeliveryRepository->eggsFromDelivery($delivery);
+            if ($inputsDeliveries > 0) {
+                array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$inputsDeliveries]);
+            } elseif (is_null($inputsDeliveries)) {
+                array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$delivery->getEggsNumber()]);
+            }
+        }
+
+        return $eggsDeliveries;
+    }
+
+    public function eggsStock($plan, $breed)
+    {
+        $deliveries = $this->getDoctrine()->getRepository(Delivery::class)->findBy([], ['deliveryDate' => 'desc']);
+        $eggsStock = $this->eggsOnWarehouse($deliveries);
+        $stockEggs = [];
+        foreach ($eggsStock as $eggStock) {
+            $id = $eggStock['delivery']->getHerd()->getName();
+            if (!isset($stockEggs[$id])) {
+                $stockEggs[$id] = $eggStock;
+                $stockEggs[$id] = array();
+            }
+            if(empty($stockEggs[$id])){
+                $stockEggs[$id] = $eggStock['eggs'];
+            } else {
+
+                $stockEggs[$id] = $stockEggs[$id] + $eggStock['eggs'];
+            }
+        }
+        return $stockEggs;
     }
 
     public function planChickBreedWeek($breed)
@@ -54,6 +93,15 @@ class PlanDetailController extends AbstractController
         $now = new \DateTime('midnight');
         $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
         $planChicks = $planDeliveryChickRepository->planBreedFarm($breed, $now);
+        return $planChicks;
+    }
+
+    public function sumWeekChick($breed)
+    {
+        $now = new \DateTime('midnight');
+        $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
+        $planChicks = $planDeliveryChickRepository->planBreedWeek($breed, $now);
+
         return $planChicks;
     }
 
@@ -95,9 +143,23 @@ class PlanDetailController extends AbstractController
             }
             $plan[$id]['chicks'][] = $planChick[0];
         }
+        $weekChicks = $this->sumWeekChick($breed);
+
+        foreach ($weekChicks as $weekCick) {
+            $id = $weekCick['weekYear'];
+            if (!isset($plan[$id])) {
+                $plan[$id] = $weekCick;
+                $plan[$id][0] = array();
+            }
+//            dd($weekChicks);
+            $plan[$id]['chicksStock'][] = $weekCick['chickNumber'];
+        }
+
+        $eggsStock = $this->eggsStock($plan, $breed);
 
         return $this->render('plan_detail/index.html.twig', [
             'plans' => $plan,
+            'eggsStock' => $eggsStock
         ]);
     }
 }
