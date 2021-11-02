@@ -1,4 +1,7 @@
 {{ form_start(form) }}
+<div class="form-check-inline">
+    {{ form_row(form.breed) }}
+</div>
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ include('layout/buttons/create.html.twig', {text: 'plan_delivery_chick.form.button.save'}) }}
 {{ form_end(form) }}

@@ -1,13 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit PlanDeliveryChick{% endblock %}
-
 {% block body %}
-    <h1>Edit PlanDeliveryChick</h1>
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <h1>{% trans %}plan_delivery_chick.edit.title{% endtrans %}</h1>
 
-    {{ include('plan_delivery_chick/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('plan_delivery_chick_index') }}">back to list</a>
-
-    {{ include('plan_delivery_chick/_delete_form.html.twig') }}
+    <div class="d-flex justify-content-center card-group">
+        {% include 'layout/cards/chead.html.twig' %}
+        <i class="fa fa-pen"></i> {% trans %}plan_delivery_chick.edit.header{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        {{ include('plan_delivery_chick/_form.html.twig', {'button_label': 'plan_delivery_chick.edit.button.update'}) }}
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {{ include('plan_delivery_chick/_delete_form.html.twig') }}
+        {% include 'layout/cards/cend.html.twig' %}
+    </div>
+    {{ include('layout/buttons/back.html.twig', { pathLink: path('plan_delivery_chick_index'), text: 'plan_delivery_chick.edit.button.back' }) }}
 {% endblock %}

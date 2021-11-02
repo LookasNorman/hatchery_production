@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>{% trans %}plan_delivery_chick.index.title{% endtrans %}</h1>
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb" class="d-print-none">
         <ol class="breadcrumb">
             {% for year in yearLink %}
             <li class="breadcrumb-item"><a href="{{path('plan_year_plan', {'yearN': year}) }}">{{ year }}</a></li>

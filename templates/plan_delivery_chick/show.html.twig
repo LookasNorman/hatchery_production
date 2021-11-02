@@ -3,40 +3,59 @@
 {% block title %}PlanDeliveryChick{% endblock %}
 
 {% block body %}
-    <h1>PlanDeliveryChick</h1>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ plan_delivery_chick.id }}</td>
-            </tr>
-            <tr>
-                <th>ChickNumber</th>
-                <td>{{ plan_delivery_chick.chickNumber }}</td>
-            </tr>
-            <tr>
-                <th>DeliveryDate</th>
-                <td>{{ plan_delivery_chick.deliveryDate ? plan_delivery_chick.deliveryDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>InputDate</th>
-                <td>{{ plan_delivery_chick.inputDate ? plan_delivery_chick.inputDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>LightingDate</th>
-                <td>{{ plan_delivery_chick.lightingDate ? plan_delivery_chick.lightingDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>TransferDate</th>
-                <td>{{ plan_delivery_chick.transferDate ? plan_delivery_chick.transferDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
 
-    <a href="{{ path('plan_delivery_chick_index') }}">back to list</a>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="example-wrapper">
+        <h1>{% trans %}plan_delivery_chick.show.title{% endtrans %}</h1>
+        <div class="d-flex justify-content-center card-group">
+            {% include 'layout/cards/chead.html.twig' %}
+            {% trans %}plan_delivery_chick.show.header{% endtrans %}:
+            {{ plan_delivery_chick.chickFarm.customer.name }} {{ plan_delivery_chick.chickFarm.name }}
+            {% include 'layout/cards/cbody.html.twig' %}
+            <dl class="row">
+                <dd class="col-sm-9">{% trans %}plan_delivery_chick.show.breed{% endtrans %}:</dd>
+                <dt class="col-sm-3">
+                    {% for breed in plan_delivery_chick.breed %}
+                    {{ breed.name }} {{ breed.type }}
+                    {% endfor %}
+                </dt>
+                <dd class="col-sm-9">{% trans %}plan_delivery_chick.show.delivery_date{% endtrans %}:</dd>
+                <dt class="col-sm-3">{{ plan_delivery_chick.deliveryDate ? plan_delivery_chick.deliveryDate|date('Y-m-d') : '' }}</dt>
+                <dd class="col-sm-9">{% trans %}plan_delivery_chick.show.chicks_number{% endtrans %}:</dd>
+                <dt class="col-sm-3">{{ plan_delivery_chick.chickNumber|number_format(0, ',', ' ') }}</dt>
+                <dd class="col-sm-9">{% trans %}plan_delivery_chick.show.input_date{% endtrans %}:</dd>
+                <dt class="col-sm-3">{{ plan_delivery_chick.inputDate ? plan_delivery_chick.inputDate|date('Y-m-d') : '' }}</dt>
+                <dd class="col-sm-9">{% trans %}plan_delivery_chick.show.lighting_date{% endtrans %}:</dd>
+                <dt class="col-sm-3">{{ plan_delivery_chick.lightingDate ? plan_delivery_chick.lightingDate|date('Y-m-d') : '' }}</dt>
+                <dd class="col-sm-9">{% trans %}plan_delivery_chick.show.transfer_date{% endtrans %}:</dd>
+                <dt class="col-sm-3">{{ plan_delivery_chick.transferDate ? plan_delivery_chick.transferDate|date('Y-m-d') : '' }}</dt>
+            </dl>
+            {% include 'layout/cards/cfooter.html.twig' %}
+            {% if is_granted('ROLE_ADMIN') %}
+                {{ include('plan_delivery_chick/_delete_form.html.twig') }}
+                {{ include('layout/buttons/edit.html.twig',
+                    {pathLink: path('plan_delivery_chick_edit', {'id': plan_delivery_chick.id}), text: 'plan_delivery_chick.show.button.edit'}) }}
+            {% endif %}
+            {% include 'layout/cards/cend.html.twig' %}
+        </div>
+        {{ include('layout/buttons/back.html.twig', { pathLink: path('plan_delivery_chick_index'), text: 'plan_delivery_chick.show.button.back' }) }}
+    </div>
 
-    <a href="{{ path('plan_delivery_chick_edit', {'id': plan_delivery_chick.id}) }}">edit</a>
-
-    {{ include('plan_delivery_chick/_delete_form.html.twig') }}
 {% endblock %}

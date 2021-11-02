@@ -1,11 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New PlanDeliveryChick{% endblock %}
-
 {% block body %}
-    <h1>Create new PlanDeliveryChick</h1>
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <h1>{% trans %}plan_delivery_chick.new.title{% endtrans %}</h1>
+    <div class="d-flex justify-content-center card-group">
+        {% include 'layout/cards/chead.html.twig' %}
+        <i class="fa fa-plus"></i> {% trans %}plan_delivery_chick.new.header{% endtrans %}
+        {% include 'layout/cards/cbody.html.twig' %}
+        {{ include('plan_delivery_chick/_form.html.twig') }}
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% include 'layout/cards/cend.html.twig' %}
+    </div>
+    {{ include('layout/buttons/back.html.twig', {pathLink: path('plan_delivery_chick_index'), text: 'plan_delivery_chick.new.button.back'}) }}
 
-    {{ include('plan_delivery_chick/_form.html.twig') }}
-
-    <a href="{{ path('plan_delivery_chick_index') }}">back to list</a>
 {% endblock %}

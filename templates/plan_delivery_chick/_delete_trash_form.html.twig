@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('plan_delivery_chick_delete', {'id': id}) }}"
+      onsubmit="return confirm('{% trans %}plan_delivery_chick.delete.confirm{% endtrans %}');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ id) }}">
+    <button class="btn"><i class="fa fa-trash"></i></button>
+</form>

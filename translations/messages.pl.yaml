@@ -1113,11 +1113,26 @@ plan_breeder:
     supplier: Dostawcy jaj
     week: Tydzień / rok
 plan_delivery_chick:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Jesteś pewien, że chcesz usunąć zamówienie?
+  edit:
+    button:
+      back: Lista zamówień
+      update: Aktualizuj
+    header: Popraw zamówienie
+    title: Edycja zamówienia
   form:
+    button:
+      save: Zapisz
     label:
+      breed: Rasa
       chick_farm: Ferma
       chick_number: Ilość piskląt
       delivery_date: Data dostawy
+    placeholder:
+      chick_farm: Wybierz fermę z listy
   index:
     button:
       new: Dodaj zamówienie
@@ -1138,8 +1153,23 @@ plan_delivery_chick:
         show: Szczegóły
         edit: Edycja
     transfer_date: Data przekładu
-  placeholder:
-    chick_farm: Wybierz fermę z listy
+  new:
+    button:
+      back: Lista zamówień
+    header: Dodawanie nowego zamówienia
+    title: Nowe zamówienie
+  show:
+    breed: Rasa
+    button:
+      back: Lista zamówień
+      edit: Edytuj
+    chicks_number: Ilość piskląt
+    delivery_date: Data wybierania
+    header: Odbiorca / ferma
+    input_date: Data nakładu
+    lighting_date: Data świetlenia
+    title: Szczegóły zamówienia
+    transfer_date: Data przekładu
 plan_delivery_egg_for_herd:
   form:
     monday: Poniedziałek

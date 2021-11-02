@@ -42,10 +42,15 @@
                 {{ hatcherNumber|number_format(1, ',', ' ') }}
             </td>
             <td class="d-print-none">
-                {{ include('plan_delivery_chick/_delete_form.html.twig') }}
-                {{ include('layout/buttons/list_actions.html.twig',
-                    {pathLink: path('plan_delivery_chick_edit', {'id': plan_delivery_chick.id}), text: 'plan_delivery_chick.list_plan_chick.table.badge.edit' }) }}
-
+                <span class="btn-group">
+                    {{ include('layout/buttons/list_show.html.twig',
+                        {pathLink: path('plan_delivery_chick_show', {'id': plan_delivery_chick.id})}) }}
+                    {% if is_granted('ROLE_PRODUCTION') %}
+                        {{ include('layout/buttons/list_edit.html.twig',
+                            {pathLink: path('plan_delivery_chick_edit', {'id': plan_delivery_chick.id})}) }}
+                        {{ include('plan_delivery_chick/_delete_trash_form.html.twig', {'id': plan_delivery_chick.id}) }}
+                    {% endif %}
+                </span>
             </td>
         </tr>
     {% else %}

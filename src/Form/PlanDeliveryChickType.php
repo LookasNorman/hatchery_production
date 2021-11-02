@@ -21,10 +21,11 @@ class PlanDeliveryChickType extends AbstractType
             ->add('breed', EntityType::class, [
                 'class' => Breed::class,
                 'choice_label' => 'name',
+                'label' => 'plan_delivery_chick.form.label.breed',
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'p-2'
                 ]
             ])
             ->add('chickNumber', IntegerType::class, [
@@ -48,9 +49,9 @@ class PlanDeliveryChickType extends AbstractType
                     return $entityRepository->createQueryBuilder('cr')
                         ->orderBy('cr.name', 'ASC');
                 },
-                'placeholder' => 'plan_delivery_chick.placeholder.chick_farm',
+                'placeholder' => 'plan_delivery_chick.form.placeholder.chick_farm',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-select'
                 ]
             ])
         ;
