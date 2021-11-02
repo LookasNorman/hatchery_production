@@ -22,6 +22,7 @@
             <tr>
                 <th scope="row" class="col-1">{% trans %}plan_detail.index.table.week{% endtrans %}</th>
                 <th scope="row" class="col-4">{% trans %}plan_detail.index.table.eggs{% endtrans %}</th>
+                <th scope="row" class="col-1">{% trans %}plan_detail.index.table.week{% endtrans %}</th>
                 <th scope="row" class="col-3">
                     {% trans %}plan_detail.index.table.chicks{% endtrans %}<br/>
                     {% trans %}plan_detail.index.table.chick_input_date{% endtrans %}
@@ -32,13 +33,17 @@
             <tbody>
             {% for key, plan in plans %}
                 <tr>
-                    <td>{{ plan.weekYear }}</td>
+                    <td>{{ plan.weekYear|slice(0,4) }} {{ plan.weekYear|slice(4,2) }}</td>
                     <td>
                         <table class="table-sm">
                             <thead>
                             <tr>
                                 <th>{% trans %}plan_detail.index.table.herd.eggs_week{% endtrans %}</th>
-                                <th colspan="2">{{ plan.eggsStock.0.eggsStock|number_format(0, ',', ' ') }}</th>
+                                <th colspan="2">
+                                    {% if plan.eggsStock is defined %}
+                                        {{ plan.eggsStock.0.eggsStock|number_format(0, ',', ' ') }}
+                                    {% endif %}
+                                </th>
                             </tr>
                             <tr>
                                 <th class="col-8 text-start">{% trans %}plan_detail.index.table.herd.name{% endtrans %}</th>
@@ -47,22 +52,26 @@
                             </tr>
                             </thead>
                             <tbody class="table-bordered">
-                            {% for egg in plan.eggs %}
-                                <tr>
-                                    <td class=" text-start">{{ egg.name }}</td>
-                                    <td>---</td>
-                                    <td class=" text-end">{{ egg.eggsNumber }}</td>
-                                </tr>
-                            {% endfor %}
+                            {% if plan.chicks is defined %}
+                                {% for egg in plan.eggs %}
+                                    <tr>
+                                        <td class=" text-start">{{ egg.name }}</td>
+                                        <td>---</td>
+                                        <td class=" text-end">{{ egg.eggsNumber }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
                             </tbody>
                         </table>
                     </td>
+                    {% set weekChick = plan.weekYear + 3 %}
+                    <td>{{ weekChick|slice(0,4) }} {{ weekChick|slice(4,2) }}</td>
                     <td>
                         <table class="table-sm">
                             <thead>
                             <tr>
                                 <th>{% trans %}plan_detail.index.table.farm.chicks_week{% endtrans %}</th>
-                                <th colspan="2">
+                                <th>
                                     {% if plan.chicksStock is defined %}
                                         {{ plan.chicksStock.0|number_format(0, ',', ' ') }}
                                     {% endif %}
