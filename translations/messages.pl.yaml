@@ -1291,6 +1291,11 @@ plans:
       date: Planowana data dostawy
       eggs_number: Planowana ilość jaj
       title: Plan dostaw dla stada
+  show_week:
+    index:
+      chicks_number: Ilość piskląt
+      delivery_date: Data wybierania
+    title: Szczegóły tygodnia
   week_plan_site:
     week:
       insert: Tydzień nakładu

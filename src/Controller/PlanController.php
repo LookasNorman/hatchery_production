@@ -444,6 +444,38 @@ class PlanController extends AbstractController
     }
 
     /**
+     * @Route("/week/{year}/{week}", name="plan_week_detail", methods={"GET"})
+     */
+    public function showWeek($week, $year)
+    {
+        $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
+        $breed = $this->getDoctrine()->getRepository(Breed::class)->find(1);
+        $date = new \DateTime();
+        $date->setISODate($year, $week, 1);
+        $date->modify('midnight -1 second');
+        $dateEnd = new \DateTime();
+        $dateEnd->setISODate($year, $week, 7);
+        $dateEnd->modify('midnight +1 second');
+
+        $dates = $planDeliveryChickRepository->dateDelivery($date, $dateEnd);
+        $plans = [];
+        foreach ($dates as $day){
+            $start = clone $day['inputDate'];
+            $start->modify('midnight -1second');
+            $end = clone $day['inputDate'];
+            $end->modify('midnight +1 day');
+
+            array_push($plans, ['date' => $day, 'plans' => $planDeliveryChickRepository->planInputsInDay($start, $end, $breed)]);
+        }
+
+        return $this->render('plans/show_week/index.html.twig', [
+            'date' => $date,
+            'plans' => $plans,
+            'breed' => $breed
+        ]);
+    }
+
+    /**
      * @Route("/", name="plan_week", methods={"GET"})
      */
     public function index()

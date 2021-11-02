@@ -21,6 +21,18 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
         parent::__construct($registry, PlanDeliveryChick::class);
     }
 
+    public function dateDelivery($date, $dateEnd)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.inputDate')
+            ->andWhere('p.inputDate BETWEEN :date AND :dateEnd')
+            ->setParameters(['date' => $date, 'dateEnd' => $dateEnd])
+            ->groupBy('p.inputDate')
+            ->orderBy('p.inputDate')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function planCustomerWeek($farm, $date, $dateEnd)
     {
         return $this->createQueryBuilder('p')
