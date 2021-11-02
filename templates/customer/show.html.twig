@@ -16,6 +16,7 @@
     </div>
     {{ include('layout/buttons/back.html.twig', { pathLink: path('customer_index'), text: 'customer.show.button.back' }) }}
     {{ include('layout/buttons/add.html.twig', { pathLink: path('chicks_recipient_new', {'id': customer.id}), text: 'customer.show.button.add' }) }}
+    {{ include('layout/buttons/add.html.twig', { pathLink: path('plan_delivery_chick_new'), text: 'customer.show.button.add_plan' }) }}
 
     <hr>
     <div class="accordion accordion-flush" id="accordionFlushShow">

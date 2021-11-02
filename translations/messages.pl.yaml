@@ -283,6 +283,7 @@ customer:
   show:
     button:
       add: Dodaj fermę do odbiorcy
+      add_plan: Dodaj zamówienie piskląt
       back: Wykaz odbiorców piskląt
       edit: Edycja odbiorcy
       farm: Fermy
