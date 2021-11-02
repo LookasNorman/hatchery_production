@@ -87,7 +87,9 @@ class PlanDeliveryChickController extends AbstractController
             $entityManager->persist($planDeliveryChick);
             $entityManager->flush();
 
-            return $this->redirectToRoute('plan_delivery_chick_index');
+            return $this->redirectToRoute('customer_show', [
+                'id' => $planDeliveryChick->getChickFarm()->getCustomer()->getId()
+            ]);
         }
 
         return $this->render('plan_delivery_chick/new.html.twig', [
@@ -115,15 +117,17 @@ class PlanDeliveryChickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
             $inputDate = clone $planDeliveryChick->getDeliveryDate();
             $lightingDate = clone $planDeliveryChick->getDeliveryDate();
             $transferDate = clone $planDeliveryChick->getDeliveryDate();
             $planDeliveryChick->setInputDate($inputDate->sub(new \DateInterval('P21DT5H')));
             $planDeliveryChick->setLightingDate($lightingDate->sub(new \DateInterval('P6DT21H')));
             $planDeliveryChick->setTransferDate($transferDate->sub(new \DateInterval('P2DT17H')));
+            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('plan_delivery_chick_index');
+            return $this->redirectToRoute('customer_show', [
+                'id' => $planDeliveryChick->getChickFarm()->getCustomer()->getId()
+            ]);
         }
 
         return $this->render('plan_delivery_chick/edit.html.twig', [

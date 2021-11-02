@@ -2,14 +2,14 @@
     {% trans %}customer.show.header{% endtrans %} - <span class="h3">{{ customer.name }}</span>
 {% include 'layout/cards/cbody.html.twig' %}
 <h5 class="card-title"></h5>
-<dl class="row">
+<dl class="row d-print-none">
     <dt class="col-sm-5">{% trans %}customer.show.email{% endtrans %}:</dt>
     <dd class="col-sm-7">{{ customer.email }}</dd>
     <dt class="col-sm-5">{% trans %}customer.show.phone_number{% endtrans %}:</dt>
     <dd class="col-sm-7">{{ customer.phoneNumber }}</dd>
 </dl>
-<hr />
-<dl class="row">
+<hr class="d-print-none" />
+<dl class="row d-print-none">
     <dt class="col-sm-5">{% trans %}customer.show.street{% endtrans %}</dt>
     <dd class="col-sm-7">{{ customer.street }} {{ customer.streetNumber }}</dd>
     <dt class="col-sm-5">{% trans %}customer.show.city{% endtrans %}</dt>
