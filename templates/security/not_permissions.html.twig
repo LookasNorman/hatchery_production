@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .card {
+            max-width: 500px;
+            min-width: 380px;
+            padding: 6px 6px;
+        }
+    </style>
+    <div class="d-flex justify-content-center card-group">
+        <div class="card text-center">
+            <div class="card-header bg-success text-white">
+                {% trans %}security.not_permissions.header{% endtrans %}
+            </div>
+            <div class="card-body">
+                {% trans %}security.not_permissions.description{% endtrans %}<br/>
+                {% trans %}security.not_permissions.description_admin{% endtrans %}<br/>
+                <h3><a href="mailto:lkonieczny@zwdmalec.pl"><i class="fa fa-envelope" aria-hidden="true"></i></a> lkonieczny@zwdmalec.pl<br/></h3>
+                <h3><i class="fa fa-phone" aria-hidden="true"></i> 662 049 921</h3>
+            </div>
+        </div>
+    </div>
+{% endblock %}

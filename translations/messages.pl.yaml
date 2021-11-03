@@ -1364,6 +1364,10 @@ security:
         send: Zaloguj
       help:
         email: Nigdy nie pokazujemy Twojego adresu email innym.
+  not_permissions:
+    description: Nie masz uprawnień aby wejść na tę stronę.
+    description_admin: Skontaktuj się z Administratorem
+    header: Brak uprawnień
 setters:
   delete:
     confirm: Na pewno chcesz usunąć aparat wylęgowy
