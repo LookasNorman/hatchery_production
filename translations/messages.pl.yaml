@@ -729,6 +729,7 @@ eggs_inputs_transfer:
   new:
     button:
       back: Szczegóły nakładu
+    farm: Ferma
     herd: Stado
     title: Dodawanie danych z przekładu
   production:
