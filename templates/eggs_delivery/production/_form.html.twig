@@ -16,28 +16,12 @@
     </div>
 </div>
 <div class="form-group">
-    <label>{{ form_label(form.firstLayingDate) }}</label>
-    {{ form_widget(form.firstLayingDate) }}
-    <small>{{ form_help(form.firstLayingDate) }}</small>
+    <label>{{ form_label(form.herd) }}</label>
+    {{ form_widget(form.herd) }}
+    <small>{{ form_help(form.herd) }}</small>
     <div class="form-text text-danger">
-        {{ form_errors(form.firstLayingDate) }}
+        {{ form_errors(form.herd) }}
     </div>
 </div>
-<div class="form-group">
-    <label>{{ form_label(form.lastLayingDate) }}</label>
-    {{ form_widget(form.lastLayingDate) }}
-    <small>{{ form_help(form.lastLayingDate) }}</small>
-    <div class="form-text text-danger">
-        {{ form_errors(form.lastLayingDate) }}
-    </div>
-</div>
-    <div class="form-group">
-        <label>{{ form_label(form.herd) }}</label>
-        {{ form_widget(form.herd) }}
-        <small>{{ form_help(form.herd) }}</small>
-        <div class="form-text text-danger">
-            {{ form_errors(form.herd) }}
-        </div>
-    </div>
-    {{ include('layout/buttons/create.html.twig', {text: 'eggs_delivery.form.button.save'}) }}
+{{ include('layout/buttons/create.html.twig', {text: 'eggs_delivery.form.button.save'}) }}
 {{ form_end(form) }}

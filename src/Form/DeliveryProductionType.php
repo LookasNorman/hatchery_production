@@ -32,20 +32,6 @@ class DeliveryProductionType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('firstLayingDate', DateType::class, [
-                'label' => 'eggs_delivery.form.label.first_laying_date',
-                'widget' => 'single_text',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('lastLayingDate', DateType::class, [
-                'label' => 'eggs_delivery.form.label.last_laying_date',
-                'widget' => 'single_text',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
             ->add('herd', EntityType::class, [
                 'label' => 'eggs_delivery.form.label.breeder',
                 'class' => Herds::class,
