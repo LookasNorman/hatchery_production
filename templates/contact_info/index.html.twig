@@ -1,22 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}ContactInfo index{% endblock %}
-
 {% block body %}
-    <h1>ContactInfo index</h1>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-    <table class="table">
-        <thead>
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>
+            {% trans %}contact_info.index.title{% endtrans %}
+        </h1>
+        {% if is_granted("ROLE_MANAGER") %}
+            {{ include('layout/buttons/new.html.twig', {pathLink: path('contact_info_new'), text: 'contact_info.index.button.new' }) }}
+        {% endif %}
+        {% include 'layout/tables/thead.html.twig' %}
         <tr>
-            <th>Id</th>
-            <th>Department</th>
-            <th>Person</th>
-            <th>PhoneNumber</th>
-            <th>Email</th>
-            <th>actions</th>
+            <th>{% trans %}contact_info.index.table.id{% endtrans %}</th>
+            <th>{% trans %}contact_info.index.table.department{% endtrans %}</th>
+            <th>{% trans %}contact_info.index.table.person{% endtrans %}</th>
+            <th>{% trans %}contact_info.index.table.phone_number{% endtrans %}</th>
+            <th>{% trans %}contact_info.index.table.email{% endtrans %}</th>
+            <th>{% trans %}contact_info.index.table.actions{% endtrans %}</th>
         </tr>
-        </thead>
-        <tbody>
+        {% include 'layout/tables/tbody.html.twig' %}
         {% for contact_info in contact_infos %}
             <tr>
                 <td>{{ contact_info.id }}</td>
@@ -25,19 +40,20 @@
                 <td>{{ contact_info.phoneNumber }}</td>
                 <td>{{ contact_info.email }}</td>
                 <td>
-                    <a href="{{ path('contact_info_show', {'id': contact_info.id}) }}">show</a>
+                    {{ include('layout/buttons/list_show.html.twig',
+                        {pathLink: path('contact_info_show', {'id': contact_info.id})}) }}
                     {% if is_granted('ROLE_MANAGER') %}
-                        <a href="{{ path('contact_info_edit', {'id': contact_info.id}) }}">edit</a>
+                        {{ include('layout/buttons/list_edit.html.twig',
+                            {pathLink: path('contact_info_edit', {'id': contact_info.id})}) }}
                     {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">{% trans %}contact_info.index.table.no_found{% endtrans %}</td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('contact_info_new') }}">Create new</a>
+        {% include 'layout/tables/tfooter.html.twig' %}
+        {% include 'layout/tables/tend.html.twig' %}
+    </div>
 {% endblock %}

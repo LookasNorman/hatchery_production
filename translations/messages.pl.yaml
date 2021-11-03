@@ -237,10 +237,51 @@ chicks_recipient:
       chicks_real: Rzeczywiste
     title: Ferma odbiorcy piskląt
 contact_info:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Jesteś pewien, że chcesz usunąć informacje kontaktowe? Dane zostaną usunięte bezpowrotnie!!!
   edit:
     button:
       back: Powrót do listy
+    header: Edytuj kontakt
     title: Edycja danych kontaktowych
+  form:
+    button:
+      save: Zapisz
+      update: Aktualizuj
+    label:
+      department: Dział
+      email: Email
+      person: Imię i nazwisko
+      phone_number: Numer telefonu
+  index:
+    button:
+      new: Dodaj nowy kontakt
+    table:
+      actions: Akcje
+      badge:
+        edit: Edytuj
+        show: Szczegóły
+      department: Dział
+      email: Email
+      id: Lp.
+      person: Imię i nazwisko
+      phone_number: Numer telefonu
+    title: Lista danych kontaktowych
+  new:
+    button:
+      back: Lista kontaktów
+    header: Wpisz dane kontaktowe
+    title: Dodawanie nowego kontaktu
+  show:
+    button:
+      back: Lita kontaktów
+      edit: Edycja
+    email: Email
+    header: Szczegóły kontaktu
+    phone_number: Numer telefonu
+    title: Karta kontaktu
 customer:
   delete:
     button:
