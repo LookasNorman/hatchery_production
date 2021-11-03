@@ -449,25 +449,28 @@ class PlanController extends AbstractController
     public function showWeek($week, $year)
     {
         $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
+        $planDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
         $breed = $this->getDoctrine()->getRepository(Breed::class)->find(1);
         $date = new \DateTime();
-        $date->setISODate($year, $week, 1);
-        $date->modify('midnight -1 second');
-        $dateEnd = new \DateTime();
-        $dateEnd->setISODate($year, $week, 7);
-        $dateEnd->modify('midnight +1 second');
+        $date->setISODate($year, $week, 2);
+        $date->modify('midnight');
+        $dateEnd = clone $date;
+        $dateEnd->modify('+7 days');
 
-        $dates = $planDeliveryChickRepository->dateDelivery($date, $dateEnd);
         $plans = [];
-        foreach ($dates as $day){
-            $start = clone $day['inputDate'];
-            $start->modify('midnight -1second');
-            $end = clone $day['inputDate'];
-            $end->modify('midnight +1 day');
+        for ($day = clone $date; $day < $dateEnd; $day->modify('+1 day')) {
+            $start = clone $day;
+            $start->modify('midnight -1 second');
+            $end = clone $day;
+            $end->modify('midnight +1 day -1 second');
 
-            array_push($plans, ['date' => $day, 'plans' => $planDeliveryChickRepository->planInputsInDay($start, $end, $breed)]);
+            array_push($plans, [
+                'date' => $start,
+                'chicks' => $planDeliveryChickRepository->planInputsInDay($start, $end, $breed),
+                'eggs' => $planDeliveryEggRepository->planDeliveryInDay($start, $end, $breed)
+            ]);
         }
-
+//dd($plans);
         return $this->render('plans/show_week/index.html.twig', [
             'date' => $date,
             'plans' => $plans,

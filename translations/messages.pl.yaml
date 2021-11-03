@@ -1293,8 +1293,14 @@ plans:
       title: Plan dostaw dla stada
   show_week:
     index:
+      card:
+        title:
+          chicks: Nakłady jaj
+          eggs: Dostawy jaj
       chicks_number: Ilość piskląt
-      delivery_date: Data wybierania
+      chicks_delivery_date: Data wybierania
+      eggs_delivery_date: Data dostawy jaj
+      eggs_number: Ilość jaj
     title: Szczegóły tygodnia
   week_plan_site:
     week:

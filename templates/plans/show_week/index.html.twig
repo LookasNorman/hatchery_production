@@ -12,23 +12,44 @@
         - {{ breed.name }} {{ breed.type }}</h1>
     <div class="card-group">
         {% for day in plans %}
-            <div class="card border-primary m-2">
-                <div class="card-header bg-transparent border-success">{{ day.date.inputDate ? day.date.inputDate|format_datetime('full', 'none', locale='pl') : '' }}</div>
-                <div class="card-body">
-                    {% for plan in day.plans %}
-                        <h6 class="card-title">{{ plan.chickFarm.customer.name }} - {{ plan.chickFarm.name }}</h6>
-                        <dl class="row">
-                            <dd class="col-sm-6">{% trans %}plans.show_week.index.chicks_number{% endtrans %}</dd>
-                            <dt class="col-sm-6">{{ plan.chickNumber|number_format(0, ',', ' ') }}</dt>
-                            <dd class="col-sm-6">{% trans %}plans.show_week.index.delivery_date{% endtrans %}</dd>
-                            <dt class="col-sm-6">{{ plan.deliveryDate ? plan.deliveryDate|format_datetime('medium', 'none', locale='pl') : '' }}</dt>
-                        </dl>
-
-                        <hr/>
-
-                    {% endfor %}
+            {% if day.chicks is not empty %}
+                <div class="card border-primary m-2">
+                    <div class="card-header bg-transparent border-success">
+                        {{ day.date ? day.date|format_datetime('full', 'none', locale='pl') : '' }}<br/>
+                        {% trans %}plans.show_week.index.card.title.chicks{% endtrans %}
+                    </div>
+                    <div class="card-body">
+                        {% for plan in day.chicks %}
+                            <h6 class="card-title">{{ plan.chickFarm.customer.name }} - {{ plan.chickFarm.name }}</h6>
+                            <dl class="row">
+                                <dd class="col-sm-6">{% trans %}plans.show_week.index.chicks_number{% endtrans %}</dd>
+                                <dt class="col-sm-6">{{ plan.chickNumber|number_format(0, ',', ' ') }}</dt>
+                                <dd class="col-sm-6">{% trans %}plans.show_week.index.chicks_delivery_date{% endtrans %}</dd>
+                                <dt class="col-sm-6">{{ plan.deliveryDate ? plan.deliveryDate|format_datetime('medium', 'none', locale='pl') : '' }}</dt>
+                            </dl>
+                            <hr/>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
+            {% if day.eggs is not empty %}
+                <div class="card border-primary m-2">
+                    <div class="card-header bg-transparent border-success">
+                        {{ day.date ? day.date|format_datetime('full', 'none', locale='pl') : '' }}<br/>
+                        {% trans %}plans.show_week.index.card.title.eggs{% endtrans %}
+                    </div>
+                    <div class="card-body">
+                        {% for plan in day.eggs %}
+                            <h6 class="card-title">{{ plan.herd.breeder.name }} - {{ plan.herd.name }}</h6>
+                            <dl class="row">
+                                <dd class="col-sm-6">{% trans %}plans.show_week.index.eggs_number{% endtrans %}</dd>
+                                <dt class="col-sm-6">{{ plan.eggsNumber|number_format(0, ',', ' ') }}</dt>
+                            </dl>
+                            <hr/>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}
