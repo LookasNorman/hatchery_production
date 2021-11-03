@@ -18,11 +18,13 @@ class InputsFarmType extends AbstractType
     {
         $builder
             ->add('chickNumber', TextType::class, [
+                'label' => 'inputs_farm.form.label.chick_number',
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('eggInput', EntityType::class, [
+                'label' => 'inputs_farm.form.label.egg_input',
                 'class' => Inputs::class,
                 'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $entityRepository) {
@@ -34,6 +36,7 @@ class InputsFarmType extends AbstractType
                 ]
             ])
             ->add('chicksFarm', EntityType::class, [
+                'label' => 'inputs_farm.form.label.chick_farm',
                 'class' => ChicksRecipient::class,
                 'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $entityRepository) {

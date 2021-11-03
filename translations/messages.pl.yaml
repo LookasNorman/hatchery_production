@@ -982,9 +982,20 @@ incubators:
     badge:
       new: Utwórz nowy
 inputs_farm:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Na pewno chcesz usunąć fermę z nakładu? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
+  edit:
+    header: Karta edycji
+    title: Edycja odbiorcy w nakładzie
   form:
     button:
       save: Dodaj fermę do nakładu
+    label:
+      chick_farm: Ferma odbiorcy
+      chick_number: Ilość piskląt
+      egg_input: Nakład
     placeholder:
       chicks_farm: Wybierz fermę z listy
   new:
@@ -992,6 +1003,12 @@ inputs_farm:
       back: Powrót do szczegółów nakładu
     header: Dodawanie do nakładu
     title: Dodawanie dostawy na fermę do nakładu
+  show:
+    button:
+      back: Szczegóły nakładu
+      edit: Edytuj
+    chicks_number: Ilość piskląt
+    title: Szczegóły odbiorcy piskląt w nakładzie
 inputs_farm_delivery:
   delete:
     button:
