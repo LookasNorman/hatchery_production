@@ -8,7 +8,7 @@ base:
     title: Zarządzanie produkcją
 breed:
   delete:
-    confirm: Jesteś pewien, że chcesz usunąć rasę kur?
+    confirm: Jesteś pewien, że chcesz usunąć rasę kur? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
     button:
       delete: Usuń rasę
   form:
@@ -49,7 +49,7 @@ car:
   delete:
     button:
       delete: Usuń
-    confirm: Jesteś pewien że chcesz usunąć pojazd?
+    confirm: Jesteś pewien że chcesz usunąć pojazd? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
   edit:
     button:
       update: Zapisz
@@ -86,7 +86,7 @@ chick_integration:
   delete:
     button:
       delete: Usuń
-    confirm: Jesteś pewien, że chcesz usunąć integrację? Jeżeli są w niej odbiorcy piskląt zostaną oni z niej usunięci.
+    confirm: Jesteś pewien, że chcesz usunąć integrację? Jeżeli są w niej odbiorcy piskląt zostaną oni z niej usunięci. Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
   edit:
     header: Edytuj
     title: Edycja integracji
@@ -119,7 +119,7 @@ chick_temperature:
   delete:
     button:
       delete: Usuń
-    confirm: Na pewno chcesz usunąć pomiar temperatury?
+    confirm: Na pewno chcesz usunąć pomiar temperatury? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
   edit:
     button:
       back: Lista temperatur
@@ -172,7 +172,7 @@ chick_temperature:
     title: Temperatura piskląt
 chicks_recipient:
   delete:
-    confirm: Czy na pewno chcesz usunąć fermę odbiorcy piskląt?
+    confirm: Czy na pewno chcesz usunąć fermę odbiorcy piskląt? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
     button:
       delete: Usuń
   edit:
@@ -240,7 +240,7 @@ contact_info:
   delete:
     button:
       delete: Usuń
-    confirm: Jesteś pewien, że chcesz usunąć informacje kontaktowe? Dane zostaną usunięte bezpowrotnie!!!
+    confirm: Jesteś pewien, że chcesz usunąć informacje kontaktowe? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
   edit:
     button:
       back: Powrót do listy
@@ -286,7 +286,7 @@ customer:
   delete:
     button:
       delete: Usuń odbiorcę
-    confirm: Jesteś pewien, że chcesz usunąć odbiorę piskląt?
+    confirm: Jesteś pewien, że chcesz usunąć odbiorę piskląt? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
   edit:
     button:
       back: Wykaz odbiorców piskląt
@@ -343,7 +343,7 @@ driver:
   delete:
     button:
       delete: Usuń
-    confirm: Jesteś pewien, że chcesz usunąć kierowcę?
+    confirm: Jesteś pewien, że chcesz usunąć kierowcę? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
   edit:
     title: Edycja danych kierowcy
   form:
@@ -379,7 +379,7 @@ driver:
     title: Szczegóły kierowcy
 egg_supplier:
   delete:
-    title: Jesteś pewien, że chcesz usunąć dostawcę jaj?
+    title: Jesteś pewien, że chcesz usunąć dostawcę jaj? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
     button:
       delete: Usuń dostawcę
   form:
@@ -426,7 +426,7 @@ egg_supplier:
     title: Dostawca jaj
 eggs_delivery:
   delete:
-    confirm: Jesteś pewien, że chcesz usunąć dostawę?
+    confirm: Jesteś pewien, że chcesz usunąć dostawę? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
     button:
       delete: Usuń
   edit:
@@ -497,7 +497,7 @@ eggs_delivery:
       back: Lista dostaw jaj
 eggs_inputs:
   delete:
-    confirm: Na pewno chcesz usunąć nakład?
+    confirm: Na pewno chcesz usunąć nakład? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
     button:
       delete: Usuń nakład
   form:
@@ -630,7 +630,7 @@ eggs_inputs_lighting:
     waste_eggs: Odpad z świetlonych
     fertility: Zapłodnienie
   delete:
-    confirm: Jesteś pewien, że chcesz usunąć świetlenie?
+    confirm: Jesteś pewien, że chcesz usunąć świetlenie? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
     button:
       delete: Usuń
   form:
@@ -687,7 +687,7 @@ eggs_inputs_lighting:
       back: Lista świetleń
 eggs_inputs_transfer:
   delete:
-    confirm: Na pewno chcesz usunąć dane o przekładzie
+    confirm: Na pewno chcesz usunąć dane o przekładzie? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
     button:
       delete: Usuń
   edit:
@@ -747,7 +747,7 @@ eggs_inputs_transfer:
       back: Lista przekładów
 eggs_inputs_selections:
   delete:
-    confirm: Jesteś pewien, że chcesz usunąć wybieranie?
+    confirm: Jesteś pewien, że chcesz usunąć wybieranie? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
     button:
       delete: Usuń
   form:
@@ -825,7 +825,7 @@ emails:
       title: Dział handlowy
 hatchers:
   delete:
-    confirm: Na pewno chcesz usunąć aparat klujnikowy?
+    confirm: Na pewno chcesz usunąć aparat klujnikowy? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
     button:
       delete: Usuń
   form:
@@ -869,9 +869,9 @@ hatchers:
     title: Szczegóły aparatu
 herds:
   active:
-    confirm: Czy na pewno chcesz zmienić status aktywny / nie aktywny
+    confirm: Czy na pewno chcesz zmienić status aktywny / nie aktywny?
   delete:
-    confirm: Na pewno chcesz usunąć stado?
+    confirm: Na pewno chcesz usunąć stado? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
     button:
       delete: Usuń stado
   form:
@@ -1013,7 +1013,7 @@ inputs_farm_delivery:
   delete:
     button:
       delete: Usuń
-    confirm: Jesteś pewien, że chcesz usunąć dostawę w nakładzie? Operacja jest nieodwracalna. Bezpowrotnie utracisz dane!!!
+    confirm: Jesteś pewien, że chcesz usunąć dostawę w nakładzie? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
   edit:
     button:
       back: Powrót
@@ -1197,7 +1197,7 @@ plan_delivery_chick:
   delete:
     button:
       delete: Usuń
-    confirm: Jesteś pewien, że chcesz usunąć zamówienie?
+    confirm: Jesteś pewien, że chcesz usunąć zamówienie? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
   edit:
     button:
       back: Lista zamówień
@@ -1333,7 +1333,7 @@ plan_input_farm:
   delete:
     button:
       delete: Usuń planowaną fermę
-    confirm: Jesteś pewień że chcesz usnąć fermę z planowanego nakładu?
+    confirm: Jesteś pewień że chcesz usnąć fermę z planowanego nakładu? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
 plans:
   index:
     chicks: Piskląt do nałożenia
@@ -1446,7 +1446,7 @@ security:
     header: Brak uprawnień
 setters:
   delete:
-    confirm: Na pewno chcesz usunąć aparat wylęgowy
+    confirm: Na pewno chcesz usunąć aparat wylęgowy? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
     button:
       delete: Usuń
   form:
@@ -1490,7 +1490,7 @@ vaccination:
   delete:
     button:
       delete: Usuń
-    confirm: Jesteś pewien że chcesz usunąć szczepienie?
+    confirm: Jesteś pewien że chcesz usunąć szczepienie? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
   edit:
     button:
       back: Wykaz szczepień / przekładów

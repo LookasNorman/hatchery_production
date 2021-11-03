@@ -1,4 +1,5 @@
-<form method="post" action="{{ path('vaccination_delete', {'id': vaccination.id}) }}" onsubmit="return confirm('{% trans %}vaccination.delete.confirm{% endtrans %}');">
+<form method="post" action="{{ path('vaccination_delete', {'id': vaccination.id}) }}"
+      onsubmit="return confirm('{% trans %}vaccination.delete.confirm{% endtrans %}');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ vaccination.id) }}">
     <button class="btn btn-danger m-2">{% trans %}vaccination.delete.button.delete{% endtrans %}</button>
 </form>
