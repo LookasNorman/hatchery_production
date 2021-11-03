@@ -7,11 +7,11 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>EggsNumber</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>EggsNumber</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for inputs_farm_delivery in inputs_farm_deliveries %}
@@ -20,7 +20,9 @@
                 <td>{{ inputs_farm_delivery.eggsNumber }}</td>
                 <td>
                     <a href="{{ path('inputs_farm_delivery_show', {'id': inputs_farm_delivery.id}) }}">show</a>
-                    <a href="{{ path('inputs_farm_delivery_edit', {'id': inputs_farm_delivery.id}) }}">edit</a>
+                    {% if is_granted('ROLE_MANAGER') %}
+                        <a href="{{ path('inputs_farm_delivery_edit', {'id': inputs_farm_delivery.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -30,6 +32,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('inputs_farm_delivery_new') }}">Create new</a>
+    {% if is_granted('ROLE_MANAGER') %}
+        <a href="{{ path('inputs_farm_delivery_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}

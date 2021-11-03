@@ -28,7 +28,7 @@
             <td>
                 {{ include('layout/buttons/list_actions.html.twig',
                     {pathLink: path('eggs_inputs_lighting_show', {'id': eggs_inputs_lighting.id}), text: 'eggs_inputs_lighting.index.table.badge.show' }) }}
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_MANAGER') %}
                     {{ include('layout/buttons/list_actions.html.twig',
                         {pathLink: path('eggs_inputs_lighting_edit', {'id': eggs_inputs_lighting.id}), text: 'eggs_inputs_lighting.index.table.badge.edit' }) }}
                 {% endif %}

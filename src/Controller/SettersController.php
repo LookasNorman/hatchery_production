@@ -29,7 +29,7 @@ class SettersController extends AbstractController
 
     /**
      * @Route("/new", name="setters_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -63,7 +63,7 @@ class SettersController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="setters_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, Setters $setter): Response
     {

@@ -1,20 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
-    </style>
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
         {% trans %}chicks_recipient.edit.title{% endtrans %}
         {% include 'layout/cards/cbody.html.twig' %}
         {{ include('chicks_recipient/_form.html.twig', {'button_label': 'chicks_recipient.edit.button.update'}) }}
         {% include 'layout/cards/cfooter.html.twig' %}
-        {{ include('chicks_recipient/_delete_form.html.twig') }}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('chicks_recipient/_delete_form.html.twig') }}
+        {% endif %}
         {% include 'layout/cards/cend.html.twig' %}
     </div>
     {{ include('layout/buttons/back.html.twig',

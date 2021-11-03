@@ -29,7 +29,7 @@
         <div class="card-footer">
             {{ include('layout/buttons/back.html.twig',
                 { pathLink: path('eggs_inputs_index'), text: 'main_page.inputs.list'}) }}
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_MANAGER') %}
                 {{ include('layout/buttons/create.html.twig',
                     { pathLink: path('eggs_inputs_new'), text: 'main_page.inputs.new' }) }}
             {% endif %}

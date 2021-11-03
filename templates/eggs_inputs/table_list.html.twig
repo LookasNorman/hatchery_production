@@ -49,7 +49,7 @@
             <td>
                 {{ include('layout/buttons/list_actions.html.twig',
                     {pathLink: path('eggs_inputs_show', {'id': eggs_input.id}), text: 'eggs_inputs.table_list.table.badge.show' }) }}
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_MANAGER') %}
                     {{ include('layout/buttons/list_actions.html.twig',
                         {pathLink: path('eggs_inputs_edit', {'id': eggs_input.id}), text: 'eggs_inputs.table_list.table.badge.edit' }) }}
                 {% endif %}

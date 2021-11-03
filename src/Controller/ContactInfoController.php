@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/contact_info")
- * @IsGranted("ROLE_ADMIN")
+ * @IsGranted("ROLE_USER")
  */
 class ContactInfoController extends AbstractController
 {
@@ -29,6 +29,7 @@ class ContactInfoController extends AbstractController
 
     /**
      * @Route("/new", name="contact_info_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -62,6 +63,7 @@ class ContactInfoController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="contact_info_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, ContactInfo $contactInfo): Response
     {
@@ -82,6 +84,7 @@ class ContactInfoController extends AbstractController
 
     /**
      * @Route("/{id}", name="contact_info_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, ContactInfo $contactInfo): Response
     {

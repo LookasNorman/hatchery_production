@@ -1,13 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
-    </style>
     <h1>{% trans %}customer.edit.title{% endtrans %}</h1>
 
     <div class="d-flex justify-content-center card-group">
@@ -16,7 +9,9 @@
         {% include 'layout/cards/cbody.html.twig' %}
         {{ include('customer/_form.html.twig', {'button_label': 'customer.edit.button.update'}) }}
         {% include 'layout/cards/cfooter.html.twig' %}
-        {{ include('customer/_delete_form.html.twig') }}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('customer/_delete_form.html.twig') }}
+        {% endif %}
         {% include 'layout/cards/cend.html.twig' %}
     </div>
     {{ include('layout/buttons/back.html.twig', { pathLink: path('customer_index'), text: 'customer.edit.button.back' }) }}

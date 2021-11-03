@@ -29,6 +29,7 @@ class BreedStandardController extends AbstractController
 
     /**
      * @Route("/new", name="breed_standard_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -62,6 +63,7 @@ class BreedStandardController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="breed_standard_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, BreedStandard $breedStandard): Response
     {
@@ -82,6 +84,7 @@ class BreedStandardController extends AbstractController
 
     /**
      * @Route("/{id}", name="breed_standard_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, BreedStandard $breedStandard): Response
     {

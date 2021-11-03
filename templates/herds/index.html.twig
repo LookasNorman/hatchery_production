@@ -7,7 +7,7 @@
             {{ breeder.name }}
         {% endif %}
     </h1>
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_MANAGER') %}
         {{ include('layout/buttons/new.html.twig',
             { pathLink: path('herds_new'), text: 'herds.index.button.new' }) }}
     {% endif %}

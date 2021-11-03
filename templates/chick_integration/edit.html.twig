@@ -8,14 +8,10 @@
             width: 95%;
             font: 18px/1.5 sans-serif;
         }
+
         .example-wrapper code {
             background: #F5F5F5;
             padding: 2px 6px;
-        }
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
         }
     </style>
 
@@ -29,7 +25,9 @@
             {% include 'layout/cards/cbody.html.twig' %}
             {{ include('chick_integration/_form.html.twig', {'button_label': 'chick_integration.edit.button.update'}) }}
             {% include 'layout/cards/cfooter.html.twig' %}
-            {{ include('chick_integration/_delete_form.html.twig') }}
+            {% if is_granted('ROLE_ADMIN') %}
+                {{ include('chick_integration/_delete_form.html.twig') }}
+            {% endif %}
             {% include 'layout/cards/cend.html.twig' %}
         </div>
         {{ include('layout/buttons/back.html.twig', { pathLink: path('chick_integration_index'), text: 'chick_integration.new.button.back' }) }}

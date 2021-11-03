@@ -8,41 +8,46 @@
             width: 95%;
             font: 18px/1.5 sans-serif;
         }
+
         .example-wrapper code {
             background: #F5F5F5;
             padding: 2px 6px;
         }
     </style>
 
-<div class="example-wrapper">
-    <h1>{% trans %}chick_integration.index.title{% endtrans %}</h1>
-    {% if is_granted("ROLE_ADMIN") %}
-        {{ include('layout/buttons/new.html.twig', {pathLink: path('chick_integration_new'), text: 'chick_integration.index.button.new' }) }}
-    {% endif %}
-    <table class="table table-sm table-hover">
-        <thead class="table-dark">
-        <tr>
-            <th>{% trans %}chick_integration.index.table.id{% endtrans %}</th>
-            <th>{% trans %}chick_integration.index.table.name{% endtrans %}</th>
-            <th>{% trans %}chick_integration.index.table.actions{% endtrans %}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for chick_integration in chick_integrations %}
+    <div class="example-wrapper">
+        <h1>{% trans %}chick_integration.index.title{% endtrans %}</h1>
+        {% if is_granted("ROLE_MANAGER") %}
+            {{ include('layout/buttons/new.html.twig', {pathLink: path('chick_integration_new'), text: 'chick_integration.index.button.new' }) }}
+        {% endif %}
+        <table class="table table-sm table-hover">
+            <thead class="table-dark">
             <tr>
-                <td>{{ chick_integration.id }}</td>
-                <td>{{ chick_integration.name }}</td>
-                <td>
-                    <a class="btn" href="{{ path('chick_integration_show', {'id': chick_integration.id}) }}"><i class="fas fa-search"></i></a>
-                    <a class="btn" href="{{ path('chick_integration_edit', {'id': chick_integration.id}) }}"><i class="fas fa-pen"></i></a>
-                </td>
+                <th>{% trans %}chick_integration.index.table.id{% endtrans %}</th>
+                <th>{% trans %}chick_integration.index.table.name{% endtrans %}</th>
+                <th>{% trans %}chick_integration.index.table.actions{% endtrans %}</th>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">{% trans %}chick_integration.index.table.no_found{% endtrans %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+            {% for chick_integration in chick_integrations %}
+                <tr>
+                    <td>{{ chick_integration.id }}</td>
+                    <td>{{ chick_integration.name }}</td>
+                    <td>
+                        <a class="btn" href="{{ path('chick_integration_show', {'id': chick_integration.id}) }}"><i
+                                    class="fas fa-search"></i></a>
+                        {% if is_granted('ROLE_MANAGER') %}
+                            <a class="btn" href="{{ path('chick_integration_edit', {'id': chick_integration.id}) }}"><i
+                                        class="fas fa-pen"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">{% trans %}chick_integration.index.table.no_found{% endtrans %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

@@ -8,11 +8,13 @@
     </div>
     <div class="d-flex justify-content-center flex-wrap">
         {% for input in inputs %}
-{#            {% set selectionDate = input.inputDate %}#}
-            <a class="btn btn-secondary p-2 m-2 col-sm-3" href="{{ path('production_chick_temperature_hatcher', {'input': input.id}) }}">
-                <span class="m-4"><i class="fas fa-thermometer fa-2x"></i></span>
-                <span class="h1">{{ input.name }} - {{ input.inputDate|date_modify('+21 day')|date('Y-m-d') }}</span>
-            </a>
+            {% if is_granted('ROLE_PRODUCTION') %}
+                <a class="btn btn-secondary p-2 m-2 col-sm-3"
+                   href="{{ path('production_chick_temperature_hatcher', {'input': input.id}) }}">
+                    <span class="m-4"><i class="fas fa-thermometer fa-2x"></i></span>
+                    <span class="h1">{{ input.name }} - {{ input.inputDate|date_modify('+21 day')|date('Y-m-d') }}</span>
+                </a>
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}

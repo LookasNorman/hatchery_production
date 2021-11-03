@@ -30,7 +30,7 @@ class HatchersController extends AbstractController
 
     /**
      * @Route("/new", name="hatchers_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -74,7 +74,7 @@ class HatchersController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="hatchers_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, Hatchers $hatcher): Response
     {

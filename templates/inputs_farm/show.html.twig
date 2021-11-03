@@ -7,20 +7,22 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ inputs_farm.id }}</td>
-            </tr>
-            <tr>
-                <th>ChickNumber</th>
-                <td>{{ inputs_farm.chickNumber }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ inputs_farm.id }}</td>
+        </tr>
+        <tr>
+            <th>ChickNumber</th>
+            <td>{{ inputs_farm.chickNumber }}</td>
+        </tr>
         </tbody>
     </table>
 
     <a href="{{ path('inputs_farm_index') }}">back to list</a>
-
-    <a href="{{ path('inputs_farm_edit', {'id': inputs_farm.id}) }}">edit</a>
-
-    {{ include('inputs_farm/_delete_form.html.twig') }}
+    {% if is_granted('ROLE_MANAGER') %}
+        <a href="{{ path('inputs_farm_edit', {'id': inputs_farm.id}) }}">edit</a>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('inputs_farm/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

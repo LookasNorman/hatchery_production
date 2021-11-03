@@ -1,13 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
-    </style>
     <h1>{% trans %}hatchers.show.title{% endtrans %}</h1>
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
@@ -20,6 +13,8 @@
         {% include 'layout/cards/cfooter.html.twig' %}
         {% if is_granted('ROLE_ADMIN') %}
             {{ include('hatchers/_delete_form.html.twig') }}
+        {% endif %}
+        {% if is_granted('ROLE_MANAGER') %}
             {{ include('layout/buttons/edit.html.twig',
                 {pathLink: path('hatchers_edit', {'id': hatcher.id}), text: 'hatchers.show.button.edit'}) }}
         {% endif %}
@@ -33,11 +28,14 @@
     <div class="accordion accordion-flush m-2" id="accordionFlushHatchers">
         <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingChickTemperature">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseChickTemperature" aria-expanded="false" aria-controls="flush-collapseChickTemperature">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseChickTemperature" aria-expanded="false"
+                        aria-controls="flush-collapseChickTemperature">
                     {% trans %}hatchers.show.accordion.chick_temperature{% endtrans %}
                 </button>
             </h2>
-            <div id="flush-collapseChickTemperature" class="accordion-collapse collapse" aria-labelledby="flush-headingChickTemperature" data-bs-parent="#accordionFlushHatchers">
+            <div id="flush-collapseChickTemperature" class="accordion-collapse collapse"
+                 aria-labelledby="flush-headingChickTemperature" data-bs-parent="#accordionFlushHatchers">
                 <div class="accordion-body">
                     {{ include('chick_temperature/table_list.html.twig') }}
                 </div>

@@ -34,7 +34,6 @@
                             </th>
                             <td>{{ transfer.0.inputDate ? transfer.0.inputDate|date_modify("+18 day")|date('Y-m-d') : '' }}</td>
                             <td>{{ (transfer.eggs - transfer.waste)|number_format(0, ',', ' ') }}</td>
-{#                            <td>{{ dump(transfer.0.inputsFarms) }}</td>#}
                         </tr>
                     {% endfor %}
                     </tbody>

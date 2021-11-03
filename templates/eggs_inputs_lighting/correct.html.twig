@@ -25,7 +25,7 @@
         {% include 'layout/cards/cfooter.html.twig' %}
         {% include 'layout/cards/cend.html.twig' %}
     </div>
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_MANAGER') %}
         {{ include('layout/buttons/back.html.twig',
             {pathLink: path('eggs_inputs_show', {id: input.id}), text: 'eggs_inputs_lighting.new.button.back'}) }}
     {% elseif is_granted('ROLE_PRODUCTION') %}

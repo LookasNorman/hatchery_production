@@ -1,13 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
-    </style>
     <h1>{% trans %}herds.show.title{% endtrans %}</h1>
     {{ include('layout/buttons/back.html.twig',
         { pathLink: path('herds_index'), text: 'herds.show.button.back' }) }}

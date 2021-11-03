@@ -1,22 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
-    </style>
-
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
-        <i class="fa fa-pencil" aria-hidden="true"></i><i class="fa fa-user"
-                                                          aria-hidden="true"></i> {% trans %}driver.edit.title{% endtrans %}
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+        <i class="fa fa-user" aria-hidden="true"></i> {% trans %}driver.edit.title{% endtrans %}
         {% include 'layout/cards/cbody.html.twig' %}
         {{ include('driver/_form.html.twig', {'button_label': 'driver.edit.button.update'}) }}
         {% include 'layout/cards/cfooter.html.twig' %}
-        {{ include('driver/_delete_form.html.twig') }}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('driver/_delete_form.html.twig') }}
+        {% endif %}
         {% include 'layout/cards/cend.html.twig' %}
     </div>
     {{ include('layout/buttons/back.html.twig', { pathLink: path('driver_index'), text: 'driver.new.button.back' }) }}

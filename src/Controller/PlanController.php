@@ -418,7 +418,7 @@ class PlanController extends AbstractController
     }
 
     /**
-     * @Route("/year_plan/{yearN}", name="plan_year_plan", methods={"GET", "POST"})
+     * @Route("/year_plan/{yearN}", name="plan_year_plan", methods={"GET"})
      */
     public function showYearPlans($yearN = null)
     {
@@ -470,7 +470,7 @@ class PlanController extends AbstractController
                 'eggs' => $planDeliveryEggRepository->planDeliveryInDay($start, $end, $breed)
             ]);
         }
-//dd($plans);
+
         return $this->render('plans/show_week/index.html.twig', [
             'date' => $date,
             'plans' => $plans,

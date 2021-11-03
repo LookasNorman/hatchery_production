@@ -45,7 +45,7 @@
                 {% if eggs_delivery.delivery.partIndex %}
                     {{ eggs_delivery.delivery.partIndex }}
                 {% else %}
-                    {% if is_granted('ROLE_ADMIN') %}
+                    {% if is_granted('ROLE_MANAGER') %}
                         {{ include('layout/buttons/list_actions.html.twig',
                             {pathLink: path('eggs_delivery_add', {'id': eggs_delivery.delivery.id}), text: 'eggs_delivery.index.table.badge.add_part_index' }) }}
                     {% else %}
@@ -67,6 +67,8 @@
                     {% if is_granted('ROLE_PRODUCTION') %}
                         {{ include('layout/buttons/list_edit.html.twig',
                             {pathLink: path('eggs_delivery_edit', {'id': eggs_delivery.delivery.id})}) }}
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         {{ include('eggs_delivery/_delete_trash_form.html.twig', {'id': eggs_delivery.delivery.id}) }}
                     {% endif %}
                     </span>

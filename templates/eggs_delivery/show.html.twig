@@ -1,61 +1,56 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
-    </style>
     <h1>{% trans %}eggs_delivery.show.title{% endtrans %}</h1>
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
         {{ eggs_delivery.herd.breeder.name }} - {{ eggs_delivery.herd.name }}
         {% include 'layout/cards/cbody.html.twig' %}
         <p class="card-text">
-                    {% trans %}eggs_delivery.show.id{% endtrans %}
-                    :
-                    {% if eggs_delivery.partIndex %}
-                        {{ eggs_delivery.partIndex }}
-                    {% else %}
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <a class="badge badge-success"
-                               href="{{ path('eggs_delivery_add', {'id': eggs_delivery.id}) }}">
-                                {% trans %}eggs_delivery.show.badge.add_part_index{% endtrans %}
-                            </a>
-                        {% else %}
-                            ------
-                        {% endif %}
-                    {% endif %}
-                </p>
-                <p class="card-text">
-                    {% trans %}eggs_delivery.show.delivery_date{% endtrans %}
-                    : {{ eggs_delivery.deliveryDate ? eggs_delivery.deliveryDate|date('Y-m-d') : '' }}
-                </p>
-                <p class="card-text">
-                    {% trans %}eggs_delivery.show.eggs_number{% endtrans %}
-                    : {{ eggs_delivery.eggsNumber }}
-                </p>
-                <p class="card-text">
-                    {% trans %}eggs_delivery.show.eggs_warehouse{% endtrans %}
-                    : {{ eggs_delivery.eggsOnWarehouse }}
-                </p>
-                <p class="card-text">
-                    {% trans %}eggs_delivery.show.first_laying_date{% endtrans %}
-                    : {{ eggs_delivery.firstLayingDate ? eggs_delivery.firstLayingDate|date('Y-m-d') : '' }}
-                </p>
-                <p class="card-text">
-                    {% trans %}eggs_delivery.show.last_laying_date{% endtrans %}
-                    : {{ eggs_delivery.lastLayingDate ? eggs_delivery.lastLayingDate|date('Y-m-d') : '' }}
-                </p>
-        {% include 'layout/cards/cfooter.html.twig' %}
-        {% if is_granted('ROLE_PRODUCTION') %}
-                    {{ include('eggs_delivery/_delete_form.html.twig') }}
-                    <a class="btn btn-warning m-2" href="{{ path('eggs_delivery_edit', {'id': eggs_delivery.id}) }}">
-                        {% trans %}eggs_delivery.show.button.edit{% endtrans %}
+            {% trans %}eggs_delivery.show.id{% endtrans %}
+            :
+            {% if eggs_delivery.partIndex %}
+                {{ eggs_delivery.partIndex }}
+            {% else %}
+                {% if is_granted('ROLE_MANAGER') %}
+                    <a class="badge badge-success"
+                       href="{{ path('eggs_delivery_add', {'id': eggs_delivery.id}) }}">
+                        {% trans %}eggs_delivery.show.badge.add_part_index{% endtrans %}
                     </a>
+                {% else %}
+                    ------
                 {% endif %}
+            {% endif %}
+        </p>
+        <p class="card-text">
+            {% trans %}eggs_delivery.show.delivery_date{% endtrans %}
+            : {{ eggs_delivery.deliveryDate ? eggs_delivery.deliveryDate|date('Y-m-d') : '' }}
+        </p>
+        <p class="card-text">
+            {% trans %}eggs_delivery.show.eggs_number{% endtrans %}
+            : {{ eggs_delivery.eggsNumber }}
+        </p>
+        <p class="card-text">
+            {% trans %}eggs_delivery.show.eggs_warehouse{% endtrans %}
+            : {{ eggs_delivery.eggsOnWarehouse }}
+        </p>
+        <p class="card-text">
+            {% trans %}eggs_delivery.show.first_laying_date{% endtrans %}
+            : {{ eggs_delivery.firstLayingDate ? eggs_delivery.firstLayingDate|date('Y-m-d') : '' }}
+        </p>
+        <p class="card-text">
+            {% trans %}eggs_delivery.show.last_laying_date{% endtrans %}
+            : {{ eggs_delivery.lastLayingDate ? eggs_delivery.lastLayingDate|date('Y-m-d') : '' }}
+        </p>
+        {% include 'layout/cards/cfooter.html.twig' %}
+        {% if is_granted("ROLE_ADMIN") %}
+            {{ include('eggs_delivery/_delete_form.html.twig') }}
+        {% endif %}
+        {% if is_granted('ROLE_PRODUCTION') %}
+            <a class="btn btn-warning m-2" href="{{ path('eggs_delivery_edit', {'id': eggs_delivery.id}) }}">
+                {% trans %}eggs_delivery.show.button.edit{% endtrans %}
+            </a>
+        {% endif %}
         {% include 'layout/cards/cend.html.twig' %}
     </div>
     {{ include('layout/buttons/back.html.twig', { pathLink: path('eggs_delivery_index'), text: 'eggs_delivery.show.button.back' }) }}

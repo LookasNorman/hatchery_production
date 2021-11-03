@@ -3,11 +3,12 @@
 {% block title %}Edit ContactInfo{% endblock %}
 
 {% block body %}
-    <h1>Edit ContactInfo</h1>
+    <h1>{% trans %}contact_info.edit.title{% endtrans %}</h1>
 
     {{ include('contact_info/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('contact_info_index') }}">back to list</a>
-
-    {{ include('contact_info/_delete_form.html.twig') }}
+    <a href="{{ path('contact_info_index') }}">{% trans %}contact_info.edit.button.back{% endtrans %}</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('contact_info/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

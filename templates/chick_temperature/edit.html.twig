@@ -1,20 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
-    </style>
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
         {% trans %}chick_temperature.edit.title{% endtrans %}
         {% include 'layout/cards/cbody.html.twig' %}
         {{ include('chick_temperature/_form.html.twig', {'button_label': 'Update'}) }}
         {% include 'layout/cards/cfooter.html.twig' %}
-        {{ include('chick_temperature/_delete_form.html.twig') }}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('chick_temperature/_delete_form.html.twig') }}
+        {% endif %}
         {% include 'layout/cards/cend.html.twig' %}
     </div>
     {{ include('layout/buttons/back.html.twig', { pathLink: path('chick_temperature_index'), text: 'chick_temperature.edit.button.back' }) }}

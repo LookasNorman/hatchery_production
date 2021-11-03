@@ -129,7 +129,7 @@ class SelectionsController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="eggs_selections_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function edit(Request $request, Selections $eggsSelection): Response
     {

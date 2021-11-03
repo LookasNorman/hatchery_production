@@ -47,7 +47,7 @@ class ChicksRecipientController extends AbstractController
 
     /**
      * @Route("/new/{id}", name="chicks_recipient_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request, $id = null): Response
     {
@@ -97,7 +97,7 @@ class ChicksRecipientController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="chicks_recipient_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, ChicksRecipient $chicksRecipient): Response
     {

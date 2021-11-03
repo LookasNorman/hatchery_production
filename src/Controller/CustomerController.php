@@ -32,6 +32,7 @@ class CustomerController extends AbstractController
 
     /**
      * @Route("/new", name="customer_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -85,6 +86,7 @@ class CustomerController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="customer_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, Customer $customer): Response
     {
@@ -105,6 +107,7 @@ class CustomerController extends AbstractController
 
     /**
      * @Route("/{id}", name="customer_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Customer $customer): Response
     {

@@ -14,7 +14,9 @@
         {% include 'layout/cards/cbody.html.twig' %}
         {{ include('breed/_form.html.twig', {'button_label': 'breed.edit.button.update'}) }}
         {% include 'layout/cards/cfooter.html.twig' %}
+        {% if is_granted("ROLE_ADMIN") %}
         {{ include('breed/_delete_form.html.twig') }}
+        {% endif %}
         {% include 'layout/cards/cend.html.twig' %}
     </div>
     {{ include('layout/buttons/back.html.twig', { pathLink: path('breed_index'), text: 'breed.edit.button.back' }) }}

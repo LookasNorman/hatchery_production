@@ -15,6 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class PlanDetailController extends AbstractController
 {
 
@@ -107,7 +110,6 @@ class PlanDetailController extends AbstractController
 
     /**
      * @Route("/plan_detail", name="plan_detail")
-     * @IsGranted("ROLE_USER")
      */
     public function index(): Response
     {
@@ -151,7 +153,7 @@ class PlanDetailController extends AbstractController
                 $plan[$id] = $weekCick;
                 $plan[$id][0] = array();
             }
-//            dd($weekChicks);
+
             $plan[$id]['chicksStock'][] = $weekCick['chickNumber'];
         }
 

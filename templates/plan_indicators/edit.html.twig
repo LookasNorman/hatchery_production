@@ -8,6 +8,7 @@
     {{ include('plan_indicators/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('plan_indicators_index') }}">back to list</a>
-
-    {{ include('plan_indicators/_delete_form.html.twig') }}
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('plan_indicators/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

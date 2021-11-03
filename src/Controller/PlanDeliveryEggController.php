@@ -61,6 +61,7 @@ class PlanDeliveryEggController extends AbstractController
 
     /**
      * @Route("/herd/{id}", name="plan_delivery_egg_herd", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function herd(Herds $herd, Request $request): Response
     {
@@ -111,6 +112,7 @@ class PlanDeliveryEggController extends AbstractController
 
     /**
      * @Route("/new", name="plan_delivery_egg_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -144,6 +146,7 @@ class PlanDeliveryEggController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="plan_delivery_egg_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, PlanDeliveryEgg $planDeliveryEgg): Response
     {
@@ -164,6 +167,7 @@ class PlanDeliveryEggController extends AbstractController
 
     /**
      * @Route("/{id}", name="plan_delivery_egg_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, PlanDeliveryEgg $planDeliveryEgg): Response
     {

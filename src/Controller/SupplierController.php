@@ -29,7 +29,7 @@ class SupplierController extends AbstractController
 
     /**
      * @Route("/new", name="egg_supplier_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -63,7 +63,7 @@ class SupplierController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="egg_supplier_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, Supplier $eggSupplier): Response
     {

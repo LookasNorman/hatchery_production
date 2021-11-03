@@ -8,7 +8,7 @@
             {% trans %}chicks_recipient.index.title{% endtrans %}
         </h1>
     {% endif %}
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_MANAGER') %}
         {% if customer is defined %}
             {{ include('layout/buttons/new.html.twig', {pathLink: path('chicks_recipient_new', {'id' : customer.id}), text: 'chicks_recipient.index.button.new' }) }}
         {% else %}
@@ -47,7 +47,7 @@
             <td>{{ chicks_recipient.phoneNumber }}</td>
             <td>
                 {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('chicks_recipient_show', {'id': chicks_recipient.id}), text: 'chicks_recipient.index.table.badge.show' }) }}
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_MANAGER') %}
                     {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('chicks_recipient_edit', {'id': chicks_recipient.id}), text: 'chicks_recipient.index.table.badge.edit' }) }}
                 {% endif %}
             </td>

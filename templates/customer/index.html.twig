@@ -2,39 +2,41 @@
 
 {% block body %}
     <h1>{% trans %}customer.index.title{% endtrans %}</h1>
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_MANAGER') %}
         {{ include('layout/buttons/new.html.twig', { pathLink: path('customer_new'), text: 'customer.index.button.new' }) }}
     {% endif %}
 
     {% include 'layout/tables/thead.html.twig' %}
     <tr>
-                <th>{% trans %}customer.index.table.id{% endtrans %}</th>
-                <th>{% trans %}customer.index.table.name{% endtrans %}</th>
-                <th>{% trans %}customer.index.table.email{% endtrans %}</th>
-                <th>{% trans %}customer.index.table.phone_number{% endtrans %}</th>
-                <th>{% trans %}customer.index.table.actions{% endtrans %}</th>
-            </tr>
+        <th>{% trans %}customer.index.table.id{% endtrans %}</th>
+        <th>{% trans %}customer.index.table.name{% endtrans %}</th>
+        <th>{% trans %}customer.index.table.email{% endtrans %}</th>
+        <th>{% trans %}customer.index.table.phone_number{% endtrans %}</th>
+        <th>{% trans %}customer.index.table.actions{% endtrans %}</th>
+    </tr>
     {% include 'layout/tables/tbody.html.twig' %}
-        {% for customer in customers %}
-            <tr>
-                <td>{{ customer.id }}</td>
-                <td>{{ customer.name }}</td>
-                <td>{{ customer.email }}</td>
-                <td>{{ customer.phoneNumber }}</td>
-                <td>
-                    {{ include('layout/buttons/list_actions.html.twig',
-                        {pathLink: path('customer_show', {'id': customer.id}), text: 'customer.index.table.badge.show' }) }}
+    {% for customer in customers %}
+        <tr>
+            <td>{{ customer.id }}</td>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phoneNumber }}</td>
+            <td>
+                {{ include('layout/buttons/list_actions.html.twig',
+                    {pathLink: path('customer_show', {'id': customer.id}), text: 'customer.index.table.badge.show' }) }}
+                {% if is_granted('ROLE_MANAGER') %}
                     {{ include('layout/buttons/list_actions.html.twig',
                         {pathLink: path('customer_edit', {'id': customer.id}), text: 'customer.index.table.badge.edit' }) }}
-                    {{ include('layout/buttons/list_actions.html.twig',
-                        {pathLink: path('chick_recipient_customer_index', {'id': customer.id}), text: 'customer.index.table.badge.farm' }) }}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
+                {% endif %}
+                {{ include('layout/buttons/list_actions.html.twig',
+                    {pathLink: path('chick_recipient_customer_index', {'id': customer.id}), text: 'customer.index.table.badge.farm' }) }}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="5">no records found</td>
+        </tr>
+    {% endfor %}
     {% include 'layout/tables/tfooter.html.twig' %}
     {% include 'layout/tables/tend.html.twig' %}
 

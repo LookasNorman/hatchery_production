@@ -29,7 +29,7 @@ class BreedController extends AbstractController
 
     /**
      * @Route("/new", name="breed_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -63,7 +63,7 @@ class BreedController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="breed_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, Breed $breed): Response
     {

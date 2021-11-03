@@ -18,7 +18,7 @@
                 <td>
                     {{ include('layout/buttons/list_actions.html.twig',
                         {pathLink: path('chick_temperature_show', {'id': chick_temperature.id}), text: 'chick_temperature.index.table.badge.show' }) }}
-                    {% if is_granted('ROLE_ADMIN') %}
+                    {% if is_granted('ROLE_MANAGER') %}
                         {{ include('layout/buttons/list_actions.html.twig',
                             {pathLink: path('chick_temperature_edit', {'id': chick_temperature.id}), text: 'chick_temperature.index.table.badge.edit' }) }}
                     {% endif %}

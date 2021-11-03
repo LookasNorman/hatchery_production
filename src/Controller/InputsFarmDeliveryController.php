@@ -58,6 +58,7 @@ class InputsFarmDeliveryController extends AbstractController
 
     /**
      * @Route("/new/{id}", name="inputs_farm_delivery_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(
         Request                      $request,
@@ -128,6 +129,7 @@ class InputsFarmDeliveryController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="inputs_farm_delivery_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, InputsFarmDelivery $inputsFarmDelivery): Response
     {
@@ -148,6 +150,7 @@ class InputsFarmDeliveryController extends AbstractController
 
     /**
      * @Route("/{id}", name="inputs_farm_delivery_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, InputsFarmDelivery $inputsFarmDelivery): Response
     {

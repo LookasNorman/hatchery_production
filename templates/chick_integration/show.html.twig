@@ -13,12 +13,6 @@
             background: #F5F5F5;
             padding: 2px 6px;
         }
-
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
     </style>
     <div class="example-wrapper">
         <h1>{% trans %}chick_integration.show.title{% endtrans %}</h1>
@@ -33,6 +27,8 @@
             {% include 'layout/cards/cfooter.html.twig' %}
             {% if is_granted('ROLE_ADMIN') %}
                 {{ include('chick_integration/_delete_form.html.twig') }}
+            {% endif %}
+            {% if is_granted('ROLE_MANAGER') %}
                 {{ include('layout/buttons/edit.html.twig',
                     {pathLink: path('chick_integration_edit', {'id': chick_integration.id}), text: 'chick_integration.show.button.edit'}) }}
             {% endif %}

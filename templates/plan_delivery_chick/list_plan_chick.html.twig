@@ -48,6 +48,8 @@
                     {% if is_granted('ROLE_PRODUCTION') %}
                         {{ include('layout/buttons/list_edit.html.twig',
                             {pathLink: path('plan_delivery_chick_edit', {'id': plan_delivery_chick.id})}) }}
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         {{ include('plan_delivery_chick/_delete_trash_form.html.twig', {'id': plan_delivery_chick.id}) }}
                     {% endif %}
                 </span>

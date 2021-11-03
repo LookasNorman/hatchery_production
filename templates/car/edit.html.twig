@@ -12,12 +12,14 @@
 
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
-        <i class="fa fa-pencil" aria-hidden="true"></i><i class="fa fa-car"
-                                                          aria-hidden="true"></i> {% trans %}car.edit.title{% endtrans %}
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+        <i class="fa fa-car" aria-hidden="true"></i> {% trans %}car.edit.title{% endtrans %}
         {% include 'layout/cards/cbody.html.twig' %}
         {{ include('car/_form.html.twig', {'button_label': 'car.edit.button.update'}) }}
         {% include 'layout/cards/cfooter.html.twig' %}
-        {{ include('car/_delete_form.html.twig') }}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('car/_delete_form.html.twig') }}
+        {% endif %}
         {% include 'layout/cards/cend.html.twig' %}
     </div>
     {{ include('layout/buttons/back.html.twig', { pathLink: path('car_index'), text: 'car.new.button.back' }) }}

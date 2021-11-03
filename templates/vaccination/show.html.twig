@@ -13,12 +13,6 @@
             background: #F5F5F5;
             padding: 2px 6px;
         }
-
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
     </style>
 
     <div class="example-wrapper">
@@ -34,6 +28,8 @@
             {% include 'layout/cards/cfooter.html.twig' %}
             {% if is_granted('ROLE_ADMIN') %}
                 {{ include('vaccination/_delete_form.html.twig') }}
+            {% endif %}
+            {% if is_granted('ROLE_MANAGER') %}
                 {{ include('layout/buttons/edit.html.twig', {pathLink: path('vaccination_edit', {'id': vaccination.id}), text: 'vaccination.show.button.edit'}) }}
             {% endif %}
             {% include 'layout/cards/cend.html.twig' %}

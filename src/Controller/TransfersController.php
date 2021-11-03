@@ -119,7 +119,7 @@ class TransfersController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="eggs_inputs_transfers_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function edit(Request $request, Transfers $eggsInputsTransfer): Response
     {

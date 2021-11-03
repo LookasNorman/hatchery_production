@@ -145,7 +145,6 @@ class DeliveryController extends AbstractController
 
     /**
      * @Route("/{id}", name="eggs_delivery_show", methods={"GET"})
-     * @IsGranted("ROLE_PRODUCTION")
      */
     public function show(Delivery $eggsDelivery): Response
     {

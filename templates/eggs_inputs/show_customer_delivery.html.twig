@@ -19,17 +19,21 @@
         <tr>
             <td class="align-middle">
                 <div class="d-grid gap-2">
-                    {{ include('layout/buttons/list_actions.html.twig',
-                        {pathLink: path('inputs_farm_delivery_new', {'id': inputFarm.id}), text: 'eggs_inputs.show_delivery.table.badge.delivery' }) }}
+                    {% if is_granted('ROLE_MANAGER') %}
+                        {{ include('layout/buttons/list_actions.html.twig',
+                            {pathLink: path('inputs_farm_delivery_new', {'id': inputFarm.id}), text: 'eggs_inputs.show_delivery.table.badge.delivery' }) }}
+                    {% endif %}
                 </div>
             </td>
             <td class="align-middle">
                 <div class="btn-group" role="group" aria-label="Basic example">
                     {% if inputFarm.inputsFarmDeliveries is empty %}
-                {{ include('inputs_farm/_delete_trash_form.html.twig', {'inputs_farm': inputFarm}) }}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            {{ include('inputs_farm/_delete_trash_form.html.twig', {'inputs_farm': inputFarm}) }}
+                        {% endif %}
                         <a class="btn" href=""><i class="fa fa-pencil"></i></a>
-                {% endif %}
-                {{ inputFarm.chicksFarm.customer.name }}: {{ inputFarm.chicksFarm.name }}
+                    {% endif %}
+                    {{ inputFarm.chicksFarm.customer.name }}: {{ inputFarm.chicksFarm.name }}
                 </div>
             </td>
             <td class="text-center align-middle">{{ inputFarm.chickNumber|number_format(0, ',', ' ') }}
@@ -61,9 +65,11 @@
                             <td>{{ delivery.delivery.herd.breeder.name }}</td>
                             <td>
                                 {{ delivery.delivery.herd.name }}
-                                <a href="{{ path('inputs_farm_delivery_delete', {'id': delivery.id}) }}">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('inputs_farm_delivery_delete', {'id': delivery.id}) }}">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                {% endif %}
                             </td>
                             <td>{{ delivery.delivery.deliveryDate|date('Y-m-d') }}
                                 <span class="{{ hatcheryColor }}"> ({{ hatcheryDays }})</span></td>

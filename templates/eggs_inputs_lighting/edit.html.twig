@@ -14,7 +14,9 @@
         {% include 'layout/cards/cbody.html.twig' %}
         {{ include('eggs_inputs_lighting/_form.html.twig', {'button_label': 'eggs_inputs_lighting.edit.button.update'}) }}
         {% include 'layout/cards/cfooter.html.twig' %}
-        {{ include('eggs_inputs_lighting/_delete_form.html.twig') }}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('eggs_inputs_lighting/_delete_form.html.twig') }}
+        {% endif %}
         {% include 'layout/cards/cend.html.twig' %}
     </div>
     {{ include('layout/buttons/back.html.twig',

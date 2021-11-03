@@ -9,7 +9,7 @@
             {% endfor %}
         </ol>
     </nav>
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_MANAGER') %}
         {{ include('layout/buttons/new.html.twig',
             { pathLink: path('plan_delivery_chick_new'), text: 'plan_delivery_chick.index.button.new' }) }}
     {% endif %}

@@ -21,6 +21,7 @@ class InputsFarmController extends AbstractController
 
     /**
      * @Route("/new/{id}", name="inputs_farm_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request, Inputs $inputs = null): Response
     {
@@ -45,6 +46,7 @@ class InputsFarmController extends AbstractController
 
     /**
      * @Route("/new_plan/{id}", name="inputs_farm_plan_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function newPlan(Request $request, Inputs $inputs = null): Response
     {
@@ -79,6 +81,7 @@ class InputsFarmController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="inputs_farm_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, InputsFarm $inputsFarm): Response
     {
@@ -99,6 +102,7 @@ class InputsFarmController extends AbstractController
 
     /**
      * @Route("/{id}", name="inputs_farm_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, InputsFarm $inputsFarm): Response
     {
@@ -113,6 +117,7 @@ class InputsFarmController extends AbstractController
 
     /**
      * @Route("/plan_delete/{id}", name="inputs_farm_plan_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function deletePlan(Request $request, InputsFarm $inputsFarm): Response
     {

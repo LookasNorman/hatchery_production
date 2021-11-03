@@ -22,11 +22,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Knp\Snappy\Pdf;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class DefaultController extends AbstractController
 {
 
     /**
      * @Route("/pdf")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function indexPdf(Pdf $pdf, ChicksRecipientRepository $chicksRecipientRepository)
     {
@@ -89,7 +93,6 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/", name="main_page")
-     * @IsGranted("ROLE_USER")
      */
     public function index(
         SupplierRepository           $supplierRepository,
@@ -132,7 +135,6 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/incubators", name="incubators_index")
-     * @IsGranted("ROLE_USER")
      */
     public function incubators(SettersRepository $settersRepository, HatchersRepository $hatchersRepository)
     {

@@ -7,42 +7,42 @@
         }
     </style>
     {% include 'layout/cards/chead.html.twig' %}
-            {% trans %}incubators.setters.title{% endtrans %}
-        </h4>
+    {% trans %}incubators.setters.title{% endtrans %}
+    </h4>
     {% include 'layout/cards/cbody.html.twig' %}
     {% include 'layout/tables/thead.html.twig' %}
-                    <tr>
-                        <th>
-                            {% trans %}incubators.setters.table.name{% endtrans %}
-                        </th>
-                        <th>
-                            {% trans %}incubators.setters.table.shortname{% endtrans %}
-                        </th>
-                        <th>
-                            {% trans %}incubators.setters.table.actions{% endtrans %}
-                        </th>
-                    </tr>
+    <tr>
+        <th>
+            {% trans %}incubators.setters.table.name{% endtrans %}
+        </th>
+        <th>
+            {% trans %}incubators.setters.table.shortname{% endtrans %}
+        </th>
+        <th>
+            {% trans %}incubators.setters.table.actions{% endtrans %}
+        </th>
+    </tr>
     {% include 'layout/tables/tbody.html.twig' %}
-                    {% for setter in setters %}
-                    <tr>
-                        <td>{{ setter.name }}</td>
-                        <td>{{ setter.shortname }}</td>
-                        <td>
-                            {{ include('layout/buttons/list_actions.html.twig',
-                                {pathLink: path('setters_show', {'id': setter.id}), text: 'incubators.setters.table.badge.show' }) }}
-                            {% if is_granted('ROLE_ADMIN') %}
-                                {{ include('layout/buttons/list_actions.html.twig',
-                                    {pathLink: path('setters_edit', {'id': setter.id}), text: 'incubators.setters.table.badge.edit' }) }}
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
+    {% for setter in setters %}
+        <tr>
+            <td>{{ setter.name }}</td>
+            <td>{{ setter.shortname }}</td>
+            <td>
+                {{ include('layout/buttons/list_actions.html.twig',
+                    {pathLink: path('setters_show', {'id': setter.id}), text: 'incubators.setters.table.badge.show' }) }}
+                {% if is_granted('ROLE_MANAGER') %}
+                    {{ include('layout/buttons/list_actions.html.twig',
+                        {pathLink: path('setters_edit', {'id': setter.id}), text: 'incubators.setters.table.badge.edit' }) }}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
     {% include 'layout/tables/tfooter.html.twig' %}
     {% include 'layout/tables/tend.html.twig' %}
     {% include 'layout/cards/cfooter.html.twig' %}
-            {% if is_granted('ROLE_ADMIN') %}
-                {{ include('layout/buttons/new.html.twig',
-                    { pathLink: path('setters_new'), text: 'incubators.hatchers.badge.new' }) }}
-            {% endif %}
+    {% if is_granted('ROLE_MANAGER') %}
+        {{ include('layout/buttons/new.html.twig',
+            { pathLink: path('setters_new'), text: 'incubators.hatchers.badge.new' }) }}
+    {% endif %}
     {% include 'layout/cards/cend.html.twig' %}
 {% endblock %}

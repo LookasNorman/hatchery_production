@@ -1,13 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
-    </style>
     {{ include('layout/buttons/back.html.twig',
         { pathLink: path('chick_recipient_customer_index', {'id': chicks_recipient.customer.id}), text: 'chicks_recipient.show.button.back' }) }}
     {{ include('layout/buttons/back.html.twig',
@@ -15,8 +8,10 @@
 
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
-        <p>{% trans %}chicks_recipient.show.customer.title{% endtrans %} <span class="h3">{{ chicks_recipient.customer.name}}</span></p>
-        <p>{% trans %}chicks_recipient.show.farm.title{% endtrans %} <span class="h3">{{ chicks_recipient.name }}</span></p>
+        <p>{% trans %}chicks_recipient.show.customer.title{% endtrans %} <span
+                    class="h3">{{ chicks_recipient.customer.name }}</span></p>
+        <p>{% trans %}chicks_recipient.show.farm.title{% endtrans %} <span class="h3">{{ chicks_recipient.name }}</span>
+        </p>
         {% include 'layout/cards/cbody.html.twig' %}
         <h5 class="card-title"></h5>
         <dl class="row">
@@ -35,7 +30,10 @@
         {% include 'layout/cards/cfooter.html.twig' %}
         {% if is_granted('ROLE_ADMIN') %}
             {{ include('chicks_recipient/_delete_form.html.twig') }}
-            {{ include('layout/buttons/edit.html.twig', {pathLink: path('chicks_recipient_edit', {'id': chicks_recipient.id}), text: 'chicks_recipient.show.button.edit'}) }}
+        {% endif %}
+        {% if is_granted('ROLE_MANAGER') %}
+            {{ include('layout/buttons/edit.html.twig',
+                {pathLink: path('chicks_recipient_edit', {'id': chicks_recipient.id}), text: 'chicks_recipient.show.button.edit'}) }}
         {% endif %}
         {% include 'layout/cards/cend.html.twig' %}
     </div>

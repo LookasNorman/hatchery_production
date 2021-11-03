@@ -236,6 +236,11 @@ chicks_recipient:
       chicks_plan: Planowane
       chicks_real: Rzeczywiste
     title: Ferma odbiorcy piskląt
+contact_info:
+  edit:
+    button:
+      back: Powrót do listy
+    title: Edycja danych kontaktowych
 customer:
   delete:
     button:

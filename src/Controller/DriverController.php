@@ -29,6 +29,7 @@ class DriverController extends AbstractController
 
     /**
      * @Route("/new", name="driver_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -62,6 +63,7 @@ class DriverController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="driver_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, Driver $driver): Response
     {
@@ -82,6 +84,7 @@ class DriverController extends AbstractController
 
     /**
      * @Route("/{id}", name="driver_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Driver $driver): Response
     {

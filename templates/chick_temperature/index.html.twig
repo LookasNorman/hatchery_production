@@ -2,7 +2,8 @@
 
 {% block body %}
     <h1>{% trans %}chick_temperature.index.title{% endtrans %}</h1>
-    {{ include('layout/buttons/new.html.twig', {pathLink: path('chick_temperature_new'), text: 'chick_temperature.index.button.new' }) }}
-
+    {% if is_granted('ROLE_MANAGER') %}
+        {{ include('layout/buttons/new.html.twig', {pathLink: path('chick_temperature_new'), text: 'chick_temperature.index.button.new' }) }}
+    {% endif %}
     {{ include('chick_temperature/table_list.html.twig') }}
 {% endblock %}

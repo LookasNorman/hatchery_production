@@ -53,7 +53,7 @@ class PlanHatchingDateController extends AbstractController
     {
         $plans = $deliveryEggRepository->planHatchingDateWeek($date);
         $suppliers = $supplierRepository->supplierByHatchingDate($date);
-//dd($suppliers);
+
         return $this->render('plan_breeder/week.html.twig', [
             'plans' => $plans,
             'date' => $date,

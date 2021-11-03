@@ -1,13 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
-    </style>
     <h1>{% trans %}eggs_inputs.show.title{% endtrans %}</h1>
     {{ include('layout/buttons/back.html.twig', { pathLink: path('eggs_inputs_index'), text: 'eggs_inputs.show.button.back' }) }}
 
@@ -21,9 +14,11 @@
         </p>
         {% include 'layout/cards/cfooter.html.twig' %}
         <ul>
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_MANAGER') %}
                 <li class="d-flex">
-                    {{ include('eggs_inputs/_delete_form.html.twig') }}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {{ include('eggs_inputs/_delete_form.html.twig') }}
+                    {% endif %}
                     {{ include('layout/buttons/edit.html.twig',
                         {pathLink: path('eggs_inputs_edit', {'id': eggs_input.id}), text: 'eggs_inputs.show.button.edit'}) }}
                     {{ include('layout/buttons/add.html.twig',
@@ -50,11 +45,14 @@
     <div class="accordion accordion-flush" id="InputsDetails">
         <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingChicks">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseChicks" aria-expanded="false" aria-controls="flush-collapseChicks">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseChicks" aria-expanded="false"
+                        aria-controls="flush-collapseChicks">
                     {% trans %}eggs_inputs.show.accordion.chick{% endtrans %}
                 </button>
             </h2>
-            <div id="flush-collapseChicks" class="accordion-collapse collapse" aria-labelledby="flush-headingChicks" data-bs-parent="#InputsDetails">
+            <div id="flush-collapseChicks" class="accordion-collapse collapse" aria-labelledby="flush-headingChicks"
+                 data-bs-parent="#InputsDetails">
                 <div class="accordion-body">
                     {% include 'eggs_inputs/show_customer_delivery.html.twig' %}
                 </div>
@@ -62,11 +60,13 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingEggs">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEggs" aria-expanded="false" aria-controls="flush-collapseEggs">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseEggs" aria-expanded="false" aria-controls="flush-collapseEggs">
                     {% trans %}eggs_inputs.show.accordion.production{% endtrans %}
                 </button>
             </h2>
-            <div id="flush-collapseEggs" class="accordion-collapse collapse" aria-labelledby="flush-headingEggs" data-bs-parent="#InputsDetails">
+            <div id="flush-collapseEggs" class="accordion-collapse collapse" aria-labelledby="flush-headingEggs"
+                 data-bs-parent="#InputsDetails">
                 <div class="accordion-body">
                     {% include 'eggs_inputs/show_supplier_delivery.html.twig' %}
                 </div>

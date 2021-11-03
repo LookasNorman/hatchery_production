@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Vaccination;
 use App\Form\VaccinationType;
 use App\Repository\VaccinationRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/vaccination")
+ * @IsGranted("ROLE_PRODUCTION")
  */
 class VaccinationController extends AbstractController
 {
@@ -27,6 +29,7 @@ class VaccinationController extends AbstractController
 
     /**
      * @Route("/new", name="vaccination_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function new(Request $request): Response
     {
@@ -60,6 +63,7 @@ class VaccinationController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="vaccination_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function edit(Request $request, Vaccination $vaccination): Response
     {
@@ -80,6 +84,7 @@ class VaccinationController extends AbstractController
 
     /**
      * @Route("/{id}", name="vaccination_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Vaccination $vaccination): Response
     {

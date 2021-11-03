@@ -49,7 +49,7 @@ class HerdsController extends AbstractController
 
     /**
      * @Route("/new", name="herds_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -101,7 +101,7 @@ class HerdsController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="herds_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, Herds $herd): Response
     {
@@ -122,7 +122,7 @@ class HerdsController extends AbstractController
 
     /**
      * @Route("/{id}/active", name="herds_edit_active", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function active(Request $request, Herds $herd): Response
     {

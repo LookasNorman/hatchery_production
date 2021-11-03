@@ -1,13 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
-    </style>
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
         {% trans %}egg_supplier.show.title{% endtrans %}
@@ -22,6 +15,8 @@
         {% include 'layout/cards/cfooter.html.twig' %}
         {% if is_granted('ROLE_ADMIN') %}
             {{ include('egg_supplier/_delete_form.html.twig') }}
+        {% endif %}
+        {% if is_granted('ROLE_MANAGER') %}
             {{ include('layout/buttons/edit.html.twig', {pathLink: path('egg_supplier_edit', {'id': egg_supplier.id}), text: 'egg_supplier.show.button.edit'}) }}
         {% endif %}
         {% include 'layout/cards/cend.html.twig' %}

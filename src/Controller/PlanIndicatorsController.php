@@ -32,6 +32,7 @@ class PlanIndicatorsController extends AbstractController
 
     /**
      * @Route("/new", name="plan_indicators_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -65,6 +66,7 @@ class PlanIndicatorsController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="plan_indicators_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, PlanIndicators $planIndicator): Response
     {
@@ -85,6 +87,7 @@ class PlanIndicatorsController extends AbstractController
 
     /**
      * @Route("/{id}", name="plan_indicators_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, PlanIndicators $planIndicator): Response
     {

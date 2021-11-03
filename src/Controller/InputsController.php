@@ -47,7 +47,7 @@ class InputsController extends AbstractController
 
     /**
      * @Route("/new", name="eggs_inputs_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -166,7 +166,7 @@ class InputsController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="eggs_inputs_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, Inputs $eggsInput): Response
     {

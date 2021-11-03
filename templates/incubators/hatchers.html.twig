@@ -1,11 +1,4 @@
 {% block body %}
-    <style>
-        .card {
-            max-width: 500px;
-            min-width: 400px;
-            padding: 6px 6px;
-        }
-    </style>
     {% include 'layout/cards/chead.html.twig' %}
     {% trans %}incubators.hatchers.title{% endtrans %}
     </h4>
@@ -30,7 +23,7 @@
             <td>
                 {{ include('layout/buttons/list_actions.html.twig',
                     {pathLink: path('hatchers_show', {'id': hatcher.id}), text: 'incubators.hatchers.table.badge.show' }) }}
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_MANAGER') %}
                     {{ include('layout/buttons/list_actions.html.twig',
                         {pathLink: path('hatchers_edit', {'id': hatcher.id}), text: 'incubators.hatchers.table.badge.edit' }) }}
                 {% endif %}
@@ -40,7 +33,7 @@
     {% include 'layout/tables/tfooter.html.twig' %}
     {% include 'layout/tables/tend.html.twig' %}
     {% include 'layout/cards/cfooter.html.twig' %}
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_MANAGER') %}
         {{ include('layout/buttons/new.html.twig',
             { pathLink: path('hatchers_new'), text: 'incubators.hatchers.badge.new' }) }}
     {% endif %}

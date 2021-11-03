@@ -4,7 +4,7 @@
     <h1>
         {% trans %}egg_supplier.index.title{% endtrans %}
     </h1>
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_MANAGER') %}
         {{ include('layout/buttons/new.html.twig', {pathLink: path('egg_supplier_new'), text: 'egg_supplier.index.button.new' }) }}
     {% endif %}
 
@@ -35,7 +35,7 @@
             <td>{{ egg_supplier.phoneNumber }}</td>
             <td>
                 {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('egg_supplier_show', {'id': egg_supplier.id}), text: 'egg_supplier.index.table.badge.show' }) }}
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_MANAGER') %}
                     {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('egg_supplier_edit', {'id': egg_supplier.id}), text: 'egg_supplier.index.table.badge.edit' }) }}
                 {% endif %}
             </td>

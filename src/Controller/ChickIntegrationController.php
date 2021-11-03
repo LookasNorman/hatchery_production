@@ -29,6 +29,7 @@ class ChickIntegrationController extends AbstractController
 
     /**
      * @Route("/new", name="chick_integration_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -62,6 +63,7 @@ class ChickIntegrationController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="chick_integration_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, ChickIntegration $chickIntegration): Response
     {
@@ -82,6 +84,7 @@ class ChickIntegrationController extends AbstractController
 
     /**
      * @Route("/{id}", name="chick_integration_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, ChickIntegration $chickIntegration): Response
     {

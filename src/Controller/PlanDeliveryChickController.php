@@ -68,6 +68,7 @@ class PlanDeliveryChickController extends AbstractController
 
     /**
      * @Route("/new", name="plan_delivery_chick_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function new(Request $request): Response
     {
@@ -110,6 +111,7 @@ class PlanDeliveryChickController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="plan_delivery_chick_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, PlanDeliveryChick $planDeliveryChick): Response
     {
@@ -138,6 +140,7 @@ class PlanDeliveryChickController extends AbstractController
 
     /**
      * @Route("/{id}", name="plan_delivery_chick_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, PlanDeliveryChick $planDeliveryChick): Response
     {

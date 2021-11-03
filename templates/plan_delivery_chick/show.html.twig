@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}PlanDeliveryChick{% endblock %}
-
 {% block body %}
     <style>
         .example-wrapper {
@@ -15,12 +13,6 @@
             background: #F5F5F5;
             padding: 2px 6px;
         }
-
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
-        }
     </style>
     <div class="example-wrapper">
         <h1>{% trans %}plan_delivery_chick.show.title{% endtrans %}</h1>
@@ -33,7 +25,7 @@
                 <dd class="col-sm-9">{% trans %}plan_delivery_chick.show.breed{% endtrans %}:</dd>
                 <dt class="col-sm-3">
                     {% for breed in plan_delivery_chick.breed %}
-                    {{ breed.name }} {{ breed.type }}
+                        {{ breed.name }} {{ breed.type }}
                     {% endfor %}
                 </dt>
                 <dd class="col-sm-9">{% trans %}plan_delivery_chick.show.delivery_date{% endtrans %}:</dd>
@@ -50,6 +42,8 @@
             {% include 'layout/cards/cfooter.html.twig' %}
             {% if is_granted('ROLE_ADMIN') %}
                 {{ include('plan_delivery_chick/_delete_form.html.twig') }}
+            {% elseif %}
+            {% if is_granted('ROLE_MANAGER') %}
                 {{ include('layout/buttons/edit.html.twig',
                     {pathLink: path('plan_delivery_chick_edit', {'id': plan_delivery_chick.id}), text: 'plan_delivery_chick.show.button.edit'}) }}
             {% endif %}

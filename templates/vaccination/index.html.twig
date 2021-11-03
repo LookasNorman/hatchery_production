@@ -18,7 +18,7 @@
     <div class="example-wrapper">
 
         <h1>{% trans %}vaccination.index.title{% endtrans %}</h1>
-        {% if is_granted("ROLE_ADMIN") %}
+        {% if is_granted("ROLE_MANAGER") %}
             {{ include('layout/buttons/new.html.twig', {pathLink: path('vaccination_new'), text: 'vaccination.index.button.new' }) }}
         {% endif %}
         <table class="table table-sm table-hover">
@@ -42,9 +42,13 @@
                         <span class="btn-group">
                         <a class="btn" href="{{ path('vaccination_show', {'id': vaccination.id}) }}"><i
                                     class="fas fa-search"></i></a>
-                        <a class="btn" href="{{ path('vaccination_edit', {'id': vaccination.id}) }}"><i
-                                    class="fas fa-pen"></i></a>
-                        {{ include('vaccination/_delete_trash_form.html.twig') }}
+                        {% if is_granted('ROLE_MANAGER') %}
+                            <a class="btn" href="{{ path('vaccination_edit', {'id': vaccination.id}) }}"><i
+                                        class="fas fa-pen"></i></a>
+                        {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                {{ include('vaccination/_delete_trash_form.html.twig') }}
+                            {% endif %}
                         </span>
                     </td>
                 </tr>

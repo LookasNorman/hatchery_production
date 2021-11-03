@@ -4,8 +4,9 @@
     <h1>
         {% trans %}breed.index.title{% endtrans %}
     </h1>
-    {{ include('layout/buttons/new.html.twig', {pathLink: path('breed_new'), text: 'breed.index.button.new' }) }}
-
+    {% if is_granted("ROLE_MANAGER") %}
+        {{ include('layout/buttons/new.html.twig', {pathLink: path('breed_new'), text: 'breed.index.button.new' }) }}
+    {% endif %}
     {% include 'layout/tables/thead.html.twig' %}
     <tr>
         <th>
@@ -29,7 +30,7 @@
             <td>{{ breed.type }}</td>
             <td>
                 {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('breed_show', {'id': breed.id}), text: 'breed.index.table.badge.show' }) }}
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_MANAGER') %}
                     {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('breed_edit', {'id': breed.id}), text: 'breed.index.table.badge.edit' }) }}
                 {% endif %}
             </td>

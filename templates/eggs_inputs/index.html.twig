@@ -4,7 +4,7 @@
     <h1>
         {% trans %}eggs_inputs.index.title{% endtrans %}
     </h1>
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_MANAGER') %}
         {{ include('layout/buttons/new.html.twig', {pathLink: path('eggs_inputs_new'), text: 'eggs_inputs.index.button.new' }) }}
     {% endif %}
     {% include('eggs_inputs/table_list.html.twig') %}

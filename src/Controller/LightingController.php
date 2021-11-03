@@ -203,7 +203,7 @@ class LightingController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="eggs_inputs_lighting_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MANAGER")
      */
     public function edit(Request $request, Lighting $eggsInputsLighting): Response
     {

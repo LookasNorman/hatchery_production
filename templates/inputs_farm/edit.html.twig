@@ -8,6 +8,7 @@
     {{ include('inputs_farm/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('inputs_farm_index') }}">back to list</a>
-
-    {{ include('inputs_farm/_delete_form.html.twig') }}
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('inputs_farm/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

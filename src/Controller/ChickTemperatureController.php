@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/chick_temperature")
- * @IsGranted("ROLE_PRODUCTION")
+ * @IsGranted("ROLE_USER")
  */
 class ChickTemperatureController extends AbstractController
 {
@@ -37,6 +37,7 @@ class ChickTemperatureController extends AbstractController
 
     /**
      * @Route("/new/{input}/{hatcher}", name="chick_temperature_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function new(Request $request, Inputs $input = null, Hatchers $hatcher = null): Response
     {
@@ -93,6 +94,7 @@ class ChickTemperatureController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="chick_temperature_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_PRODUCTION")
      */
     public function edit(Request $request, ChickTemperature $chickTemperature): Response
     {
@@ -113,6 +115,7 @@ class ChickTemperatureController extends AbstractController
 
     /**
      * @Route("/{id}", name="chick_temperature_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, ChickTemperature $chickTemperature): Response
     {

@@ -63,7 +63,7 @@
                     {pathLink: path('herds_show', {'id': herd.id}), text: 'herds.index.table.badge.show' }) }}
                 {{ include('layout/buttons/list_actions.html.twig',
                     {pathLink: path('herd_delivery_plan_week', {'id': herd.id}), text: 'herds.index.table.badge.show_plan' }) }}
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_MANAGER') %}
                     {{ include('layout/buttons/list_success.html.twig',
                         {pathLink: path('plan_delivery_egg_herd', {'id': herd.id}), text: 'herds.index.table.badge.plan' }) }}
                     {{ include('layout/buttons/list_success.html.twig',
