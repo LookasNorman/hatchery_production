@@ -996,7 +996,17 @@ inputs_farm_delivery:
   delete:
     button:
       delete: Usuń
+    confirm: Jesteś pewien, że chcesz usunąć dostawę w nakładzie? Operacja jest nieodwracalna. Bezpowrotnie utracisz dane!!!
+  edit:
+    button:
+      back: Powrót
+      save: Zapisz
+      update: Aktualizuj
+    header: Edytuj dostawę
+    title: Edycja dostawy w nakładzie
   form:
+    button:
+      save: Zapisz
     label:
       breeder: Dostawca jaj
       eggs_number: Ilość jaj
@@ -1004,6 +1014,14 @@ inputs_farm_delivery:
     placeholder:
       breeder: Wybierz dostawcę jaj
       herd: Wybierz stado
+  index:
+    table:
+      actions: Akcje
+      eggs_number: Ilość jaj
+      farm: Odbiorca - ferma
+      herd: Dostawca - stado
+      id: Lp.
+    title: Lista dostaw do nakładów
   new:
     header: Odbiorca piskląt
     title: Dodawanie dostawy do nakładu
