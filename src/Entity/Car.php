@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CarRepository;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation\Auditable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass=CarRepository::class)
  * @UniqueEntity("name", message="car.name.isset")
  * @UniqueEntity("registrationNumber", message="car.registration_number.isset")
+ * @Auditable()
  */
 class Car
 {

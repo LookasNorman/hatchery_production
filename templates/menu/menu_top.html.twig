@@ -130,9 +130,17 @@
                     </ul>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href={{ path('registration') }}>{% trans %}menu.menu_top.registration{% endtrans %}</a>
+                    <li class="nav-item dropdown" id="admin">
+                        <a class="nav-link dropdown-toggle" href="#"
+                           data-bs-toggle="dropdown">{% trans %}menu.menu_top.admin.title{% endtrans %}</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item"
+                                   href="{{ path('registration') }}">{% trans %}menu.menu_top.admin.registration{% endtrans %}</a>
+                            </li>
+                            <li><a class="dropdown-item" target="_blank"
+                                   href="{{ path('dh_auditor_list_audits') }}">{% trans %}menu.menu_top.admin.audit{% endtrans %}</a>
+                            </li>
+                        </ul>
                     </li>
                 {% endif %}
             </ul>

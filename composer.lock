@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b052973c7ed687f54edc0db446ffd29",
+    "content-hash": "2544b1fab48f52dfb7a295a58a78aa61",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -184,6 +184,163 @@
                 }
             ],
             "time": "2020-11-11T10:22:58+00:00"
+        },
+        {
+            "name": "damienharper/auditor",
+            "version": "1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DamienHarper/auditor.git",
+                "reference": "a40336c97bbe2d4bf4c0ba236df3c50e98d248e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DamienHarper/auditor/zipball/a40336c97bbe2d4bf4c0ba236df3c50e98d248e6",
+                "reference": "a40336c97bbe2d4bf4c0ba236df3c50e98d248e6",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "^1.8",
+                "doctrine/dbal": "^2.10",
+                "doctrine/orm": "^2.7",
+                "php": ">=7.2",
+                "symfony/event-dispatcher": "^3.4|^4.0|^5.0",
+                "symfony/lock": "^3.4|^4.0|^5.0",
+                "symfony/options-resolver": "^3.4|^4.0|^5.0"
+            },
+            "conflict": {
+                "doctrine/persistence": "<1.3"
+            },
+            "require-dev": {
+                "doctrine/doctrine-migrations-bundle": "^1.3|^2.0",
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "gedmo/doctrine-extensions": "^2.4|^3.0",
+                "korbeil/phpstan-generic-rules": "^0.2",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpstan/phpstan-doctrine": "^0.12",
+                "phpstan/phpstan-strict-rules": "^0.12",
+                "phpunit/phpunit": "^8.0|^9.0",
+                "symfony/var-dumper": "^4.0|^5.0"
+            },
+            "suggest": {
+                "damienharper/auditor-bundle": "Integrate auditor library in your Symfony projects."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DH\\Auditor\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Damien Harper",
+                    "email": "damien.harper@gmail.com"
+                }
+            ],
+            "description": "The missing audit log library.",
+            "keywords": [
+                "Audit",
+                "audit-log",
+                "audit-trail",
+                "doctrine"
+            ],
+            "support": {
+                "issues": "https://github.com/DamienHarper/auditor/issues",
+                "source": "https://github.com/DamienHarper/auditor/tree/1.3.1"
+            },
+            "time": "2021-10-26T08:24:16+00:00"
+        },
+        {
+            "name": "damienharper/auditor-bundle",
+            "version": "4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DamienHarper/auditor-bundle.git",
+                "reference": "2e7b1defdc133ad97c7cdcd5cdafc4178c933ea5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DamienHarper/auditor-bundle/zipball/2e7b1defdc133ad97c7cdcd5cdafc4178c933ea5",
+                "reference": "2e7b1defdc133ad97c7cdcd5cdafc4178c933ea5",
+                "shasum": ""
+            },
+            "require": {
+                "damienharper/auditor": "^1.0",
+                "doctrine/annotations": "^1.8",
+                "doctrine/doctrine-bundle": "^1.9|^2.0",
+                "doctrine/orm": "^2.7",
+                "php": ">=7.2",
+                "symfony/doctrine-bridge": "^3.4|^4.4.19|^5.2.2",
+                "symfony/event-dispatcher": "^3.4|^4.0|^5.0",
+                "symfony/lock": "^3.4|^4.0|^5.0",
+                "symfony/security-bundle": "^3.4|^4.0|^5.0",
+                "symfony/translation": "^3.4|^4.0|^5.0",
+                "symfony/twig-bundle": "^3.4|^4.0|^5.0"
+            },
+            "conflict": {
+                "doctrine/persistence": "<1.3"
+            },
+            "require-dev": {
+                "doctrine/doctrine-migrations-bundle": "^1.3|^2.0",
+                "friendsofphp/php-cs-fixer": "^2.15",
+                "gedmo/doctrine-extensions": "^2.4|^3.0",
+                "matthiasnoback/symfony-dependency-injection-test": "^3.1|^4.0",
+                "nyholm/symfony-bundle-test": "^1.6",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-doctrine": "^0.12",
+                "phpstan/phpstan-strict-rules": "^0.12",
+                "phpstan/phpstan-symfony": "^0.12",
+                "phpunit/phpunit": "^8.0|^9.0",
+                "symfony/browser-kit": "^3.4|^4.0|^5.1",
+                "symfony/css-selector": "^5.1",
+                "symfony/framework-bundle": "^3.4.26|^4.4|^5.0",
+                "symfony/var-dumper": "^3.4|^4.0|^5.0",
+                "twig/extensions": "^1.5"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DH\\AuditorBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Damien Harper",
+                    "email": "damien.harper@gmail.com"
+                }
+            ],
+            "description": "Integrate auditor library in your Symfony projects.",
+            "keywords": [
+                "Audit",
+                "audit-log",
+                "audit-trail",
+                "auditor",
+                "doctrine"
+            ],
+            "support": {
+                "issues": "https://github.com/DamienHarper/auditor-bundle/issues",
+                "source": "https://github.com/DamienHarper/auditor-bundle/tree/4.2.0"
+            },
+            "time": "2021-09-26T22:37:30+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -6015,6 +6172,84 @@
                 }
             ],
             "time": "2021-09-14T15:48:39+00:00"
+        },
+        {
+            "name": "symfony/lock",
+            "version": "v4.4.33",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/lock.git",
+                "reference": "567d29b1bc6e3937652054dafc069151d17824a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/lock/zipball/567d29b1bc6e3937652054dafc069151d17824a9",
+                "reference": "567d29b1bc6e3937652054dafc069151d17824a9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.3",
+                "psr/log": "^1|^2|^3",
+                "symfony/polyfill-php80": "^1.16"
+            },
+            "conflict": {
+                "doctrine/dbal": "<2.6"
+            },
+            "require-dev": {
+                "doctrine/dbal": "^2.6|^3.0",
+                "predis/predis": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Lock\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jérémy Derussé",
+                    "email": "jeremy@derusse.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Creates and manages locks, a mechanism to provide exclusive access to a shared resource",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "cas",
+                "flock",
+                "locking",
+                "mutex",
+                "redlock",
+                "semaphore"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/lock/tree/v4.4.33"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-10-05T20:27:01+00:00"
         },
         {
             "name": "symfony/mailer",

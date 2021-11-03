@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\ChickIntegrationRepository;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation\Auditable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ChickIntegrationRepository::class)
+ * @Auditable()
  */
 class ChickIntegration
 {

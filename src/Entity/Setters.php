@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\SettersRepository;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation\Auditable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SettersRepository::class)
+ * @Auditable()
  */
 class Setters
 {

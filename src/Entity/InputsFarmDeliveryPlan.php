@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\InputsFarmDeliveryPlanRepository;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation\Auditable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=InputsFarmDeliveryPlanRepository::class)
+ * @Auditable()
  */
 class InputsFarmDeliveryPlan
 {

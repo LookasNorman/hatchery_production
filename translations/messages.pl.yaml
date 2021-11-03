@@ -1114,6 +1114,10 @@ main_page:
     title: Dostawcy jaj
 menu:
   menu_top:
+    admin:
+      audit: Audyt zmian
+      registration: Nowy użytkownik
+      title: Administracja
     breed:
       index: Rasy kur
       title: Rasy
@@ -1177,7 +1181,6 @@ menu:
       index: Plan tygodniowy
     plans:
       title: Plany
-    registration: Nowy użytkownik
     transport:
       title: Transport
     vaccination:

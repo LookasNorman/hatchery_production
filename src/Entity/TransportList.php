@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\TransportListRepository;
+use DH\Auditor\Provider\Doctrine\Auditing\Annotation\Auditable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TransportListRepository::class)
+ * @Auditable()
  */
 class TransportList
 {

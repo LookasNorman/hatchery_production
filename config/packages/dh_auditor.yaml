@@ -1,0 +1,10 @@
+# Full configuration reference available at:
+# https://damienharper.github.io/auditor-docs/docs/auditor-bundle/configuration/reference.html
+dh_auditor:
+    timezone: 'Europe/Warsaw'
+    enabled: true
+    providers:
+        doctrine:
+            table_prefix: null
+            table_suffix: '_audit'
+            viewer: true

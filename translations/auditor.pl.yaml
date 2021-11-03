@@ -1,0 +1,11 @@
+audit:
+  header:
+    home: Strona główna
+    audited_entities: audytowanych encji / tabel
+  table_headers:
+    activity: Aktywność
+    entity: Encja
+    table: Tabela
+  audit_details:
+    most_recent: Zanotowane zmiany (najnowsza pierwsza)
+    view_audit: Pokaż zmiany
