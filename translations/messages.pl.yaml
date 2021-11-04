@@ -207,6 +207,7 @@ chicks_recipient:
       email: Adres email
       farm: Nazwa fermy
       id: Indeks
+      integration: Integracja
       name: Nazwa
       no_records: Brak ferm odbiorców
       phone_number: Numer telefonu

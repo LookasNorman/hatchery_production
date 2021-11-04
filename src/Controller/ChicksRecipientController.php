@@ -37,7 +37,7 @@ class ChicksRecipientController extends AbstractController
     public function customerIndex(ChicksRecipientRepository $chicksRecipientRepository, CustomerRepository $customerRepository, $id): Response
     {
         $customer = $customerRepository->find($id);
-        $chicksRecipients = $chicksRecipientRepository->findBy(['customer' => $customer]);
+        $chicksRecipients = $chicksRecipientRepository->findBy(['customer' => $customer], ['name' => 'asc']);
 
         return $this->render('chicks_recipient/index.html.twig', [
             'chicks_recipients' => $chicksRecipients,

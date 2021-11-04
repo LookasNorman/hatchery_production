@@ -1,69 +1,86 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ include('layout/buttons/back.html.twig',
-        { pathLink: path('chick_recipient_customer_index', {'id': chicks_recipient.customer.id}), text: 'chicks_recipient.show.button.back' }) }}
-    {{ include('layout/buttons/back.html.twig',
-        { pathLink: path('customer_show', {'id': chicks_recipient.customer.id}), text: 'chicks_recipient.show.button.show' }) }}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-    <div class="d-flex justify-content-center card-group">
-        {% include 'layout/cards/chead.html.twig' %}
-        <p>{% trans %}chicks_recipient.show.customer.title{% endtrans %} <span
-                    class="h3">{{ chicks_recipient.customer.name }}</span></p>
-        <p>{% trans %}chicks_recipient.show.farm.title{% endtrans %} <span class="h3">{{ chicks_recipient.name }}</span>
-        </p>
-        {% include 'layout/cards/cbody.html.twig' %}
-        <h5 class="card-title"></h5>
-        <dl class="row">
-            <dt class="col-sm-5">{% trans %}egg_supplier.show.email{% endtrans %}:</dt>
-            <dd class="col-sm-7">{{ chicks_recipient.email }}</dd>
-            <dt class="col-sm-5">{% trans %}egg_supplier.show.phone_number{% endtrans %}:</dt>
-            <dd class="col-sm-7">{{ chicks_recipient.phoneNumber }}</dd>
-        </dl>
-        <hr/>
-        <dl class="row">
-            <dt class="col-sm-5">{% trans %}chicks_recipient.show.address{% endtrans %}:</dt>
-            <dd class="col-sm-7">{{ chicks_recipient.postcode }} {{ chicks_recipient.city }}</dd>
-            <dt class="col-sm-5">{% trans %}chicks_recipient.show.street{% endtrans %}:</dt>
-            <dd class="col-sm-7">{{ chicks_recipient.street }} {{ chicks_recipient.streetNumber }}</dd>
-        </dl>
-        {% include 'layout/cards/cfooter.html.twig' %}
-        {% if is_granted('ROLE_ADMIN') %}
-            {{ include('chicks_recipient/_delete_form.html.twig') }}
-        {% endif %}
-        {% if is_granted('ROLE_MANAGER') %}
-            {{ include('layout/buttons/edit.html.twig',
-                {pathLink: path('chicks_recipient_edit', {'id': chicks_recipient.id}), text: 'chicks_recipient.show.button.edit'}) }}
-        {% endif %}
-        {% include 'layout/cards/cend.html.twig' %}
-    </div>
-    <hr>
-    <div class="accordion accordion-flush" id="accordionFlushShow">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                    {% trans %}chicks_recipient.show.accordion.inputs{% endtrans %}
-                </button>
-            </h2>
-            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-                 data-bs-parent="#accordionFlushShow">
-                <div class="accordion-body">
-                    {% include('chicks_recipient/inputs_list.html.twig') %}
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        {{ include('layout/buttons/back.html.twig',
+            { pathLink: path('chick_recipient_customer_index', {'id': chicks_recipient.customer.id}), text: 'chicks_recipient.show.button.back' }) }}
+        {{ include('layout/buttons/back.html.twig',
+            { pathLink: path('customer_show', {'id': chicks_recipient.customer.id}), text: 'chicks_recipient.show.button.show' }) }}
+
+        <div class="d-flex justify-content-center card-group">
+            {% include 'layout/cards/chead.html.twig' %}
+            <p>{% trans %}chicks_recipient.show.customer.title{% endtrans %} <span
+                        class="h3">{{ chicks_recipient.customer.name }}</span></p>
+            <p>{% trans %}chicks_recipient.show.farm.title{% endtrans %} <span
+                        class="h3">{{ chicks_recipient.name }}</span>
+            </p>
+            {% include 'layout/cards/cbody.html.twig' %}
+            <h5 class="card-title"></h5>
+            <dl class="row">
+                <dt class="col-sm-5">{% trans %}egg_supplier.show.email{% endtrans %}:</dt>
+                <dd class="col-sm-7">{{ chicks_recipient.email }}</dd>
+                <dt class="col-sm-5">{% trans %}egg_supplier.show.phone_number{% endtrans %}:</dt>
+                <dd class="col-sm-7">{{ chicks_recipient.phoneNumber }}</dd>
+            </dl>
+            <hr/>
+            <dl class="row">
+                <dt class="col-sm-5">{% trans %}chicks_recipient.show.address{% endtrans %}:</dt>
+                <dd class="col-sm-7">{{ chicks_recipient.postcode }} {{ chicks_recipient.city }}</dd>
+                <dt class="col-sm-5">{% trans %}chicks_recipient.show.street{% endtrans %}:</dt>
+                <dd class="col-sm-7">{{ chicks_recipient.street }} {{ chicks_recipient.streetNumber }}</dd>
+            </dl>
+            {% include 'layout/cards/cfooter.html.twig' %}
+            {% if is_granted('ROLE_ADMIN') %}
+                {{ include('chicks_recipient/_delete_form.html.twig') }}
+            {% endif %}
+            {% if is_granted('ROLE_MANAGER') %}
+                {{ include('layout/buttons/edit.html.twig',
+                    {pathLink: path('chicks_recipient_edit', {'id': chicks_recipient.id}), text: 'chicks_recipient.show.button.edit'}) }}
+            {% endif %}
+            {% include 'layout/cards/cend.html.twig' %}
+        </div>
+        <hr>
+        <div class="accordion accordion-flush" id="accordionFlushShow">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        {% trans %}chicks_recipient.show.accordion.inputs{% endtrans %}
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                     data-bs-parent="#accordionFlushShow">
+                    <div class="accordion-body">
+                        {% include('chicks_recipient/inputs_list.html.twig') %}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                    {% trans %}chicks_recipient.show.accordion.chicks_plan{% endtrans %}
-                </button>
-            </h2>
-            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
-                 data-bs-parent="#accordionFlushShow">
-                <div class="accordion-body">
-                    {% include('plan_delivery_chick/list_plan_chick.html.twig') %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        {% trans %}chicks_recipient.show.accordion.chicks_plan{% endtrans %}
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                     data-bs-parent="#accordionFlushShow">
+                    <div class="accordion-body">
+                        {% include('plan_delivery_chick/list_plan_chick.html.twig') %}
+                    </div>
                 </div>
             </div>
         </div>

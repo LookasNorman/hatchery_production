@@ -1,65 +1,72 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% if customer is defined %}
-        <h1>{% trans %}chicks_recipient.index.short_title{% endtrans %}: {{ customer.name }}</h1>
-    {% else %}
-        <h1>
-            {% trans %}chicks_recipient.index.title{% endtrans %}
-        </h1>
-    {% endif %}
-    {% if is_granted('ROLE_MANAGER') %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
         {% if customer is defined %}
-            {{ include('layout/buttons/new.html.twig', {pathLink: path('chicks_recipient_new', {'id' : customer.id}), text: 'chicks_recipient.index.button.new' }) }}
+            <h1>{% trans %}chicks_recipient.index.short_title{% endtrans %}: {{ customer.name }}</h1>
         {% else %}
-            {{ include('layout/buttons/new.html.twig', {pathLink: path('chicks_recipient_new'), text: 'chicks_recipient.index.button.new' }) }}
+            <h1>
+                {% trans %}chicks_recipient.index.title{% endtrans %}
+            </h1>
         {% endif %}
-    {% endif %}
+        {% if is_granted('ROLE_MANAGER') %}
+            {% if customer is defined %}
+                {{ include('layout/buttons/new.html.twig', {pathLink: path('chicks_recipient_new', {'id' : customer.id}), text: 'chicks_recipient.index.button.new' }) }}
+            {% else %}
+                {{ include('layout/buttons/new.html.twig', {pathLink: path('chicks_recipient_new'), text: 'chicks_recipient.index.button.new' }) }}
+            {% endif %}
+        {% endif %}
 
-    {% include 'layout/tables/thead.html.twig' %}
-    <tr>
-        <th>
-            {% trans %}chicks_recipient.index.table.id{% endtrans %}
-        </th>
-        <th>
-            {% trans %}chicks_recipient.index.table.customer{% endtrans %}
-        </th>
-        <th>
-            {% trans %}chicks_recipient.index.table.farm{% endtrans %}
-        </th>
-        <th>
-            {% trans %}chicks_recipient.index.table.email{% endtrans %}
-        </th>
-        <th>
-            {% trans %}chicks_recipient.index.table.phone_number{% endtrans %}
-        </th>
-        <th>
-            {% trans %}chicks_recipient.index.table.actions{% endtrans %}
-        </th>
-    </tr>
-    {% include 'layout/tables/tbody.html.twig' %}
-    {% for chicks_recipient in chicks_recipients %}
+        {% include 'layout/tables/thead.html.twig' %}
         <tr>
-            <td>{{ chicks_recipient.id }}</td>
-            <td>{{ chicks_recipient.customer.name }}</td>
-            <td>{{ chicks_recipient.name }}</td>
-            <td>{{ chicks_recipient.email }}</td>
-            <td>{{ chicks_recipient.phoneNumber }}</td>
-            <td>
-                {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('chicks_recipient_show', {'id': chicks_recipient.id}), text: 'chicks_recipient.index.table.badge.show' }) }}
-                {% if is_granted('ROLE_MANAGER') %}
-                    {{ include('layout/buttons/list_actions.html.twig', {pathLink: path('chicks_recipient_edit', {'id': chicks_recipient.id}), text: 'chicks_recipient.index.table.badge.edit' }) }}
-                {% endif %}
-            </td>
+            <th>{% trans %}chicks_recipient.index.table.id{% endtrans %}</th>
+            <th>{% trans %}chicks_recipient.index.table.farm{% endtrans %}</th>
+            <th>{% trans %}chicks_recipient.index.table.customer{% endtrans %}</th>
+            <th>{% trans %}chicks_recipient.index.table.integration{% endtrans %}</th>
+            <th>{% trans %}chicks_recipient.index.table.email{% endtrans %}</th>
+            <th>{% trans %}chicks_recipient.index.table.phone_number{% endtrans %}</th>
+            <th>{% trans %}chicks_recipient.index.table.actions{% endtrans %}</th>
         </tr>
-    {% else %}
-        <tr>
-            <td colspan="5">
-                {% trans %}chicks_recipient.index.table.no_records{% endtrans %}
-            </td>
-        </tr>
-    {% endfor %}
-    {% include 'layout/tables/tfooter.html.twig' %}
-    {% include 'layout/tables/tend.html.twig' %}
-
+        {% include 'layout/tables/tbody.html.twig' %}
+        {% for chicks_recipient in chicks_recipients %}
+            <tr>
+                <td>{{ chicks_recipient.id }}</td>
+                <td>{{ chicks_recipient.name }}</td>
+                <td>{{ chicks_recipient.customer.name }}</td>
+                <td>{{ chicks_recipient.customer.chickIntegration ? chicks_recipient.customer.chickIntegration.name : '' }}</td>
+                <td>{{ chicks_recipient.email }}</td>
+                <td>{{ chicks_recipient.phoneNumber }}</td>
+                <td>
+                    {{ include('layout/buttons/list_show.html.twig',
+                        {pathLink: path('chicks_recipient_show', {'id': chicks_recipient.id})}) }}
+                    {% if is_granted('ROLE_MANAGER') %}
+                        {{ include('layout/buttons/list_edit.html.twig',
+                            {pathLink: path('chicks_recipient_edit', {'id': chicks_recipient.id})}) }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">
+                    {% trans %}chicks_recipient.index.table.no_records{% endtrans %}
+                </td>
+            </tr>
+        {% endfor %}
+        {% include 'layout/tables/tfooter.html.twig' %}
+        {% include 'layout/tables/tend.html.twig' %}
+    </div>
 {% endblock %}
