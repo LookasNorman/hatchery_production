@@ -721,7 +721,10 @@ eggs_inputs_transfer:
       badge:
         show: Szczegóły
         edit: Edytuj
+      farm: Ferma
+      herd: Stado
       id: Indeks
+      input: Nakład
       no_found: Brak danych o przekładach
       transfer_date: Data przekładu
       transfers_egg: Przełożonych jaj
