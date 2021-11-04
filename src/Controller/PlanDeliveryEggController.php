@@ -25,8 +25,9 @@ class PlanDeliveryEggController extends AbstractController
      */
     public function index(PlanDeliveryEggRepository $planDeliveryEggRepository): Response
     {
+        $date = new \DateTime('midnight');
         return $this->render('plan_delivery_egg/index.html.twig', [
-            'plan_delivery_eggs' => $planDeliveryEggRepository->findAll(),
+            'plan_delivery_eggs' => $planDeliveryEggRepository->planDeliveryFromDate($date),
         ]);
     }
 

@@ -1258,6 +1258,46 @@ plan_delivery_chick:
     lighting_date: Data świetlenia
     title: Szczegóły zamówienia
     transfer_date: Data przekładu
+plan_delivery_egg:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Jesteś pewien że chcesz usunąć planowaną dostawę? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
+  edit:
+    button:
+      back: Lista planów
+    header: Karta edycji planu
+    title: Edycja planu
+  form:
+    button:
+      save: Zapisz
+    label:
+      delivery_date: Data dostawy
+      eggs_number: Ilość jaj
+      herd: Stado
+  index:
+    button:
+      new: Dodaj planowaną dostawę
+    table:
+      actions: Akcje
+      breeder: Hodowca
+      delivery_date: Data dostawy
+      eggs_number: Ilość jaj
+      herd: Stado
+      id: Lp.
+    title: Wykaz planowanych dostaw
+  new:
+    button:
+      back: Lista planów
+    header: Kara dodawania planu
+    title: Dodawanie nowego planu
+  show:
+    button:
+      back: Lista planów
+      edit: Edytuj
+    delivery_date: Data dostawy
+    eggs_number: Ilość jaj
+    title: Szczegóły planu
 plan_delivery_egg_for_herd:
   form:
     monday: Poniedziałek

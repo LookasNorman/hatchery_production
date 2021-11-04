@@ -19,6 +19,21 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
         parent::__construct($registry, PlanDeliveryEgg::class);
     }
 
+    public function planDeliveryFromDate($date)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.herd', 'h')
+            ->join('h.breeder', 'b')
+            ->andWhere('p.deliveryDate >= :date')
+            ->setParameters(['date' => $date])
+            ->orderBy('p.deliveryDate', 'asc')
+            ->addOrderBy('b.name', 'asc')
+            ->addOrderBy('h.name', 'asc')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function planHatchingDate($date)
     {
         return $this->createQueryBuilder('p')

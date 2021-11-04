@@ -17,6 +17,7 @@ class PlanDeliveryEggType extends AbstractType
     {
         $builder
             ->add('eggsNumber', IntegerType::class, [
+                'label' => 'plan_delivery_egg.form.label.eggs_number',
                 'attr' => [
                     'class' => 'form-control'
                 ]
@@ -31,6 +32,7 @@ class PlanDeliveryEggType extends AbstractType
             ->add('herd', EntityType::class, [
                 'class' => Herds::class,
                 'choice_label' => 'name',
+                'label' => 'plan_delivery_egg.form.label.herd',
                 'attr' => [
                     'class' => 'form-control'
                 ]

@@ -1,4 +1,5 @@
-<form method="post" action="{{ path('plan_delivery_egg_delete', {'id': plan_delivery_egg.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('plan_delivery_egg_delete', {'id': plan_delivery_egg.id}) }}"
+      onsubmit="return confirm('{% trans %}plan_delivery_egg.delete.confirm{% endtrans %}');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ plan_delivery_egg.id) }}">
-    <button class="btn">Delete</button>
+    {{ include('layout/buttons/delete.html.twig', { text: 'plan_delivery_egg.delete.button.delete' }) }}
 </form>
