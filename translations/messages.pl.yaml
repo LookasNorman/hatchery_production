@@ -319,6 +319,7 @@ customer:
         show: Szczegóły
       email: Email
       id: Lp.
+      integration: Integracja
       name: Nazwa
       phone_number: Numer telefonu
     title: Lista odbiorców piskląt

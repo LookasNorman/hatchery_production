@@ -1,42 +1,58 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1 class="d-print-none">{% trans %}customer.show.title{% endtrans %}</h1>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-    <div class="d-flex justify-content-center card-group">
-        {{ include('customer/customer_detail_card.html.twig') }}
-    </div>
-    {{ include('layout/buttons/back.html.twig', { pathLink: path('customer_index'), text: 'customer.show.button.back' }) }}
-    {{ include('layout/buttons/add.html.twig', { pathLink: path('chicks_recipient_new', {'id': customer.id}), text: 'customer.show.button.add' }) }}
-    {{ include('layout/buttons/add.html.twig', { pathLink: path('plan_delivery_chick_new'), text: 'customer.show.button.add_plan' }) }}
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
 
-    <hr>
-    <div class="accordion accordion-flush" id="accordionFlushShow">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                    {% trans %}chicks_recipient.show.accordion.inputs{% endtrans %}
-                </button>
-            </h2>
-            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-                 data-bs-parent="#accordionFlushShow">
-                <div class="accordion-body">
-                    {# {% include('chicks_recipient/inputs_list.html.twig') %} #}
+    <div class="example-wrapper">
+        <h1 class="d-print-none">{% trans %}customer.show.title{% endtrans %}</h1>
+
+        <div class="d-flex justify-content-center card-group">
+            {{ include('customer/customer_detail_card.html.twig') }}
+        </div>
+        {{ include('layout/buttons/back.html.twig', { pathLink: path('customer_index'), text: 'customer.show.button.back' }) }}
+        {{ include('layout/buttons/add.html.twig', { pathLink: path('chicks_recipient_new', {'id': customer.id}), text: 'customer.show.button.add' }) }}
+        {{ include('layout/buttons/add.html.twig', { pathLink: path('plan_delivery_chick_new'), text: 'customer.show.button.add_plan' }) }}
+
+        <hr>
+        <div class="accordion accordion-flush" id="accordionFlushShow">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        {% trans %}chicks_recipient.show.accordion.inputs{% endtrans %}
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                     data-bs-parent="#accordionFlushShow">
+                    <div class="accordion-body">
+                        {# {% include('chicks_recipient/inputs_list.html.twig') %} #}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                    {% trans %}chicks_recipient.show.accordion.chicks_plan{% endtrans %}
-                </button>
-            </h2>
-            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
-                 data-bs-parent="#accordionFlushShow">
-                <div class="accordion-body">
-                    {% include('plan_delivery_chick/list_plan_chick.html.twig') %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        {% trans %}chicks_recipient.show.accordion.chicks_plan{% endtrans %}
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                     data-bs-parent="#accordionFlushShow">
+                    <div class="accordion-body">
+                        {% include('plan_delivery_chick/list_plan_chick.html.twig') %}
+                    </div>
                 </div>
             </div>
         </div>

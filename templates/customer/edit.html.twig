@@ -1,19 +1,34 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>{% trans %}customer.edit.title{% endtrans %}</h1>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-    <div class="d-flex justify-content-center card-group">
-        {% include 'layout/cards/chead.html.twig' %}
-        {% trans %}customer.edit.header{% endtrans %}
-        {% include 'layout/cards/cbody.html.twig' %}
-        {{ include('customer/_form.html.twig', {'button_label': 'customer.edit.button.update'}) }}
-        {% include 'layout/cards/cfooter.html.twig' %}
-        {% if is_granted('ROLE_ADMIN') %}
-            {{ include('customer/_delete_form.html.twig') }}
-        {% endif %}
-        {% include 'layout/cards/cend.html.twig' %}
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>{% trans %}customer.edit.title{% endtrans %}</h1>
+
+        <div class="d-flex justify-content-center card-group">
+            {% include 'layout/cards/chead.html.twig' %}
+            {% trans %}customer.edit.header{% endtrans %}
+            {% include 'layout/cards/cbody.html.twig' %}
+            {{ include('customer/_form.html.twig', {'button_label': 'customer.edit.button.update'}) }}
+            {% include 'layout/cards/cfooter.html.twig' %}
+            {% if is_granted('ROLE_ADMIN') %}
+                {{ include('customer/_delete_form.html.twig') }}
+            {% endif %}
+            {% include 'layout/cards/cend.html.twig' %}
+        </div>
+        {{ include('layout/buttons/back.html.twig', { pathLink: path('customer_index'), text: 'customer.edit.button.back' }) }}
     </div>
-    {{ include('layout/buttons/back.html.twig', { pathLink: path('customer_index'), text: 'customer.edit.button.back' }) }}
-
 {% endblock %}
