@@ -37,8 +37,9 @@ class PlanDeliveryChickController extends AbstractController
      */
     public function index(PlanDeliveryChickRepository $planDeliveryChickRepository, PlanIndicatorsRepository $planIndicatorsRepository): Response
     {
+        $date = new \DateTime('midnight');
         return $this->render('plan_delivery_chick/index.html.twig', [
-            'plan_delivery_chicks' => $planDeliveryChickRepository->findBy([], ['inputDate' => 'ASC']),
+            'plan_delivery_chicks' => $planDeliveryChickRepository->planFromDate($date),
             'plan_indicators' => $planIndicatorsRepository->findOneBy([]),
             'yearLink' => $this->yearLink()
         ]);

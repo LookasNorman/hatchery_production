@@ -42,7 +42,7 @@
             {% include 'layout/cards/cfooter.html.twig' %}
             {% if is_granted('ROLE_ADMIN') %}
                 {{ include('plan_delivery_chick/_delete_form.html.twig') }}
-            {% elseif %}
+            {% endif %}
             {% if is_granted('ROLE_MANAGER') %}
                 {{ include('layout/buttons/edit.html.twig',
                     {pathLink: path('plan_delivery_chick_edit', {'id': plan_delivery_chick.id}), text: 'plan_delivery_chick.show.button.edit'}) }}

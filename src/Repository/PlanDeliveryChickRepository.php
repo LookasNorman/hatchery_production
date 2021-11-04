@@ -21,6 +21,16 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
         parent::__construct($registry, PlanDeliveryChick::class);
     }
 
+    public function planFromDate($date)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.inputDate >= :date')
+            ->setParameters(['date' => $date])
+            ->orderBy('p.inputDate', 'asc')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function dateDelivery($date, $dateEnd)
     {
         return $this->createQueryBuilder('p')
@@ -51,8 +61,7 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->setParameters(['customer' => $customer])
             ->orderBy('p.deliveryDate', 'asc')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function planBreedBetweenDate($breed, $date, $dateEnd)
@@ -64,8 +73,7 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->andWhere('p.inputDate BETWEEN :date AND :dateEnd')
             ->setParameters(['breed' => $breed, 'date' => $date, 'dateEnd' => $dateEnd])
             ->getQuery()
-            ->getSingleScalarResult()
-            ;
+            ->getSingleScalarResult();
     }
 
     public function planBreedFarm($breed, $now)
@@ -80,8 +88,7 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->orderBy('weekYear', 'asc')
             ->addOrderBy('f.name', 'asc')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function planBreedWeek($breed, $now)
@@ -95,8 +102,7 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->groupBy('weekYear')
             ->orderBy('weekYear', 'asc')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function planInputsInWeekCustomer($breed, $date, $dateEnd)
@@ -113,8 +119,7 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->groupBy('yearWeek')
             ->addGroupBy('p.chickFarm')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function planInputsDetail($start, $end, $breed)
@@ -127,8 +132,7 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->setParameters(['start' => $start, 'end' => $end, 'breed' => $breed])
             ->addOrderBy('p.inputDate', 'asc')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function planInputsInDay($start, $end, $breed)
@@ -139,7 +143,6 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->andWhere('p.inputDate BETWEEN :start AND :end')
             ->setParameters(['start' => $start, 'end' => $end, 'breed' => $breed])
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 }
