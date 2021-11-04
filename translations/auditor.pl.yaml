@@ -1,11 +1,20 @@
 audit:
+  audit_details:
+    most_recent: Zanotowane zmiany (najnowsza pierwsza)
+    new_value: Nowa wartość
+    old_value: Stara wartość
+    property: Właściwość
+    view_audit: Pokaż zmiany
+    transaction: Tranzakcja
   header:
     home: Strona główna
     audited_entities: audytowanych encji / tabel
+  pager:
+    first: pierwsza
+    previous: poprzednia
+    next: następna
+    last: ostatnia
   table_headers:
     activity: Aktywność
     entity: Encja
     table: Tabela
-  audit_details:
-    most_recent: Zanotowane zmiany (najnowsza pierwsza)
-    view_audit: Pokaż zmiany
