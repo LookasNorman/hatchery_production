@@ -1118,6 +1118,7 @@ menu:
       audit: Audyt zmian
       registration: Nowy użytkownik
       title: Administracja
+      user: Użytkownicy
     breed:
       index: Rasy kur
       title: Rasy
@@ -1490,6 +1491,40 @@ setters:
     button:
       edit: Edytuj
       back: Lista aparatów wylęgowych
+user:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Na pewno chcesz usunąć użytkownika? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
+  edit:
+    button:
+      back: Lista użytkowników
+    header: Formularz edycji użytkownika
+    title: Edycja użytkownika
+  form:
+    button:
+      save: Zapisz
+  index:
+    button:
+      new: Dodaj nowego
+    table:
+      actions: Akcje
+      email: Email
+      firstname: Imię
+      id: Lp.
+      lastname: Nazwisko
+      no_found: brak użytkowników
+      phone_number: Numer telefonu
+      roles: Uprawnienia
+    title: Lista użytkowników
+  show:
+    button:
+      back: Lista użytkowników
+      edit: Edytuj
+    email: Email
+    phone_number: Numer telefonu
+    roles: Uprawnienia
+    title: Karta użytkownika
 vaccination:
   delete:
     button:
