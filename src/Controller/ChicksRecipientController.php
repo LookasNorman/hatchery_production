@@ -26,8 +26,10 @@ class ChicksRecipientController extends AbstractController
      */
     public function index(ChicksRecipientRepository $chicksRecipientRepository): Response
     {
+        $chicksRecipients = $chicksRecipientRepository->chickRecipientsWithPlan();
+
         return $this->render('chicks_recipient/index.html.twig', [
-            'chicks_recipients' => $chicksRecipientRepository->findBy([], ['name' => 'ASC']),
+            'chicks_recipients' => $chicksRecipients,
         ]);
     }
 
@@ -37,7 +39,7 @@ class ChicksRecipientController extends AbstractController
     public function customerIndex(ChicksRecipientRepository $chicksRecipientRepository, CustomerRepository $customerRepository, $id): Response
     {
         $customer = $customerRepository->find($id);
-        $chicksRecipients = $chicksRecipientRepository->findBy(['customer' => $customer], ['name' => 'asc']);
+        $chicksRecipients = $chicksRecipientRepository->chickRecipientsForCustomerWithPlan($customer);
 
         return $this->render('chicks_recipient/index.html.twig', [
             'chicks_recipients' => $chicksRecipients,

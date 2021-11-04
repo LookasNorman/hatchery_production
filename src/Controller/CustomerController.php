@@ -25,8 +25,10 @@ class CustomerController extends AbstractController
      */
     public function index(CustomerRepository $customerRepository): Response
     {
+        $customers = $customerRepository->customersWithPlan();
+//        dd($customer);
         return $this->render('customer/index.html.twig', [
-            'customers' => $customerRepository->findBy([], ['name' => 'ASC']),
+            'customers' => $customers,
         ]);
     }
 

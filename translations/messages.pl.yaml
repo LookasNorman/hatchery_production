@@ -211,6 +211,7 @@ chicks_recipient:
       name: Nazwa
       no_records: Brak ferm odbiorców
       phone_number: Numer telefonu
+      plan_date: Plan do dnia
     title: Fermy odbiorców piskląt
   new:
     title: Dodawanie nowej fermy odbiorcy
@@ -322,6 +323,7 @@ customer:
       integration: Integracja
       name: Nazwa
       phone_number: Numer telefonu
+      plan_date: Plan do dnia
     title: Lista odbiorców piskląt
   new:
     button:

@@ -32,32 +32,29 @@ class ChicksRecipientRepository extends ServiceEntityRepository
             ;
     }
 
-    // /**
-    //  * @return ChicksRecipient[] Returns an array of ChicksRecipient objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function chickRecipientsWithPlan()
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('cr')
+            ->addSelect('MAX(p.deliveryDate) as deliveryDate')
+            ->leftJoin('cr.planDeliveryChicks', 'p')
+            ->orderBy('cr.name', 'ASC')
+            ->groupBy('cr')
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?ChicksRecipient
+    public function chickRecipientsForCustomerWithPlan($customer)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('cr')
+            ->addSelect('MAX(p.deliveryDate) as deliveryDate')
+            ->leftJoin('cr.planDeliveryChicks', 'p')
+            ->andWhere('cr.customer = :customer')
+            ->setParameters(['customer' => $customer])
+            ->orderBy('cr.name', 'ASC')
+            ->groupBy('cr')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult()
+            ;
     }
-    */
 }
