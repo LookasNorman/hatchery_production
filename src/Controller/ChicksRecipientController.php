@@ -93,7 +93,8 @@ class ChicksRecipientController extends AbstractController
             'chicks_recipient' => $chicksRecipient,
             'inputsDetail' => $inputsDetail,
             'plan_delivery_chicks' => $planDelivery,
-            'plan_indicators' => $planIndicators
+            'plan_indicators' => $planIndicators,
+            'maps_api' => $this->getParameter('app.mapskey')
         ]);
     }
 

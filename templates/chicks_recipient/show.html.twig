@@ -13,6 +13,12 @@
             background: #F5F5F5;
             padding: 2px 6px;
         }
+
+        .maps {
+            width: 500px;
+            height: 500px;
+            padding: 6px 6px;
+        }
     </style>
 
     <div class="example-wrapper">
@@ -52,6 +58,15 @@
                     {pathLink: path('chicks_recipient_edit', {'id': chicks_recipient.id}), text: 'chicks_recipient.show.button.edit'}) }}
             {% endif %}
             {% include 'layout/cards/cend.html.twig' %}
+            <div class="maps">
+                <iframe
+                        width="480"
+                        height="480"
+                        style="border:0"
+                        src="https://www.google.com/maps/embed/v1/place?key={{ maps_api }}&q=Poland+{{ chicks_recipient.postcode }}+{{ chicks_recipient.city }}+{{ chicks_recipient.street }}+{{ chicks_recipient.streetNumber }}&maptype=satellite"
+                        allowfullscreen>
+                </iframe>
+            </div>
         </div>
         <hr>
         <div class="accordion accordion-flush" id="accordionFlushShow">
