@@ -1130,6 +1130,13 @@ menu:
   menu_top:
     admin:
       audit: Audyt zmian
+      production:
+        chick_temperature: Temperatury piskląt
+        inputs: Nakłady
+        lightings: Świetlenia
+        selections: Wybierania
+        title: Produkcja - administacja
+        transfers: Przekłady
       registration: Nowy użytkownik
       title: Administracja
       user: Użytkownicy

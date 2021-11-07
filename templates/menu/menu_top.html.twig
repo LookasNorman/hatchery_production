@@ -145,6 +145,27 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown" id="admin_production">
+                        <a class="nav-link dropdown-toggle" href="#"
+                           data-bs-toggle="dropdown">{% trans %}menu.menu_top.admin.production.title{% endtrans %}</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item"
+                                   href="{{ path('eggs_inputs_index') }}">{% trans %}menu.menu_top.admin.production.inputs{% endtrans %}</a>
+                            </li>
+                            <li><a class="dropdown-item"
+                                   href="{{ path('eggs_inputs_lighting_index') }}">{% trans %}menu.menu_top.admin.production.lightings{% endtrans %}</a>
+                            </li>
+                            <li><a class="dropdown-item"
+                                   href="{{ path('eggs_inputs_transfers_index') }}">{% trans %}menu.menu_top.admin.production.transfers{% endtrans %}</a>
+                            </li>
+                            <li><a class="dropdown-item"
+                                   href="{{ path('chick_temperature_index') }}">{% trans %}menu.menu_top.admin.production.chick_temperature{% endtrans %}</a>
+                            </li>
+                            <li><a class="dropdown-item"
+                                   href="{{ path('eggs_selections_index') }}">{% trans %}menu.menu_top.admin.production.selections{% endtrans %}</a>
+                            </li>
+                        </ul>
+                    </li>
                 {% endif %}
             </ul>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
