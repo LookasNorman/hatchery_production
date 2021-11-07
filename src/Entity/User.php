@@ -24,7 +24,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\Email()
+     * @Assert\Email(groups={"registration"})
      * @Assert\NotBlank()
      * @Assert\Length(
      *     allowEmptyString=false,
@@ -53,6 +53,7 @@ class User implements UserInterface
      *     allowEmptyString=false,
      *     min=3,
      *     max=50,
+     *     groups={"edit"}
      * )
      */
     private $firstname;
@@ -63,6 +64,7 @@ class User implements UserInterface
      *     allowEmptyString=false,
      *     min=3,
      *     max=50,
+     *     groups={"edit"}
      * )
      */
     private $lastname;
@@ -73,6 +75,7 @@ class User implements UserInterface
      *     allowEmptyString=false,
      *     min=9,
      *     max=13,
+     *     groups={"edit"}
      * )
      */
     private $phoneNumber;
@@ -86,7 +89,8 @@ class User implements UserInterface
      *     maxMessage="plain_password.max",
      * )
      * @Assert\NotBlank(
-     *     message="plain_password.not_blank"
+     *     message="plain_password.not_blank",
+     *     groups={"registration"}
      * )
      */
     private $plainPassword;

@@ -42,10 +42,15 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user): Response
     {
-        $form = $this->createForm(User1Type::class, $user);
+        $form = $this->createForm(User1Type::class, $user, [
+            'validation_groups' => ['edit'],
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $password = $user->getPassword();
+            $user->setPassword($password);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_index');

@@ -43,6 +43,19 @@ class User1Type extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+            ->add('roles', ChoiceType::class, [
+                'required' => false,
+                'multiple' => true,
+                'expanded' => true,
+                'choices' => [
+                    'user.form.choices.admin' => 'ROLE_ADMIN',
+                    'user.form.choices.manager' => 'ROLE_MANAGER',
+                    'user.form.choices.production' => 'ROLE_PRODUCTION',
+                ],
+                'attr' => [
+                    'class' => 'form-check"'
+                ]
+            ])
         ;
     }
 
