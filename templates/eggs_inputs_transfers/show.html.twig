@@ -19,12 +19,27 @@
         <h1>{% trans %}eggs_inputs_transfer.show.title{% endtrans %}</h1>
         <div class="d-flex justify-content-center card-group">
             {% include 'layout/cards/chead.html.twig' %}
+            {% for farmDelivery in eggs_inputs_transfer.inputsFarmDelivery %}
+                {{ farmDelivery.inputsFarm.eggInput.name }}
+            {% endfor %} -
             {{ eggs_inputs_transfer.transferDate ? eggs_inputs_transfer.transferDate|date('Y-m-d') : '' }}
             {% include 'layout/cards/cbody.html.twig' %}
-            <p class="card-text">
-                {% trans %}eggs_inputs_transfer.show.waste_eggs{% endtrans %}
-                {{ eggs_inputs_transfer.transfersEgg }}
-            </p>
+            <dl class="row">
+                <dd class="col-sm-3">{% trans %}eggs_inputs_transfer.show.waste_eggs{% endtrans %}</dd>
+                <dt class="col-sm-9 text-end">{{ eggs_inputs_transfer.transfersEgg|number_format(0, ',', ' ') }}</dt>
+                <dd class="col-sm-3">{% trans %}eggs_inputs_transfer.show.herd{% endtrans %}</dd>
+                <dt class="col-sm-9 text-end">
+                    {% for farmDelivery in eggs_inputs_transfer.inputsFarmDelivery %}
+                        {{ farmDelivery.delivery.herd.name }}
+                    {% endfor %}
+                </dt>
+                <dd class="col-sm-3">{% trans %}eggs_inputs_transfer.show.farm{% endtrans %}</dd>
+                <dt class="col-sm-9 text-end">
+                    {% for farmDelivery in eggs_inputs_transfer.inputsFarmDelivery %}
+                        {{ farmDelivery.inputsFarm.chicksFarm.name }}
+                    {% endfor %}
+                </dt>
+            </dl>
             {% include 'layout/cards/cfooter.html.twig' %}
             {% if is_granted('ROLE_ADMIN') %}
                 {{ include('eggs_inputs_transfers/_delete_form.html.twig') }}

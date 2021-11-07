@@ -751,11 +751,13 @@ eggs_inputs_transfer:
     inputs:
       title: Wybierz nakład do przekładu
   show:
-    title: Szczegóły przekładu
-    waste_eggs: Odpad jaj
     button:
       edit: Edytuj
       back: Lista przekładów
+    farm: Ferma odbiorcy
+    herd: Stado
+    waste_eggs: Odpad jaj
+    title: Szczegóły przekładu
 eggs_inputs_selections:
   delete:
     confirm: Jesteś pewien, że chcesz usunąć wybieranie? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
