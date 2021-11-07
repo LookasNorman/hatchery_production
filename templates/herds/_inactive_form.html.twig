@@ -1,7 +1,7 @@
 <form method="post" action="{{ path('herds_edit_active', {'id': herd.id}) }}"
-      onsubmit="return confirm('{% trans %}herds.active.confirm.active{% endtrans %}');">
+      onsubmit="return confirm('{% trans %}herds.active.confirm.inactive{% endtrans %}');">
     <input type="hidden" name="_token_active" value="{{ csrf_token('active_herd' ~ herd.id) }}">
     <button class="btn">
-        <i class="fa fa-check-square" aria-hidden="true"></i>
+        <i class="far fa-square"></i>
     </button>
 </form>

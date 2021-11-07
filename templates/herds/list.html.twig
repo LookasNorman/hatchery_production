@@ -1,35 +1,17 @@
 {% block body %}
     {% include 'layout/tables/thead.html.twig' %}
     <tr>
-        <th>
-            {% trans %}herds.index.table.id{% endtrans %}
-        </th>
-        <th>
-            {% trans %}herds.index.table.name{% endtrans %}
-        </th>
-        <th>
-            {% trans %}herds.index.table.hatching_date{% endtrans %}
-        </th>
-        <th>
-            {% trans %}herds.index.table.hens_number{% endtrans %}
-        </th>
-        <th>
-            {% trans %}herds.index.table.breed{% endtrans %}
-        </th>
+        <th>{% trans %}herds.index.table.id{% endtrans %}</th>
+        <th>{% trans %}herds.index.table.name{% endtrans %}</th>
+        <th>{% trans %}herds.index.table.hatching_date{% endtrans %}</th>
+        <th>{% trans %}herds.index.table.hens_number{% endtrans %}</th>
+        <th>{% trans %}herds.index.table.breed{% endtrans %}</th>
         {% if breeder is not defined %}
-            <th>
-                {% trans %}herds.index.table.breeders{% endtrans %}
-            </th>
+            <th>{% trans %}herds.index.table.breeders{% endtrans %}</th>
         {% endif %}
-        <th>
-            {% trans %}herds.index.table.lighting{% endtrans %}
-        </th>
-        <th>
-            {% trans %}herds.index.table.active{% endtrans %}
-        </th>
-        <th>
-            {% trans %}herds.index.table.actions{% endtrans %}
-        </th>
+        <th>{% trans %}herds.index.table.lighting{% endtrans %}</th>
+        <th>{% trans %}herds.index.table.active{% endtrans %}</th>
+        <th>{% trans %}herds.index.table.actions{% endtrans %}</th>
     </tr>
     {% include 'layout/tables/tbody.html.twig' %}
     {% for herd in herds %}
@@ -56,7 +38,11 @@
                 <td></td>
             {% endif %}
             <td class="text-center">
-                {{ include('herds/_active_form.html.twig') }}
+                {% if herd.active %}
+                    {{ include('herds/_active_form.html.twig') }}
+                {% else %}
+                {{include('herds/_inactive_form.html.twig')}}
+                {% endif %}
             </td>
             <td>
                 {{ include('layout/buttons/list_actions.html.twig',

@@ -877,7 +877,9 @@ hatchers:
     title: Szczegóły aparatu
 herds:
   active:
-    confirm: Czy na pewno chcesz zmienić status aktywny / nie aktywny?
+    confirm:
+      active: Czy na pewno chcesz zmienić status na nie aktywny? Stada nie będzie można używać w bieżącej produkcji. Nie będzie można dopisywać dostaw, nakładów, itp.!!!
+      inactive: Czy na pewno chcesz zmienić status na aktywny? Stada będzie można używać w bieżącej produkcji.
   delete:
     confirm: Na pewno chcesz usunąć stado? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
     button:
