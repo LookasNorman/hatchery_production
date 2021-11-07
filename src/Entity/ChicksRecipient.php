@@ -100,6 +100,11 @@ class ChicksRecipient
      */
     private $vaccinations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=PlanInput::class, mappedBy="farm")
+     */
+    private $planInputs;
+
     public function __construct()
     {
         $this->customerBuildings = new ArrayCollection();
@@ -107,6 +112,7 @@ class ChicksRecipient
         $this->planInputFarms = new ArrayCollection();
         $this->planDeliveryChicks = new ArrayCollection();
         $this->vaccinations = new ArrayCollection();
+        $this->planInputs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -325,6 +331,33 @@ class ChicksRecipient
             if ($vaccination->getFarm() === $this) {
                 $vaccination->setFarm(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PlanInput[]
+     */
+    public function getPlanInputs(): Collection
+    {
+        return $this->planInputs;
+    }
+
+    public function addPlanInput(PlanInput $planInput): self
+    {
+        if (!$this->planInputs->contains($planInput)) {
+            $this->planInputs[] = $planInput;
+            $planInput->addFarm($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanInput(PlanInput $planInput): self
+    {
+        if ($this->planInputs->removeElement($planInput)) {
+            $planInput->removeFarm($this);
         }
 
         return $this;

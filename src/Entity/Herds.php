@@ -84,12 +84,18 @@ class Herds
      */
     private $vaccinations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=PlanInput::class, mappedBy="herd")
+     */
+    private $planInputs;
+
     public function __construct()
     {
         $this->eggsDeliveries = new ArrayCollection();
         $this->deliveries = new ArrayCollection();
         $this->planDeliveryEggs = new ArrayCollection();
         $this->vaccinations = new ArrayCollection();
+        $this->planInputs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -266,6 +272,33 @@ class Herds
             if ($vaccination->getHerd() === $this) {
                 $vaccination->setHerd(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PlanInput[]
+     */
+    public function getPlanInputs(): Collection
+    {
+        return $this->planInputs;
+    }
+
+    public function addPlanInput(PlanInput $planInput): self
+    {
+        if (!$this->planInputs->contains($planInput)) {
+            $this->planInputs[] = $planInput;
+            $planInput->addHerd($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanInput(PlanInput $planInput): self
+    {
+        if ($this->planInputs->removeElement($planInput)) {
+            $planInput->removeHerd($this);
         }
 
         return $this;
