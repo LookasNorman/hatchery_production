@@ -16,11 +16,11 @@
                 <td>{{ chick_temperature.date ? chick_temperature.date|date('Y-m-d') : '' }}</td>
                 <td>{{ chick_temperature.temperature }}</td>
                 <td>
-                    {{ include('layout/buttons/list_actions.html.twig',
-                        {pathLink: path('chick_temperature_show', {'id': chick_temperature.id}), text: 'chick_temperature.index.table.badge.show' }) }}
+                    {{ include('layout/buttons/list_show.html.twig',
+                        {pathLink: path('chick_temperature_show', {'id': chick_temperature.id})}) }}
                     {% if is_granted('ROLE_MANAGER') %}
-                        {{ include('layout/buttons/list_actions.html.twig',
-                            {pathLink: path('chick_temperature_edit', {'id': chick_temperature.id}), text: 'chick_temperature.index.table.badge.edit' }) }}
+                        {{ include('layout/buttons/list_edit.html.twig',
+                            {pathLink: path('chick_temperature_edit', {'id': chick_temperature.id})}) }}
                     {% endif %}
                 </td>
             </tr>

@@ -129,7 +129,9 @@ class LightingController extends AbstractController
             }
             $em->flush();
 
-            return $this->redirectToRoute('eggs_inputs_lighting_index');
+            return $this->redirectToRoute('eggs_inputs_show', [
+                'id' => $inputs->getId()
+            ]);
         }
 
         return $this->render('eggs_inputs_lighting/correct.html.twig', [
@@ -228,8 +230,15 @@ class LightingController extends AbstractController
      */
     public function delete(Request $request, Lighting $eggsInputsLighting): Response
     {
+        $inputFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+        $inputsFarmDelivery = $inputFarmDeliveryRepository->findBy(['lighting' => $eggsInputsLighting]);
+
         if ($this->isCsrfTokenValid('delete' . $eggsInputsLighting->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            foreach ($inputsFarmDelivery as $delivery) {
+                $delivery->getLighting()->removeInputsFarmDelivery($delivery);
+            }
+
             $entityManager->remove($eggsInputsLighting);
             $entityManager->flush();
         }

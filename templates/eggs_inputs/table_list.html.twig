@@ -27,17 +27,6 @@
                             <td>{{ inputFarm.chickNumber }}</td>
                             <td>{{ inputFarm.chicksFarm.customer.name }}: {{ inputFarm.chicksFarm.name }}</td>
                             <td>
-{#                                <table class="table table-sm">#}
-{#                                    <thead class="bg-primary text-white">#}
-{#                                        <tr>#}
-{#                                            <th>{% trans %}eggs_inputs.table_list.table_deliveries.breeder{% endtrans %}</th>#}
-{#                                            <th>{% trans %}eggs_inputs.table_list.table_deliveries.herd{% endtrans %}</th>#}
-{#                                            <th>{% trans %}eggs_inputs.table_list.table_deliveries.delivery_date{% endtrans %}</th>#}
-{#                                            <th>{% trans %}eggs_inputs.table_list.table_deliveries.laying_date{% endtrans %}</th>#}
-{#                                            <th>{% trans %}eggs_inputs.table_list.table_deliveries.eggs_number{% endtrans %}</th>#}
-{#                                        </tr>#}
-{#                                    </thead>#}
-{#                                </table>#}
                             </td>
                         </tr>
                         </tbody>
@@ -47,11 +36,11 @@
             </td>
             <td>{{ eggs_input.inputDate ? eggs_input.inputDate|date('Y-m-d H:i') : '' }}</td>
             <td>
-                {{ include('layout/buttons/list_actions.html.twig',
-                    {pathLink: path('eggs_inputs_show', {'id': eggs_input.id}), text: 'eggs_inputs.table_list.table.badge.show' }) }}
+                {{ include('layout/buttons/list_show.html.twig',
+                    {pathLink: path('eggs_inputs_show', {'id': eggs_input.id})}) }}
                 {% if is_granted('ROLE_MANAGER') %}
-                    {{ include('layout/buttons/list_actions.html.twig',
-                        {pathLink: path('eggs_inputs_edit', {'id': eggs_input.id}), text: 'eggs_inputs.table_list.table.badge.edit' }) }}
+                    {{ include('layout/buttons/list_edit.html.twig',
+                        {pathLink: path('eggs_inputs_edit', {'id': eggs_input.id})}) }}
                 {% endif %}
             </td>
         </tr>

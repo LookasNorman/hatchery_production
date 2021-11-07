@@ -4,20 +4,31 @@
     <h1>{% trans %}eggs_inputs_selections.show.title{% endtrans %}</h1>
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
-        {{ eggs_selection.eggsInputsDetail.eggInput.name }}
+        {% for farmDelivery in eggs_selection.inputsFarmDelivery %}
+            {{ farmDelivery.inputsFarm.eggInput.name }}
+        {% endfor %} -{{ eggs_selection.selectionDate ? eggs_selection.selectionDate|date('Y-m-d') : '' }}
         {% include 'layout/cards/cbody.html.twig' %}
-        <p class="card-text">
-            {% trans %}eggs_inputs_selections.show.selection_date{% endtrans %}
-            : {{ eggs_selection.selectionDate ? eggs_selection.selectionDate|date('Y-m-d') : '' }}
-        </p>
-        <p class="card-text">
-            {% trans %}eggs_inputs_selections.show.chick_number{% endtrans %}
-            : {{ eggs_selection.chickNumber }}
-        </p>
-        <p class="card-text">
-            {% trans %}eggs_inputs_selections.show.cull_chick{% endtrans %}
-            : {{ eggs_selection.cullChicken }}
-        </p>
+        <dl class="row">
+            <dd class="col-sm-6">{% trans %}eggs_inputs_selections.show.chick_number{% endtrans %}</dd>
+            <dt class="col-sm-6 text-end">{{ eggs_selection.chickNumber|number_format(0, ',', ' ') }}</dt>
+            <dd class="col-sm-6">{% trans %}eggs_inputs_selections.show.cull_chick{% endtrans %}</dd>
+            <dt class="col-sm-6 text-end">{{ eggs_selection.cullChicken|number_format(0, ',', ' ') }}</dt>
+            <dd class="col-sm-6">{% trans %}eggs_inputs_selections.show.unhatched{% endtrans %}</dd>
+            <dt class="col-sm-6 text-end">{{ eggs_selection.unhatched|number_format(0, ',', ' ') }}</dt>
+            <dd class="col-sm-6">{% trans %}eggs_inputs_selections.show.herd{% endtrans %}</dd>
+            <dt class="col-sm-6 text-end">
+                {% for farmDelivery in eggs_selection.inputsFarmDelivery %}
+                    {{ farmDelivery.delivery.herd.name }}
+                {% endfor %}
+            </dt>
+            <dd class="col-sm-6">{% trans %}eggs_inputs_selections.show.farm{% endtrans %}</dd>
+            <dt class="col-sm-6 text-end">
+                {% for farmDelivery in eggs_selection.inputsFarmDelivery %}
+                    {{ farmDelivery.inputsFarm.chicksFarm.name }}
+                {% endfor %}
+            </dt>
+        </dl>
+
         {% include 'layout/cards/cfooter.html.twig' %}
         {% if is_granted('ROLE_ADMIN') %}
             {{ include('eggs_selections/_delete_form.html.twig') }}

@@ -2,34 +2,44 @@
 
 {% block body %}
     <style>
-        .card {
-            max-width: 500px;
-            min-width: 380px;
-            padding: 6px 6px;
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
         }
     </style>
-    <div class="d-flex justify-content-center card-group">
-        {% include 'layout/cards/chead.html.twig' %}
-        {% trans %}eggs_inputs_lighting.new.title{% endtrans %}: <span class="fw-bold fs-4">{{ input.name }}</span>
-        <p>{% trans %}eggs_inputs_lighting.new.herd{% endtrans %}: <span class="fw-bold fs-4">{{ herd.name }}</span></p>
-        {% include 'layout/cards/cbody.html.twig' %}
-        <dl class="row">
-            <dd class="col-sm-9">{% trans %}eggs_inputs_lighting.correct.lighting_eggs{% endtrans %}</dd>
-            <dt class="col-sm-3">{{ lightings.lightingEggs }}</dt>
-            <dd class="col-sm-9">{% trans %}eggs_inputs_lighting.correct.waste_eggs{% endtrans %}</dd>
-            <dt class="col-sm-3">{{ lightings.wasteEggs }}</dt>
-            <dd class="col-sm-9">{% trans %}eggs_inputs_lighting.correct.fertility{% endtrans %}</dd>
-            <dt class="col-sm-3">{{ lightings.fertilization }}</dt>
-        </dl>
-        {{ include('eggs_inputs_lighting/_form_correct.html.twig') }}
-        {% include 'layout/cards/cfooter.html.twig' %}
-        {% include 'layout/cards/cend.html.twig' %}
+
+    <div class="example-wrapper">
+        <div class="d-flex justify-content-center card-group">
+            {% include 'layout/cards/chead.html.twig' %}
+            {% trans %}eggs_inputs_lighting.new.title{% endtrans %}: <span class="fw-bold fs-4">{{ input.name }}</span>
+            <p>{% trans %}eggs_inputs_lighting.new.herd{% endtrans %}: <span class="fw-bold fs-4">{{ herd.name }}</span>
+            </p>
+            {% include 'layout/cards/cbody.html.twig' %}
+            <dl class="row">
+                <dd class="col-sm-9">{% trans %}eggs_inputs_lighting.correct.lighting_eggs{% endtrans %}</dd>
+                <dt class="col-sm-3">{{ lightings.lightingEggs }}</dt>
+                <dd class="col-sm-9">{% trans %}eggs_inputs_lighting.correct.waste_eggs{% endtrans %}</dd>
+                <dt class="col-sm-3">{{ lightings.wasteEggs }}</dt>
+                <dd class="col-sm-9">{% trans %}eggs_inputs_lighting.correct.fertility{% endtrans %}</dd>
+                <dt class="col-sm-3">{{ lightings.fertilization }}</dt>
+            </dl>
+            {{ include('eggs_inputs_lighting/_form_correct.html.twig') }}
+            {% include 'layout/cards/cfooter.html.twig' %}
+            {% include 'layout/cards/cend.html.twig' %}
+        </div>
+        {% if is_granted('ROLE_MANAGER') %}
+            {{ include('layout/buttons/back.html.twig',
+                {pathLink: path('eggs_inputs_show', {id: input.id}), text: 'eggs_inputs_lighting.new.button.back'}) }}
+        {% elseif is_granted('ROLE_PRODUCTION') %}
+            {{ include('layout/buttons/back.html.twig',
+                {pathLink: path('production_lighting_herd', {id: input.id}), text: 'eggs_inputs_lighting.new.button.herds'}) }}
+        {% endif %}
     </div>
-    {% if is_granted('ROLE_MANAGER') %}
-        {{ include('layout/buttons/back.html.twig',
-            {pathLink: path('eggs_inputs_show', {id: input.id}), text: 'eggs_inputs_lighting.new.button.back'}) }}
-    {% elseif is_granted('ROLE_PRODUCTION') %}
-        {{ include('layout/buttons/back.html.twig',
-            {pathLink: path('production_lighting_herd', {id: input.id}), text: 'eggs_inputs_lighting.new.button.herds'}) }}
-    {% endif %}
 {% endblock %}

@@ -1,11 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>
-        {% trans %}eggs_inputs.index.title{% endtrans %}
-    </h1>
-    {% if is_granted('ROLE_MANAGER') %}
-        {{ include('layout/buttons/new.html.twig', {pathLink: path('eggs_inputs_new'), text: 'eggs_inputs.index.button.new' }) }}
-    {% endif %}
-    {% include('eggs_inputs/table_list.html.twig') %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>
+            {% trans %}eggs_inputs.index.title{% endtrans %}
+        </h1>
+        {% if is_granted('ROLE_MANAGER') %}
+            {{ include('layout/buttons/new.html.twig', {pathLink: path('eggs_inputs_new'), text: 'eggs_inputs.index.button.new' }) }}
+        {% endif %}
+        {% include('eggs_inputs/table_list.html.twig') %}
+    </div>
 {% endblock %}

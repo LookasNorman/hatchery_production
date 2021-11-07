@@ -517,7 +517,7 @@ eggs_inputs:
     button:
       back: Lista nakładów
       update: Zaktualizuj
-    title: Tworzenie nowego nakładu
+    title: Aktualizacja nakładu
   index:
     button:
       new: Utwórz nakład
@@ -643,7 +643,7 @@ eggs_inputs_lighting:
   form:
     label:
       breeder: Dostawca jaj
-      correct_percent: Procent błędu świetlenia
+      correct_percent: Procent zapłodnienia
       eggs_inputs: Nakład
       eggs_number: Ilość jaj świetlonych
       lighting_date: Data świetlenia
@@ -654,7 +654,7 @@ eggs_inputs_lighting:
       eggs_inputs: Wybierz nakład
       breeder: Wybierz hodowcę
     help:
-      correct_percent: Wpisz procentowy błąd maszyny
+      correct_percent: Wpisz zapłodnienie
       eggs_number: Podaj ilość jaj prześwietlonych
       waste_eggs: Wpisz odpad jaj dla wybranego nakładu i hodowcy
   edit:
@@ -665,14 +665,17 @@ eggs_inputs_lighting:
   index:
     title: Wykaz świetleń
     table:
-      id: Indeks
-      waste_eggs: Odpad jaj
-      lighting_date: Data świetlenia
       actions: Akcje
-      no_found: Brak świetleń
       badge:
         show: Szczegóły
         edit: Edytuj
+      farm: Ferma
+      herd: Stado
+      id: Indeks
+      input: Nakład
+      lighting_date: Data świetlenia
+      no_found: Brak świetleń
+      waste_eggs: Odpad jaj
     button:
       new: Dodaj świetlenie
   new:
@@ -687,11 +690,13 @@ eggs_inputs_lighting:
     inputs:
       title: Wybierz świetlony nakład
   show:
-    title: Szczegóły świetlenia
-    waste_eggs: Odpad jaj
     button:
       edit: Edytuj
       back: Lista świetleń
+    farm: Ferma
+    herd: Stado
+    title: Szczegóły świetlenia
+    waste_eggs: Odpad jaj
 eggs_inputs_transfer:
   delete:
     confirm: Na pewno chcesz usunąć dane o przekładzie? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
@@ -786,19 +791,23 @@ eggs_inputs_selections:
       update: Aktualizuj
       back: Lista wybierań
   index:
-    title: Wykaz wybierań
+    button:
+      new: Wpisz wybieranie
     table:
-      id: Indeks
-      chick_number: Ilość piskląt
-      cull_chick: Pisklęta wybrakowane
-      selection_date: Data wybierania
       actions: Akcje
       badge:
         show: Szczegóły
         edit: Edytuj
+      chick_number: Ilość piskląt
+      cull_chick: Pisklęta wybrakowane
+      farm: Ferma
+      herd: Stado
+      input: Nakład
+      id: Indeks
       no_found: Brak wybierań
-    button:
-      new: Wpisz wybieranie
+      selection_date: Data wybierania
+      unhatched: Niewyklute
+    title: Wykaz wybierań
   new:
     button:
       back: Szczegóły nakładu
@@ -813,13 +822,16 @@ eggs_inputs_selections:
     inputs:
       title: Wybierz nakład do wybierania
   show:
-    title: Szczegóły wybierania
     button:
       edit: Edytuj
       back: Lista wybierań
-    selection_date: Data wybierania
     chick_number: Ilość piskląt
     cull_chick: Wybrakowane pisklęta
+    farm: Ferma
+    herd: Stado
+    selection_date: Data wybierania
+    title: Szczegóły wybierania
+    unhatched: Niewyklute
 emails:
   egg_delivery:
     accounting:

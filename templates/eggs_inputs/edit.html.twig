@@ -1,17 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="d-flex justify-content-center card-group">
-        {% include 'layout/cards/chead.html.twig' %}
-        {% trans %}eggs_inputs.edit.title{% endtrans %}
-        {% include 'layout/cards/cbody.html.twig' %}
-        {{ include('eggs_inputs/_form.html.twig', {'button_label': 'eggs_inputs.edit.button.update'}) }}
-        {% include 'layout/cards/cfooter.html.twig' %}
-        {% if is_granted('ROLE_ADMIN') %}
-            {{ include('eggs_inputs/_delete_form.html.twig') }}
-        {% endif %}
-        {% include 'layout/cards/cend.html.twig' %}
-    </div>
-    {{ include('layout/buttons/back.html.twig', { pathLink: path('eggs_inputs_index'), text: 'eggs_inputs.new.button.back' }) }}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <div class="d-flex justify-content-center card-group">
+            {% include 'layout/cards/chead.html.twig' %}
+            {% trans %}eggs_inputs.edit.title{% endtrans %}
+            {% include 'layout/cards/cbody.html.twig' %}
+            {{ include('eggs_inputs/_form.html.twig', {'button_label': 'eggs_inputs.edit.button.update'}) }}
+            {% include 'layout/cards/cfooter.html.twig' %}
+            {% if is_granted('ROLE_ADMIN') %}
+                {{ include('eggs_inputs/_delete_form.html.twig') }}
+            {% endif %}
+            {% include 'layout/cards/cend.html.twig' %}
+        </div>
+        {{ include('layout/buttons/back.html.twig', { pathLink: path('eggs_inputs_index'), text: 'eggs_inputs.new.button.back' }) }}
+    </div>
 {% endblock %}
