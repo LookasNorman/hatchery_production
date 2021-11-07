@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\ChickIntegration;
+use App\Entity\ChicksRecipient;
+use App\Entity\Customer;
 use App\Form\ChickIntegrationType;
 use App\Repository\ChickIntegrationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -56,8 +58,13 @@ class ChickIntegrationController extends AbstractController
      */
     public function show(ChickIntegration $chickIntegration): Response
     {
+        $customers = $this->getDoctrine()->getRepository(Customer::class)->customersIntegrationWithPlan($chickIntegration);
+        $chicks_recipients = $this->getDoctrine()->getRepository(ChicksRecipient::class)->chickRecipientsIntegrationWithPlan($chickIntegration);
+
         return $this->render('chick_integration/show.html.twig', [
             'chick_integration' => $chickIntegration,
+            'customers' => $customers,
+            'chicks_recipients' => $chicks_recipients
         ]);
     }
 

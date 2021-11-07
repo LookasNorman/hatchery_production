@@ -35,5 +35,31 @@
             {% include 'layout/cards/cend.html.twig' %}
         </div>
         {{ include('layout/buttons/back.html.twig', { pathLink: path('chick_integration_index'), text: 'chick_integration.show.button.back' }) }}
+        <div class="accordion" id="accordionIntegration">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingCustomers">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCustomers" aria-expanded="true" aria-controls="collapseCustomers">
+                        {% trans %}chick_integration.show.accordion.customers{% endtrans %}
+                    </button>
+                </h2>
+                <div id="collapseCustomers" class="accordion-collapse collapse show" aria-labelledby="headingCustomers" data-bs-parent="#accordionIntegration">
+                    <div class="accordion-body">
+                        {{ include('customer/list_customers.html.twig') }}
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFarms">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFarms" aria-expanded="false" aria-controls="collapseFarms">
+                        {% trans %}chick_integration.show.accordion.farms{% endtrans %}
+                    </button>
+                </h2>
+                <div id="collapseFarms" class="accordion-collapse collapse" aria-labelledby="headingFarms" data-bs-parent="#accordionIntegration">
+                    <div class="accordion-body">
+                        {{ include('chicks_recipient/list_farm.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

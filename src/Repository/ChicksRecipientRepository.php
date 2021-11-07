@@ -44,6 +44,21 @@ class ChicksRecipientRepository extends ServiceEntityRepository
             ;
     }
 
+    public function chickRecipientsIntegrationWithPlan($integration)
+    {
+        return $this->createQueryBuilder('cr')
+            ->addSelect('MAX(p.deliveryDate) as deliveryDate')
+            ->leftJoin('cr.planDeliveryChicks', 'p')
+            ->leftJoin('cr.customer', 'c')
+            ->andWhere('c.chickIntegration = :integration')
+            ->setParameters(['integration' => $integration])
+            ->orderBy('cr.name', 'ASC')
+            ->groupBy('cr')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function chickRecipientsForCustomerWithPlan($customer)
     {
         return $this->createQueryBuilder('cr')

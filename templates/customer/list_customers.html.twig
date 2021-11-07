@@ -1,0 +1,43 @@
+{% include 'layout/tables/thead.html.twig' %}
+<tr>
+    <th>{% trans %}customer.index.table.id{% endtrans %}</th>
+    <th>{% trans %}customer.index.table.name{% endtrans %}</th>
+    <th>{% trans %}customer.index.table.integration{% endtrans %}</th>
+    <th>{% trans %}customer.index.table.plan_date{% endtrans %}</th>
+    <th>{% trans %}customer.index.table.email{% endtrans %}</th>
+    <th>{% trans %}customer.index.table.phone_number{% endtrans %}</th>
+    <th>{% trans %}customer.index.table.actions{% endtrans %}</th>
+</tr>
+{% include 'layout/tables/tbody.html.twig' %}
+        {% for customer in customers %}
+            <tr>
+                <td>{{ customer.0.id }}</td>
+                <td><a href="{{ path('customer_show', {'id': customer.0.id}) }}">{{ customer.0.name }}</a></td>
+                <td>
+                    {% if(customer.0.chickIntegration is not empty) %}
+                        <a href="{{ path('chick_integration_show', {'id': customer.0.chickIntegration.id}) }}">{{ customer.0.chickIntegration.name }}</a>
+                    {% else %}
+                        ---
+                    {% endif %}
+                </td>
+                <td>{{ customer.deliveryDate ? customer.deliveryDate|date('Y-m-d') : '' }}</td>
+                <td>{{ customer.0.email }}</td>
+                <td>{{ customer.0.phoneNumber }}</td>
+                <td>
+                    {{ include('layout/buttons/list_show.html.twig',
+                        {pathLink: path('customer_show', {'id': customer.0.id})}) }}
+                    {% if is_granted('ROLE_MANAGER') %}
+                        {{ include('layout/buttons/list_edit.html.twig',
+                            {pathLink: path('customer_edit', {'id': customer.0.id})}) }}
+                    {% endif %}
+                    {{ include('layout/buttons/list_actions.html.twig',
+                        {pathLink: path('chick_recipient_customer_index', {'id': customer.0.id}), text: 'customer.index.table.badge.farm' }) }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        {% include 'layout/tables/tfooter.html.twig' %}
+        {% include 'layout/tables/tend.html.twig' %}

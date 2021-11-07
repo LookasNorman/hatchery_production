@@ -109,6 +109,9 @@ chick_integration:
       back: Lista integracji
     title: Dodawanie nowej integracji
   show:
+    accordion:
+      customers: Odbiorcy piskląt
+      farms: Fermy piskląt
     button:
       back: Lista integracji
       edit: Edytuj

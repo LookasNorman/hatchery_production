@@ -32,4 +32,19 @@ class CustomerRepository extends ServiceEntityRepository
         ;
     }
 
+    public function customersIntegrationWithPlan($integration)
+    {
+        return $this->createQueryBuilder('c')
+            ->addSelect('MAX(p.deliveryDate) as deliveryDate')
+            ->leftJoin('c.chicksRecipients', 'cr')
+            ->leftJoin('cr.planDeliveryChicks', 'p')
+            ->andWhere('c.chickIntegration = :integration')
+            ->setParameters(['integration' => $integration])
+            ->orderBy('c.name', 'ASC')
+            ->groupBy('c')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }
