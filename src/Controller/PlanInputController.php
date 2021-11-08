@@ -2,48 +2,95 @@
 
 namespace App\Controller;
 
-use App\Entity\Breed;
-use App\Entity\PlanDeliveryChick;
-use App\Entity\PlanIndicators;
+use App\Entity\PlanInput;
+use App\Form\PlanInputType;
+use App\Repository\PlanInputRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * @Route("/plan_input")
  * @IsGranted("ROLE_USER")
  */
 class PlanInputController extends AbstractController
 {
-    public function getIndicators()
+    /**
+     * @Route("/", name="plan_input_index", methods={"GET"})
+     */
+    public function index(PlanInputRepository $planInputRepository): Response
     {
-        $planIndicatorsRepository = $this->getDoctrine()->getRepository(PlanIndicators::class);
-        return $planIndicatorsRepository->findOneBy([]);
-    }
-
-    public function getPlans($date)
-    {
-        $date->modify('midnight');
-        $end = clone $date;
-        $end->modify('+1 day -1 second');
-        $breed = $this->getDoctrine()->getRepository(Breed::class)->findOneBy([]);
-        $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
-        $planDeliveryChicks = $planDeliveryChickRepository->planInputsInDay($date, $end, $breed);
-        return $planDeliveryChicks;
+        return $this->render('plan_input/index.html.twig', [
+            'plan_inputs' => $planInputRepository->findAll(),
+        ]);
     }
 
     /**
-     * @Route("/plan_input", name="plan_input")
+     * @Route("/new", name="plan_input_new", methods={"GET","POST"})
      */
-    public function index(): Response
+    public function new(Request $request): Response
     {
-        $date = new \DateTime();
-        $indicators = $this->getIndicators();
-        $deliveriesChicks = $this->getPlans($date);
+        $planInput = new PlanInput();
+        $form = $this->createForm(PlanInputType::class, $planInput);
+        $form->handleRequest($request);
 
-        return $this->render('plans/inputs/index.html.twig', [
-            'indicators' => $indicators,
-            'deliveriesChicks' => $deliveriesChicks
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($planInput);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('plan_input_index');
+        }
+
+        return $this->render('plan_input/new.html.twig', [
+            'plan_input' => $planInput,
+            'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}", name="plan_input_show", methods={"GET"})
+     */
+    public function show(PlanInput $planInput): Response
+    {
+        return $this->render('plan_input/show.html.twig', [
+            'plan_input' => $planInput,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="plan_input_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, PlanInput $planInput): Response
+    {
+        $form = $this->createForm(PlanInputType::class, $planInput);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('plan_input_index');
+        }
+
+        return $this->render('plan_input/edit.html.twig', [
+            'plan_input' => $planInput,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="plan_input_delete", methods={"POST"})
+     */
+    public function delete(Request $request, PlanInput $planInput): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$planInput->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($planInput);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('plan_input_index');
     }
 }

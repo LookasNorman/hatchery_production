@@ -1,20 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PlanInputController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>
+        {% trans %}plan_input.index.title{% endtrans %}
+    </h1>
+    {% if is_granted("ROLE_MANAGER") %}
+        {{ include('layout/buttons/new.html.twig', {pathLink: path('plan_input_new'), text: 'plan_input.index.button.new' }) }}
+    {% endif %}
+    {% include 'layout/tables/thead.html.twig' %}
+    <tr>
+        <th>{% trans %}plan_input.index.table.id{% endtrans %}</th>
+        <th>{% trans %}plan_input.index.table.input{% endtrans %}</th>
+        <th>{% trans %}plan_input.index.table.farm{% endtrans %}</th>
+        <th>{% trans %}plan_input.index.table.chick_number{% endtrans %}</th>
+        <th>{% trans %}plan_input.index.table.herd{% endtrans %}</th>
+        <th>{% trans %}plan_input.index.table.egg_number{% endtrans %}</th>
+        <th>{% trans %}plan_input.index.table.actions{% endtrans %}</th>
+    </tr>
+    {% include 'layout/tables/tbody.html.twig' %}
+    {% for plan_input in plan_inputs %}
+        <tr>
+            <td>{{ plan_input.id }}</td>
+            <td>{{ plan_input.input.name }}</td>
+            <td>{{ plan_input.farm.customer.name }} - {{ plan_input.farm.name }}</td>
+            <td>{{ plan_input.chickNumber }}</td>
+            <td>{{ plan_input.herd.breeder.name }} - {{ plan_input.herd.name }}</td>
+            <td>{{ plan_input.eggNumber|number_format(0, ',', ' ') }}</td>
+            <td>
+                {{ include('layout/buttons/list_show.html.twig',
+                    {pathLink: path('plan_input_show', {'id': plan_input.id})}) }}
+                {% if is_granted('ROLE_MANAGER') %}
+                    {{ include('layout/buttons/list_edit.html.twig',
+                        {pathLink: path('plan_input_edit', {'id': plan_input.id})}) }}
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="7">{% trans %}plan_input.index.table.no_found{% endtrans %}</td>
+        </tr>
+    {% endfor %}
+    {% include 'layout/tables/tfooter.html.twig' %}
+    {% include 'layout/tables/tend.html.twig' %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/lookas/Workspace/GitHub/hatchery_production/src/Controller/PlanInputController.php'|file_link(0) }}">src/Controller/PlanInputController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/lookas/Workspace/GitHub/hatchery_production/templates/plan_input/index.html.twig'|file_link(0) }}">templates/plan_input/index.html.twig</a></code></li>
-    </ul>
 </div>
 {% endblock %}

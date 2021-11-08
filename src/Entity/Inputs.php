@@ -52,10 +52,16 @@ class Inputs
      */
     private $chickTemperatures;
 
+    /**
+     * @ORM\OneToMany(targetEntity=PlanInput::class, mappedBy="input")
+     */
+    private $planInputs;
+
     public function __construct()
     {
         $this->inputsFarms = new ArrayCollection();
         $this->chickTemperatures = new ArrayCollection();
+        $this->planInputs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,6 +147,36 @@ class Inputs
             // set the owning side to null (unless already changed)
             if ($chickTemperature->getInput() === $this) {
                 $chickTemperature->setInput(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PlanInput[]
+     */
+    public function getPlanInputs(): Collection
+    {
+        return $this->planInputs;
+    }
+
+    public function addPlanInput(PlanInput $planInput): self
+    {
+        if (!$this->planInputs->contains($planInput)) {
+            $this->planInputs[] = $planInput;
+            $planInput->setInput($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanInput(PlanInput $planInput): self
+    {
+        if ($this->planInputs->removeElement($planInput)) {
+            // set the owning side to null (unless already changed)
+            if ($planInput->getInput() === $this) {
+                $planInput->setInput(null);
             }
         }
 

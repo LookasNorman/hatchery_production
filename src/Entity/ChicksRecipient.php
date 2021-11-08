@@ -101,7 +101,7 @@ class ChicksRecipient
     private $vaccinations;
 
     /**
-     * @ORM\ManyToMany(targetEntity=PlanInput::class, mappedBy="farm")
+     * @ORM\OneToMany(targetEntity=PlanInput::class, mappedBy="farm")
      */
     private $planInputs;
 
@@ -109,7 +109,6 @@ class ChicksRecipient
     {
         $this->customerBuildings = new ArrayCollection();
         $this->inputsFarms = new ArrayCollection();
-        $this->planInputFarms = new ArrayCollection();
         $this->planDeliveryChicks = new ArrayCollection();
         $this->vaccinations = new ArrayCollection();
         $this->planInputs = new ArrayCollection();
@@ -348,7 +347,7 @@ class ChicksRecipient
     {
         if (!$this->planInputs->contains($planInput)) {
             $this->planInputs[] = $planInput;
-            $planInput->addFarm($this);
+            $planInput->setFarm($this);
         }
 
         return $this;
@@ -357,7 +356,10 @@ class ChicksRecipient
     public function removePlanInput(PlanInput $planInput): self
     {
         if ($this->planInputs->removeElement($planInput)) {
-            $planInput->removeFarm($this);
+            // set the owning side to null (unless already changed)
+            if ($planInput->getFarm() === $this) {
+                $planInput->setFarm(null);
+            }
         }
 
         return $this;

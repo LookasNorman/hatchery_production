@@ -85,14 +85,13 @@ class Herds
     private $vaccinations;
 
     /**
-     * @ORM\ManyToMany(targetEntity=PlanInput::class, mappedBy="herd")
+     * @ORM\OneToMany(targetEntity=PlanInput::class, mappedBy="herd")
      */
     private $planInputs;
 
     public function __construct()
     {
         $this->eggsDeliveries = new ArrayCollection();
-        $this->deliveries = new ArrayCollection();
         $this->planDeliveryEggs = new ArrayCollection();
         $this->vaccinations = new ArrayCollection();
         $this->planInputs = new ArrayCollection();
@@ -289,7 +288,7 @@ class Herds
     {
         if (!$this->planInputs->contains($planInput)) {
             $this->planInputs[] = $planInput;
-            $planInput->addHerd($this);
+            $planInput->setHerd($this);
         }
 
         return $this;
@@ -298,9 +297,13 @@ class Herds
     public function removePlanInput(PlanInput $planInput): self
     {
         if ($this->planInputs->removeElement($planInput)) {
-            $planInput->removeHerd($this);
+            // set the owning side to null (unless already changed)
+            if ($planInput->getHerd() === $this) {
+                $planInput->setHerd(null);
+            }
         }
 
         return $this;
     }
+
 }

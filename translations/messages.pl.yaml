@@ -1375,9 +1375,29 @@ plan_input:
     button:
       save: Utwórz
     label:
+      chick_number: Ilość piskląt
+      egg_number: Ilość jaj
+      farm: Ferma (Odbiorca - ferma)
+      herd: Stado (Dostawca - stado)
+      input: Nakład
       input_date: Data i godzina wybierania
+    placeholder:
+      farm: Wybierz fermę z listy
+      herd: Wybierz stado z listy
+      input: Wybierz nakład z listy
   index:
-    title: Wykaz planowanych nakładów
+    button:
+      new: Dodaj nowy
+    table:
+      actions: Akcje
+      chick_number: Ilość piskląt
+      egg_number: Ilość jaj
+      farm: Ferma
+      herd: Stado
+      id: Indeks
+      input: Nakład
+      no_found: Brak zapisów
+    title: Wykaz piskląt i jaj do planowanych nakładów
   new:
     button:
       back: Lista planowanych nakładów
