@@ -77,10 +77,22 @@ class Delivery
      */
     private $inputsFarmDeliveryPlans;
 
+    /**
+     * @ORM\OneToMany(targetEntity=InputDelivery::class, mappedBy="delivery")
+     */
+    private $inputDeliveries;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SellingEgg::class, mappedBy="delivery")
+     */
+    private $sellingEggs;
+
     public function __construct()
     {
         $this->inputsFarmDeliveries = new ArrayCollection();
         $this->inputsFarmDeliveryPlans = new ArrayCollection();
+        $this->inputDeliveries = new ArrayCollection();
+        $this->sellingEggs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -226,6 +238,66 @@ class Delivery
             // set the owning side to null (unless already changed)
             if ($inputsFarmDeliveryPlan->getDelivery() === $this) {
                 $inputsFarmDeliveryPlan->setDelivery(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InputDelivery[]
+     */
+    public function getInputDeliveries(): Collection
+    {
+        return $this->inputDeliveries;
+    }
+
+    public function addInputDelivery(InputDelivery $inputDelivery): self
+    {
+        if (!$this->inputDeliveries->contains($inputDelivery)) {
+            $this->inputDeliveries[] = $inputDelivery;
+            $inputDelivery->setDelivery($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInputDelivery(InputDelivery $inputDelivery): self
+    {
+        if ($this->inputDeliveries->removeElement($inputDelivery)) {
+            // set the owning side to null (unless already changed)
+            if ($inputDelivery->getDelivery() === $this) {
+                $inputDelivery->setDelivery(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SellingEgg[]
+     */
+    public function getSellingEggs(): Collection
+    {
+        return $this->sellingEggs;
+    }
+
+    public function addSellingEgg(SellingEgg $sellingEgg): self
+    {
+        if (!$this->sellingEggs->contains($sellingEgg)) {
+            $this->sellingEggs[] = $sellingEgg;
+            $sellingEgg->setDelivery($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSellingEgg(SellingEgg $sellingEgg): self
+    {
+        if ($this->sellingEggs->removeElement($sellingEgg)) {
+            // set the owning side to null (unless already changed)
+            if ($sellingEgg->getDelivery() === $this) {
+                $sellingEgg->setDelivery(null);
             }
         }
 

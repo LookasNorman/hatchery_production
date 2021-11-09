@@ -9,9 +9,11 @@ use App\Entity\InputsFarm;
 use App\Entity\InputsFarmDelivery;
 use App\Repository\ChicksRecipientRepository;
 use App\Repository\DeliveryRepository;
+use App\Repository\InputDeliveryRepository;
 use App\Repository\InputsFarmDeliveryRepository;
 use App\Repository\InputsFarmRepository;
 use App\Repository\InputsRepository;
+use App\Repository\SellingEggRepository;
 use App\Repository\SupplierRepository;
 use App\Repository\HatchersRepository;
 use App\Repository\SettersRepository;
@@ -95,17 +97,20 @@ class DefaultController extends AbstractController
      * @Route("/", name="main_page")
      */
     public function index(
-        SupplierRepository           $supplierRepository,
-        InputsRepository             $inputsRepository,
-        DeliveryRepository           $deliveryRepository,
-        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository,
-        InputsFarmRepository         $inputsFarmRepository
+        SupplierRepository      $supplierRepository,
+        InputsRepository        $inputsRepository,
+        DeliveryRepository      $deliveryRepository,
+        InputDeliveryRepository $inputsDeliveryRepository,
+        InputsFarmRepository    $inputsFarmRepository,
+        SellingEggRepository    $sellingEggRepository
     ): Response
     {
         $suppliers = [];
         $eggsSuppliers = $supplierRepository->findAll();
         $suppliers['suppliersNumber'] = count($eggsSuppliers);
-        $eggsInWarehouse = $deliveryRepository->eggsDelivered() - $inputsFarmDeliveryRepository->eggsProduction();
+        $eggsInWarehouse = $deliveryRepository->eggsDelivered() - $inputsDeliveryRepository->eggsProduction() - $sellingEggRepository->sellingEggs();
+//        dd($sellingEggRepository->sellingEggs());
+//        455906
 
         $suppliers['eggsInWarehouse'] = $eggsInWarehouse;
         $farm = $this->farmCount();

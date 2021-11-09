@@ -2,87 +2,21 @@
     {% include 'layout/tables/thead.html.twig' %}
     <tr>
         <th class="align-middle">
-            {% trans %}eggs_inputs.show.table.id{% endtrans %}
-        </th>
-        <th class="align-middle">
             {% trans %}eggs_inputs.show.table.chicks_recipient{% endtrans %}
         </th>
         <th class="text-center align-middle">
             {% trans %}eggs_inputs.show.table.chick{% endtrans %}
         </th>
-        <th class="text-center align-middle">
-            {% trans %}eggs_inputs.show.table.deliveries{% endtrans %}
-        </th>
     </tr>
     {% include 'layout/tables/tbody.html.twig' %}
-    {% for inputFarm in farms %}
+    {% for farm in farms %}
         <tr>
             <td class="align-middle">
-                <div class="d-grid gap-2">
-                    {% if is_granted('ROLE_MANAGER') %}
-                        {{ include('layout/buttons/list_actions.html.twig',
-                            {pathLink: path('inputs_farm_delivery_new', {'id': inputFarm.id}), text: 'eggs_inputs.show_delivery.table.badge.delivery' }) }}
-                    {% endif %}
-                </div>
-            </td>
-            <td class="align-middle">
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    {% if inputFarm.inputsFarmDeliveries is empty %}
-                        {% if is_granted('ROLE_ADMIN') %}
-                            {{ include('inputs_farm/_delete_trash_form.html.twig', {'inputs_farm': inputFarm}) }}
-                        {% endif %}
-                        <a class="btn" href=""><i class="fa fa-pencil"></i></a>
-                    {% endif %}
-                    {{ inputFarm.chicksFarm.customer.name }}: {{ inputFarm.chicksFarm.name }}
+                    {{ farm.chicksFarm.customer.name }}: {{ farm.chicksFarm.name }}
                 </div>
             </td>
-            <td class="text-center align-middle">{{ inputFarm.chickNumber|number_format(0, ',', ' ') }}
-            </td>
-            <td>
-                <table class="table table-sm">
-                    <thead class="bg-success text-white">
-                    <tr>
-                        <td>{% trans %}eggs_inputs.show_customer_delivery.table.breeder{% endtrans %}</td>
-                        <td>{% trans %}eggs_inputs.show_customer_delivery.table.herd{% endtrans %}</td>
-                        <td>{% trans %}eggs_inputs.show_customer_delivery.table.delivery_date{% endtrans %}</td>
-                        <td>{% trans %}eggs_inputs.show_customer_delivery.table.laying_date{% endtrans %}</td>
-                        <td>{% trans %}eggs_inputs.show_customer_delivery.table.eggs_number{% endtrans %}</td>
-                    </tr>
-                    </thead>
-                    {% for delivery in inputFarm.inputsFarmDeliveries %}
-                        {# Eggs in hatchery after input #}
-                        {% set differenceHatchery = date(eggs_input.inputDate).diff(date(delivery.delivery.deliveryDate)) %}
-                        {% set hatcheryDays = differenceHatchery.days %}
-                        {% set hatcheryColor = hatcheryDays > 7 ? 'text-danger' : 'text-dark' %}
-                        {# Eggs laying after input #}
-                        {% set differenceFirstLaying = date(eggs_input.inputDate).diff(date(delivery.delivery.firstLayingDate)) %}
-                        {% set firstLayingDays = differenceFirstLaying.days %}
-                        {% set firstLayingColor = firstLayingDays > 7 ? 'text-danger' : 'text-dark' %}
-                        {% set differenceLastLaying = date(eggs_input.inputDate).diff(date(delivery.delivery.lastLayingDate)) %}
-                        {% set lastLayingDays = differenceLastLaying.days %}
-                        {% set lastLayingColor = lastLayingDays > 7 ? 'text-danger' : 'text-dark' %}
-                        <tr>
-                            <td>{{ delivery.delivery.herd.breeder.name }}</td>
-                            <td>
-                                {{ delivery.delivery.herd.name }}
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <a href="{{ path('inputs_farm_delivery_delete', {'id': delivery.id}) }}">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                {% endif %}
-                            </td>
-                            <td>{{ delivery.delivery.deliveryDate|date('Y-m-d') }}
-                                <span class="{{ hatcheryColor }}"> ({{ hatcheryDays }})</span></td>
-                            <td>{{ delivery.delivery.firstLayingDate|date('Y-m-d') }}
-                                - {{ delivery.delivery.lastLayingDate|date('Y-m-d') }}
-                                <span class="{{ lastLayingColor }}">({{ lastLayingDays }}</span>
-                                -
-                                <span class="{{ firstLayingColor }}">{{ firstLayingDays }})</span>
-                            </td>
-                            <td>{{ delivery.eggsNumber }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
+            <td class="text-center align-middle">{{ farm.chickNumber|number_format(0, ',', ' ') }}
             </td>
         </tr>
     {% endfor %}

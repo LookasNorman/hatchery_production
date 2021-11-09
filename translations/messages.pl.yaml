@@ -542,7 +542,18 @@ eggs_inputs:
   no_selection:
     title: Wykaz nakładów przed wybieraniem
   production:
-    inputs:
+    breeder:
+      input: Nakład
+      title: Wybierz dostawcę jaj
+    herd:
+      breeder: Hodowca
+      input: Nakład
+      title: Wybierz stado
+    index:
+      add: Wprowadź nakład
+      button:
+        close: Zamknij
+      show: Szczegóły
       title: Wybierz nakład
   show:
     accordion:
@@ -1008,6 +1019,58 @@ incubators:
         edit: Edytuj
     badge:
       new: Utwórz nowy
+input_delivery:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Jesteś pewien, że chcesz usunąć dostawę w nakłądzie? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
+  edit:
+    button:
+      back: Lista
+      update: Aktualizuj
+    header: Kara edycji
+    title: Edycja dostawy w nakładzie
+  form:
+    label:
+      button:
+        new: Zapisz
+        new_breeder: Zapisz i nowy hodowca
+        new_herd: Zapisz i nowe stado
+      eggs: Ilość jaj
+      herd: Stado
+      input: Nakład
+    placeholder:
+      herd: Wybierz stado z listy
+      input: Wybierz nakład z listy
+  index:
+    button:
+      new: Dodaj nowy
+    table:
+      actions: Akcje
+      delivery: Dostawa
+      eggs_number: Ilość jaj
+      id: Lp.
+      input: Nakład
+      no_found: Brak zapisów
+    title: Lista dostaw w nakładach
+  new:
+    button:
+      back: Lista
+    header: Karta nowej dostawy
+    title: Dodawanie nowej dostawy do nakładu
+  production:
+    new:
+      herd: Stado
+      input: Nakład
+  show:
+    breeder: Hodowca
+    button:
+      back: Lista
+      edit: Edytuj
+    delivery_date: Data dostawy
+    eggs_number: Ilość jaj
+    herd: Stado
+    title: Szczegóły dostawy do nakładu
 inputs_farm:
   delete:
     button:
@@ -1542,6 +1605,50 @@ security:
     description: Nie masz uprawnień aby wejść na tę stronę.
     description_admin: Skontaktuj się z Administratorem
     header: Brak uprawnień
+selling_egg:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Czy jesteś pewien, że chcesz usunąć sprzedaż? Operacja jest nieodwracalna, bezpowrotnie utracisz dane!!!
+  edit:
+    button:
+      back: Lista sprzedaży
+    header: Karta edycji sprzedaży
+    title: Edycja sprzedaży
+  form:
+    button:
+      save: Zapisz
+    label:
+      date: Data sprzedaży
+      delivery: Dostawa
+      eggs_number: Ilość jaj
+    placeholder:
+      delivery: Wybierz dostawę z listy
+  index:
+    button:
+      new: Dodaj sprzedaż
+    table:
+      actions: Akcje
+      date: Data sprzedaży
+      eggs_number: Ilość jaj
+      herd: Stado
+      id: Lp.
+      no_found: Brak zapisów
+    title: Wykaz sprzedaży jaj
+  new:
+    button:
+      back: Lista sprzedaży
+    header: Karta dodawania sprzedaży
+    title: Dodaj nową sprzedaż
+  show:
+    button:
+      back: Lista sprzedaży
+      edit: Edytuj
+    breeder: Hodowca
+    delivery_date: Data dostawy
+    herd: Stado
+    eggs_number: Ilość jaj
+    title: Szczegóły dostawy
 setters:
   delete:
     confirm: Na pewno chcesz usunąć aparat wylęgowy? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!

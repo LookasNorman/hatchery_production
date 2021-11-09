@@ -10,6 +10,7 @@ use App\Form\HerdActiveType;
 use App\Form\HerdsType;
 use App\Repository\DeliveryRepository;
 use App\Repository\DetailsRepository;
+use App\Repository\InputDeliveryRepository;
 use App\Repository\InputsFarmDeliveryRepository;
 use App\Repository\SupplierRepository;
 use App\Repository\HerdsRepository;
@@ -79,11 +80,13 @@ class HerdsController extends AbstractController
     public function show(
         Herds $herd,
         DeliveryRepository $deliveryRepository,
-        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
+        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository,
+        InputDeliveryRepository $inputDeliveryRepository
     ): Response
     {
         $deliveries = $deliveryRepository->herdDeliveryWithStock($herd);
         $inputs = $inputsFarmDeliveryRepository->herdDelivery($herd);
+        $inputs = $inputDeliveryRepository->herdDelivery($herd);
 
         return $this->render('herds/show.html.twig', [
             'herd' => $herd,

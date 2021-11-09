@@ -6,12 +6,15 @@ use App\Entity\Breed;
 use App\Entity\ContactInfo;
 use App\Entity\Delivery;
 use App\Entity\Herds;
+use App\Entity\InputDelivery;
 use App\Entity\InputsFarmDelivery;
+use App\Entity\SellingEgg;
 use App\Entity\Supplier;
 use App\Form\DeliveryPartIndexType;
 use App\Form\DeliveryType;
 use App\Repository\DeliveryRepository;
 use App\Repository\DetailsDeliveryRepository;
+use App\Repository\InputDeliveryRepository;
 use App\Repository\InputsFarmDeliveryRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,10 +33,15 @@ class DeliveryController extends AbstractController
 {
     public function eggsOnWarehouse($deliveries)
     {
-        $inputsFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+        $inputDeliveryRepository = $this->getDoctrine()->getRepository(InputDelivery::class);
+        $sellingEggDelivery = $this->getDoctrine()->getRepository(SellingEgg::class);
+
         $eggsDeliveries = [];
         foreach ($deliveries as $delivery) {
-            $inputsDeliveries = $inputsFarmDeliveryRepository->eggsFromDelivery($delivery);
+            $eggsInProduction = $inputDeliveryRepository->eggsFromDelivery($delivery);
+            $eggsSelled = $sellingEggDelivery->eggsFromDelivery($delivery);
+
+            $inputsDeliveries = $delivery->getEggsNumber() - $eggsInProduction - $eggsSelled;
             if ($inputsDeliveries > 0) {
                 array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$inputsDeliveries]);
             } elseif (is_null($inputsDeliveries)) {
@@ -46,10 +54,14 @@ class DeliveryController extends AbstractController
 
     public function eggsWarehouse($deliveries)
     {
-        $inputsFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+        $inputDeliveryRepository = $this->getDoctrine()->getRepository(InputDelivery::class);
+        $sellingEggDelivery = $this->getDoctrine()->getRepository(SellingEgg::class);
         $eggsDeliveries = [];
         foreach ($deliveries as $delivery) {
-            $inputsDeliveries = $inputsFarmDeliveryRepository->eggsFromDelivery($delivery);
+            $eggsInProduction = $inputDeliveryRepository->eggsFromDelivery($delivery);
+            $eggsSelled = $sellingEggDelivery->eggsFromDelivery($delivery);
+
+            $inputsDeliveries = $delivery->getEggsNumber() - $eggsInProduction - $eggsSelled;
             if (is_null($inputsDeliveries)) {
                 array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$delivery->getEggsNumber()]);
             } else {

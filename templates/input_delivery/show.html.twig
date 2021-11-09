@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>{% trans %}input_delivery.show.title{% endtrans %}</h1>
+        <div class="d-flex justify-content-center card-group">
+            {% include 'layout/cards/chead.html.twig' %}
+            {{ input_delivery.input.name }} - {{ input_delivery.input.inputDate|date("Y-m-d") }}
+            {% include 'layout/cards/cbody.html.twig' %}
+            <dl class="row">
+                <dd class="col-sm-6">{% trans %}input_delivery.show.eggs_number{% endtrans %}</dd>
+                <dt class="col-sm-6 text-end">{{ input_delivery.eggsNumber|number_format(0, ',', ' ') }}</dt>
+                <dd class="col-sm-6">{% trans %}input_delivery.show.breeder{% endtrans %}</dd>
+                <dt class="col-sm-6 text-end">{{ input_delivery.delivery.herd.breeder.name }}</dt>
+                <dd class="col-sm-6">{% trans %}input_delivery.show.herd{% endtrans %}</dd>
+                <dt class="col-sm-6 text-end">{{ input_delivery.delivery.herd.name }}</dt>
+                <dd class="col-sm-6">{% trans %}input_delivery.show.delivery_date{% endtrans %}</dd>
+                <dt class="col-sm-6 text-end">{{ input_delivery.delivery.deliveryDate|date("Y-m-d") }}</dt>
+            </dl>
+            {% include 'layout/cards/cfooter.html.twig' %}
+            {% if is_granted('ROLE_ADMIN') %}
+                {{ include('input_delivery/_delete_form.html.twig') }}
+            {% endif %}
+            {% if is_granted('ROLE_MANAGER') %}
+                {{ include('layout/buttons/edit.html.twig',
+                    {pathLink: path('input_delivery_edit', {'id': input_delivery.id}), text: 'input_delivery.show.button.edit'}) }}
+            {% endif %}
+            {% include 'layout/cards/cend.html.twig' %}
+        </div>
+        {{ include('layout/buttons/back.html.twig',
+            { pathLink: path('input_delivery_index'), text: 'input_delivery.show.button.back' }) }}
+    </div>
+{% endblock %}

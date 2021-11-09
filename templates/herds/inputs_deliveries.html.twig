@@ -37,9 +37,6 @@
     {% for input in inputs %}
         <tr>
             <td class="text-center align-middle">
-                <a href="{{ path('eggs_inputs_show', {'id': input.inputsFarm.eggInput.id}) }}">
-                    {{ input.inputsFarm.eggInput.name }}
-                </a>
             </td>
             <td class="text-center align-middle">
                 <a href="{{ path('eggs_delivery_show', {'id': input.delivery.id}) }}">
@@ -54,26 +51,16 @@
                 ({{ input.delivery.eggsNumber|number_format(0, '', ' ') }})
             </td>
             <td class="text-center align-middle">
-                <a href="{{ path('chicks_recipient_show', {'id': input.inputsFarm.chicksFarm.id}) }}">
-                    {{ input.inputsFarm.chicksFarm.name }}
-                </a>
             </td>
             <td class="text-center align-middle">
-                {% if input.lighting %}
-                    {{ input.lighting.wasteEggs|number_format(0, '', ' ') }} ({{ input.lighting.wasteLighting|number_format(0, '', ' ') }})
-                {% endif %}
             </td>
             <td class="text-center align-middle">
-                {{ input.transfers ? input.transfers.transfersEgg|number_format(0, '', ' ') : '' }}
             </td>
             <td class="text-center align-middle">
-                {{ input.selections ? input.selections.chickNumber|number_format(0, '', ' ') : '' }}
             </td>
             <td class="text-center align-middle">
-                {{ input.selections ? input.selections.cullChicken|number_format(0, '', ' ') : '' }}
             </td>
             <td class="text-center align-middle">
-                {{ input.selections ? input.selections.unhatched|number_format(0, '', ' ') : '' }}
             </td>
         </tr>
     {% endfor %}

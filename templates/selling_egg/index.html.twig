@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>{% trans %}selling_egg.index.title{% endtrans %}</h1>
+        {% if is_granted("ROLE_MANAGER") %}
+            {{ include('layout/buttons/new.html.twig', {pathLink: path('selling_egg_new'), text: 'selling_egg.index.button.new' }) }}
+        {% endif %}
+        {% include 'layout/tables/thead.html.twig' %}
+        <tr>
+            <th>{% trans %}selling_egg.index.table.id{% endtrans %}</th>
+            <th class="text-center">{% trans %}selling_egg.index.table.date{% endtrans %}</th>
+            <th class="text-center">{% trans %}selling_egg.index.table.herd{% endtrans %}</th>
+            <th class="text-end">{% trans %}selling_egg.index.table.eggs_number{% endtrans %}</th>
+            <th class="text-center">{% trans %}selling_egg.index.table.actions{% endtrans %}</th>
+        </tr>
+        {% include 'layout/tables/tbody.html.twig' %}
+        {% for selling_egg in selling_eggs %}
+            <tr>
+                <td>{{ selling_egg.id }}</td>
+                <td class="text-center">{{ selling_egg.date ? selling_egg.date|date('Y-m-d') : '' }}</td>
+                <td class="text-center">{{ selling_egg.delivery.herd.name }} - {{ selling_egg.delivery.deliveryDate|date("Y-m-d") }}</td>
+                <td class="text-end">{{ selling_egg.eggsNumber|number_format(0, ',', ' ') }}</td>
+                <td class="text-center">
+                    <span class="btn-group">
+                    {{ include('layout/buttons/list_show.html.twig',
+                        {pathLink: path('selling_egg_show', {'id': selling_egg.id})}) }}
+                        {% if is_granted('ROLE_MANAGER') %}
+                            {{ include('layout/buttons/list_edit.html.twig',
+                                {pathLink: path('selling_egg_edit', {'id': selling_egg.id})}) }}
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            {{ include('selling_egg/_delete_trash_form.html.twig', {'id': selling_egg.id}) }}
+                        {% endif %}
+                    </span>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">{% trans %}selling_egg.index.table.no_found{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        {% include 'layout/tables/tfooter.html.twig' %}
+        {% include 'layout/tables/tend.html.twig' %}
+    </div>
+{% endblock %}

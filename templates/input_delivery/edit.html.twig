@@ -16,19 +16,20 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>{% trans %}contact_info.edit.title{% endtrans %}</h1>
+        <h1>{% trans %}input_delivery.edit.title{% endtrans %}</h1>
         <div class="d-flex justify-content-center card-group">
             {% include 'layout/cards/chead.html.twig' %}
             <i class="fa fa-pencil"></i>
-            {% trans %}contact_info.edit.header{% endtrans %}
+            {% trans %}input_delivery.edit.header{% endtrans %}
             {% include 'layout/cards/cbody.html.twig' %}
-            {{ include('contact_info/_form.html.twig', {'button_label': 'contact_info.form.button.update'}) }}
+            {{ include('input_delivery/_form.html.twig', {'button_label': 'input_delivery.edit.button.update'}) }}
             {% include 'layout/cards/cfooter.html.twig' %}
             {% if is_granted("ROLE_ADMIN") %}
-                {{ include('contact_info/_delete_form.html.twig') }}
+                {{ include('input_delivery/_delete_form.html.twig') }}
             {% endif %}
             {% include 'layout/cards/cend.html.twig' %}
         </div>
-        {{ include('layout/buttons/back.html.twig', { pathLink: path('contact_info_index'), text: 'contact_info.edit.button.back' }) }}
+        {{ include('layout/buttons/back.html.twig', { pathLink: path('input_delivery_index'), text: 'input_delivery.edit.button.back' }) }}
     </div>
+
 {% endblock %}

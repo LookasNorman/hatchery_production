@@ -5,6 +5,8 @@
         <th>{% trans %}herds.index.table.name{% endtrans %}</th>
         <th>{% trans %}herds.index.table.hatching_date{% endtrans %}</th>
         <th>{% trans %}herds.index.table.hens_number{% endtrans %}</th>
+        <th>Data ubicia (62 tyg)</th>
+        <th>Data następnego wstawienia (46 tyg)</th>
         <th>{% trans %}herds.index.table.breed{% endtrans %}</th>
         {% if breeder is not defined %}
             <th>{% trans %}herds.index.table.breeders{% endtrans %}</th>
@@ -20,6 +22,8 @@
             <td>{{ herd.name }}</td>
             <td>{{ herd.hatchingDate ? herd.hatchingDate|date('Y-m-d') : '' }}</td>
             <td>{{ herd.hensNumber }}</td>
+            <td>{{ herd.hatchingDate ? herd.hatchingDate|date_modify("+62 week")|date('Y-m-d') : '' }}</td>
+            <td>{{ herd.hatchingDate ? herd.hatchingDate|date_modify("+46 week")|date('Y-m-d') : '' }}</td>
             <td>
                 <a href="{{ path('breed_show', {'id': herd.breed.id}) }}">
                     {{ herd.breed.name }} {{ herd.breed.type }}

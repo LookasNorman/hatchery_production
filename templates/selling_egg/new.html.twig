@@ -16,19 +16,16 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>{% trans %}contact_info.edit.title{% endtrans %}</h1>
+        <h1>{% trans %}selling_egg.new.title{% endtrans %}</h1>
         <div class="d-flex justify-content-center card-group">
             {% include 'layout/cards/chead.html.twig' %}
-            <i class="fa fa-pencil"></i>
-            {% trans %}contact_info.edit.header{% endtrans %}
+            <i class="fa fa-plus"></i>
+            {% trans %}selling_egg.new.header{% endtrans %}
             {% include 'layout/cards/cbody.html.twig' %}
-            {{ include('contact_info/_form.html.twig', {'button_label': 'contact_info.form.button.update'}) }}
+            {{ include('selling_egg/_form.html.twig') }}
             {% include 'layout/cards/cfooter.html.twig' %}
-            {% if is_granted("ROLE_ADMIN") %}
-                {{ include('contact_info/_delete_form.html.twig') }}
-            {% endif %}
             {% include 'layout/cards/cend.html.twig' %}
         </div>
-        {{ include('layout/buttons/back.html.twig', { pathLink: path('contact_info_index'), text: 'contact_info.edit.button.back' }) }}
+        {{ include('layout/buttons/back.html.twig', {pathLink: path('selling_egg_index'), text: 'selling_egg.new.button.back'}) }}
     </div>
 {% endblock %}

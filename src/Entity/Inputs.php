@@ -57,11 +57,17 @@ class Inputs
      */
     private $planInputs;
 
+    /**
+     * @ORM\OneToMany(targetEntity=InputDelivery::class, mappedBy="input")
+     */
+    private $inputDeliveries;
+
     public function __construct()
     {
         $this->inputsFarms = new ArrayCollection();
         $this->chickTemperatures = new ArrayCollection();
         $this->planInputs = new ArrayCollection();
+        $this->inputDeliveries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +183,36 @@ class Inputs
             // set the owning side to null (unless already changed)
             if ($planInput->getInput() === $this) {
                 $planInput->setInput(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InputDelivery[]
+     */
+    public function getInputDeliveries(): Collection
+    {
+        return $this->inputDeliveries;
+    }
+
+    public function addInputDelivery(InputDelivery $inputDelivery): self
+    {
+        if (!$this->inputDeliveries->contains($inputDelivery)) {
+            $this->inputDeliveries[] = $inputDelivery;
+            $inputDelivery->setInput($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInputDelivery(InputDelivery $inputDelivery): self
+    {
+        if ($this->inputDeliveries->removeElement($inputDelivery)) {
+            // set the owning side to null (unless already changed)
+            if ($inputDelivery->getInput() === $this) {
+                $inputDelivery->setInput(null);
             }
         }
 

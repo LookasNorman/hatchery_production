@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>{% trans %}input_delivery.index.title{% endtrans %}</h1>
+        {% if is_granted("ROLE_MANAGER") %}
+            {{ include('layout/buttons/new.html.twig', {pathLink: path('input_delivery_new'), text: 'input_delivery.index.button.new' }) }}
+        {% endif %}
+        {% include 'layout/tables/thead.html.twig' %}
+        <tr>
+            <th>{% trans %}input_delivery.index.table.id{% endtrans %}</th>
+            <th class="text-center">{% trans %}input_delivery.index.table.input{% endtrans %}</th>
+            <th class="text-center">{% trans %}input_delivery.index.table.delivery{% endtrans %}</th>
+            <th class="text-end">{% trans %}input_delivery.index.table.eggs_number{% endtrans %}</th>
+            <th class="text-center">{% trans %}input_delivery.index.table.actions{% endtrans %}</th>
+        </tr>
+        {% include 'layout/tables/tbody.html.twig' %}
+        {% for input_delivery in input_deliveries %}
+            <tr>
+                <td>{{ input_delivery.id }}</td>
+                <td class="text-center">{{ input_delivery.input.name }}
+                    - {{ input_delivery.input.inputDate|date("Y-m-d") }}</td>
+                <td class="text-center">{{ input_delivery.delivery.herd.breeder.name }}
+                    - {{ input_delivery.delivery.herd.name }}
+                    - {{ input_delivery.delivery.deliveryDate|date("Y-m-d") }}</td>
+                <td class="text-end">{{ input_delivery.eggsNumber|number_format(0, ',', ' ') }}</td>
+                <td class="text-center">
+                <span class="btn-group">
+                    {{ include('layout/buttons/list_show.html.twig',
+                        {pathLink: path('input_delivery_show', {'id': input_delivery.id})}) }}
+                    {% if is_granted('ROLE_MANAGER') %}
+                        {{ include('layout/buttons/list_edit.html.twig',
+                            {pathLink: path('input_delivery_edit', {'id': input_delivery.id})}) }}
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {{ include('input_delivery/_delete_trash_form.html.twig', {'id': input_delivery.id}) }}
+                    {% endif %}
+                </span>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">{% trans %}input_delivery.index.table.no_found{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        {% include 'layout/tables/tfooter.html.twig' %}
+        {% include 'layout/tables/tend.html.twig' %}
+    </div>
+{% endblock %}
