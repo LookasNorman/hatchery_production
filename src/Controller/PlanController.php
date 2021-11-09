@@ -262,7 +262,7 @@ class PlanController extends AbstractController
     public function weekChicksPlanBreed($year, $breed)
     {
         $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
-        $now = new \DateTime();
+        $now = new \DateTime('midnight');
         if ($year < $now) {
             $firstWeekStart = $now;
             if ($firstWeekStart->format('l') != 'Monday') {
@@ -319,7 +319,7 @@ class PlanController extends AbstractController
 
     public function sortPlansByWeek($year, $breed)
     {
-        $now = new \DateTime();
+        $now = new \DateTime('midnight');
         if ($year < $now) {
             $firstWeekStart = $now;
             if ($firstWeekStart->format('l') != 'Monday') {
@@ -452,7 +452,7 @@ class PlanController extends AbstractController
         $planDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
         $breed = $this->getDoctrine()->getRepository(Breed::class)->find(1);
         $date = new \DateTime();
-        $date->setISODate($year, $week, 2);
+        $date->setISODate($year, $week, 1);
         $date->modify('midnight');
         $dateEnd = clone $date;
         $dateEnd->modify('+7 days');
@@ -460,17 +460,18 @@ class PlanController extends AbstractController
         $plans = [];
         for ($day = clone $date; $day < $dateEnd; $day->modify('+1 day')) {
             $start = clone $day;
-            $start->modify('midnight -1 second');
+            $start->modify('midnight');
             $end = clone $day;
             $end->modify('midnight +1 day -1 second');
-
+//dump($start);
+//dump($end);
             array_push($plans, [
                 'date' => $start,
                 'chicks' => $planDeliveryChickRepository->planInputsInDay($start, $end, $breed),
                 'eggs' => $planDeliveryEggRepository->planDeliveryInDay($start, $end, $breed)
             ]);
         }
-
+//die();
         return $this->render('plans/show_week/index.html.twig', [
             'date' => $date,
             'plans' => $plans,
