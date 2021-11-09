@@ -463,15 +463,14 @@ class PlanController extends AbstractController
             $start->modify('midnight');
             $end = clone $day;
             $end->modify('midnight +1 day -1 second');
-//dump($start);
-//dump($end);
+
             array_push($plans, [
                 'date' => $start,
                 'chicks' => $planDeliveryChickRepository->planInputsInDay($start, $end, $breed),
                 'eggs' => $planDeliveryEggRepository->planDeliveryInDay($start, $end, $breed)
             ]);
         }
-//die();
+
         return $this->render('plans/show_week/index.html.twig', [
             'date' => $date,
             'plans' => $plans,
