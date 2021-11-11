@@ -21,33 +21,37 @@
         </h1>
         {% include 'layout/tables/thead.html.twig' %}
         <tr>
-            <th>{% trans %}eggs_inputs_lighting.index.table.id{% endtrans %}</th>
-            <th class="text-center">{% trans %}eggs_inputs_lighting.index.table.waste_eggs{% endtrans %}</th>
+            <th class="text-end">{% trans %}eggs_inputs_lighting.index.table.waste_eggs{% endtrans %}</th>
+            <th class="text-end">{% trans %}eggs_inputs_lighting.index.table.waste{% endtrans %}</th>
             <th class="text-center">{% trans %}eggs_inputs_lighting.index.table.lighting_date{% endtrans %}</th>
             <th class="text-center">{% trans %}eggs_inputs_lighting.index.table.herd{% endtrans %}</th>
-            <th class="text-center">{% trans %}eggs_inputs_lighting.index.table.farm{% endtrans %}</th>
+            <th class="text-end">{% trans %}eggs_inputs_lighting.index.table.eggs_number{% endtrans %}</th>
             <th class="text-center">{% trans %}eggs_inputs_lighting.index.table.input{% endtrans %}</th>
             <th class="text-center">{% trans %}eggs_inputs_lighting.index.table.actions{% endtrans %}</th>
         </tr>
         {% include 'layout/tables/tbody.html.twig' %}
         {% for eggs_inputs_lighting in eggs_inputs_lightings %}
             <tr>
-                <td>{{ eggs_inputs_lighting.id }}</td>
-                <td class="text-center">{{ eggs_inputs_lighting.wasteEggs|number_format(0, ',', ' ') }}</td>
+                <td class="text-end">
+                    {{ eggs_inputs_lighting.wasteEggs|number_format(0, ',', ' ') }}
+                    {% trans %}eggs_inputs_lighting.index.table.of{% endtrans%}
+                    {{ eggs_inputs_lighting.lightingEggs|number_format(0, ',', ' ') }}
+                </td>
+                <td class="text-end">{{ eggs_inputs_lighting.wasteLighting|number_format(0, ',', ' ') }}</td>
                 <td class="text-center">{{ eggs_inputs_lighting.lightingDate ? eggs_inputs_lighting.lightingDate|date('Y-m-d') : '' }}</td>
                 <td class="text-center">
-                    {% for farmDelivery in eggs_inputs_lighting.inputsFarmDelivery %}
-                        {{ farmDelivery.delivery.herd.name }}
+                    {% for inputDelivery in eggs_inputs_lighting.inputDeliveries %}
+                        {{ inputDelivery.delivery.herd.breeder.name }} - {{ inputDelivery.delivery.herd.name }}
+                    {% endfor %}
+                </td>
+                <td class="text-end">
+                    {% for inputDelivery in eggs_inputs_lighting.inputDeliveries %}
+                        {{ inputDelivery.eggsNumber|number_format(0, ',', ' ') }}
                     {% endfor %}
                 </td>
                 <td class="text-center">
-                    {% for farmDelivery in eggs_inputs_lighting.inputsFarmDelivery %}
-                        {{ farmDelivery.inputsFarm.chicksFarm.name }}
-                    {% endfor %}
-                </td>
-                <td class="text-center">
-                    {% for farmDelivery in eggs_inputs_lighting.inputsFarmDelivery %}
-                        {{ farmDelivery.inputsFarm.eggInput.name }}
+                    {% for inputDelivery in eggs_inputs_lighting.inputDeliveries %}
+                        {{ inputDelivery.input.name }}
                     {% endfor %}
                 </td>
                 <td class="text-center">

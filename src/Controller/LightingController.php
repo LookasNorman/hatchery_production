@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Herds;
+use App\Entity\InputDelivery;
 use App\Entity\Inputs;
 use App\Entity\InputsFarmDelivery;
 use App\Entity\Lighting;
 use App\Form\LightingCorrectType;
 use App\Form\LightingType;
 use App\Repository\HerdsRepository;
+use App\Repository\InputDeliveryRepository;
 use App\Repository\InputsFarmDeliveryRepository;
 use App\Repository\LightingRepository;
 use App\Repository\InputsRepository;
@@ -30,41 +32,77 @@ class LightingController extends AbstractController
     public function index(LightingRepository $eggsInputsLightingRepository): Response
     {
         return $this->render('eggs_inputs_lighting/index.html.twig', [
-            'eggs_inputs_lightings' => $eggsInputsLightingRepository->findAll(),
+            'eggs_inputs_lightings' => $eggsInputsLightingRepository->findBy([], ['lightingDate' =>'desc']),
         ]);
     }
 
-    public function totalEggs($inputsFarmDelivery)
+    /**
+     * @Route("/new/{inputs}/{herd}", name="eggs_inputs_lighting_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_PRODUCTION")
+     */
+    public function new(
+        $inputs,
+        $herd,
+        Request $request,
+        InputsRepository $eggsInputsRepository,
+        HerdsRepository $herdsRepository,
+        InputDeliveryRepository $inputDeliveryRepository
+    ): Response
+    {
+        $inputs = $eggsInputsRepository->find($inputs);
+        $herd = $herdsRepository->find($herd);
+        $form = $this->createForm(LightingType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $inputDelivery = $inputDeliveryRepository->herdDeliveryInInputForLighting($herd, $inputs);
+
+            $this->createLighting($form, $inputDelivery);
+
+            $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+            if (in_array('ROLE_PRODUCTION', $user->getRoles(), true)) {
+                return $this->redirectToRoute('production_lighting_herd', ['id' => $inputs->getId()]);
+            }
+            return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputs->getId()]);
+        }
+
+        return $this->render('eggs_inputs_lighting/new.html.twig', [
+            'form' => $form->createView(),
+            'input' => $inputs,
+            'herd' => $herd
+        ]);
+    }
+
+    public function totalEggs($inputDeliveries)
     {
         $totalEggs = 0;
-        foreach ($inputsFarmDelivery as $inputFarmDelivery) {
-            $totalEggs = $totalEggs + $inputFarmDelivery->getEggsNumber();
+        foreach ($inputDeliveries as $inputDelivery) {
+            $totalEggs = $totalEggs + $inputDelivery->getEggsNumber();
         }
         return $totalEggs;
     }
 
-    public function createLighting($form, $inputsFarmDelivery)
+    public function createLighting($form, $inputDeliveries)
     {
         $entityManager = $this->getDoctrine()->getManager();
-
         $wasteEggs = $form['wasteEggs']->getData();
         $lightingDate = $form['lightingDate']->getData();
         $eggsNumber = $form['eggsNumber']->getData();
-        $totalEggs = $this->totalEggs($inputsFarmDelivery);
-
+        $totalEggs = $this->totalEggs($inputDeliveries);
+        $fertility = round($wasteEggs / $eggsNumber, 4);
         $totalWaste = 0;
         $totalEggsNumber = 0;
-        $length = count($inputsFarmDelivery) - 1;
-
-        foreach ($inputsFarmDelivery as $key => $inputFarmDelivery) {
+        $length = count($inputDeliveries) - 1;
+        foreach ($inputDeliveries as $key => $inputDelivery) {
             $eggsInputLighting = new Lighting();
             $eggsInputLighting->setLightingDate($lightingDate);
             if ($totalEggs === $eggsNumber) {
-                $setEggs = $inputFarmDelivery->getEggsNumber();
+                $setEggs = $inputDelivery->getEggsNumber();
                 $eggsInputLighting->setLightingEggs($setEggs);
             } else {
                 if ($key < $length) {
-                    $setEggs = round($eggsNumber / $totalEggs * $inputFarmDelivery->getEggsNumber());
+                    $setEggs = round($eggsNumber / $totalEggs * $inputDelivery->getEggsNumber());
                     $eggsInputLighting->setLightingEggs($setEggs);
                     $totalEggsNumber = $totalEggsNumber + $setEggs;
                 } else {
@@ -72,20 +110,19 @@ class LightingController extends AbstractController
                     $eggsInputLighting->setLightingEggs($setEggs);
                 }
             }
-            $eggsInputLighting->addInputsFarmDelivery($inputFarmDelivery);
-
+            $eggsInputLighting->addInputDelivery($inputDelivery);
+            $setWasteLighting = $inputDelivery->getEggsNumber() * $fertility;
+            $eggsInputLighting->setWasteLighting($setWasteLighting);
             if ($key < $length) {
-                $setWaste = round($inputFarmDelivery->getEggsNumber() / $totalEggs * $wasteEggs, 0);
+                $setWaste = round($inputDelivery->getEggsNumber() / $totalEggs * $wasteEggs, 0);
                 $eggsInputLighting->setWasteEggs($setWaste);
                 $totalWaste = $totalWaste + $setWaste;
             } else {
                 $setWaste = $wasteEggs - $totalWaste;
                 $eggsInputLighting->setWasteEggs($setWaste);
             }
-
             $entityManager->persist($eggsInputLighting);
         }
-
         $entityManager->flush();
 
     }
@@ -142,43 +179,6 @@ class LightingController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new/{inputs}/{herd}", name="eggs_inputs_lighting_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_PRODUCTION")
-     */
-    public function new(
-        $inputs,
-        $herd,
-        Request $request,
-        InputsRepository $eggsInputsRepository,
-        HerdsRepository $herdsRepository,
-        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
-    ): Response
-    {
-        $inputs = $eggsInputsRepository->find($inputs);
-        $herd = $herdsRepository->find($herd);
-        $form = $this->createForm(LightingType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $inputsFarmDelivery = $inputsFarmDeliveryRepository->inputFarmDeliveryForLighting($herd, $inputs);
-
-            $this->createLighting($form, $inputsFarmDelivery);
-
-            $user = $this->container->get('security.token_storage')->getToken()->getUser();
-
-            if (in_array('ROLE_PRODUCTION', $user->getRoles(), true)) {
-                return $this->redirectToRoute('production_lighting_herd', ['id' => $inputs->getId()]);
-            }
-            return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputs->getId()]);
-        }
-
-        return $this->render('eggs_inputs_lighting/new.html.twig', [
-            'form' => $form->createView(),
-            'input' => $inputs,
-            'herd' => $herd
-        ]);
-    }
 
     /**
      * @param \App\Repository\InputsRepository $inputsRepository
@@ -228,18 +228,15 @@ class LightingController extends AbstractController
      * @Route("/{id}", name="eggs_inputs_lighting_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, Lighting $eggsInputsLighting): Response
+    public function delete(Request $request, Lighting $lighting): Response
     {
-        $inputFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
-        $inputsFarmDelivery = $inputFarmDeliveryRepository->findBy(['lighting' => $eggsInputsLighting]);
-
-        if ($this->isCsrfTokenValid('delete' . $eggsInputsLighting->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $lighting->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            foreach ($inputsFarmDelivery as $delivery) {
-                $delivery->getLighting()->removeInputsFarmDelivery($delivery);
+            foreach ($lighting->getInputDeliveries() as $delivery) {
+                $lighting->removeInputDelivery($delivery);
             }
 
-            $entityManager->remove($eggsInputsLighting);
+            $entityManager->remove($lighting);
             $entityManager->flush();
         }
 

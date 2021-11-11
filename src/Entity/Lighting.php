@@ -36,11 +36,6 @@ class Lighting
     private $lightingDate;
 
     /**
-     * @ORM\OneToMany(targetEntity=InputsFarmDelivery::class, mappedBy="lighting")
-     */
-    private $inputsFarmDelivery;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $lightingEggs;
@@ -50,9 +45,14 @@ class Lighting
      */
     private $wasteLighting;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=InputDelivery::class, mappedBy="lighting")
+     */
+    private $inputDeliveries;
+
     public function __construct()
     {
-        $this->inputsFarmDelivery = new ArrayCollection();
+        $this->inputDeliveries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,36 +84,6 @@ class Lighting
         return $this;
     }
 
-    /**
-     * @return Collection|InputsFarmDelivery[]
-     */
-    public function getInputsFarmDelivery(): Collection
-    {
-        return $this->inputsFarmDelivery;
-    }
-
-    public function addInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
-    {
-        if (!$this->inputsFarmDelivery->contains($inputsFarmDelivery)) {
-            $this->inputsFarmDelivery[] = $inputsFarmDelivery;
-            $inputsFarmDelivery->setLighting($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
-    {
-        if ($this->inputsFarmDelivery->removeElement($inputsFarmDelivery)) {
-            // set the owning side to null (unless already changed)
-            if ($inputsFarmDelivery->getLighting() === $this) {
-                $inputsFarmDelivery->setLighting(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getLightingEggs(): ?int
     {
         return $this->lightingEggs;
@@ -134,6 +104,33 @@ class Lighting
     public function setWasteLighting(?int $wasteLighting): self
     {
         $this->wasteLighting = $wasteLighting;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InputDelivery[]
+     */
+    public function getInputDeliveries(): Collection
+    {
+        return $this->inputDeliveries;
+    }
+
+    public function addInputDelivery(InputDelivery $inputDelivery): self
+    {
+        if (!$this->inputDeliveries->contains($inputDelivery)) {
+            $this->inputDeliveries[] = $inputDelivery;
+            $inputDelivery->addLighting($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInputDelivery(InputDelivery $inputDelivery): self
+    {
+        if ($this->inputDeliveries->removeElement($inputDelivery)) {
+            $inputDelivery->removeLighting($this);
+        }
 
         return $this;
     }
