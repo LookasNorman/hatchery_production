@@ -35,14 +35,19 @@ class Transfers
     private $transfersEgg;
 
     /**
-     * @ORM\OneToMany(targetEntity=InputsFarmDelivery::class, mappedBy="transfers")
+     * @ORM\ManyToOne(targetEntity=InputsFarm::class, inversedBy="transfers")
      */
-    private $inputsFarmDelivery;
+    private $farm;
 
-    public function __construct()
-    {
-        $this->inputsFarmDelivery = new ArrayCollection();
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity=Herds::class, inversedBy="transfers")
+     */
+    private $herd;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Inputs::class, inversedBy="transfers")
+     */
+    private $input;
 
     public function getId(): ?int
     {
@@ -73,33 +78,40 @@ class Transfers
         return $this;
     }
 
-    /**
-     * @return Collection|InputsFarmDelivery[]
-     */
-    public function getInputsFarmDelivery(): Collection
+    public function getFarm(): ?InputsFarm
     {
-        return $this->inputsFarmDelivery;
+        return $this->farm;
     }
 
-    public function addInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
+    public function setFarm(?InputsFarm $farm): self
     {
-        if (!$this->inputsFarmDelivery->contains($inputsFarmDelivery)) {
-            $this->inputsFarmDelivery[] = $inputsFarmDelivery;
-            $inputsFarmDelivery->setTransfers($this);
-        }
+        $this->farm = $farm;
 
         return $this;
     }
 
-    public function removeInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
+    public function getHerd(): ?Herds
     {
-        if ($this->inputsFarmDelivery->removeElement($inputsFarmDelivery)) {
-            // set the owning side to null (unless already changed)
-            if ($inputsFarmDelivery->getTransfers() === $this) {
-                $inputsFarmDelivery->setTransfers(null);
-            }
-        }
+        return $this->herd;
+    }
+
+    public function setHerd(?Herds $herd): self
+    {
+        $this->herd = $herd;
 
         return $this;
     }
+
+    public function getInput(): ?Inputs
+    {
+        return $this->input;
+    }
+
+    public function setInput(?Inputs $input): self
+    {
+        $this->input = $input;
+
+        return $this;
+    }
+
 }

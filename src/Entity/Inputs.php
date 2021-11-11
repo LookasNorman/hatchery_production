@@ -62,12 +62,18 @@ class Inputs
      */
     private $inputDeliveries;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Transfers::class, mappedBy="input")
+     */
+    private $transfers;
+
     public function __construct()
     {
         $this->inputsFarms = new ArrayCollection();
         $this->chickTemperatures = new ArrayCollection();
         $this->planInputs = new ArrayCollection();
         $this->inputDeliveries = new ArrayCollection();
+        $this->transfers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -213,6 +219,36 @@ class Inputs
             // set the owning side to null (unless already changed)
             if ($inputDelivery->getInput() === $this) {
                 $inputDelivery->setInput(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Transfers[]
+     */
+    public function getTransfers(): Collection
+    {
+        return $this->transfers;
+    }
+
+    public function addTransfer(Transfers $transfer): self
+    {
+        if (!$this->transfers->contains($transfer)) {
+            $this->transfers[] = $transfer;
+            $transfer->setInput($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransfer(Transfers $transfer): self
+    {
+        if ($this->transfers->removeElement($transfer)) {
+            // set the owning side to null (unless already changed)
+            if ($transfer->getInput() === $this) {
+                $transfer->setInput(null);
             }
         }
 

@@ -19,25 +19,19 @@
         <h1>{% trans %}eggs_inputs_transfer.show.title{% endtrans %}</h1>
         <div class="d-flex justify-content-center card-group">
             {% include 'layout/cards/chead.html.twig' %}
-            {% for farmDelivery in eggs_inputs_transfer.inputsFarmDelivery %}
-                {{ farmDelivery.inputsFarm.eggInput.name }}
-            {% endfor %} -
+            {{ eggs_inputs_transfer.input ? eggs_inputs_transfer.input.name : '' }} -
             {{ eggs_inputs_transfer.transferDate ? eggs_inputs_transfer.transferDate|date('Y-m-d') : '' }}
             {% include 'layout/cards/cbody.html.twig' %}
             <dl class="row">
-                <dd class="col-sm-3">{% trans %}eggs_inputs_transfer.show.waste_eggs{% endtrans %}</dd>
-                <dt class="col-sm-9 text-end">{{ eggs_inputs_transfer.transfersEgg|number_format(0, ',', ' ') }}</dt>
-                <dd class="col-sm-3">{% trans %}eggs_inputs_transfer.show.herd{% endtrans %}</dd>
-                <dt class="col-sm-9 text-end">
-                    {% for farmDelivery in eggs_inputs_transfer.inputsFarmDelivery %}
-                        {{ farmDelivery.delivery.herd.name }}
-                    {% endfor %}
+                <dd class="col-sm-6">{% trans %}eggs_inputs_transfer.show.transfer_egg{% endtrans %}</dd>
+                <dt class="col-sm-6 text-end">{{ eggs_inputs_transfer.transfersEgg|number_format(0, ',', ' ') }}</dt>
+                <dd class="col-sm-6">{% trans %}eggs_inputs_transfer.show.herd{% endtrans %}</dd>
+                <dt class="col-sm-6 text-end">{{ eggs_inputs_transfer.herd ? eggs_inputs_transfer.herd.breeder.name : '' }}
+                    - {{ eggs_inputs_transfer.herd ? eggs_inputs_transfer.herd.name : '' }}
                 </dt>
-                <dd class="col-sm-3">{% trans %}eggs_inputs_transfer.show.farm{% endtrans %}</dd>
-                <dt class="col-sm-9 text-end">
-                    {% for farmDelivery in eggs_inputs_transfer.inputsFarmDelivery %}
-                        {{ farmDelivery.inputsFarm.chicksFarm.name }}
-                    {% endfor %}
+                <dd class="col-sm-6">{% trans %}eggs_inputs_transfer.show.farm{% endtrans %}</dd>
+                <dt class="col-sm-6 text-end">{{ eggs_inputs_transfer.farm ? eggs_inputs_transfer.farm.chicksFarm.customer.name : '' }}
+                    - {{ eggs_inputs_transfer.farm ? eggs_inputs_transfer.farm.chicksFarm.name : '' }}
                 </dt>
             </dl>
             {% include 'layout/cards/cfooter.html.twig' %}

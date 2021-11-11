@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\ChicksRecipient;
+use App\Entity\Herds;
 use App\Entity\Inputs;
-use App\Entity\InputsDetails;
 use App\Entity\Transfers;
-use App\Entity\Supplier;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -25,8 +25,38 @@ class TransfersType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+            ->add('input', EntityType::class, [
+                'class' => Inputs::class,
+                'choice_label' => 'name',
+                'attr' => [
+                    'class' => 'form-select'
+                ],
+                'label' => 'eggs_inputs_transfer.form.label.eggs_inputs',
+                'placeholder' => 'eggs_inputs_transfer.form.placeholder.eggs_inputs'
+            ])
+            ->add('herd', EntityType::class, [
+                'class' => Herds::class,
+                'choice_label' => function (Herds $herds) {
+                    return $herds->getBreeder()->getName() . ' - ' . $herds->getName();
+                },
+                'attr' => [
+                    'class' => 'form-select'
+                ],
+                'label' => 'eggs_inputs_transfer.form.label.herd',
+                'placeholder' => 'eggs_inputs_transfer.form.placeholder.herd'
+            ])
+            ->add('farm', EntityType::class, [
+                'class' => ChicksRecipient::class,
+                'choice_label' => function(ChicksRecipient $chicksRecipient){
+                return $chicksRecipient->getCustomer()->getName() . ' - ' . $chicksRecipient->getName();
+                },
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'eggs_inputs_transfer.form.label.farm',
+                'placeholder' => 'eggs_inputs_transfer.form.placeholder.farm'
+            ])
             ->add('transfersEgg', IntegerType::class, [
-                'help' => 'eggs_inputs_transfer.form.help.transfers_egg',
                 'label' => 'eggs_inputs_transfer.form.label.transfers_egg',
                 'attr' => [
                     'class' => 'form-control'

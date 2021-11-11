@@ -5,12 +5,9 @@ namespace App\Controller;
 use App\Entity\Herds;
 use App\Entity\Inputs;
 use App\Entity\InputsFarm;
-use App\Entity\InputsFarmDelivery;
 use App\Entity\Transfers;
+use App\Form\Production\TransfersProductionType;
 use App\Form\TransfersType;
-use App\Repository\HerdsRepository;
-use App\Repository\InputsFarmDeliveryRepository;
-use App\Repository\InputsFarmRepository;
 use App\Repository\InputsRepository;
 use App\Repository\TransfersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +28,7 @@ class TransfersController extends AbstractController
     public function index(TransfersRepository $eggsInputsTransfersRepository): Response
     {
         return $this->render('eggs_inputs_transfers/index.html.twig', [
-            'eggs_inputs_transfers' => $eggsInputsTransfersRepository->findAll(),
+            'eggs_inputs_transfers' => $eggsInputsTransfersRepository->findBy([], ['transferDate' => 'DESC']),
         ]);
     }
 
@@ -40,64 +37,34 @@ class TransfersController extends AbstractController
      * @IsGranted("ROLE_PRODUCTION")
      */
     public function new(
-        Inputs                       $inputs,
-        InputsFarm                   $farm,
-        Herds                        $herd,
-        Request                      $request,
-        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
+        Inputs     $inputs,
+        InputsFarm $farm,
+        Herds      $herd,
+        Request    $request
     ): Response
     {
-        $form = $this->createForm(TransfersType::class);
+        $transfer = new Transfers();
+        $form = $this->createForm(TransfersProductionType::class, $transfer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $totalEggs = 0;
-            $transfersEgg = $form['transfersEgg']->getData();
-            $transferDate = $form['transferDate']->getData();
             $entityManager = $this->getDoctrine()->getManager();
-            $inputsFarmDelivery = $inputsFarmDeliveryRepository->herdInputsFarmInInput($farm, $herd);
-            foreach ($inputsFarmDelivery as $inputFarmDelivery) {
-                $totalEggs = $totalEggs + $inputFarmDelivery->getEggsNumber() - $inputFarmDelivery->getLighting()->getWasteEggs();
-            }
-
-            $totalEggsNumber = 0;
-            $length = count($inputsFarmDelivery) - 1;
-
-            foreach ($inputsFarmDelivery as $key => $inputFarmDelivery) {
-                $eggsInputTransfer = new Transfers();
-                $eggsInputTransfer->setTransferDate($transferDate);
-
-                if ($key < $length) {
-                    $setEggs = round($transfersEgg / $totalEggs * $inputFarmDelivery->getEggsNumber());
-                    $eggsInputTransfer->setTransfersEgg($setEggs);
-                    $totalEggsNumber = $totalEggsNumber + $setEggs;
-                } else {
-                    $setEggs = $transfersEgg - $totalEggsNumber;
-                    $eggsInputTransfer->setTransfersEgg($setEggs);
-                }
-
-                $eggsInputTransfer->addInputsFarmDelivery($inputFarmDelivery);
-
-                $entityManager->persist($eggsInputTransfer);
-            }
-
-
+            $transfer->setHerd($herd);
+            $transfer->setFarm($farm);
+            $transfer->setInput($inputs);
+            $entityManager->persist($transfer);
             $entityManager->flush();
 
-            return $this->redirectToRoute('eggs_inputs_show', ['id' => $inputs->getId()]);
+            return $this->redirectToRoute('production_transfer_farm', ['id' => $inputs->getId()]);
         }
 
-        return $this->render('eggs_inputs_transfers/new.html.twig', [
-            'form' => $form->createView(),
+        return $this->render('eggs_inputs_transfers/new.html.twig', ['form' => $form->createView(),
             'input' => $inputs,
             'herd' => $herd,
-            'farm' => $farm
-        ]);
+            'farm' => $farm]);
     }
 
     /**
-     * @param \App\Repository\InputsRepository $inputsRepository
-     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/transfer", name="no_transfer_index", methods={"GET"})
      */
     public function showNoTransfer(InputsRepository $inputsRepository): Response
@@ -145,14 +112,9 @@ class TransfersController extends AbstractController
      */
     public function delete(Request $request, Transfers $eggsInputsTransfer): Response
     {
-        $inputFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
-        $inputsFarmDelivery = $inputFarmDeliveryRepository->findBy(['transfers' => $eggsInputsTransfer]);
 
         if ($this->isCsrfTokenValid('delete' . $eggsInputsTransfer->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            foreach ($inputsFarmDelivery as $delivery) {
-                $delivery->getTransfers()->removeInputsFarmDelivery($delivery);
-            }
             $entityManager->remove($eggsInputsTransfer);
             $entityManager->flush();
         }

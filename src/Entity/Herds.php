@@ -89,12 +89,18 @@ class Herds
      */
     private $planInputs;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Transfers::class, mappedBy="herd")
+     */
+    private $transfers;
+
     public function __construct()
     {
         $this->eggsDeliveries = new ArrayCollection();
         $this->planDeliveryEggs = new ArrayCollection();
         $this->vaccinations = new ArrayCollection();
         $this->planInputs = new ArrayCollection();
+        $this->transfers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -306,4 +312,33 @@ class Herds
         return $this;
     }
 
+    /**
+     * @return Collection|Transfers[]
+     */
+    public function getTransfers(): Collection
+    {
+        return $this->transfers;
+    }
+
+    public function addTransfer(Transfers $transfer): self
+    {
+        if (!$this->transfers->contains($transfer)) {
+            $this->transfers[] = $transfer;
+            $transfer->setHerd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransfer(Transfers $transfer): self
+    {
+        if ($this->transfers->removeElement($transfer)) {
+            // set the owning side to null (unless already changed)
+            if ($transfer->getHerd() === $this) {
+                $transfer->setHerd(null);
+            }
+        }
+
+        return $this;
+    }
 }

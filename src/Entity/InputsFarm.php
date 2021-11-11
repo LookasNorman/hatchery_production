@@ -39,11 +39,6 @@ class InputsFarm
     private $chicksFarm;
 
     /**
-     * @ORM\OneToMany(targetEntity=InputsFarmDelivery::class, mappedBy="inputsFarm")
-     */
-    private $inputsFarmDeliveries;
-
-    /**
      * @ORM\OneToMany(targetEntity=InputsFarmDeliveryPlan::class, mappedBy="inputsFarm")
      */
     private $inputsFarmDeliveryPlans;
@@ -53,11 +48,16 @@ class InputsFarm
      */
     private $transportLists;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Transfers::class, mappedBy="farm")
+     */
+    private $transfers;
+
     public function __construct()
     {
-        $this->inputsFarmDeliveries = new ArrayCollection();
         $this->inputsFarmDeliveryPlans = new ArrayCollection();
         $this->transportLists = new ArrayCollection();
+        $this->transfers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,36 +97,6 @@ class InputsFarm
     public function setChicksFarm(?ChicksRecipient $chicksFarm): self
     {
         $this->chicksFarm = $chicksFarm;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|InputsFarmDelivery[]
-     */
-    public function getInputsFarmDeliveries(): Collection
-    {
-        return $this->inputsFarmDeliveries;
-    }
-
-    public function addInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
-    {
-        if (!$this->inputsFarmDeliveries->contains($inputsFarmDelivery)) {
-            $this->inputsFarmDeliveries[] = $inputsFarmDelivery;
-            $inputsFarmDelivery->setInputsFarm($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
-    {
-        if ($this->inputsFarmDeliveries->removeElement($inputsFarmDelivery)) {
-            // set the owning side to null (unless already changed)
-            if ($inputsFarmDelivery->getInputsFarm() === $this) {
-                $inputsFarmDelivery->setInputsFarm(null);
-            }
-        }
 
         return $this;
     }
@@ -185,6 +155,36 @@ class InputsFarm
             // set the owning side to null (unless already changed)
             if ($transportList->getFarm() === $this) {
                 $transportList->setFarm(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Transfers[]
+     */
+    public function getTransfers(): Collection
+    {
+        return $this->transfers;
+    }
+
+    public function addTransfer(Transfers $transfer): self
+    {
+        if (!$this->transfers->contains($transfer)) {
+            $this->transfers[] = $transfer;
+            $transfer->setFarm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransfer(Transfers $transfer): self
+    {
+        if ($this->transfers->removeElement($transfer)) {
+            // set the owning side to null (unless already changed)
+            if ($transfer->getFarm() === $this) {
+                $transfer->setFarm(null);
             }
         }
 

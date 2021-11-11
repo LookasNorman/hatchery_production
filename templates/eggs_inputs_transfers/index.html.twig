@@ -36,21 +36,11 @@
                 <td>{{ eggs_inputs_transfer.id }}</td>
                 <td class="text-center">{{ eggs_inputs_transfer.transfersEgg|number_format(0, ',', ' ') }}</td>
                 <td class="text-center">{{ eggs_inputs_transfer.transferDate ? eggs_inputs_transfer.transferDate|date('Y-m-d') : '' }}</td>
-                <td class="text-center">
-                    {% for farmDelivery in eggs_inputs_transfer.inputsFarmDelivery %}
-                        {{ farmDelivery.delivery.herd.name }}
-                    {% endfor %}
-                </td>
-                <td class="text-center">
-                    {% for farmDelivery in eggs_inputs_transfer.inputsFarmDelivery %}
-                        {{ farmDelivery.inputsFarm.chicksFarm.name }}
-                    {% endfor %}
-                </td>
-                <td class="text-center">
-                    {% for farmDelivery in eggs_inputs_transfer.inputsFarmDelivery %}
-                        {{ farmDelivery.inputsFarm.eggInput.name }}
-                    {% endfor %}
-                </td>
+                <td class="text-center">{{ eggs_inputs_transfer.herd ? eggs_inputs_transfer.herd.breeder.name : '' }}
+                    - {{ eggs_inputs_transfer.herd ? eggs_inputs_transfer.herd.name : '' }}</td>
+                <td class="text-center">{{ eggs_inputs_transfer.farm ? eggs_inputs_transfer.farm.chicksFarm.customer.name : '' }}
+                    - {{ eggs_inputs_transfer.farm ? eggs_inputs_transfer.farm.chicksFarm.name : '' }}</td>
+                <td class="text-center">{{ eggs_inputs_transfer.input ? eggs_inputs_transfer.input.name : '' }}</td>
                 <td class="text-center">
                     <span class="btn-group">
                     {{ include('layout/buttons/list_show.html.twig',
