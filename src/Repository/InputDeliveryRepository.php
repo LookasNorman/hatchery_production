@@ -37,6 +37,39 @@ class InputDeliveryRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function deliveryInLighting($lighting)
+    {
+        return $this->createQueryBuilder('id')
+            ->andWhere('id.lighting = :lighting')
+            ->setParameters(['lighting' => $lighting])
+            ->getQuery()
+            ->getArrayResult()
+            ;
+    }
+
+    public function herdDeliveryInInputForLighting($herd, $input)
+    {
+        return $this->createQueryBuilder('id')
+            ->join('id.delivery', 'd')
+            ->andWhere('d.herd = :herd')
+            ->andWhere('id.input = :input')
+            ->setParameters(['input' => $input, 'herd' => $herd])
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function herdInputEggsInInput($herd, $input)
+    {
+        return $this->createQueryBuilder('id')
+            ->select('SUM(id.eggsNumber)')
+            ->join('id.delivery', 'd')
+            ->andWhere('d.herd = :herd')
+            ->andWhere('id.input = :input')
+            ->setParameters(['input' => $input, 'herd' => $herd])
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function herdDelivery($herd)
     {
         return $this->createQueryBuilder('id')
@@ -47,4 +80,24 @@ class InputDeliveryRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function eggsInProduction()
+    {
+        return $this->createQueryBuilder('id')
+            ->select('SUM(id.eggsNumber)')
+            ->andWhere('id.selection IS EMPTY')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function wasteLightingInProduction()
+    {
+        return $this->createQueryBuilder('id')
+            ->select('SUM(l.wasteEggs)')
+            ->leftJoin('id.lighting', 'l')
+            ->andWhere('id.selection IS EMPTY')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 }

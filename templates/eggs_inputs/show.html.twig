@@ -43,30 +43,24 @@
                     <li class="d-flex">{% trans %}eggs_inputs.show.card.footer.add{% endtrans %}</li>
                     <li class="d-flex">
                         {{ include('layout/modals/production_modal.html.twig',
-                            { title: 'eggs_inputs.show.button.lighting.new', body: herdsEggs, pathLink: 'eggs_inputs_lighting_new', class: 'btn-warning' }) }}
-                        {{ include('layout/modals/production_modal.html.twig',
                             { title: 'eggs_inputs.show.button.lighting.correct',
                                 body: herdsEggs, pathLink: 'eggs_inputs_lighting_correct', class: 'btn-warning' }) }}
-                        {{ include('eggs_inputs/details/transfer_modal.html.twig',
-                            { title: 'eggs_inputs.show.button.transfer', body: herdsEggs, pathLink: 'eggs_inputs_transfers_new', class: 'btn-success' }) }}
-                        {{ include('eggs_inputs/details/transfer_modal.html.twig',
-                            { title: 'eggs_inputs.show.button.selection', body: herdsEggs, pathLink: 'eggs_selections_new', class: 'btn-danger' }) }}
                     </li>
                 {% endif %}
             </ul>
             {% include 'layout/cards/cend.html.twig' %}
         </div>
         <hr>
-        <div class="accordion accordion-flush" id="InputsDetails">
+        <div class="accordion" id="InputsDetails">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingChicks">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
                             data-bs-target="#flush-collapseChicks" aria-expanded="false"
                             aria-controls="flush-collapseChicks">
                         {% trans %}eggs_inputs.show.accordion.chick{% endtrans %}
                     </button>
                 </h2>
-                <div id="flush-collapseChicks" class="accordion-collapse collapse" aria-labelledby="flush-headingChicks"
+                <div id="flush-collapseChicks" class="accordion-collapse collapse show" aria-labelledby="flush-headingChicks"
                      data-bs-parent="#InputsDetails">
                     <div class="accordion-body">
                         {% include 'eggs_inputs/show_customer_delivery.html.twig' %}

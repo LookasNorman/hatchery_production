@@ -40,19 +40,10 @@
                 <td class="text-center">{{ eggs_selection.unhatched }}</td>
                 <td class="text-center">{{ eggs_selection.selectionDate ? eggs_selection.selectionDate|date('Y-m-d') : '' }}</td>
                 <td class="text-center">
-                    {% for farmDelivery in eggs_selection.inputsFarmDelivery %}
-                        {{ farmDelivery.delivery.herd.name }}
-                    {% endfor %}
                 </td>
                 <td class="text-center">
-                    {% for farmDelivery in eggs_selection.inputsFarmDelivery %}
-                        {{ farmDelivery.inputsFarm.chicksFarm.name }}
-                    {% endfor %}
                 </td>
                 <td class="text-center">
-                    {% for farmDelivery in eggs_selection.inputsFarmDelivery %}
-                        {{ farmDelivery.inputsFarm.eggInput.name }}
-                    {% endfor %}
                 </td>
                 <td class="text-center">
                     <span class="btn-group">

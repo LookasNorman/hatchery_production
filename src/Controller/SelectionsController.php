@@ -42,8 +42,7 @@ class SelectionsController extends AbstractController
         Inputs $inputs,
         InputsFarm $farm,
         Herds $herd,
-        Request $request,
-        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
+        Request $request
     ): Response
     {
         $form = $this->createForm(SelectionsType::class);

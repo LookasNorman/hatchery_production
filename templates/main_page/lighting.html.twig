@@ -15,25 +15,23 @@
                 <table class="table table-hover">
                     <thead class="thead-light">
                     <tr>
-                        <th scope="col">
-                            {% trans %}main_page.lighting.table.inputs_name{% endtrans %}
-                        </th>
-                        <th scope="col">
-                            {% trans %}main_page.lighting.table.date{% endtrans %}
-                        </th>
-                        <th scope="col">
-                            {% trans %}main_page.lighting.table.eggs_number{% endtrans %}
-                        </th>
+                        <th scope="col">{% trans %}main_page.lighting.table.inputs_name{% endtrans %}</th>
+                        <th scope="col">{% trans %}main_page.lighting.table.date{% endtrans %}</th>
+                        <th scope="col">{% trans %}main_page.lighting.table.eggs_number{% endtrans %}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for lighting in lightings %}
+                    {% for input in lightings %}
                         <tr>
                             <th scope="row">
-                                <a href="{{ path('eggs_inputs_show', {'id': lighting.0.id}) }}">{{ lighting.0.name }}</a>
+                                <a href="{{ path('eggs_inputs_show', {'id': input.id}) }}">{{ input.name }}</a>
                             </th>
-                            <td>{{ lighting.0.inputDate ? lighting.0.inputDate|date_modify("+12 day")|date('Y-m-d') : '' }}</td>
-                            <td>{{ lighting.eggs|number_format(0, '', ' ') }}</td>
+                            <td>{{ input.inputDate ? input.inputDate|date_modify("+12 day")|date('Y-m-d') : '' }}</td>
+                            {% set eggs = 0 %}
+                            {% for delivery in input.inputDeliveries %}
+                                {% set eggs = eggs + delivery.eggsNumber %}
+                            {% endfor %}
+                            <td>{{ eggs|number_format(0, '', ' ') }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

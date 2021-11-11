@@ -32,25 +32,12 @@ class HerdsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function herdInInputFarm($farm)
-    {
-        return $this->createQueryBuilder('h')
-            ->join('h.eggsDeliveries', 'ed')
-            ->join('ed.inputsFarmDeliveries', 'ifd')
-            ->andWhere('ifd.inputsFarm = :farm')
-            ->setParameters(['farm' => $farm])
-            ->getQuery()
-            ->getResult()
-            ;
-    }
-
     public function herdInInput($input)
     {
         return $this->createQueryBuilder('h')
             ->join('h.eggsDeliveries', 'ed')
-            ->join('ed.inputsFarmDeliveries', 'ifd')
-            ->join('ifd.inputsFarm', 'if')
-            ->andWhere('if.eggInput = :input')
+            ->join('ed.inputDeliveries', 'id')
+            ->andWhere('id.input = :input')
             ->setParameter('input', $input)
             ->orderBy('h.name', 'ASC')
             ->groupBy('h')

@@ -181,8 +181,6 @@ class LightingController extends AbstractController
 
 
     /**
-     * @param \App\Repository\InputsRepository $inputsRepository
-     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/lighting", name="no_lighting_index", methods={"GET"})
      */
     public function showNoLighting(InputsRepository $inputsRepository): Response

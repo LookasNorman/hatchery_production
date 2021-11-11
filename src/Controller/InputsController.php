@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Herds;
+use App\Entity\InputDelivery;
 use App\Entity\Inputs;
 use App\Entity\InputsFarmDelivery;
 use App\Entity\Lighting;
@@ -41,7 +42,7 @@ class InputsController extends AbstractController
     public function index(InputsRepository $eggsInputsRepository): Response
     {
         return $this->render('eggs_inputs/index.html.twig', [
-            'eggs_inputs' => $eggsInputsRepository->findBy([], ['inputDate' => 'desc']),
+            'eggs_inputs' => $eggsInputsRepository->inputsIndex(),
         ]);
     }
 
@@ -69,73 +70,6 @@ class InputsController extends AbstractController
         ]);
     }
 
-    public function herdInputFarmDelivery($herd, $input)
-    {
-        $inputFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
-        $inputFarmDeliveries = $inputFarmDeliveryRepository->herdInputFarmDelivery($herd, $input);
-
-        return $inputFarmDeliveries;
-
-    }
-
-    public function herdLightingInInput($herd, $input)
-    {
-        $lightingRepository = $this->getDoctrine()->getRepository(Lighting::class);
-        $lighting = $lightingRepository->herdLightingInInput($herd, $input);
-        return $lighting;
-    }
-
-    public function herdTransferInInput($herd, $input)
-    {
-        $transferRepository = $this->getDoctrine()->getRepository(Transfers::class);
-        $transfer = $transferRepository->herdTransferInInput($herd, $input);
-        return $transfer;
-    }
-
-    public function herdSelectionInInput($herd, $input)
-    {
-        $selectionRepository = $this->getDoctrine()->getRepository(Selections::class);
-        $selection = $selectionRepository->herdSelectionInInput($herd, $input);
-        return $selection;
-    }
-
-    public function herdInInput($input)
-    {
-        $herdRepository = $this->getDoctrine()->getRepository(Herds::class);
-        $herds = $herdRepository->herdInInput($input);
-
-        return $herds;
-    }
-
-    public function herdInputEggsInInput($herd, $input)
-    {
-        $inputFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
-        $inputEggs = $inputFarmDeliveryRepository->herdInputEggsInInput($herd, $input);
-
-        return $inputEggs;
-    }
-
-    public function herdInInputData($input)
-    {
-        $herds = $this->herdInInput($input);
-        $herdData = [];
-        foreach ($herds as $herd) {
-            $inputEggs = $this->herdInputEggsInInput($herd, $input);
-            $lighting = $this->herdLightingInInput($herd, $input);
-            $transfer = $this->herdTransferInInput($herd, $input);
-            $selection = $this->herdSelectionInInput($herd, $input);
-            array_push($herdData, [
-                'herd' => $herd,
-                'inputEggs' => $inputEggs,
-                'eggsNumber' => 5,
-                'lighting' => $lighting,
-                'transfer' => $transfer,
-                'selection' => $selection
-            ]);
-        }
-        return $herdData;
-    }
-
     /**
      * @Route("/{id}", name="eggs_inputs_show", methods={"GET"})
      */
@@ -149,18 +83,11 @@ class InputsController extends AbstractController
         $herds = $this->herdInInput($eggsInput);
         $herdsData = $this->herdInInputData($eggsInput);
 
-        $farmsHerds = [];
-        foreach ($farms as $farm) {
-            $herdsFarm = $herdsRepository->herdInInputFarm($farm);
-            array_push($farmsHerds, ['farm' => $farm, 'herds' => $herdsFarm]);
-        }
-
         return $this->render('eggs_inputs/show.html.twig', [
             'eggs_input' => $eggsInput,
             'farms' => $farms,
             'herdsEggs' => $herdsData,
-            'herds' => $herds,
-            'farmsHerds' => $farmsHerds
+            'herds' => $herds
         ]);
     }
 
@@ -198,5 +125,36 @@ class InputsController extends AbstractController
         }
 
         return $this->redirectToRoute('eggs_inputs_index');
+    }
+
+    public function herdInInput($input)
+    {
+        $herdRepository = $this->getDoctrine()->getRepository(Herds::class);
+        $herds = $herdRepository->herdInInput($input);
+
+        return $herds;
+    }
+
+    public function herdInputEggsInInput($herd, $input)
+    {
+        $inputDeliveryRepository = $this->getDoctrine()->getRepository(InputDelivery::class);
+        $inputEggs = $inputDeliveryRepository->herdInputEggsInInput($herd, $input);
+
+        return $inputEggs;
+    }
+
+    public function herdInInputData($input)
+    {
+        $herds = $this->herdInInput($input);
+        $herdData = [];
+        foreach ($herds as $herd) {
+            $inputEggs = $this->herdInputEggsInInput($herd, $input);
+            array_push($herdData, [
+                'herd' => $herd,
+                'inputEggs' => $inputEggs,
+                'eggsNumber' => 5,
+            ]);
+        }
+        return $herdData;
     }
 }

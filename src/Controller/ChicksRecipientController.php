@@ -110,7 +110,9 @@ class ChicksRecipientController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('chicks_recipient_index');
+            return $this->redirectToRoute('chick_recipient_customer_index', [
+                'id' => $chicksRecipient->getCustomer()->getId()
+            ]);
         }
 
         return $this->render('chicks_recipient/edit.html.twig', [

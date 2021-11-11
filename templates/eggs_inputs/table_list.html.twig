@@ -1,41 +1,32 @@
 {% block body %}
     {% include 'layout/tables/thead.html.twig' %}
     <tr>
-        <th>{% trans %}eggs_inputs.table_list.table.id{% endtrans %}</th>
         <th>{% trans %}eggs_inputs.table_list.table.name{% endtrans %}</th>
-        <th>{% trans %}eggs_inputs.table_list.table.detail{% endtrans %}</th>
-        <th>{% trans %}eggs_inputs.table_list.table.input_date{% endtrans %}</th>
-        <th>{% trans %}eggs_inputs.table_list.table.actions{% endtrans %}</th>
+        <th class="text-end">{% trans %}eggs_inputs.table_list.table.chick_number{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_inputs.table_list.table.selection_date{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_inputs.table_list.table.input_date{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_inputs.table_list.table.lighting_date{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_inputs.table_list.table.transfer_date{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_inputs.table_list.table.actions{% endtrans %}</th>
     </tr>
     {% include 'layout/tables/tbody.html.twig' %}
     {% for eggs_input in eggs_inputs %}
         <tr>
-            <td>{{ eggs_input.id }}</td>
             <td>{{ eggs_input.name }}</td>
-            <td>
-                <table class="table table-sm table-bordered table-hover">
-                    <thead class="bg-success text-white">
-                    <tr>
-                        <th class="col col-lg-2">{% trans %}eggs_inputs.table_list.table_detail.chick_number{% endtrans %}</th>
-                        <th class="col-md-auto">{% trans %}eggs_inputs.table_list.table_detail.chick_recipient{% endtrans %}</th>
-                        <th class="col col-lg-2">{% trans %}eggs_inputs.table_list.table_detail.deliveries{% endtrans %}</th>
-                    </tr>
-                    </thead>
-                    {% for inputFarm in eggs_input.inputsFarms %}
-                        <tbody>
-                        <tr>
-                            <td>{{ inputFarm.chickNumber }}</td>
-                            <td>{{ inputFarm.chicksFarm.customer.name }}: {{ inputFarm.chicksFarm.name }}</td>
-                            <td>
-                            </td>
-                        </tr>
-                        </tbody>
-                    {% endfor %}
-
-                </table>
-            </td>
-            <td>{{ eggs_input.inputDate ? eggs_input.inputDate|date('Y-m-d H:i') : '' }}</td>
-            <td>
+            {% if eggs_input.chickNumber is defined %}
+                <td class="text-end">{{ eggs_input.chickNumber|number_format(0, ',', ' ') }}</td>
+            {% else %}
+                {% set chicks = 0 %}
+                {% for farm in eggs_input.inputsFarms %}
+                    {% set chicks = chicks + farm.chickNumber %}
+                {% endfor %}
+                <td class="text-end">{{ chicks|number_format(0, ',', ' ') }}</td>
+            {% endif %}
+            <td class="text-center">{{ eggs_input.inputDate ? eggs_input.inputDate|date_modify("+21 day +5 hour")|date('Y-m-d H:i') : '' }}</td>
+            <td class="text-center">{{ eggs_input.inputDate ? eggs_input.inputDate|date('Y-m-d H:i') : '' }}</td>
+            <td class="text-center">{{ eggs_input.inputDate ? eggs_input.inputDate|date_modify("+12 day")|date('Y-m-d') : '' }}</td>
+            <td class="text-center">{{ eggs_input.inputDate ? eggs_input.inputDate|date_modify("+18 day")|date('Y-m-d') : '' }}</td>
+            <td class="text-center">
                 {{ include('layout/buttons/list_show.html.twig',
                     {pathLink: path('eggs_inputs_show', {'id': eggs_input.id})}) }}
                 {% if is_granted('ROLE_MANAGER') %}

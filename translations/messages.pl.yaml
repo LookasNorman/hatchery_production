@@ -637,15 +637,19 @@ eggs_inputs:
       laying_date: Data zniesienia
       eggs_number: Ilość jaj nałożonych
     table:
-      id: Indeks
-      detail: Szczegóły nakładu
-      name: Nazwa
-      input_date: Data nałożenia
-      actions: Akcje
-      no_found: Brak nakładów
       badge:
         show: Szczegóły
         edit: Edycja
+      actions: Akcje
+      chick_number: Ilość piskląt
+      detail: Szczegóły nakładu
+      id: Indeks
+      input_date: Data nałożenia
+      lighting_date: Data świetlenia
+      name: Nazwa
+      no_found: Brak nakładów
+      selection_date: Data wybierania
+      transfer_date: Data przekładu
 eggs_inputs_lighting:
   correct:
     lighting_eggs: Ilość świetlona
@@ -684,12 +688,15 @@ eggs_inputs_lighting:
       badge:
         show: Szczegóły
         edit: Edytuj
+      eggs_number: Ilość jaj
       farm: Ferma
       herd: Stado
       id: Indeks
       input: Nakład
       lighting_date: Data świetlenia
       no_found: Brak świetleń
+      of: z
+      waste: Odpad
       waste_eggs: Odpad jaj
     button:
       new: Dodaj świetlenie
@@ -724,19 +731,23 @@ eggs_inputs_transfer:
       back: Lista przekładów
   form:
     label:
-      waste_eggs: Odpad jaj
+      breeder: Dostawca jaj
+      eggs_inputs: Nakład
+      eggs_inputs_detail: Szczegóły nakładu
+      farm: Ferma
+      herd: Stado
       transfer_date: Data przekładu
       transfers_egg: Ilość przełożonych jaj
-      eggs_inputs_detail: Szczegóły nakładu
-      eggs_inputs: Nakład
-      breeder: Dostawca jaj
+      waste_eggs: Odpad jaj
     help:
       waste_eggs: Wpisz ilość wyrzuconych jaj dla wybranego nakładu i hodowcy
       transfers_egg: Wpisz ilość przełożonych jaj dla wybranego nakładu i stada
     placeholder:
-      eggs_inputs_detail: Wybierz nakład
-      eggs_inputs: Wybierz nakład
       breeder: Wybierz hodowcę
+      eggs_inputs: Wybierz nakład
+      eggs_inputs_detail: Wybierz nakład
+      farm: Wybierz fermę z listy
+      herd: Wybierz stado z listy
     button:
       save: Zapisz
   index:
@@ -778,6 +789,7 @@ eggs_inputs_transfer:
     herd: Stado
     waste_eggs: Odpad jaj
     title: Szczegóły przekładu
+    transfer_egg: Przełożonych jaj
 eggs_inputs_selections:
   delete:
     confirm: Jesteś pewien, że chcesz usunąć wybieranie? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!

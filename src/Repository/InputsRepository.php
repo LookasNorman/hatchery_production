@@ -15,6 +15,18 @@ use Doctrine\Persistence\ManagerRegistry;
 class InputsRepository extends ServiceEntityRepository
 {
 
+    public function inputsIndex()
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.id', 'i.name', 'i.inputDate', 'SUM(if.chickNumber) as chickNumber')
+            ->join('i.inputsFarms', 'if')
+            ->orderBy('i.inputDate', 'desc')
+            ->groupBy('i')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function inputsInProduction($date)
     {
         return $this->createQueryBuilder('i')
@@ -40,9 +52,8 @@ class InputsRepository extends ServiceEntityRepository
     public function inputsNoLighting()
     {
         return $this->createQueryBuilder('i')
-            ->join('i.inputsFarms', 'if')
-            ->join('if.inputsFarmDeliveries', 'ifd')
-            ->andWhere('ifd.lighting is null')
+            ->leftJoin('i.inputDeliveries', 'id')
+            ->andWhere('id.lighting is empty')
             ->groupBy('i')
             ->getQuery()
             ->getResult();
@@ -51,10 +62,7 @@ class InputsRepository extends ServiceEntityRepository
     public function inputsNoTransfer()
     {
         return $this->createQueryBuilder('i')
-            ->join('i.inputsFarms', 'if')
-            ->join('if.inputsFarmDeliveries', 'ifd')
-            ->leftJoin('ifd.lighting', 'l')
-            ->andWhere('ifd.transfers is null')
+            ->andWhere('i.transfers is empty')
             ->groupBy('i')
             ->getQuery()
             ->getResult();
@@ -76,9 +84,8 @@ class InputsRepository extends ServiceEntityRepository
     public function inputsNoSelection()
     {
         return $this->createQueryBuilder('i')
-            ->join('i.inputsFarms', 'if')
-            ->join('if.inputsFarmDeliveries', 'ifd')
-            ->andWhere('ifd.selections is null')
+            ->join('i.inputDeliveries', 'id')
+            ->andWhere('id.selection is empty')
             ->groupBy('i')
             ->getQuery()
             ->getResult();

@@ -27,13 +27,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for transfer in transfers %}
+                    {% for input in transfers %}
                         <tr>
                             <th scope="row">
-                                <a href="{{ path('eggs_inputs_show', {'id': transfer.0.id}) }}">{{ transfer.0.name }}</a>
+                                <a href="{{ path('eggs_inputs_show', {'id': input.id}) }}">{{ input.name }}</a>
                             </th>
-                            <td>{{ transfer.0.inputDate ? transfer.0.inputDate|date_modify("+18 day")|date('Y-m-d') : '' }}</td>
-                            <td>{{ (transfer.eggs - transfer.waste)|number_format(0, ',', ' ') }}</td>
+                            <td>{{ input.inputDate ? input.inputDate|date_modify("+18 day")|date('Y-m-d') : '' }}</td>
+                            {% set eggs = 0 %}
+                            {% for delivery in input.inputDeliveries %}
+                                {% set eggs = eggs + delivery.eggsNumber %}
+                            {% endfor %}
+                            <td>{{ eggs|number_format(0, '', ' ') }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

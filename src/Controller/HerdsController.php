@@ -80,12 +80,10 @@ class HerdsController extends AbstractController
     public function show(
         Herds $herd,
         DeliveryRepository $deliveryRepository,
-        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository,
         InputDeliveryRepository $inputDeliveryRepository
     ): Response
     {
         $deliveries = $deliveryRepository->herdDeliveryWithStock($herd);
-        $inputs = $inputsFarmDeliveryRepository->herdDelivery($herd);
         $inputs = $inputDeliveryRepository->herdDelivery($herd);
 
         return $this->render('herds/show.html.twig', [

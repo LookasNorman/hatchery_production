@@ -44,8 +44,7 @@ class InputsFarmDeliveryPlanController extends AbstractController
      */
     public function inputsShow(
         Inputs                       $eggsInput,
-        InputsFarmRepository         $farmRepository,
-        InputsFarmDeliveryRepository $inputsFarmDeliveryRepository
+        InputsFarmRepository         $farmRepository
     ): Response
     {
         $farms = $farmRepository->findBy(['eggInput' => $eggsInput]);

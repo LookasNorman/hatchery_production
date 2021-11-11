@@ -68,11 +68,6 @@ class Delivery
     private $partIndex;
 
     /**
-     * @ORM\OneToMany(targetEntity=InputsFarmDelivery::class, mappedBy="delivery")
-     */
-    private $inputsFarmDeliveries;
-
-    /**
      * @ORM\OneToMany(targetEntity=InputsFarmDeliveryPlan::class, mappedBy="delivery")
      */
     private $inputsFarmDeliveryPlans;
@@ -89,7 +84,6 @@ class Delivery
 
     public function __construct()
     {
-        $this->inputsFarmDeliveries = new ArrayCollection();
         $this->inputsFarmDeliveryPlans = new ArrayCollection();
         $this->inputDeliveries = new ArrayCollection();
         $this->sellingEggs = new ArrayCollection();
@@ -180,36 +174,6 @@ class Delivery
     public function setPartIndex(?string $partIndex): self
     {
         $this->partIndex = $partIndex;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|InputsFarmDelivery[]
-     */
-    public function getInputsFarmDeliveries(): Collection
-    {
-        return $this->inputsFarmDeliveries;
-    }
-
-    public function addInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
-    {
-        if (!$this->inputsFarmDeliveries->contains($inputsFarmDelivery)) {
-            $this->inputsFarmDeliveries[] = $inputsFarmDelivery;
-            $inputsFarmDelivery->setDelivery($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
-    {
-        if ($this->inputsFarmDeliveries->removeElement($inputsFarmDelivery)) {
-            // set the owning side to null (unless already changed)
-            if ($inputsFarmDelivery->getDelivery() === $this) {
-                $inputsFarmDelivery->setDelivery(null);
-            }
-        }
 
         return $this;
     }

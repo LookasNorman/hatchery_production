@@ -42,13 +42,13 @@ class Selections
     private $unhatched;
 
     /**
-     * @ORM\OneToMany(targetEntity=InputsFarmDelivery::class, mappedBy="selections")
+     * @ORM\ManyToMany(targetEntity=InputDelivery::class, mappedBy="selection")
      */
-    private $inputsFarmDelivery;
+    private $inputDeliveries;
 
     public function __construct()
     {
-        $this->inputsFarmDelivery = new ArrayCollection();
+        $this->inputDeliveries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,30 +105,27 @@ class Selections
     }
 
     /**
-     * @return Collection|InputsFarmDelivery[]
+     * @return Collection|InputDelivery[]
      */
-    public function getInputsFarmDelivery(): Collection
+    public function getInputDeliveries(): Collection
     {
-        return $this->inputsFarmDelivery;
+        return $this->inputDeliveries;
     }
 
-    public function addInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
+    public function addInputDelivery(InputDelivery $inputDelivery): self
     {
-        if (!$this->inputsFarmDelivery->contains($inputsFarmDelivery)) {
-            $this->inputsFarmDelivery[] = $inputsFarmDelivery;
-            $inputsFarmDelivery->setSelections($this);
+        if (!$this->inputDeliveries->contains($inputDelivery)) {
+            $this->inputDeliveries[] = $inputDelivery;
+            $inputDelivery->addSelection($this);
         }
 
         return $this;
     }
 
-    public function removeInputsFarmDelivery(InputsFarmDelivery $inputsFarmDelivery): self
+    public function removeInputDelivery(InputDelivery $inputDelivery): self
     {
-        if ($this->inputsFarmDelivery->removeElement($inputsFarmDelivery)) {
-            // set the owning side to null (unless already changed)
-            if ($inputsFarmDelivery->getSelections() === $this) {
-                $inputsFarmDelivery->setSelections(null);
-            }
+        if ($this->inputDeliveries->removeElement($inputDelivery)) {
+            $inputDelivery->removeSelection($this);
         }
 
         return $this;

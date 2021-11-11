@@ -4,9 +4,7 @@
     <h1>{% trans %}eggs_inputs_selections.show.title{% endtrans %}</h1>
     <div class="d-flex justify-content-center card-group">
         {% include 'layout/cards/chead.html.twig' %}
-        {% for farmDelivery in eggs_selection.inputsFarmDelivery %}
-            {{ farmDelivery.inputsFarm.eggInput.name }}
-        {% endfor %} -{{ eggs_selection.selectionDate ? eggs_selection.selectionDate|date('Y-m-d') : '' }}
+        -{{ eggs_selection.selectionDate ? eggs_selection.selectionDate|date('Y-m-d') : '' }}
         {% include 'layout/cards/cbody.html.twig' %}
         <dl class="row">
             <dd class="col-sm-6">{% trans %}eggs_inputs_selections.show.chick_number{% endtrans %}</dd>
@@ -17,15 +15,9 @@
             <dt class="col-sm-6 text-end">{{ eggs_selection.unhatched|number_format(0, ',', ' ') }}</dt>
             <dd class="col-sm-6">{% trans %}eggs_inputs_selections.show.herd{% endtrans %}</dd>
             <dt class="col-sm-6 text-end">
-                {% for farmDelivery in eggs_selection.inputsFarmDelivery %}
-                    {{ farmDelivery.delivery.herd.name }}
-                {% endfor %}
             </dt>
             <dd class="col-sm-6">{% trans %}eggs_inputs_selections.show.farm{% endtrans %}</dd>
             <dt class="col-sm-6 text-end">
-                {% for farmDelivery in eggs_selection.inputsFarmDelivery %}
-                    {{ farmDelivery.inputsFarm.chicksFarm.name }}
-                {% endfor %}
             </dt>
         </dl>
 

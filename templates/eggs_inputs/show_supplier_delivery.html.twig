@@ -1,59 +1,29 @@
 {% block body %}
     {% include 'layout/tables/thead.html.twig' %}
     <tr>
-        <th rowspan="2" class="align-middle">
-            {% trans %}eggs_inputs.show.table.id{% endtrans %}
-        </th>
-        <th rowspan="2" class="align-middle">
-            {% trans %}eggs_inputs.table_list.table_deliveries.herd{% endtrans %}
-        </th>
-        <th rowspan="2" class="text-center align-middle">
-            {% trans %}eggs_inputs.table_list.table_deliveries.eggs_number{% endtrans %}
-        </th>
-        <th colspan="5" class="text-center align-middle">
-            {% trans %}eggs_inputs.show.table.lighting.title{% endtrans %}
-        </th>
-        <th colspan="2" class="text-center align-middle bg-light text-black">
-            {% trans %}eggs_inputs.show.table.transfer.title{% endtrans %}
-        </th>
-        <th colspan="4" class="text-center align-middle">
-            {% trans %}eggs_inputs.show.table.selection.title{% endtrans %}
-        </th>
+        <th rowspan="2" class="align-middle">{% trans %}eggs_inputs.show.table.id{% endtrans %}</th>
+        <th rowspan="2" class="align-middle">{% trans %}eggs_inputs.table_list.table_deliveries.herd{% endtrans %}</th>
+        <th rowspan="2"
+            class="text-center align-middle">{% trans %}eggs_inputs.table_list.table_deliveries.eggs_number{% endtrans %}</th>
+        <th colspan="5"
+            class="text-center align-middle">{% trans %}eggs_inputs.show.table.lighting.title{% endtrans %}</th>
+        <th colspan="2"
+            class="text-center align-middle bg-light text-black">{% trans %}eggs_inputs.show.table.transfer.title{% endtrans %}</th>
+        <th colspan="4"
+            class="text-center align-middle">{% trans %}eggs_inputs.show.table.selection.title{% endtrans %}</th>
     </tr>
     <tr>
-        <th class="text-center align-middle">
-            {% trans %}eggs_inputs.show.table.lighting.date{% endtrans %}
-        </th>
-        <th class="text-center align-middle">
-            {% trans %}eggs_inputs.show.table.lighting.eggs_number{% endtrans %}
-        </th>
-        <th class="text-center align-middle">
-            {% trans %}eggs_inputs.show.table.lighting.waste_eggs{% endtrans %}
-        </th>
-        <th class="text-center align-middle">
-            {% trans %}eggs_inputs.show.table.lighting.waste_lighting{% endtrans %}
-        </th>
-        <th class="text-center align-middle">
-            {% trans %}eggs_inputs.show.table.lighting.fertilization{% endtrans %}
-        </th>
-        <th class="text-center align-middle bg-light text-black">
-            {% trans %}eggs_inputs.show.table.transfer.date{% endtrans %}
-        </th>
-        <th class="text-center align-middle bg-light text-black">
-            {% trans %}eggs_inputs.show.table.transfer.eggs_transfer{% endtrans %}
-        </th>
-        <th class="text-center align-middle">
-            {% trans %}eggs_inputs.show.table.selection.date{% endtrans %}
-        </th>
-        <th class="text-center align-middle">
-            {% trans %}eggs_inputs.show.table.selection.chicks{% endtrans %}
-        </th>
-        <th class="text-center align-middle">
-            {% trans %}eggs_inputs.show.table.selection.cull_chicks{% endtrans %}
-        </th>
-        <th class="text-center align-middle">
-            {% trans %}eggs_inputs.show.table.selection.unhatched{% endtrans %}
-        </th>
+        <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.lighting.date{% endtrans %}</th>
+        <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.lighting.eggs_number{% endtrans %}</th>
+        <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.lighting.waste_eggs{% endtrans %}</th>
+        <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.lighting.waste_lighting{% endtrans %}</th>
+        <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.lighting.fertilization{% endtrans %}</th>
+        <th class="text-center align-middle bg-light text-black">{% trans %}eggs_inputs.show.table.transfer.date{% endtrans %}</th>
+        <th class="text-center align-middle bg-light text-black">{% trans %}eggs_inputs.show.table.transfer.eggs_transfer{% endtrans %}</th>
+        <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.selection.date{% endtrans %}</th>
+        <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.selection.chicks{% endtrans %}</th>
+        <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.selection.cull_chicks{% endtrans %}</th>
+        <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.selection.unhatched{% endtrans %}</th>
     </tr>
     {% include 'layout/tables/tbody.html.twig' %}
 
@@ -69,45 +39,17 @@
             <td class="text-center align-middle">
                 {{ herdEgg.inputEggs }}
             </td>
-            {% if herdEgg.lighting %}
-                <td class="text-center align-middle">{{ herdEgg.lighting.lightingDate|date('Y-m-d') }}</td>
-                <td class="text-center align-middle">{{ herdEgg.lighting.lightingEggs }}</td>
-                <td class="text-center align-middle">{{ herdEgg.lighting.wasteEggs }}</td>
-                <td class="text-center align-middle">{{ herdEgg.lighting.wasteLighting }}</td>
-                {% set fertility = (1 - herdEgg.lighting.wasteEggs / herdEgg.lighting.lightingEggs) * 100 %}
-                {% set fertilityCorrection = (1 - herdEgg.lighting.wasteLighting / herdEgg.inputEggs) * 100 %}
-                <td class="text-center align-middle">
-                    {{ fertility|number_format(1, ',', ' ') }} ({{ fertilityCorrection|number_format(1, ',', ' ') }}) %
-                </td>
-            {% else %}
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
-            {% endif %}
-            {% if herdEgg.transfer %}
-                <td class="text-center align-middle bg-light">
-                    <a href="{{ path('eggs_inputs_transfers_index') }}">
-                        {{ herdEgg.transfer.transferDate ? herdEgg.transfer.transferDate|date('Y-m-d') : '' }}
-                    </a>
-                </td>
-                <td class="text-center align-middle bg-light">{{ herdEgg.transfer.transferEgg }}</td>
-            {% else %}
-                <td></td>
-                <td></td>
-            {% endif %}
-            {% if herdEgg.selection %}
-                <td class="text-center align-middle bg-primary text-white">{{ herdEgg.selection.selectionDate ? herdEgg.selection.selectionDate|date('Y-m-d') : '' }}</td>
-                <td class="text-center align-middle bg-primary text-white">{{ herdEgg.selection.chickNumber }}</td>
-                <td class="text-center align-middle bg-primary text-white">{{ herdEgg.selection.cullChicken }}</td>
-                <td class="text-center align-middle bg-primary text-white">{{ herdEgg.selection.unhatched }}</td>
-            {% else %}
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
-            {% endif %}
+                <td></td>
+                <td></td>
         </tr>
 
     {% endfor %}
