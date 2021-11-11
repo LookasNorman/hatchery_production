@@ -6,6 +6,8 @@
     <th>{% trans %}customer.index.table.plan_date{% endtrans %}</th>
     <th>{% trans %}customer.index.table.email{% endtrans %}</th>
     <th>{% trans %}customer.index.table.phone_number{% endtrans %}</th>
+    <th>{% trans %}customer.index.table.city{% endtrans %}</th>
+    <th>{% trans %}customer.index.table.street{% endtrans %}</th>
     <th>{% trans %}customer.index.table.actions{% endtrans %}</th>
 </tr>
 {% include 'layout/tables/tbody.html.twig' %}
@@ -23,6 +25,8 @@
                 <td>{{ customer.deliveryDate ? customer.deliveryDate|date('Y-m-d') : '' }}</td>
                 <td>{{ customer.0.email }}</td>
                 <td>{{ customer.0.phoneNumber }}</td>
+                <td>{{ customer.0.postCode }} {{ customer.0.city }}</td>
+                <td>{{ customer.0.street }} {{ customer.0.streetNumber }}</td>
                 <td>
                     {{ include('layout/buttons/list_show.html.twig',
                         {pathLink: path('customer_show', {'id': customer.0.id})}) }}

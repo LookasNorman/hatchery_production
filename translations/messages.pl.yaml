@@ -206,6 +206,7 @@ chicks_recipient:
       badge:
         edit: Edytuj
         show: Szczegóły
+      city: Miejscowość
       customer: Nazwa odbiorcy
       email: Adres email
       farm: Nazwa fermy
@@ -215,6 +216,7 @@ chicks_recipient:
       no_records: Brak ferm odbiorców
       phone_number: Numer telefonu
       plan_date: Plan do dnia
+      street: Ulica
     title: Fermy odbiorców piskląt
   new:
     title: Dodawanie nowej fermy odbiorcy
@@ -321,12 +323,14 @@ customer:
         edit: Edycja
         farm: Fermy
         show: Szczegóły
+      city: Miejscowość
       email: Email
       id: Lp.
       integration: Integracja
       name: Nazwa
       phone_number: Numer telefonu
       plan_date: Plan do dnia
+      street: Ulica
     title: Lista odbiorców piskląt
   new:
     button:
