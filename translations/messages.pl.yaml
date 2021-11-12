@@ -735,6 +735,7 @@ eggs_inputs_transfer:
       eggs_inputs: Nakład
       eggs_inputs_detail: Szczegóły nakładu
       farm: Ferma
+      hatcher: Aparat klujnikowy
       herd: Stado
       transfer_date: Data przekładu
       transfers_egg: Ilość przełożonych jaj

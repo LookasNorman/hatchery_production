@@ -51,9 +51,15 @@ class Hatchers
      */
     private $chickTemperatures;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Transfers::class, mappedBy="hatchers")
+     */
+    private $transfers;
+
     public function __construct()
     {
         $this->chickTemperatures = new ArrayCollection();
+        $this->transfers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -110,6 +116,33 @@ class Hatchers
             if ($chickTemperature->getHatcher() === $this) {
                 $chickTemperature->setHatcher(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Transfers[]
+     */
+    public function getTransfers(): Collection
+    {
+        return $this->transfers;
+    }
+
+    public function addTransfer(Transfers $transfer): self
+    {
+        if (!$this->transfers->contains($transfer)) {
+            $this->transfers[] = $transfer;
+            $transfer->addHatcher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransfer(Transfers $transfer): self
+    {
+        if ($this->transfers->removeElement($transfer)) {
+            $transfer->removeHatcher($this);
         }
 
         return $this;

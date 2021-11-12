@@ -49,6 +49,16 @@ class Transfers
      */
     private $input;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Hatchers::class, inversedBy="transfers")
+     */
+    private $hatchers;
+
+    public function __construct()
+    {
+        $this->hatchers = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -110,6 +120,30 @@ class Transfers
     public function setInput(?Inputs $input): self
     {
         $this->input = $input;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Hatchers[]
+     */
+    public function getHatchers(): Collection
+    {
+        return $this->hatchers;
+    }
+
+    public function addHatcher(Hatchers $hatcher): self
+    {
+        if (!$this->hatchers->contains($hatcher)) {
+            $this->hatchers[] = $hatcher;
+        }
+
+        return $this;
+    }
+
+    public function removeHatcher(Hatchers $hatcher): self
+    {
+        $this->hatchers->removeElement($hatcher);
 
         return $this;
     }

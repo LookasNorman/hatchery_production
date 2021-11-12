@@ -24,7 +24,7 @@
                     class="fw-bold fs-4">{{ farm.chicksFarm.name }}</span><br/>
             {% trans %}eggs_inputs_transfer.new.herd{% endtrans %}: <span class="fw-bold fs-4">{{ herd.name }}</span>
             {% include 'layout/cards/cbody.html.twig' %}
-            {{ include('eggs_inputs_transfers/_form.html.twig') }}
+            {{ include('eggs_inputs_transfers/production/_form_production.html.twig') }}
             {% include 'layout/cards/cfooter.html.twig' %}
             {% include 'layout/cards/cend.html.twig' %}
         </div>
