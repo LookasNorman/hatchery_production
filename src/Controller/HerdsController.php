@@ -12,6 +12,7 @@ use App\Repository\DeliveryRepository;
 use App\Repository\DetailsRepository;
 use App\Repository\InputDeliveryRepository;
 use App\Repository\InputsFarmDeliveryRepository;
+use App\Repository\InputsRepository;
 use App\Repository\SupplierRepository;
 use App\Repository\HerdsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -83,8 +84,10 @@ class HerdsController extends AbstractController
         InputDeliveryRepository $inputDeliveryRepository
     ): Response
     {
-        $deliveries = $deliveryRepository->herdDeliveryWithStock($herd);
+        $deliveries = $deliveryRepository->herdDeliveryOnStock($herd);
         $inputs = $inputDeliveryRepository->herdDelivery($herd);
+
+//        $inputs = $deliveryRepository->herdDelivery($herd);
 
         return $this->render('herds/show.html.twig', [
             'herd' => $herd,

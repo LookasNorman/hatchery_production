@@ -6,16 +6,10 @@
             {% trans %}herds.show_delivery.table.input_name{% endtrans %}
         </th>
         <th class="text-center align-middle">
-            {% trans %}herds.show_delivery.table.delivery_id{% endtrans %}
-        </th>
-        <th class="text-center align-middle">
             {% trans %}herds.show_delivery.table.delivery_date{% endtrans %}
         </th>
-        <th class="text-center align-middle">
+        <th class="text-end align-middle">
             {% trans %}herds.show_delivery.table.eggs_number{% endtrans %}
-        </th>
-        <th class="text-center align-middle">
-            {% trans %}herds.show_delivery.table.farm{% endtrans %}
         </th>
         <th class="text-center align-middle">
             {% trans %}herds.show_delivery.table.waste_lighting{% endtrans %}
@@ -34,23 +28,20 @@
         </th>
     </tr>
     {% include 'layout/tables/tbody.html.twig' %}
-    {% for input in inputs %}
+    {% for delivery in deliveries %}
         <tr>
             <td class="text-center align-middle">
+                {% for inputDelivery in delivery.inputDeliveries %}
+                    {{ inputDelivery.input.name }}
+                {% endfor %}
             </td>
             <td class="text-center align-middle">
-                <a href="{{ path('eggs_delivery_show', {'id': input.delivery.id}) }}">
-                    {{ input.delivery.partIndex }}
-                </a>
+                {{ delivery.deliveryDate ? delivery.deliveryDate|date("Y-m-d") : '' }}
             </td>
-            <td class="text-center align-middle">
-                {{ input.delivery.deliveryDate ? input.delivery.deliveryDate|date('Y-m-d') : '' }}
-            </td>
-            <td class="text-center align-middle">
-                {{ input.eggsNumber|number_format(0, '', ' ') }}
-                ({{ input.delivery.eggsNumber|number_format(0, '', ' ') }})
-            </td>
-            <td class="text-center align-middle">
+            <td class="text-end align-middle">
+                {% for inputDelivery in delivery.inputDeliveries %}
+                    {{ inputDelivery.eggsNumber|number_format(0, '', ' ') }}<br/>
+                {% endfor %}
             </td>
             <td class="text-center align-middle">
             </td>

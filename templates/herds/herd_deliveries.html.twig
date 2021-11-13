@@ -2,9 +2,6 @@
     {% include 'layout/tables/thead.html.twig' %}
     <tr>
         <th class="text-center align-middle">
-            {% trans %}herds.herd_deliveries.table.id{% endtrans %}
-        </th>
-        <th class="text-center align-middle">
             {% trans %}herds.herd_deliveries.table.delivery_date{% endtrans %}
         </th>
         <th class="text-center align-middle">
@@ -13,10 +10,10 @@
         <th class="text-center align-middle">
             {% trans %}herds.herd_deliveries.table.last_laying_date{% endtrans %}
         </th>
-        <th class="text-center align-middle">
+        <th class="text-end align-middle">
             {% trans %}herds.herd_deliveries.table.delivery_eggs_number{% endtrans %}
         </th>
-        <th class="text-center align-middle">
+        <th class="text-end align-middle">
             {% trans %}herds.herd_deliveries.table.eggs_warehouse{% endtrans %}
         </th>
         <th class="text-center align-middle">
@@ -27,29 +24,26 @@
     {% for delivery in deliveries %}
         <tr>
             <td class="text-center align-middle">
-                {{ delivery.0.id }}
+                {{ delivery.deliveryDate ? delivery.deliveryDate|date('Y-m-d') : '' }}
             </td>
             <td class="text-center align-middle">
-                {{ delivery.0.deliveryDate ? delivery.0.deliveryDate|date('Y-m-d') : '' }}
+                {{ delivery.firstLayingDate ? delivery.firstLayingDate|date('Y-m-d') : '' }}
             </td>
             <td class="text-center align-middle">
-                {{ delivery.0.firstLayingDate ? delivery.0.firstLayingDate|date('Y-m-d') : '' }}
+                {{ delivery.lastLayingDate ? delivery.lastLayingDate|date('Y-m-d') : '' }}
             </td>
-            <td class="text-center align-middle">
-                {{ delivery.0.lastLayingDate ? delivery.0.lastLayingDate|date('Y-m-d') : '' }}
+            <td class="text-end align-middle">
+                {{ delivery.eggsNumber|number_format(0, ',', ' ') }}
             </td>
-            <td class="text-center align-middle">
-                {{ delivery.0.eggsNumber|number_format(0, ',', ' ') }}
+            <td class="text-end align-middle">
+{#                {{ delivery.eggsStock|number_format(0, ',', ' ') }}#}
             </td>
-            <td class="text-center align-middle">
-                {{ delivery.eggsStock|number_format(0, ',', ' ') }}
-            </td>
-            <td>
+            <td class="text-center">
                 {{ include('layout/buttons/list_actions.html.twig',
-                    {pathLink: path('eggs_delivery_show', {'id': delivery.0.id}), text: 'herds.herd_deliveries.table.badge.show' }) }}
+                    {pathLink: path('eggs_delivery_show', {'id': delivery.id}), text: 'herds.herd_deliveries.table.badge.show' }) }}
                 {% if is_granted('ROLE_MANAGER') %}
                     {{ include('layout/buttons/list_actions.html.twig',
-                        {pathLink: path('eggs_delivery_edit', {'id': delivery.0.id}), text: 'herds.herd_deliveries.table.badge.edit' }) }}
+                        {pathLink: path('eggs_delivery_edit', {'id': delivery.id}), text: 'herds.herd_deliveries.table.badge.edit' }) }}
                 {% endif %}
             </td>
         </tr>

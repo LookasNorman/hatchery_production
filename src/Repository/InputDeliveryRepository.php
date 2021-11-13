@@ -73,10 +73,17 @@ class InputDeliveryRepository extends ServiceEntityRepository
     public function herdDelivery($herd)
     {
         return $this->createQueryBuilder('id')
+            ->select('id.id', 'i.name', 'd.deliveryDate', 'id.eggsNumber', 'd.id as deliveryId')
+            ->addSelect('l.wasteLighting', 't.transfersEgg', 's.chickNumber', 's.cullChicken', 's.unhatched')
             ->join('id.delivery', 'd')
+            ->join('id.input', 'i')
+            ->leftJoin('id.lighting', 'l')
+            ->leftJoin('id.selection', 's')
+            ->leftJoin('i.transfers', 't')
             ->andWhere('d.herd = :herd')
             ->setParameters(['herd' => $herd])
             ->orderBy('id.input')
+            ->addOrderBy('d.deliveryDate', 'asc')
             ->getQuery()
             ->getResult();
     }
