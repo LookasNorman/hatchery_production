@@ -19,6 +19,7 @@ use App\Repository\InputsFarmDeliveryRepository;
 use App\Repository\SellingEggRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -78,9 +79,9 @@ class DeliveryController extends AbstractController
      * @IsGranted("ROLE_PRODUCTION")
      */
     public function index(
-        DeliveryRepository $eggsDeliveryRepository,
+        DeliveryRepository      $eggsDeliveryRepository,
         InputDeliveryRepository $inputDeliveryRepository,
-        SellingEggRepository $sellingEggRepository
+        SellingEggRepository    $sellingEggRepository
     ): Response
     {
         $deliveries = $eggsDeliveryRepository->findBy([], ['deliveryDate' => 'desc']);
@@ -97,9 +98,9 @@ class DeliveryController extends AbstractController
      * @Route("/all", name="eggs_delivery_all_index", methods={"GET"})
      */
     public function allDelivery(
-        DeliveryRepository $eggsDeliveryRepository,
+        DeliveryRepository      $eggsDeliveryRepository,
         InputDeliveryRepository $inputDeliveryRepository,
-        SellingEggRepository $sellingEggRepository
+        SellingEggRepository    $sellingEggRepository
     ): Response
     {
         $deliveries = $eggsDeliveryRepository->findAll();
@@ -154,7 +155,7 @@ class DeliveryController extends AbstractController
             $entityManager->persist($eggsDelivery);
             $email = $this->sendEmail($eggsDelivery);
             if ($email) {
-                $mailer->send($email);
+//                $mailer->send($email);
             }
 
             $entityManager->flush();
@@ -184,10 +185,12 @@ class DeliveryController extends AbstractController
      */
     public function edit(Request $request, Delivery $eggsDelivery): Response
     {
+        $oldDelivery = clone $eggsDelivery;
         $form = $this->createForm(DeliveryType::class, $eggsDelivery);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $eggsDelivery->setEggsOnWarehouse($oldDelivery->getEggsOnWarehouse() - $oldDelivery->getEggsNumber() + $eggsDelivery->getEggsNumber());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('eggs_delivery_index');

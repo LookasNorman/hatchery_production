@@ -39,7 +39,11 @@
             <td class="text-center">{{ eggs_delivery.delivery.herd.name }}</td>
             <td class="text-center">{{ eggs_delivery.delivery.deliveryDate ? eggs_delivery.delivery.deliveryDate|date('Y-m-d') : '' }}</td>
             <td class="text-end">{{ eggs_delivery.delivery.eggsNumber|number_format(0, ',', ' ') }}</td>
-            <td class="text-end">{{ eggs_delivery.eggs|number_format(0, ',', ' ') }}</td>
+            <td class="text-end">{{ eggs_delivery.eggs|number_format(0, ',', ' ') }}
+                {% if is_granted('ROLE_ADMIN') %}
+                    / {{ eggs_delivery.delivery.eggsOnWarehouse|number_format(0, ',', ' ') }}
+                {% endif %}
+            </td>
             <td class="text-center">{{ eggs_delivery.delivery.firstLayingDate ? eggs_delivery.delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
             <td class="text-center">{{ eggs_delivery.delivery.lastLayingDate ? eggs_delivery.delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
             <td class="text-center d-print-none">
