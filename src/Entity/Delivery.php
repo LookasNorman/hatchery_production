@@ -82,6 +82,46 @@ class Delivery
      */
     private $sellingEggs;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $wasteLighting;
+
+    /**
+     * @ORM\Column(type="decimal", precision=5, scale=2, nullable=true)
+     */
+    private $fertilization;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $wasteEggsLighting;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $lightingEggs;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $transfersEgg;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $chickNumber;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $cullChicken;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $unhatched;
+
     public function __construct()
     {
         $this->inputsFarmDeliveryPlans = new ArrayCollection();
@@ -264,6 +304,102 @@ class Delivery
                 $sellingEgg->setDelivery(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getWasteLighting(): ?int
+    {
+        return $this->wasteLighting;
+    }
+
+    public function setWasteLighting(?int $wasteLighting): self
+    {
+        $this->wasteLighting = $wasteLighting;
+
+        return $this;
+    }
+
+    public function getFertilization(): ?string
+    {
+        return $this->fertilization;
+    }
+
+    public function setFertilization(?string $fertilization): self
+    {
+        $this->fertilization = $fertilization;
+
+        return $this;
+    }
+
+    public function getWasteEggsLighting(): ?int
+    {
+        return $this->wasteEggsLighting;
+    }
+
+    public function setWasteEggsLighting(?int $wasteEggsLighting): self
+    {
+        $this->wasteEggsLighting = $wasteEggsLighting;
+
+        return $this;
+    }
+
+    public function getLightingEggs(): ?int
+    {
+        return $this->lightingEggs;
+    }
+
+    public function setLightingEggs(?int $lightingEggs): self
+    {
+        $this->lightingEggs = $lightingEggs;
+
+        return $this;
+    }
+
+    public function getTransfersEgg(): ?int
+    {
+        return $this->transfersEgg;
+    }
+
+    public function setTransfersEgg(?int $transfersEgg): self
+    {
+        $this->transfersEgg = $transfersEgg;
+
+        return $this;
+    }
+
+    public function getChickNumber(): ?int
+    {
+        return $this->chickNumber;
+    }
+
+    public function setChickNumber(?int $chickNumber): self
+    {
+        $this->chickNumber = $chickNumber;
+
+        return $this;
+    }
+
+    public function getCullChicken(): ?int
+    {
+        return $this->cullChicken;
+    }
+
+    public function setCullChicken(?int $cullChicken): self
+    {
+        $this->cullChicken = $cullChicken;
+
+        return $this;
+    }
+
+    public function getUnhatched(): ?int
+    {
+        return $this->unhatched;
+    }
+
+    public function setUnhatched(?int $unhatched): self
+    {
+        $this->unhatched = $unhatched;
 
         return $this;
     }
