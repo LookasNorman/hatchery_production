@@ -100,4 +100,16 @@ class InputDeliveryRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function eggsBreedProduction($breed)
+    {
+        return $this->createQueryBuilder('id')
+            ->select('SUM(id.eggsNumber)')
+            ->join('id.delivery', 'd')
+            ->join('d.herd', 'h')
+            ->andWhere('h.breed = :breed')
+            ->setParameters(['breed' => $breed])
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
 }

@@ -7,41 +7,23 @@
     {% if is_granted('ROLE_PRODUCTION') %}
         {{ include('layout/buttons/new.html.twig', {pathLink: path('eggs_delivery_new'), text: 'eggs_delivery.index.button.new' }) }}
     {% endif %}
-
+    <h3>{% trans %}eggs_delivery.index.eggs_stock{% endtrans %}: {{ eggs_in_warehouse|number_format(0, ',', ' ') }}</h3>
     {% include 'layout/tables/thead.html.twig' %}
     <tr>
-        <th>
-            {% trans %}eggs_delivery.index.table.id{% endtrans %}
-        </th>
-        <th>
-            {% trans %}eggs_delivery.index.table.breeder{% endtrans %}
-        </th>
-        <th>
-            {% trans %}eggs_delivery.index.table.herds{% endtrans %}
-        </th>
-        <th>
-            {% trans %}eggs_delivery.index.table.delivery_date{% endtrans %}
-        </th>
-        <th>
-            {% trans %}eggs_delivery.index.table.eggs_number{% endtrans %}
-        </th>
-        <th>
-            {% trans %}eggs_delivery.index.table.eggs_warehouse{% endtrans %}
-        </th>
-        <th>
-            {% trans %}eggs_delivery.index.table.first_laying_date{% endtrans %}
-        </th>
-        <th>
-            {% trans %}eggs_delivery.index.table.last_laying_date{% endtrans %}
-        </th>
-        <th>
-            {% trans %}eggs_delivery.index.table.actions{% endtrans %}
-        </th>
+        <th class="d-print-none">{% trans %}eggs_delivery.index.table.id{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_delivery.index.table.breeder{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_delivery.index.table.herds{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_delivery.index.table.delivery_date{% endtrans %}</th>
+        <th class="text-end">{% trans %}eggs_delivery.index.table.eggs_number{% endtrans %}</th>
+        <th class="text-end">{% trans %}eggs_delivery.index.table.eggs_warehouse{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_delivery.index.table.first_laying_date{% endtrans %}</th>
+        <th class="text-center">{% trans %}eggs_delivery.index.table.last_laying_date{% endtrans %}</th>
+        <th class="text-center d-print-none">{% trans %}eggs_delivery.index.table.actions{% endtrans %}</th>
     </tr>
     {% include 'layout/tables/tbody.html.twig' %}
     {% for eggs_delivery in eggs_deliveries %}
         <tr>
-            <td>
+            <td class="d-print-none">
                 {% if eggs_delivery.delivery.partIndex %}
                     {{ eggs_delivery.delivery.partIndex }}
                 {% else %}
@@ -53,14 +35,14 @@
                     {% endif %}
                 {% endif %}
             </td>
-            <td>{{ eggs_delivery.delivery.herd.breeder.name }}</td>
-            <td>{{ eggs_delivery.delivery.herd.name }}</td>
-            <td>{{ eggs_delivery.delivery.deliveryDate ? eggs_delivery.delivery.deliveryDate|date('Y-m-d') : '' }}</td>
-            <td>{{ eggs_delivery.delivery.eggsNumber }}</td>
-            <td>{{ eggs_delivery.eggs }}</td>
-            <td>{{ eggs_delivery.delivery.firstLayingDate ? eggs_delivery.delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
-            <td>{{ eggs_delivery.delivery.lastLayingDate ? eggs_delivery.delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
-            <td>
+            <td class="text-center">{{ eggs_delivery.delivery.herd.breeder.name }}</td>
+            <td class="text-center">{{ eggs_delivery.delivery.herd.name }}</td>
+            <td class="text-center">{{ eggs_delivery.delivery.deliveryDate ? eggs_delivery.delivery.deliveryDate|date('Y-m-d') : '' }}</td>
+            <td class="text-end">{{ eggs_delivery.delivery.eggsNumber|number_format(0, ',', ' ') }}</td>
+            <td class="text-end">{{ eggs_delivery.eggs|number_format(0, ',', ' ') }}</td>
+            <td class="text-center">{{ eggs_delivery.delivery.firstLayingDate ? eggs_delivery.delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
+            <td class="text-center">{{ eggs_delivery.delivery.lastLayingDate ? eggs_delivery.delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
+            <td class="text-center d-print-none">
                 <span class="btn-group">
                     {{ include('layout/buttons/list_show.html.twig',
                         {pathLink: path('eggs_delivery_show', {'id': eggs_delivery.delivery.id})}) }}

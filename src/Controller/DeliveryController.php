@@ -16,6 +16,7 @@ use App\Repository\DeliveryRepository;
 use App\Repository\DetailsDeliveryRepository;
 use App\Repository\InputDeliveryRepository;
 use App\Repository\InputsFarmDeliveryRepository;
+use App\Repository\SellingEggRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,26 +77,38 @@ class DeliveryController extends AbstractController
      * @Route("/", name="eggs_delivery_index", methods={"GET"})
      * @IsGranted("ROLE_PRODUCTION")
      */
-    public function index(DeliveryRepository $eggsDeliveryRepository): Response
+    public function index(
+        DeliveryRepository $eggsDeliveryRepository,
+        InputDeliveryRepository $inputDeliveryRepository,
+        SellingEggRepository $sellingEggRepository
+    ): Response
     {
         $deliveries = $eggsDeliveryRepository->findBy([], ['deliveryDate' => 'desc']);
         $eggsDeliveries = $this->eggsOnWarehouse($deliveries);
+        $eggsInWarehouse = $eggsDeliveryRepository->eggsDelivered() - $inputDeliveryRepository->eggsProduction() - $sellingEggRepository->sellingEggs();
 
         return $this->render('eggs_delivery/index.html.twig', [
             'eggs_deliveries' => $eggsDeliveries,
+            'eggs_in_warehouse' => $eggsInWarehouse
         ]);
     }
 
     /**
      * @Route("/all", name="eggs_delivery_all_index", methods={"GET"})
      */
-    public function allDelivery(DeliveryRepository $eggsDeliveryRepository): Response
+    public function allDelivery(
+        DeliveryRepository $eggsDeliveryRepository,
+        InputDeliveryRepository $inputDeliveryRepository,
+        SellingEggRepository $sellingEggRepository
+    ): Response
     {
         $deliveries = $eggsDeliveryRepository->findAll();
         $eggsDeliveries = $this->eggsWarehouse($deliveries);
+        $eggsInWarehouse = $eggsDeliveryRepository->eggsDelivered() - $inputDeliveryRepository->eggsProduction() - $sellingEggRepository->sellingEggs();
 
         return $this->render('eggs_delivery/index.html.twig', [
             'eggs_deliveries' => $eggsDeliveries,
+            'eggs_in_warehouse' => $eggsInWarehouse
         ]);
     }
 

@@ -462,6 +462,7 @@ eggs_delivery:
   index:
     button:
       new: Dodaj dostawę
+    eggs_stock: Stan na magazynie
     title: Dostawy jaj
     table:
       id: Indeks
