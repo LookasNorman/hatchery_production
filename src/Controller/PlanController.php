@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Breed;
 use App\Entity\Delivery;
 use App\Entity\Herds;
-use App\Entity\InputsFarmDelivery;
+use App\Entity\InputDelivery;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanDeliveryEgg;
 use App\Entity\PlanIndicators;
@@ -110,8 +110,8 @@ class PlanController extends AbstractController
         if ($eggsOnWarehouse == 0) {
             $deliveryRepository = $this->getDoctrine()->getRepository(Delivery::class);
             $deliveredEggs = (int)$deliveryRepository->eggsBreedDelivered($breed);
-            $inputFarmDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
-            $productionsEggs = (int)$inputFarmDeliveryRepository->eggsBreedProduction($breed);
+            $inputDeliveryRepository = $this->getDoctrine()->getRepository(InputDelivery::class);
+            $productionsEggs = (int)$inputDeliveryRepository->eggsBreedProduction($breed);
             $eggsOnWarehouse = $deliveredEggs - $productionsEggs;
         }
 
@@ -395,7 +395,7 @@ class PlanController extends AbstractController
         $planEggs = $this->planEggs($breed, $dateEnd);
 
         $deliveryRepository = $this->getDoctrine()->getRepository(Delivery::class);
-        $inputDeliveryRepository = $this->getDoctrine()->getRepository(InputsFarmDelivery::class);
+        $inputDeliveryRepository = $this->getDoctrine()->getRepository(InputDelivery::class);
         $eggsDelivered = $deliveryRepository->eggsBreedDelivered($breed);
         $eggsInProduction = $inputDeliveryRepository->eggsBreedProduction($breed);
         $eggsStock = $eggsDelivered - $eggsInProduction + $planEggs;
