@@ -100,6 +100,7 @@ class LightingController extends AbstractController
             if ($totalEggs === $eggsNumber) {
                 $setEggs = $inputDelivery->getEggsNumber();
                 $eggsInputLighting->setLightingEggs($setEggs);
+                dd($inputDelivery);
             } else {
                 if ($key < $length) {
                     $setEggs = round($eggsNumber / $totalEggs * $inputDelivery->getEggsNumber());
@@ -110,9 +111,13 @@ class LightingController extends AbstractController
                     $eggsInputLighting->setLightingEggs($setEggs);
                 }
             }
+            $inputDelivery->getDelivery()->addLightingEggs($setEggs);
+
             $eggsInputLighting->addInputDelivery($inputDelivery);
             $setWasteLighting = $inputDelivery->getEggsNumber() * $fertility;
             $eggsInputLighting->setWasteLighting($setWasteLighting);
+            $inputDelivery->getDelivery()->addWasteLighting($setWasteLighting);
+
             if ($key < $length) {
                 $setWaste = round($inputDelivery->getEggsNumber() / $totalEggs * $wasteEggs, 0);
                 $eggsInputLighting->setWasteEggs($setWaste);
@@ -121,6 +126,7 @@ class LightingController extends AbstractController
                 $setWaste = $wasteEggs - $totalWaste;
                 $eggsInputLighting->setWasteEggs($setWaste);
             }
+            $inputDelivery->getDelivery()->addWasteEggLighting($setWaste);
             $entityManager->persist($eggsInputLighting);
         }
         $entityManager->flush();
@@ -192,37 +198,6 @@ class LightingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="eggs_inputs_lighting_show", methods={"GET"})
-     */
-    public function show(Lighting $eggsInputsLighting): Response
-    {
-        return $this->render('eggs_inputs_lighting/show.html.twig', [
-            'eggs_inputs_lighting' => $eggsInputsLighting,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="eggs_inputs_lighting_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
-     */
-    public function edit(Request $request, Lighting $eggsInputsLighting): Response
-    {
-        $form = $this->createForm(LightingType::class, $eggsInputsLighting);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('eggs_inputs_lighting_index');
-        }
-
-        return $this->render('eggs_inputs_lighting/edit.html.twig', [
-            'eggs_inputs_lighting' => $eggsInputsLighting,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="eggs_inputs_lighting_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
@@ -231,6 +206,10 @@ class LightingController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $lighting->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             foreach ($lighting->getInputDeliveries() as $delivery) {
+                $delivery->getDelivery()->oddWasteLighting($lighting->getWasteLighting());
+                $delivery->getDelivery()->oddLightingEggs($lighting->getLightingEggs());
+                $delivery->getDelivery()->oddWasteEggLighting($lighting->getWasteEggs());
+                $entityManager->persist($delivery);
                 $lighting->removeInputDelivery($delivery);
             }
 

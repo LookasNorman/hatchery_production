@@ -320,6 +320,20 @@ class Delivery
         return $this;
     }
 
+    public function addWasteLighting(?int $addWasteLighting): self
+    {
+        $this->wasteLighting = $this->wasteLighting + $addWasteLighting;
+
+        return $this;
+    }
+
+    public function oddWasteLighting(?int $oddWasteLighting): self
+    {
+        $this->wasteLighting = $this->wasteLighting - $oddWasteLighting;
+
+        return $this;
+    }
+
     public function getFertilization(): ?string
     {
         return $this->fertilization;
@@ -344,6 +358,20 @@ class Delivery
         return $this;
     }
 
+    public function addWasteEggLighting(?int $addWasteEggLighting): self
+    {
+        $this->wasteEggsLighting = $this->wasteEggsLighting + $addWasteEggLighting;
+
+        return $this;
+    }
+
+    public function oddWasteEggLighting(?int $oddWasteEggLighting): self
+    {
+        $this->wasteEggsLighting = $this->wasteEggsLighting - $oddWasteEggLighting;
+
+        return $this;
+    }
+
     public function getLightingEggs(): ?int
     {
         return $this->lightingEggs;
@@ -352,6 +380,20 @@ class Delivery
     public function setLightingEggs(?int $lightingEggs): self
     {
         $this->lightingEggs = $lightingEggs;
+
+        return $this;
+    }
+
+    public function addLightingEggs(?int $addLightingEggs): self
+    {
+        $this->lightingEggs = $this->lightingEggs + $addLightingEggs;
+
+        return $this;
+    }
+
+    public function oddLightingEggs(?int $oddLightingEggs): self
+    {
+        $this->lightingEggs = $this->lightingEggs - $oddLightingEggs;
 
         return $this;
     }

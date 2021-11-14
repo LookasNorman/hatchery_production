@@ -42,6 +42,8 @@
                     <hr>
                     <li class="d-flex">{% trans %}eggs_inputs.show.card.footer.add{% endtrans %}</li>
                     <li class="d-flex">
+                        {{ include('layout/buttons/edit.html.twig',
+                            {pathLink: path('production_lighting_herd', {'id': eggs_input.id}), text: 'eggs_inputs.show.button.lighting.new'}) }}
                         {{ include('layout/modals/production_modal.html.twig',
                             { title: 'eggs_inputs.show.button.lighting.correct',
                                 body: herdsEggs, pathLink: 'eggs_inputs_lighting_correct', class: 'btn-warning' }) }}

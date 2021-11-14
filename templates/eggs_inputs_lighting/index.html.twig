@@ -34,7 +34,7 @@
             <tr>
                 <td class="text-end">
                     {{ eggs_inputs_lighting.wasteEggs|number_format(0, ',', ' ') }}
-                    {% trans %}eggs_inputs_lighting.index.table.of{% endtrans%}
+                    {% trans %}eggs_inputs_lighting.index.table.of{% endtrans %}
                     {{ eggs_inputs_lighting.lightingEggs|number_format(0, ',', ' ') }}
                 </td>
                 <td class="text-end">{{ eggs_inputs_lighting.wasteLighting|number_format(0, ',', ' ') }}</td>
@@ -56,12 +56,6 @@
                 </td>
                 <td class="text-center">
                     <span class="btn-group">
-                    {{ include('layout/buttons/list_show.html.twig',
-                        {pathLink: path('eggs_inputs_lighting_show', {'id': eggs_inputs_lighting.id})}) }}
-                        {% if is_granted('ROLE_MANAGER') %}
-                            {{ include('layout/buttons/list_edit.html.twig',
-                                {pathLink: path('eggs_inputs_lighting_edit', {'id': eggs_inputs_lighting.id})}) }}
-                        {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}
                             {{ include('eggs_inputs_lighting/_delete_trash_form.html.twig') }}
                         {% endif %}
