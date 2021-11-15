@@ -29,7 +29,7 @@ class TransportListController extends AbstractController
 
     /**
      * @Route("/new", name="transport_list_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_TRANSPORT")
      */
     public function new(Request $request): Response
     {
@@ -63,7 +63,7 @@ class TransportListController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="transport_list_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_TRANSPORT")
      */
     public function edit(Request $request, TransportList $transportList): Response
     {

@@ -47,10 +47,12 @@ class User1Type extends AbstractType
                 'required' => false,
                 'multiple' => true,
                 'expanded' => true,
+                'label' => 'user.form.label.roles',
                 'choices' => [
                     'user.form.choices.admin' => 'ROLE_ADMIN',
                     'user.form.choices.manager' => 'ROLE_MANAGER',
                     'user.form.choices.production' => 'ROLE_PRODUCTION',
+                    'user.form.choices.transport' => 'ROLE_TRANSPORT',
                 ],
                 'attr' => [
                     'class' => 'form-check"'

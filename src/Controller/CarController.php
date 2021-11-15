@@ -29,7 +29,7 @@ class CarController extends AbstractController
 
     /**
      * @Route("/new", name="car_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_TRANSPORT")
      */
     public function new(Request $request): Response
     {
@@ -63,7 +63,7 @@ class CarController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="car_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_TRANSPORT")
      */
     public function edit(Request $request, Car $car): Response
     {

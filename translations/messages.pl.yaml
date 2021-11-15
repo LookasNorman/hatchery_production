@@ -1728,6 +1728,9 @@ user:
       admin: Administrator
       manager: Zarząd
       production: Produkcja
+      transport: Transport
+    label:
+      roles: Uprawnienia
   index:
     button:
       new: Dodaj nowego
