@@ -98,6 +98,11 @@ class Inputs
         return $this->inputDate;
     }
 
+    public function getSelectionDate()
+    {
+        return $this->inputDate->add(new \DateInterval('P21DT5H'));
+    }
+
     public function setInputDate(\DateTimeInterface $inputDate): self
     {
         $this->inputDate = $inputDate->sub(new \DateInterval('P21DT5H'));

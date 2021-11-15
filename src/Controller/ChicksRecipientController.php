@@ -83,7 +83,6 @@ class ChicksRecipientController extends AbstractController
      */
     public function show(ChicksRecipient $chicksRecipient, ChicksRecipientRepository $repository): Response
     {
-//        $inputsDetail = $repository->inputsDelivery($chicksRecipient->getId());
         $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
         $planDelivery = $planDeliveryChickRepository->findBy(['chickFarm' => $chicksRecipient], ['inputDate' => 'ASC']);
         $planIndicatorsRepository = $this->getDoctrine()->getRepository(PlanIndicators::class);
@@ -91,7 +90,6 @@ class ChicksRecipientController extends AbstractController
 
         return $this->render('chicks_recipient/show.html.twig', [
             'chicks_recipient' => $chicksRecipient,
-//            'inputsDetail' => $inputsDetail,
             'plan_delivery_chicks' => $planDelivery,
             'plan_indicators' => $planIndicators,
             'maps_api' => $this->getParameter('app.mapskey')

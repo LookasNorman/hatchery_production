@@ -58,6 +58,7 @@ class TransportListController extends AbstractController
     {
         return $this->render('transport_list/show.html.twig', [
             'transport_list' => $transportList,
+            'maps_api' => $this->getParameter('app.mapskey')
         ]);
     }
 

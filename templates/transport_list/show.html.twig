@@ -19,16 +19,22 @@
         <h1>{% trans %}transport_list.show.title{% endtrans %}</h1>
         <div class="d-flex justify-content-center card-group">
             {% include 'layout/cards/chead.html.twig' %}
-            {{ transport_list.farm.chicksFarm.name }} - {{ transport_list.farm.eggInput.inputDate|date_modify('+21 day')|date('Y-m-d') }}
+            {% for farm in transport_list.farm %}
+            {% if loop.first %}
+            {{ farm.eggInput.inputDate|date_modify('+21 day')|date('Y-m-d') }}
+            {% endif %}
+            {% endfor %}
             {% include 'layout/cards/cbody.html.twig' %}
             <dl class="row">
                 <dd class="col-sm-5">{% trans %}transport_list.show.address{% endtrans %}</dd>
                 <dt class="col-sm-7 text-end">
-                    {{ transport_list.farm.chicksFarm.city }}<br/>
-                    {{ transport_list.farm.chicksFarm.street }} {{ transport_list.farm.chicksFarm.streetNumber }}
+                    {% for farm in transport_list.farm %}
+                    {{ farm.chicksFarm.city }}<br/>
+                    {{ farm.chicksFarm.street }} {{ farm.chicksFarm.streetNumber }}
+                    {% endfor %}
                 </dt>
-                <dd class="col-sm-5">{% trans %}transport_list.show.phone_number{% endtrans %}</dd>
-                <dt class="col-sm-7 text-end">{{ transport_list.farm.chicksFarm.phoneNumber }}</dt>
+{#                <dd class="col-sm-5">{% trans %}transport_list.show.phone_number{% endtrans %}</dd>#}
+{#                <dt class="col-sm-7 text-end">{{ transport_list.farm.chicksFarm.phoneNumber }}</dt>#}
                 <dd class="col-sm-5">{% trans %}transport_list.show.distance{% endtrans %}</dd>
                 <dt class="col-sm-7 text-end">{{ transport_list.distance }}</dt>
                 <dd class="col-sm-5">{% trans %}transport_list.show.departure_hour{% endtrans %}</dd>
@@ -36,7 +42,11 @@
                 <dd class="col-sm-5">{% trans %}transport_list.show.arrival_hour{% endtrans %}</dd>
                 <dt class="col-sm-7 text-end">{{ transport_list.arrivalHourToFarm ? transport_list.arrivalHourToFarm|date('H:i') : '' }}</dt>
                 <dd class="col-sm-5">{% trans %}transport_list.show.chicks{% endtrans %}</dd>
-                <dt class="col-sm-7 text-end">{{ transport_list.farm.chickNumber }}</dt>
+                <dt class="col-sm-7 text-end">
+                    {% for farm in transport_list.farm %}
+                    {{ farm.chickNumber }}<br/>
+                    {% endfor %}
+                </dt>
             </dl>
             {% include 'layout/cards/cfooter.html.twig' %}
             {% if is_granted('ROLE_ADMIN') %}
@@ -47,7 +57,17 @@
                     {pathLink: path('transport_list_edit', {'id': transport_list.id}), text: 'transport_list.show.button.edit'}) }}
             {% endif %}
             {% include 'layout/cards/cend.html.twig' %}
+            <iframe
+                    width="480"
+                    height="480"
+                    style="border:0"
+                    src="https://www.google.com/maps/embed/v1/directions?key={{ maps_api }}&origin=Poland+Dębówka+1a&destination=Poland+Dębówka+1a&waypoints={{ transport_list.farm|map(p => "#{p.chicksFarm.city} + #{p.chicksFarm.street}")|join('|') }}&avoid=tolls|highways"
+                    allowfullscreen>
+            </iframe>
+
         </div>
+
+
         {{ include('layout/buttons/back.html.twig',
             { pathLink: path('transport_list_index'), text: 'transport_list.show.button.back' }) }}
     </div>

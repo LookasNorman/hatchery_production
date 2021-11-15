@@ -1772,10 +1772,12 @@ transport_list:
       distance: Kilometry
       driver: Kierowca
       farm: Ferma
+      input: Nakład
     placeholder:
       car: Wybierz samochód z listy
       driver: Wybierz kierowcę z listy
       farm: Wybierz ferme z listy
+      input: Wybierz nakład z listy
   index:
     button:
       new: Dodaj trasę

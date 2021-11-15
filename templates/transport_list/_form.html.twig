@@ -2,3 +2,10 @@
     {{ form_widget(form) }}
 {{ include('layout/buttons/create.html.twig', {text: 'transport_list.form.button.save'}) }}
 {{ form_end(form) }}
+<script>
+    let breeder = $('#transport_list_input')
+    let herds = $('#transport_list_input_farm')
+    breeder.change(function () {
+        herds.closest('div').remove()
+    })
+</script>

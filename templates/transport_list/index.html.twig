@@ -41,17 +41,31 @@
         {% for transport_list in transport_lists %}
             <tr>
                 <td>
-                    {{ transport_list.farm.eggInput.inputDate|date_modify('+21 day')|date('Y-m-d') }}
-                    {{ transport_list.farm.eggInput.inputDate|date_modify('+21 day')|date('l') }}
+                    {% for key, farm in transport_list.farm %}
+                        {% if loop.first %}
+                    {{ farm.eggInput.inputDate|date_modify('+21 day')|date('Y-m-d') }}
+                    {{ farm.eggInput.inputDate|date_modify('+21 day')|date('l') }}
+                        {% endif %}
+                    {% endfor %}
                 </td>
-                <td>{{ transport_list.farm.chicksFarm.name }}</td>
                 <td>
-                    {{ transport_list.farm.chicksFarm.postcode }}
-                    {{ transport_list.farm.chicksFarm.city }}
-                    {{ transport_list.farm.chicksFarm.street }}
-                    {{ transport_list.farm.chicksFarm.streetNumber }}
+                    {% for farm in transport_list.farm %}
+                    {{ farm.chicksFarm.name }}<br/>
+                    {% endfor %}
                 </td>
-                <td>{{ transport_list.farm.chicksFarm.phoneNumber }}</td>
+                <td>
+                    {% for farm in transport_list.farm %}
+                    {{ farm.chicksFarm.postcode }}
+                    {{ farm.chicksFarm.city }}
+                    {{ farm.chicksFarm.street }}
+                    {{ farm.chicksFarm.streetNumber }}<br/>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for farm in transport_list.farm %}
+                    {{ farm.chicksFarm.phoneNumber }}<br/>
+                    {% endfor %}
+                </td>
                 <td>{{ transport_list.distance }}</td>
                 <td>
                     {% for driver in transport_list.driver %}
@@ -61,7 +75,11 @@
                 <td>{{ transport_list.departureHour ? transport_list.departureHour|date('H:i') : '' }}</td>
                 <td>{{ transport_list.arrivalHourToFarm ? transport_list.arrivalHourToFarm|date('H:i') : '' }}</td>
                 <td>{{ transport_list.car.name }} - {{ transport_list.car.registrationNumber }}</td>
-                <td>{{ transport_list.farm.chickNumber }}</td>
+                <td>
+                    {% for farm in transport_list.farm %}
+                    {{ farm.chickNumber }}<br/>
+                    {% endfor %}
+                </td>
                 <td class="d-print-none">
                     {{ include('layout/buttons/list_show.html.twig',
                         {pathLink: path('transport_list_show', {'id': transport_list.id})}) }}

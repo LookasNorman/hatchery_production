@@ -35,7 +35,7 @@ class Transfers
     private $transfersEgg;
 
     /**
-     * @ORM\ManyToOne(targetEntity=InputsFarm::class, inversedBy="transfers")
+     * @ORM\ManyToMany(targetEntity=InputsFarm::class, inversedBy="transfers")
      */
     private $farm;
 
