@@ -22,12 +22,6 @@ class TransportList
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=InputsFarm::class, inversedBy="transportLists")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $farm;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Driver::class, inversedBy="transportLists")
      */
     private $driver;
@@ -53,26 +47,20 @@ class TransportList
      */
     private $arrivalHourToFarm;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=InputsFarm::class, inversedBy="transportLists")
+     */
+    private $farm;
+
     public function __construct()
     {
         $this->driver = new ArrayCollection();
+        $this->farm = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getFarm(): ?InputsFarm
-    {
-        return $this->farm;
-    }
-
-    public function setFarm(?InputsFarm $farm): self
-    {
-        $this->farm = $farm;
-
-        return $this;
     }
 
     /**
@@ -143,6 +131,30 @@ class TransportList
     public function setArrivalHourToFarm(\DateTimeInterface $arrivalHourToFarm): self
     {
         $this->arrivalHourToFarm = $arrivalHourToFarm;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InputsFarm[]
+     */
+    public function getFarm(): Collection
+    {
+        return $this->farm;
+    }
+
+    public function addFarm(InputsFarm $farm): self
+    {
+        if (!$this->farm->contains($farm)) {
+            $this->farm[] = $farm;
+        }
+
+        return $this;
+    }
+
+    public function removeFarm(InputsFarm $farm): self
+    {
+        $this->farm->removeElement($farm);
 
         return $this;
     }

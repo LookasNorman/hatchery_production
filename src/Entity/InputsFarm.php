@@ -44,14 +44,14 @@ class InputsFarm
     private $inputsFarmDeliveryPlans;
 
     /**
-     * @ORM\OneToMany(targetEntity=TransportList::class, mappedBy="farm")
-     */
-    private $transportLists;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Transfers::class, mappedBy="farm")
+     * @ORM\ManyToMany(targetEntity=Transfers::class, mappedBy="farm")
      */
     private $transfers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=TransportList::class, mappedBy="farm")
+     */
+    private $transportLists;
 
     public function __construct()
     {
@@ -132,36 +132,6 @@ class InputsFarm
     }
 
     /**
-     * @return Collection|TransportList[]
-     */
-    public function getTransportLists(): Collection
-    {
-        return $this->transportLists;
-    }
-
-    public function addTransportList(TransportList $transportList): self
-    {
-        if (!$this->transportLists->contains($transportList)) {
-            $this->transportLists[] = $transportList;
-            $transportList->setFarm($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTransportList(TransportList $transportList): self
-    {
-        if ($this->transportLists->removeElement($transportList)) {
-            // set the owning side to null (unless already changed)
-            if ($transportList->getFarm() === $this) {
-                $transportList->setFarm(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Transfers[]
      */
     public function getTransfers(): Collection
@@ -186,6 +156,33 @@ class InputsFarm
             if ($transfer->getFarm() === $this) {
                 $transfer->setFarm(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TransportList[]
+     */
+    public function getTransportLists(): Collection
+    {
+        return $this->transportLists;
+    }
+
+    public function addTransportList(TransportList $transportList): self
+    {
+        if (!$this->transportLists->contains($transportList)) {
+            $this->transportLists[] = $transportList;
+            $transportList->addFarm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransportList(TransportList $transportList): self
+    {
+        if ($this->transportLists->removeElement($transportList)) {
+            $transportList->removeFarm($this);
         }
 
         return $this;

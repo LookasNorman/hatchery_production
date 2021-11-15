@@ -19,7 +19,7 @@ class InputsRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('i')
             ->select('i.id', 'i.name', 'i.inputDate', 'SUM(if.chickNumber) as chickNumber')
-            ->join('i.inputsFarms', 'if')
+            ->leftJoin('i.inputsFarms', 'if')
             ->orderBy('i.inputDate', 'desc')
             ->groupBy('i')
             ->getQuery()

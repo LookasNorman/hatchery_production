@@ -42,10 +42,12 @@ class TransportListType extends AbstractType
             ->add('farm', EntityType::class, [
                 'class' => InputsFarm::class,
                 'choice_label' => function(InputsFarm $inputsFarm){
-                return $inputsFarm->getChicksFarm()->getCustomer()->getName() . ' - ' . $inputsFarm->getChicksFarm()->getName();
+                return $inputsFarm->getEggInput()->getName() . ' ' . $inputsFarm->getChicksFarm()->getCustomer()->getName() . ' - ' . $inputsFarm->getChicksFarm()->getName();
                 },
                 'label' => 'transport_list.form.label.farm',
                 'placeholder' => 'transport_list.form.placeholder.farm',
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'form-select'
                 ]
