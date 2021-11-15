@@ -1298,6 +1298,8 @@ menu:
       title: Plany
     transport:
       title: Transport
+    transport_list:
+      index: Wyjazdy - trasy
     vaccination:
       index: Szczepienia / przekład
 plan_breeder:
@@ -1747,6 +1749,63 @@ user:
     phone_number: Numer telefonu
     roles: Uprawnienia
     title: Karta użytkownika
+transport_list:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Jesteś pewien, że chesz usunąć trasę? Operacja jest nieodwracalna, bezpowrotnie utracisz dane!!!
+  edit:
+    button:
+      back: Lista tras
+    header: Karta edycji
+    title: Edycja trasy
+  form:
+    button:
+      save: Zapisz
+    label:
+      arrival_hour: Godzina przyjazdu
+      car: Samochód
+      departure_hour: Godzina wyjazdu
+      distance: Kilometry
+      driver: Kierowca
+      farm: Ferma
+    placeholder:
+      car: Wybierz samochód z listy
+      driver: Wybierz kierowcę z listy
+      farm: Wybierz ferme z listy
+  index:
+    button:
+      new: Dodaj trasę
+    table:
+      actions: Akcje
+      address: Adres
+      arrival_hour: Godzina przyjazdu
+      car: Samochód
+      chicks: Ilość piskląt
+      date: Data
+      departure_hour: Godzina wyjazdu
+      distance: Kilometry
+      driver: Kierowca
+      farm: Hodowca
+      no_found: Brak tras
+      phone_number: Telefon
+    title: Lista tras
+  new:
+    button:
+      back: Lista transportów
+    header: Karta dodawania trasy
+    title: Dodawanie nowej trasy
+  show:
+    address: Adres
+    arrival_hour: Przyjazd
+    button:
+      back: Lista tras
+      edit: Edytuj
+    chicks: Ilość piskląt
+    departure_hour: Wyjazd
+    distance: Kilometry
+    phone_number: Telefon
+    title: Szczegóły wyjazdu
 vaccination:
   delete:
     button:

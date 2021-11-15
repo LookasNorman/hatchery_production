@@ -100,7 +100,6 @@ class LightingController extends AbstractController
             if ($totalEggs === $eggsNumber) {
                 $setEggs = $inputDelivery->getEggsNumber();
                 $eggsInputLighting->setLightingEggs($setEggs);
-                dd($inputDelivery);
             } else {
                 if ($key < $length) {
                     $setEggs = round($eggsNumber / $totalEggs * $inputDelivery->getEggsNumber());

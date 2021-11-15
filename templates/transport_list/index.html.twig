@@ -1,42 +1,82 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TransportList index{% endblock %}
-
 {% block body %}
-    <h1>TransportList index</h1>
+<style>
+    .example-wrapper {
+        margin: 1em auto;
+        max-width: 1920px;
+        width: 95%;
+        font: 18px/1.5 sans-serif;
+    }
 
-    <table class="table">
+    .example-wrapper code {
+        background: #F5F5F5;
+        padding: 2px 6px;
+    }
+</style>
+
+<div class="example-wrapper">
+    <h1>
+        {% trans %}transport_list.index.title{% endtrans %}
+    </h1>
+    {% if is_granted("ROLE_MANAGER") %}
+        {{ include('layout/buttons/new.html.twig', {pathLink: path('transport_list_new'), text: 'transport_list.index.button.new' }) }}
+    {% endif %}
+    {% include 'layout/tables/thead.html.twig' %}
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Distance</th>
-            <th>DepartureHour</th>
-            <th>ArrivalHourToFarm</th>
-            <th>actions</th>
+            <th>{% trans %}transport_list.index.table.date{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.farm{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.address{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.phone_number{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.distance{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.driver{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.departure_hour{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.arrival_hour{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.car{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.chicks{% endtrans %}</th>
+            <th class="d-print-none">{% trans %}transport_list.index.table.actions{% endtrans %}</th>
         </tr>
-        </thead>
-        <tbody>
+        {% include 'layout/tables/tbody.html.twig' %}
         {% for transport_list in transport_lists %}
             <tr>
-                <td>{{ transport_list.id }}</td>
-                <td>{{ transport_list.distance }}</td>
-                <td>{{ transport_list.departureHour ? transport_list.departureHour|date('H:i:s') : '' }}</td>
-                <td>{{ transport_list.arrivalHourToFarm ? transport_list.arrivalHourToFarm|date('H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('transport_list_show', {'id': transport_list.id}) }}">show</a>
+                    {{ transport_list.farm.eggInput.inputDate|date_modify('+21 day')|date('Y-m-d') }}
+                    {{ transport_list.farm.eggInput.inputDate|date_modify('+21 day')|date('l') }}
+                </td>
+                <td>{{ transport_list.farm.chicksFarm.name }}</td>
+                <td>
+                    {{ transport_list.farm.chicksFarm.postcode }}
+                    {{ transport_list.farm.chicksFarm.city }}
+                    {{ transport_list.farm.chicksFarm.street }}
+                    {{ transport_list.farm.chicksFarm.streetNumber }}
+                </td>
+                <td>{{ transport_list.farm.chicksFarm.phoneNumber }}</td>
+                <td>{{ transport_list.distance }}</td>
+                <td>
+                    {% for driver in transport_list.driver %}
+                    {{ driver.firstname }} {{ driver.lastname }}<br/>
+                    {% endfor %}
+                </td>
+                <td>{{ transport_list.departureHour ? transport_list.departureHour|date('H:i') : '' }}</td>
+                <td>{{ transport_list.arrivalHourToFarm ? transport_list.arrivalHourToFarm|date('H:i') : '' }}</td>
+                <td>{{ transport_list.car.name }} - {{ transport_list.car.registrationNumber }}</td>
+                <td>{{ transport_list.farm.chickNumber }}</td>
+                <td class="d-print-none">
+                    {{ include('layout/buttons/list_show.html.twig',
+                        {pathLink: path('transport_list_show', {'id': transport_list.id})}) }}
                     {% if is_granted('ROLE_MANAGER') %}
-                        <a href="{{ path('transport_list_edit', {'id': transport_list.id}) }}">edit</a>
+                        {{ include('layout/buttons/list_edit.html.twig',
+                            {pathLink: path('transport_list_edit', {'id': transport_list.id})}) }}
                     {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="6">{% trans %}transport_list.index.table.no_found{% endtrans %}</td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
-    {% if is_granted('ROLE_MANAGER') %}
-        <a href="{{ path('transport_list_new') }}">Create new</a>
-    {% endif %}
+        {% include 'layout/tables/tfooter.html.twig' %}
+        {% include 'layout/tables/tend.html.twig' %}
+</div>
 {% endblock %}

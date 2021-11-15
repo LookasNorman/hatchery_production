@@ -1,4 +1,5 @@
-<form method="post" action="{{ path('transport_list_delete', {'id': transport_list.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('transport_list_delete', {'id': transport_list.id}) }}"
+      onsubmit="return confirm('{% trans %}transport_list.delete.confirm{% endtrans %}');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ transport_list.id) }}">
-    <button class="btn">Delete</button>
+    {{ include('layout/buttons/delete.html.twig', { text: 'transport_list.delete.button.delete' }) }}
 </form>
