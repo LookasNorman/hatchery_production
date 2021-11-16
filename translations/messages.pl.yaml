@@ -1296,6 +1296,8 @@ menu:
       index: Plan tygodniowy
     plans:
       title: Plany
+    production:
+      index: Produkcja
     transport:
       title: Transport
     transport_list:
