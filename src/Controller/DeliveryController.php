@@ -76,7 +76,6 @@ class DeliveryController extends AbstractController
 
     /**
      * @Route("/", name="eggs_delivery_index", methods={"GET"})
-     * @IsGranted("ROLE_PRODUCTION")
      */
     public function index(
         DeliveryRepository      $eggsDeliveryRepository,
@@ -155,7 +154,7 @@ class DeliveryController extends AbstractController
             $entityManager->persist($eggsDelivery);
             $email = $this->sendEmail($eggsDelivery);
             if ($email) {
-//                $mailer->send($email);
+                $mailer->send($email);
             }
 
             $entityManager->flush();
