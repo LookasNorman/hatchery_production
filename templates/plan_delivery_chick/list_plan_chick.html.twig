@@ -23,7 +23,7 @@
             </td>
             <td>
                 <a href="{{ path('chicks_recipient_show', {'id': plan_delivery_chick.chickFarm.id}) }}">
-                    {{ plan_delivery_chick.chickFarm.name }}
+                    {{ plan_delivery_chick.chickFarm.customer.name }} - {{ plan_delivery_chick.chickFarm.name }}
                 </a>
             </td>
             <td class="text-nowrap">{{ plan_delivery_chick.chickNumber|number_format(0, ',', ' ') }}</td>
