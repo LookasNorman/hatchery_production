@@ -1,3 +1,9 @@
+between_date:
+  form:
+    label:
+      end: Do dnia
+      save: Wybierz
+      start: Od dnia
 details: 3 tygodnie
 form:
   breed:
@@ -1338,6 +1344,9 @@ plan_delivery_chick:
     placeholder:
       chick_farm: Wybierz fermę z listy
   index:
+    accordion:
+      plan:
+        date: Zakres dat wybierania do wyświetlenia
     button:
       new: Dodaj zamówienie
     title: Lista planowanych wstawień

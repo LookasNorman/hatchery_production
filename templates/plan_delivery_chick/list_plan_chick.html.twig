@@ -1,6 +1,5 @@
 {% include 'layout/tables/thead.html.twig' %}
 <tr>
-    <th class="d-print-none">{% trans %}plan_delivery_chick.list_plan_chick.id{% endtrans %}</th>
     <th>{% trans %}plan_delivery_chick.list_plan_chick.breed{% endtrans %}</th>
     <th>{% trans %}plan_delivery_chick.list_plan_chick.chick_farm{% endtrans %}</th>
     <th>{% trans %}plan_delivery_chick.list_plan_chick.chick_number{% endtrans %}</th>
@@ -15,7 +14,6 @@
 {% include 'layout/tables/tbody.html.twig' %}
     {% for plan_delivery_chick in plan_delivery_chicks %}
         <tr>
-            <td class="d-print-none">{{ plan_delivery_chick.id }}</td>
             <td>
                 {% for breed in plan_delivery_chick.breed %}
                     {{ breed.name }} {{ breed.type }}

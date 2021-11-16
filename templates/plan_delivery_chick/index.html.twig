@@ -17,19 +17,44 @@
 
     <div class="example-wrapper">
         <h1>{% trans %}plan_delivery_chick.index.title{% endtrans %}</h1>
-        <nav aria-label="breadcrumb" class="d-print-none">
-            <ol class="breadcrumb">
-                {% for year in yearLink %}
-                    <li class="breadcrumb-item"><a href="{{ path('plan_year_plan', {'yearN': year}) }}">{{ year }}</a>
-                    </li>
-                {% endfor %}
-            </ol>
-        </nav>
-        {% if is_granted('ROLE_MANAGER') %}
-            {{ include('layout/buttons/new.html.twig',
-                { pathLink: path('plan_delivery_chick_new'), text: 'plan_delivery_chick.index.button.new' }) }}
-        {% endif %}
-
+        <div class="card-group">
+            <div class="card m-2 shadow-lg p-1 mb-5 bg-body rounded">
+                <div class="card-body">
+                    <nav aria-label="breadcrumb" class="d-print-none">
+                        <ol class="breadcrumb">
+                            {% for year in yearLink %}
+                                <li class="breadcrumb-item"><a href="{{ path('plan_year_plan', {'yearN': year}) }}">{{ year }}</a>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </nav>
+                    {% if is_granted('ROLE_MANAGER') %}
+                        {{ include('layout/buttons/new.html.twig',
+                            { pathLink: path('plan_delivery_chick_new'), text: 'plan_delivery_chick.index.button.new' }) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card m-2 shadow-lg p-1 mb-5 bg-body rounded">
+                <div class="card-body">
+                    <div class="accordion accordion-flush" id="accordionFlushPlanChick">
+                        <div class="accordion-item">
+                            <h4 class="accordion-header" id="flush-headingDate">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDate" aria-expanded="false" aria-controls="flush-collapseDate">
+                                    {% trans %}plan_delivery_chick.index.accordion.plan.date{% endtrans %}
+                                </button>
+                            </h4>
+                            <div id="flush-collapseDate" class="accordion-collapse collapse" aria-labelledby="flush-headingDate" data-bs-parent="#accordionFlushPlanChick">
+                                <div class="accordion-body">
+                                    {{ form_start(form) }}
+                                    {{ form_widget(form) }}
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{ include('plan_delivery_chick/list_plan_chick.html.twig') }}
     </div>
 {% endblock %}

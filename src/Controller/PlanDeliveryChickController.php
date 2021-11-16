@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ChicksRecipient;
 use App\Entity\PlanDeliveryChick;
+use App\Form\BetweenDateType;
 use App\Form\PlanDeliveryChickType;
 use App\Repository\PlanDeliveryChickRepository;
 use App\Repository\PlanIndicatorsRepository;
@@ -33,15 +34,30 @@ class PlanDeliveryChickController extends AbstractController
     }
 
     /**
-     * @Route("/", name="plan_delivery_chick_index", methods={"GET"})
+     * @Route("/", name="plan_delivery_chick_index", methods={"GET","POST"})
      */
-    public function index(PlanDeliveryChickRepository $planDeliveryChickRepository, PlanIndicatorsRepository $planIndicatorsRepository): Response
+    public function index(Request $request, PlanDeliveryChickRepository $planDeliveryChickRepository, PlanIndicatorsRepository $planIndicatorsRepository): Response
     {
+        $form = $this->createForm(BetweenDateType::class);
+        $form->handleRequest($request);
         $date = new \DateTime('midnight');
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $startDate = $form->get('startDate')->getData()->modify('-21 days');
+            $endDate = $form->get('endDate')->getData()->modify('-21 days');
+            return $this->render('plan_delivery_chick/index.html.twig', [
+                'plan_delivery_chicks' => $planDeliveryChickRepository->planBetweenDate($startDate, $endDate),
+                'plan_indicators' => $planIndicatorsRepository->findOneBy([]),
+                'yearLink' => $this->yearLink(),
+                'form' => $form->createView()
+            ]);
+        }
+
         return $this->render('plan_delivery_chick/index.html.twig', [
-            'plan_delivery_chicks' => $planDeliveryChickRepository->planFromDate($date),
+            'plan_delivery_chicks' => $planDeliveryChickRepository->findBy([], ['inputDate' => 'asc']),
             'plan_indicators' => $planIndicatorsRepository->findOneBy([]),
-            'yearLink' => $this->yearLink()
+            'yearLink' => $this->yearLink(),
+            'form' => $form->createView()
         ]);
     }
 
