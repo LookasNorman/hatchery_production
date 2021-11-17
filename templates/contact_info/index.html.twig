@@ -40,12 +40,14 @@
                 <td>{{ contact_info.phoneNumber }}</td>
                 <td>{{ contact_info.email }}</td>
                 <td>
-                    {{ include('layout/buttons/list_show.html.twig',
-                        {pathLink: path('contact_info_show', {'id': contact_info.id})}) }}
-                    {% if is_granted('ROLE_MANAGER') %}
-                        {{ include('layout/buttons/list_edit.html.twig',
-                            {pathLink: path('contact_info_edit', {'id': contact_info.id})}) }}
-                    {% endif %}
+                    <span class="button-group">
+                        {{ include('layout/buttons/list_show.html.twig',
+                            {pathLink: path('contact_info_show', {'id': contact_info.id})}) }}
+                        {% if is_granted('ROLE_MANAGER') %}
+                            {{ include('layout/buttons/list_edit.html.twig',
+                                {pathLink: path('contact_info_edit', {'id': contact_info.id})}) }}
+                        {% endif %}
+                    </span>
                 </td>
             </tr>
         {% else %}

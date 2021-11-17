@@ -20,11 +20,23 @@
 
         <div class="d-flex justify-content-center card-group">
             {{ include('customer/customer_detail_card.html.twig') }}
+            <div class="maps">
+                <iframe
+                        width="480"
+                        height="480"
+                        style="border:0"
+                        src="https://www.google.com/maps/embed/v1/place?key={{ maps_api }}&q=Poland+{{ customer.postcode }}+{{ customer.city }}+{{ customer.street }}+{{ customer.streetNumber }}&maptype=satellite"
+                        allowfullscreen>
+                </iframe>
+            </div>
         </div>
         {{ include('layout/buttons/back.html.twig', { pathLink: path('customer_index'), text: 'customer.show.button.back' }) }}
         {{ include('layout/buttons/add.html.twig', { pathLink: path('chicks_recipient_new', {'id': customer.id}), text: 'customer.show.button.add' }) }}
         {{ include('layout/buttons/add.html.twig', { pathLink: path('plan_delivery_chick_new'), text: 'customer.show.button.add_plan' }) }}
-
+        {{ include('layout/buttons/add.html.twig', { pathLink: path('customer_phone_new', {'customer': customer.id}), text: 'customer.show.button.add_phone' }) }}
+        <a type="btn" href="{{ path('customer_phone_new', {'customer': customer.id}) }}">
+            <i class="fas fa-plus"></i><i class="fas fa-phone-square"></i>
+        </a>
         <hr>
         <div class="accordion accordion-flush" id="accordionFlushShow">
             <div class="accordion-item">

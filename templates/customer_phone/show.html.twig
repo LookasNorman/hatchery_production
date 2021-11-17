@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+
+        .card {
+            max-width: 350px;
+            min-width: 300px;
+            padding: 6px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>{% trans %}customer_phone.show.title{% endtrans %}</h1>
+        <div class="d-flex justify-content-center card-group">
+            <div class="card-group">
+                <div class="card mb-3 m-2 border-dark shadow-lg p-3 mb-5 bg-body rounded" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ asset('img/emptyPhoto.png') }}" sizes="" class="img-fluid rounded-start"
+                                 alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                {% if customer_phone.person %}
+                                <h5 class="card-title">{{ customer_phone.person }}</h5>
+                                {% else %}
+                                <p class="fs-6">{% trans %}customer_phone.show.no_name{% endtrans %}</p>
+                                {% endif %}
+                                <hr/>
+                                <dl class="row">
+                                    <dt class="col-sm-6">{% trans %}customer_phone.show.phone_number{% endtrans %}</dt>
+                                    <dd class="col-sm-6 text-end">{{ customer_phone.phoneNumber }}</dd>
+                                    <dt class="col-sm-6">{% trans %}customer_phone.show.job_position{% endtrans %}</dt>
+                                    <dd class="col-sm-6 text-end">{{ customer_phone.jobPosition }}</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer  bg-transparent border-success d-flex">
+                        <p class="card-text">{{ customer_phone.description }}</p>
+                        <div class="btn-group" role="group">
+                            {{ include('layout/buttons/back.html.twig',
+                                { pathLink: path('customer_show', {'id': customer_phone.customer.id}), text: 'customer_phone.show.button.back' }) }}
+                            {{ include('layout/buttons/edit.html.twig',
+                                {pathLink: path('customer_phone_edit', {'id': customer_phone.id}), text: 'customer_phone.show.button.edit'}) }}
+                            {{ include('customer_phone/_delete_form.html.twig') }}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

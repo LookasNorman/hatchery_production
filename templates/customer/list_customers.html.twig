@@ -1,6 +1,5 @@
 {% include 'layout/tables/thead.html.twig' %}
 <tr>
-    <th>{% trans %}customer.index.table.id{% endtrans %}</th>
     <th>{% trans %}customer.index.table.name{% endtrans %}</th>
     <th>{% trans %}customer.index.table.integration{% endtrans %}</th>
     <th>{% trans %}customer.index.table.plan_date{% endtrans %}</th>
@@ -13,7 +12,6 @@
 {% include 'layout/tables/tbody.html.twig' %}
         {% for customer in customers %}
             <tr>
-                <td>{{ customer.0.id }}</td>
                 <td><a href="{{ path('customer_show', {'id': customer.0.id}) }}">{{ customer.0.name }}</a></td>
                 <td>
                     {% if(customer.0.chickIntegration is not empty) %}
@@ -24,7 +22,12 @@
                 </td>
                 <td>{{ customer.deliveryDate ? customer.deliveryDate|date('Y-m-d') : '' }}</td>
                 <td>{{ customer.0.email }}</td>
-                <td>{{ customer.0.phoneNumber }}</td>
+                <td>
+                    {{ customer.0.phoneNumber }}
+                    <i class="fas fa-phone-square" data-bs-toggle="modal"
+                       data-bs-target="#Modal{{ customer.0.id }}"></i>
+
+                </td>
                 <td>{{ customer.0.postCode }} {{ customer.0.city }}</td>
                 <td>{{ customer.0.street }} {{ customer.0.streetNumber }}</td>
                 <td>
@@ -38,6 +41,23 @@
                         {pathLink: path('chick_recipient_customer_index', {'id': customer.0.id}), text: 'customer.index.table.badge.farm' }) }}
                 </td>
             </tr>
+            <div class="modal fade" id="Modal{{ customer.0.id }}" tabindex="-1"
+                 aria-labelledby="Modal{{ customer.0.id }}Label" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="Modal{{ customer.0.id }}Label">{{ customer.0.name }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{ include('customer/phone_modal_body.html.twig') }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% else %}
             <tr>
                 <td colspan="5">no records found</td>

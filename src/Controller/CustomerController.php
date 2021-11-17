@@ -83,6 +83,7 @@ class CustomerController extends AbstractController
             'customer' => $customer,
             'plan_delivery_chicks' => $planDelivery,
             'plan_indicators' => $planIndicators,
+            'maps_api' => $this->getParameter('app.mapskey'),
         ]);
     }
 

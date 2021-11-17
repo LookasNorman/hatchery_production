@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>{% trans %}customer_phone.new.title{% endtrans %}</h1>
+        <div class="d-flex justify-content-center card-group">
+            {% include 'layout/cards/chead.html.twig' %}
+            <i class="fa fa-plus"></i>
+            {% trans %}customer_phone.new.header{% endtrans %}
+            {% include 'layout/cards/cbody.html.twig' %}
+            {{ include('customer_phone/_form.html.twig') }}
+            {% include 'layout/cards/cfooter.html.twig' %}
+            {% include 'layout/cards/cend.html.twig' %}
+        </div>
+        {% if customer %}
+        {{ include('layout/buttons/back.html.twig', {pathLink: path('customer_show', {'id': customer.id}), text: 'customer_phone.new.button.back_customer'}) }}
+        {% else %}
+        {{ include('layout/buttons/back.html.twig', {pathLink: path('customer_phone_index'), text: 'customer_phone.new.button.back'}) }}
+        {% endif %}
+    </div>
+{% endblock %}

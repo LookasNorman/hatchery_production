@@ -346,6 +346,7 @@ customer:
   show:
     button:
       add: Dodaj fermę do odbiorcy
+      add_phone: Dodaj telefon
       add_plan: Dodaj zamówienie piskląt
       back: Wykaz odbiorców piskląt
       edit: Edycja odbiorcy
@@ -356,6 +357,54 @@ customer:
     phone_number: Numer telefonu
     street: Ulica
     title: Szczegóły odbiorcy
+customer_phone:
+  delete:
+    button:
+      delete: Usuń
+    confirm: Jeesteś pewień, że chcesz usunąć kontakt?  Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
+  edit:
+    button:
+      back: Odbiorca
+    header: Karta edycji
+    title: Edycja kontaktu
+  form:
+    button:
+      save: Zapisz
+    label:
+      customer: Odbiorca
+      description: Uwagi
+      job_position: Stanowisko
+      person: Imię i nazwisko
+      phone_number: Numer telefonu
+    placeholder:
+      customer: Wybierz odbiorcę z listy
+  index:
+    button:
+      new: Dodaj nowy kontakt
+    table:
+      actions: Akcje
+      customer: Odbiorca
+      description: Uwagi
+      job_position: Stanowisko
+      no_found: Brak pozycji na liście
+      person: Imię i nazwisko
+      phone_number: Numer telefonu
+    title: Lista kontaktów
+  new:
+    button:
+      back: Lista kontaktów odbiorców
+      back_customer: Szczegóły odbiorcy
+    header: Karta nowego kontaktu
+    title: Dodawanie nowego kontaktu
+  show:
+    button:
+      back: Odbiorca
+      delete: Usuń
+      edit: Edytuj
+    job_position: Stanowisko
+    no_name: Brak imienia i nazwiska
+    phone_number: Telefon
+    title: Wizytówka
 driver:
   delete:
     button:

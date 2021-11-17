@@ -1,0 +1,24 @@
+<style>
+    .card {
+        max-width: 350px;
+        min-width: 300px;
+        padding: 6px 6px;
+    }
+</style>
+<div class="card-group">
+{% for customer_phone in customer.0.customerPhones %}
+    <div class="card mb-3 m-2 border-dark shadow-sm p-3 mb-5 bg-body rounded" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ asset('img/emptyPhoto.png') }}" sizes="" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ customer_phone.person }}</h5>
+                    <p class="card-text">{{ customer_phone.phoneNumber }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>

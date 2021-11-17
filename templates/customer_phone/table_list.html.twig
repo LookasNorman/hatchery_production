@@ -1,0 +1,35 @@
+{% include 'layout/tables/thead.html.twig' %}
+<tr>
+    <th>{% trans %}customer_phone.index.table.customer{% endtrans %}</th>
+    <th>{% trans %}customer_phone.index.table.phone_number{% endtrans %}</th>
+    <th>{% trans %}customer_phone.index.table.person{% endtrans %}</th>
+    <th>{% trans %}customer_phone.index.table.job_position{% endtrans %}</th>
+    <th>{% trans %}customer_phone.index.table.description{% endtrans %}</th>
+    <th>{% trans %}customer_phone.index.table.actions{% endtrans %}</th>
+</tr>
+{% include 'layout/tables/tbody.html.twig' %}
+{% for customer_phone in customer_phones %}
+    <tr>
+        <td>{{ customer_phone.customer.name }}</td>
+        <td>{{ customer_phone.phoneNumber }}</td>
+        <td>{{ customer_phone.person }}</td>
+        <td>{{ customer_phone.jobPosition }}</td>
+        <td>{{ customer_phone.description }}</td>
+        <td>
+            <span class="button-group">
+                {{ include('layout/buttons/list_show.html.twig',
+                    {pathLink: path('customer_phone_show', {'id': customer_phone.id})}) }}
+                {% if is_granted('ROLE_MANAGER') %}
+                    {{ include('layout/buttons/list_edit.html.twig',
+                        {pathLink: path('customer_phone_edit', {'id': customer_phone.id})}) }}
+                {% endif %}
+            </span>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="6">{% trans %}customer_phone.index.table.no_found{% endtrans %}</td>
+    </tr>
+{% endfor %}
+{% include 'layout/tables/tfooter.html.twig' %}
+{% include 'layout/tables/tend.html.twig' %}
