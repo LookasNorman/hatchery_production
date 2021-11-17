@@ -123,6 +123,7 @@ class DeliveryController extends AbstractController
 
         $email = (new TemplatedEmail())
             ->to('rgolec@zwdmalec.pl')
+            ->addTo('kkrakowiak@zwdmalec.pl')
             ->addBcc('lkonieczny@zwdmalec.pl')
             ->subject('Przyjęcie jaj w dniu ' . $date->format('Y-m-d'))
             ->htmlTemplate('emails/deliveryEgg.html.twig')
