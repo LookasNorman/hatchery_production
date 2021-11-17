@@ -66,9 +66,15 @@ class Customer
      */
     private $chickIntegration;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CustomerPhone::class, mappedBy="customer")
+     */
+    private $customerPhones;
+
     public function __construct()
     {
         $this->chicksRecipients = new ArrayCollection();
+        $this->customerPhones = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,6 +204,36 @@ class Customer
     public function setChickIntegration(?ChickIntegration $chickIntegration): self
     {
         $this->chickIntegration = $chickIntegration;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CustomerPhone[]
+     */
+    public function getCustomerPhones(): Collection
+    {
+        return $this->customerPhones;
+    }
+
+    public function addCustomerPhone(CustomerPhone $customerPhone): self
+    {
+        if (!$this->customerPhones->contains($customerPhone)) {
+            $this->customerPhones[] = $customerPhone;
+            $customerPhone->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomerPhone(CustomerPhone $customerPhone): self
+    {
+        if ($this->customerPhones->removeElement($customerPhone)) {
+            // set the owning side to null (unless already changed)
+            if ($customerPhone->getCustomer() === $this) {
+                $customerPhone->setCustomer(null);
+            }
+        }
 
         return $this;
     }

@@ -105,6 +105,11 @@ class ChicksRecipient
      */
     private $planInputs;
 
+    /**
+     * @ORM\OneToMany(targetEntity=FarmPhone::class, mappedBy="farm")
+     */
+    private $farmPhones;
+
     public function __construct()
     {
         $this->customerBuildings = new ArrayCollection();
@@ -112,6 +117,7 @@ class ChicksRecipient
         $this->planDeliveryChicks = new ArrayCollection();
         $this->vaccinations = new ArrayCollection();
         $this->planInputs = new ArrayCollection();
+        $this->farmPhones = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -359,6 +365,36 @@ class ChicksRecipient
             // set the owning side to null (unless already changed)
             if ($planInput->getFarm() === $this) {
                 $planInput->setFarm(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FarmPhone[]
+     */
+    public function getFarmPhones(): Collection
+    {
+        return $this->farmPhones;
+    }
+
+    public function addFarmPhone(FarmPhone $farmPhone): self
+    {
+        if (!$this->farmPhones->contains($farmPhone)) {
+            $this->farmPhones[] = $farmPhone;
+            $farmPhone->setFarm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFarmPhone(FarmPhone $farmPhone): self
+    {
+        if ($this->farmPhones->removeElement($farmPhone)) {
+            // set the owning side to null (unless already changed)
+            if ($farmPhone->getFarm() === $this) {
+                $farmPhone->setFarm(null);
             }
         }
 
