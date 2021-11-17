@@ -1,0 +1,20 @@
+@media print {
+    body {
+        font-family: Georgia, ‘Times New Roman’, serif;
+        width: 100%;
+        margin: 0;
+        float: none;
+        background: white;
+    }
+    h1 {
+        font-size: 14pt;
+    }
+    table {
+        font-size: 10pt;
+    }
+    a:link {
+        font-weight: bold;
+        text-decoration: underline;
+        color: #06c;
+    }
+}
