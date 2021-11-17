@@ -9,6 +9,7 @@ use App\Entity\InputDelivery;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanDeliveryEgg;
 use App\Entity\PlanIndicators;
+use App\Entity\SellingEgg;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -396,9 +397,11 @@ class PlanController extends AbstractController
 
         $deliveryRepository = $this->getDoctrine()->getRepository(Delivery::class);
         $inputDeliveryRepository = $this->getDoctrine()->getRepository(InputDelivery::class);
+        $sellingEggsRepository = $this->getDoctrine()->getRepository(SellingEgg::class);
         $eggsDelivered = $deliveryRepository->eggsBreedDelivered($breed);
         $eggsInProduction = $inputDeliveryRepository->eggsBreedProduction($breed);
-        $eggsStock = $eggsDelivered - $eggsInProduction + $planEggs;
+        $eggsSold = $sellingEggsRepository->sellingEggs();
+        $eggsStock = $eggsDelivered - $eggsInProduction - $eggsSold + $planEggs;
 
         return $eggsStock;
 

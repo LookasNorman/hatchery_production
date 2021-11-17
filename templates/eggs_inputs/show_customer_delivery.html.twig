@@ -13,7 +13,9 @@
         <tr>
             <td class="align-middle">
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    {{ farm.chicksFarm.customer.name }}: {{ farm.chicksFarm.name }}
+                    <a href="{{ path('customer_show' , {id: farm.chicksFarm.customer.id }) }}">
+                        {{ farm.chicksFarm.customer.name }}: {{ farm.chicksFarm.name }}
+                    </a>
                 </div>
             </td>
             <td class="text-center align-middle">{{ farm.chickNumber|number_format(0, ',', ' ') }}

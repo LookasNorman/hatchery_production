@@ -34,22 +34,24 @@
                 </div>
             </td>
             <td class="align-middle">
-                {{ herdEgg.herd.name }}
+                <a href="{{ path('herds_show', {'id': herdEgg.herd.id }) }}">
+                    {{ herdEgg.herd.name }}
+                </a>
             </td>
             <td class="text-center align-middle">
                 {{ herdEgg.inputEggs }}
             </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
 
     {% endfor %}
