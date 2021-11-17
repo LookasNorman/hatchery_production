@@ -1,28 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<style>
-    .example-wrapper {
-        margin: 1em auto;
-        max-width: 1920px;
-        width: 95%;
-        font: 18px/1.5 sans-serif;
-    }
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-    .example-wrapper code {
-        background: #F5F5F5;
-        padding: 2px 6px;
-    }
-</style>
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
 
-<div class="example-wrapper">
-    <h1>
-        {% trans %}transport_list.index.title{% endtrans %}
-    </h1>
-    {% if is_granted("ROLE_MANAGER") %}
-        {{ include('layout/buttons/new.html.twig', {pathLink: path('transport_list_new'), text: 'transport_list.index.button.new' }) }}
-    {% endif %}
-    {% include 'layout/tables/thead.html.twig' %}
+    <div class="example-wrapper">
+        <h1>
+            {% trans %}transport_list.index.title{% endtrans %}
+        </h1>
+        {% if is_granted("ROLE_MANAGER") %}
+            {{ include('layout/buttons/new.html.twig', {pathLink: path('transport_list_new'), text: 'transport_list.index.button.new' }) }}
+        {% endif %}
+        {% include 'layout/tables/thead.html.twig' %}
         <thead>
         <tr>
             <th>{% trans %}transport_list.index.table.date{% endtrans %}</th>
@@ -39,56 +39,67 @@
         </tr>
         {% include 'layout/tables/tbody.html.twig' %}
         {% for transport_list in transport_lists %}
-            <tr>
-                <td>
-                    {% for key, farm in transport_list.farm %}
-                        {% if loop.first %}
-                    {{ farm.eggInput.inputDate|date_modify('+21 day')|date('Y-m-d') }}
-                    {{ farm.eggInput.inputDate|date_modify('+21 day')|date('l') }}
-                        {% endif %}
-                    {% endfor %}
-                </td>
-                <td>
-                    {% for farm in transport_list.farm %}
-                    {{ farm.chicksFarm.name }}<br/>
-                    {% endfor %}
-                </td>
-                <td>
-                    {% for farm in transport_list.farm %}
-                    {{ farm.chicksFarm.postcode }}
-                    {{ farm.chicksFarm.city }}
-                    {{ farm.chicksFarm.street }}
-                    {{ farm.chicksFarm.streetNumber }}<br/>
-                    {% endfor %}
-                </td>
-                <td>
-                    {% for farm in transport_list.farm %}
-                    {{ farm.chicksFarm.phoneNumber }}<br/>
-                    {% endfor %}
-                </td>
-                <td>{{ transport_list.distance }}</td>
-                <td>
-                    {% for driver in transport_list.driver %}
-                    {{ driver.firstname }} {{ driver.lastname }}<br/>
-                    {% endfor %}
-                </td>
-                <td>{{ transport_list.departureHour ? transport_list.departureHour|date('H:i') : '' }}</td>
-                <td>{{ transport_list.arrivalHourToFarm ? transport_list.arrivalHourToFarm|date('H:i') : '' }}</td>
-                <td>{{ transport_list.car.name }} - {{ transport_list.car.registrationNumber }}</td>
-                <td>
-                    {% for farm in transport_list.farm %}
-                    {{ farm.chickNumber }}<br/>
-                    {% endfor %}
-                </td>
-                <td class="d-print-none">
-                    {{ include('layout/buttons/list_show.html.twig',
-                        {pathLink: path('transport_list_show', {'id': transport_list.id})}) }}
-                    {% if is_granted('ROLE_MANAGER') %}
-                        {{ include('layout/buttons/list_edit.html.twig',
-                            {pathLink: path('transport_list_edit', {'id': transport_list.id})}) }}
-                    {% endif %}
-                </td>
-            </tr>
+            {% set row = transport_list.farm|length %}
+            {% for farm in transport_list.farm %}
+                {% if loop.first %}
+                    <tr>
+                        <td rowspan="{{ row }}">
+                            {{ farm.eggInput.inputDate|date_modify('+21 day')|format_datetime('full', 'none', locale='pl') }}
+                        </td>
+                        <td>
+                            {{ farm.chicksFarm.name }}<br/>
+                        </td>
+                        <td>
+                                {{ farm.chicksFarm.postcode }}
+                                {{ farm.chicksFarm.city }}
+                                {{ farm.chicksFarm.street }}
+                                {{ farm.chicksFarm.streetNumber }}<br/>
+                        </td>
+                        <td>
+                                {{ farm.chicksFarm.phoneNumber }}<br/>
+                        </td>
+                        <td rowspan="{{ row }}">{{ transport_list.distance }}</td>
+                        <td rowspan="{{ row }}">
+                            {% for driver in transport_list.driver %}
+                                {{ driver.firstname|slice(0,1) }}.{{ driver.lastname }}<br/>
+                            {% endfor %}
+                        </td>
+                        <td rowspan="{{ row }}">{{ transport_list.departureHour ? transport_list.departureHour|date('H:i') : '' }}</td>
+                        <td rowspan="{{ row }}">{{ transport_list.arrivalHourToFarm ? transport_list.arrivalHourToFarm|date('H:i') : '' }}</td>
+                        <td rowspan="{{ row }}">{{ transport_list.car.name }}</td>
+                        <td>
+                                {{ farm.chickNumber }}<br/>
+                        </td>
+                        <td rowspan="{{ row }}" class="d-print-none">
+                            {{ include('layout/buttons/list_show.html.twig',
+                                {pathLink: path('transport_list_show', {'id': transport_list.id})}) }}
+                            {% if is_granted('ROLE_MANAGER') %}
+                                {{ include('layout/buttons/list_edit.html.twig',
+                                    {pathLink: path('transport_list_edit', {'id': transport_list.id})}) }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if not loop.first %}
+                    <tr>
+                        <td>
+                                {{ farm.chicksFarm.name }}<br/>
+                        </td>
+                        <td>
+                                {{ farm.chicksFarm.postcode }}
+                                {{ farm.chicksFarm.city }}
+                                {{ farm.chicksFarm.street }}
+                                {{ farm.chicksFarm.streetNumber }}<br/>
+                        </td>
+                        <td>
+                                {{ farm.chicksFarm.phoneNumber }}<br/>
+                        </td>
+                        <td>
+                                {{ farm.chickNumber }}<br/>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
         {% else %}
             <tr>
                 <td colspan="6">{% trans %}transport_list.index.table.no_found{% endtrans %}</td>
@@ -96,5 +107,5 @@
         {% endfor %}
         {% include 'layout/tables/tfooter.html.twig' %}
         {% include 'layout/tables/tend.html.twig' %}
-</div>
+    </div>
 {% endblock %}
