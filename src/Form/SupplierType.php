@@ -34,6 +34,34 @@ class SupplierType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+            ->add('postCode', TextType::class, [
+                'required' => false,
+                'label' => 'egg_supplier.form.label.post_code',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('city', TextType::class, [
+                'required' => false,
+                'label' => 'egg_supplier.form.label.city',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('street', TextType::class, [
+                'required' => false,
+                'label' => 'egg_supplier.form.label.street',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('streetNubmber', TextType::class, [
+                'required' => false,
+                'label' => 'egg_supplier.form.label.street_number',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
         ;
     }
 

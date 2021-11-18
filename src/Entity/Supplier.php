@@ -61,6 +61,26 @@ class Supplier
      */
     private $herds;
 
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true)
+     */
+    private $postCode;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $city;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $street;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $streetNubmber;
+
     public function __construct()
     {
         $this->herds = new ArrayCollection();
@@ -133,6 +153,54 @@ class Supplier
                 $herd->setBreeder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPostCode(): ?string
+    {
+        return $this->postCode;
+    }
+
+    public function setPostCode(?string $postCode): self
+    {
+        $this->postCode = $postCode;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(?string $street): self
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    public function getStreetNubmber(): ?string
+    {
+        return $this->streetNubmber;
+    }
+
+    public function setStreetNubmber(?string $streetNubmber): self
+    {
+        $this->streetNubmber = $streetNubmber;
 
         return $this;
     }

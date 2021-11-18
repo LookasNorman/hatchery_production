@@ -452,26 +452,32 @@ egg_supplier:
     button:
       save: Zapisz
     label:
-      name: Nazwa dostawcy jaj
+      city: Miejscowość
       email: Adres email
+      name: Nazwa dostawcy jaj
       phone_number: Numer telefonu
+      post_code: Kod pocztowy
+      street: Ulica
+      street_number: Numer domu
   edit:
-    title: Edycja dostawcy
     button:
       back: Lista dostawców jaj
       update: Zaktualizuj
+    title: Edycja dostawcy
   index:
     title: Dostawcy jaj
     table:
-      id: Indeks
-      name: Nazwa
-      email: Adres email
-      phone_number: Numer telefonu
       actions: Akcje
       badge:
         show: Szczegóły
         edit: Edytuj
+      city: Miejscowość
+      email: Adres email
+      id: Indeks
+      name: Nazwa
       no_records: Brak dostawców jaj
+      phone_number: Numer telefonu
+      street: Ulica
     button:
       new: Dodaj nowego dostawcę
   new:
@@ -485,10 +491,12 @@ egg_supplier:
       plans:
         day: Plan dzienny
         week: Plan tygodniowy
+    city: Miejscowość
     email: Email
     herds:
       list: Stada dostawcy
     phone_number: Telefon
+    street: Ulica
     title: Dostawca jaj
 eggs_delivery:
   delete:

@@ -58,6 +58,7 @@ class SupplierController extends AbstractController
     {
         return $this->render('egg_supplier/show.html.twig', [
             'egg_supplier' => $eggSupplier,
+            'maps_api' => $this->getParameter('app.mapskey'),
         ]);
     }
 
