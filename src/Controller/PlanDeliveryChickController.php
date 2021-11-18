@@ -44,7 +44,7 @@ class PlanDeliveryChickController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
             $startDate = $form->get('startDate')->getData()->modify('-21 days');
-            $endDate = $form->get('endDate')->getData()->modify('-21 days');
+            $endDate = $form->get('endDate')->getData()->modify('-20 days');
             return $this->render('plan_delivery_chick/index.html.twig', [
                 'plan_delivery_chicks' => $planDeliveryChickRepository->planBetweenDate($startDate, $endDate),
                 'plan_indicators' => $planIndicatorsRepository->findOneBy([]),
