@@ -957,6 +957,17 @@ emails:
       title: Informacje
     sales:
       title: Dział handlowy
+  input_reminder:
+    chick: Ilość piskląt
+    delivery_date: Data dostawy
+    farm: Ferma
+    input: Z nakładu
+    header: Wykaz ferm
+    next:
+      delivery_date: Planowana dostawa
+      input_date: Planowany nakład
+    slaughter_date: Data uboju
+    title: Przypomnienie o nakładach
   transport_list:
     header: Planowana dostawa piskląt
     transport:

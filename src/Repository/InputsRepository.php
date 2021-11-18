@@ -14,6 +14,15 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class InputsRepository extends ServiceEntityRepository
 {
+    public function inputsReminder()
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.inputDate between :date and :end')
+            ->setParameters(['date' => new \DateTime('-57 days'), 'end' => new \DateTime('-49 days')])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     public function inputsIndex()
     {
@@ -37,18 +46,6 @@ class InputsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function lightingInputs()
-    {
-        return $this->createQueryBuilder('i')
-            ->addSelect('SUM(ifd.eggsNumber) as eggs')
-            ->join('i.inputsFarms', 'if')
-            ->join('if.inputsFarmDeliveries', 'ifd')
-            ->andWhere('ifd.lighting is null')
-            ->groupBy('i')
-            ->getQuery()
-            ->getResult();
-    }
-
     public function inputsNoLighting()
     {
         return $this->createQueryBuilder('i')
@@ -63,19 +60,6 @@ class InputsRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('i')
             ->andWhere('i.transfers is empty')
-            ->groupBy('i')
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function transferInputs()
-    {
-        return $this->createQueryBuilder('i')
-            ->addSelect('SUM(ifd.eggsNumber) as eggs', 'SUM(l.wasteLighting) as waste')
-            ->join('i.inputsFarms', 'if')
-            ->join('if.inputsFarmDeliveries', 'ifd')
-            ->leftJoin('ifd.lighting', 'l')
-            ->andWhere('ifd.transfers is null')
             ->groupBy('i')
             ->getQuery()
             ->getResult();

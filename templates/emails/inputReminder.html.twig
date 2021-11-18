@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>ZWD Malec</title>
+    <style type="text/css">
+        body {
+            margin: 10px;
+            padding: 10px;
+            min-width: 100% !important;
+            background-color: #FFFFFF;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1 style="text-align: center">{% trans %}emails.input_reminder.header{% endtrans %}</h1>
+    {% for input in inputs %}
+        <h3>
+            {% trans %}emails.input_reminder.input{% endtrans %}: {{ input.name }}
+            {% trans %}emails.input_reminder.delivery_date{% endtrans %}: {{ input.inputDate|date_modify('+21 days')|date('Y-m-d') }}
+            {% trans %}emails.input_reminder.slaughter_date{% endtrans %}: {{ input.inputDate|date_modify('+63 days')|date('Y-m-d') }}
+        </h3>
+    <table class="content" align="center" cellpadding="0" cellspacing="0" border="1"
+           style="background-color: #ffffff; text-align: center">
+        <tr>
+            <td style="padding-top: 10px"><h3>{% trans %}emails.input_reminder.farm{% endtrans %}</h3></td>
+            <td style="padding-top: 10px"><h3>{% trans %}emails.input_reminder.chick{% endtrans %}</h3></td>
+            <td style="padding-top: 10px"><h3>{% trans %}emails.input_reminder.next.input_date{% endtrans %}</h3></td>
+            <td style="padding-top: 10px"><h3>{% trans %}emails.input_reminder.next.delivery_date{% endtrans %}</h3></td>
+        </tr>
+        {% for farm in input.inputsFarms %}
+        <tr>
+            <td style="padding-bottom: 10px">{{ farm.chicksFarm.name }}</td>
+            <td style="padding-bottom: 10px">{{ farm.chickNumber }}</td>
+            <td style="padding-bottom: 10px">{{ input.inputDate|date_modify('+59 days')|date('Y-m-d') }}</td>
+            <td style="padding-bottom: 10px">{{ input.inputDate|date_modify('+80 days')|date('Y-m-d') }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <hr/>
+    {% endfor %}
+</div>
+</body>
+</html>
