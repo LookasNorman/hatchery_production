@@ -136,7 +136,9 @@ class HerdsController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('herds_index');
+        return $this->redirectToRoute('egg_supplier_show', [
+            'id' => $herd->getBreeder()->getId()
+        ]);
     }
 
     /**
