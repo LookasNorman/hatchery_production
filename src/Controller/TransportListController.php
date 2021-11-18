@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\ContactInfo;
 use App\Entity\TransportList;
 use App\Form\TransportListEditType;
 use App\Form\TransportListType;
 use App\Repository\TransportListRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -28,11 +31,41 @@ class TransportListController extends AbstractController
         ]);
     }
 
+    public function sendEmail($farm, $driver, $arrivalHour, $car)
+    {
+        $contactInfoRepository = $this->getDoctrine()->getRepository(ContactInfo::class);
+        $hatchery = $contactInfoRepository->findOneBy(['department' => 'Wylęgarnia']);
+        $transport = $contactInfoRepository->findOneBy(['department' => 'Transport']);
+        $accounting = $contactInfoRepository->findOneBy(['department' => 'Księgowość']);
+        $date = clone $farm->getEggInput()->getInputDate();
+        $date->modify('+ 21 days');
+
+        $email = (new TemplatedEmail())
+            ->to($transport->getEmail())
+            ->addBcc('lkonieczny@zwdmalec.pl')
+            ->subject('Planowana dostawa piskląt ' . $date->format('Y-m-d'))
+            ->htmlTemplate('emails/transportList.html.twig')
+            ->context([
+                'farm' => $farm,
+                'driver' => $driver,
+                'arrivalHour' => $arrivalHour,
+                'car' => $car,
+                'hatchery' => $hatchery,
+                'transport' => $transport,
+                'accounting' => $accounting
+            ]);
+//        if ($emailAddress) {
+//            $email->addTo($emailAddress);
+//        }
+
+        return $email;
+    }
+
     /**
      * @Route("/new", name="transport_list_new", methods={"GET","POST"})
      * @IsGranted("ROLE_TRANSPORT")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, MailerInterface $mailer): Response
     {
         $transportList = new TransportList();
         $form = $this->createForm(TransportListType::class, $transportList);
@@ -41,6 +74,13 @@ class TransportListController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($transportList);
+
+            foreach ($transportList->getFarm() as $transport) {
+                $email = $this->sendEmail($transport, $transportList->getDriver(), $transportList->getArrivalHourToFarm(), $transportList->getCar());
+                if ($email) {
+                    $mailer->send($email);
+                }
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('transport_list_index');
@@ -90,7 +130,7 @@ class TransportListController extends AbstractController
      */
     public function delete(Request $request, TransportList $transportList): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$transportList->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $transportList->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($transportList);
             $entityManager->flush();

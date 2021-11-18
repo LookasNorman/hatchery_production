@@ -932,6 +932,10 @@ emails:
       title: Informacje
     sales:
       title: Dział handlowy
+  transport_list:
+    header: Planowana dostawa piskląt
+    transport:
+      title: Transport
 hatchers:
   delete:
     confirm: Na pewno chcesz usunąć aparat klujnikowy? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!
