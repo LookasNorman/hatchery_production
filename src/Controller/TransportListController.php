@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\TransportList;
+use App\Form\TransportListEditType;
 use App\Form\TransportListType;
 use App\Repository\TransportListRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -68,7 +69,7 @@ class TransportListController extends AbstractController
      */
     public function edit(Request $request, TransportList $transportList): Response
     {
-        $form = $this->createForm(TransportListType::class, $transportList);
+        $form = $this->createForm(TransportListEditType::class, $transportList);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
