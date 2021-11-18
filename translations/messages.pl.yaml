@@ -925,6 +925,23 @@ eggs_inputs_selections:
     title: Szczegóły wybierania
     unhatched: Niewyklute
 emails:
+  customer_plans:
+    accounting:
+      title: Dział księgowości
+    breed: Rasa
+    button:
+      send: Wyślij
+    chicks: Ilość piskląt
+    delivery_date: Data dostawy
+    header: Plan dostaw
+    header_customer: Plan dostaw dla
+    information:
+      body: W przypadku niezgodności prosimy o pilny kontakt z działem sprzedaży
+      title: Informacje
+    hatchery:
+      title: Wylęgarnia
+    sales:
+      title: Dział handlowy
   egg_delivery:
     accounting:
       title: Dział księgowości

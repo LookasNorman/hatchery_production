@@ -33,6 +33,8 @@
                 <td>
                     {{ include('layout/buttons/list_show.html.twig',
                         {pathLink: path('customer_show', {'id': customer.0.id})}) }}
+                    {{ include('layout/buttons/list_plans.html.twig',
+                        {pathLink: path('customer_plans', {'id': customer.0.id})}) }}
                     {% if is_granted('ROLE_MANAGER') %}
                         {{ include('layout/buttons/list_edit.html.twig',
                             {pathLink: path('customer_edit', {'id': customer.0.id})}) }}
