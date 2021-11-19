@@ -959,6 +959,12 @@ emails:
       title: Informacje
     sales:
       title: Dział handlowy
+  input_farm:
+    chick_number: Ilość piskląt
+    delivery_date: Data wybierania
+    farm: Ferma
+    header: Informacja o wprowadzonym nakładzie
+    title: Wprowadzono nakład
   input_reminder:
     chick: Ilość piskląt
     delivery_date: Data dostawy

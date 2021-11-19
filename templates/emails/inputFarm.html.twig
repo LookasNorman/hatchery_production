@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>ZWD Malec</title>
+    <style type="text/css">
+        body {
+            margin: 10px;
+            padding: 10px;
+            min-width: 100% !important;
+            background-color: #FFFFFF;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1 style="text-align: center">{% trans %}emails.input_farm.header{% endtrans %}</h1>
+
+    <table class="content" align="center" cellpadding="0" cellspacing="0" border="1"
+           style="background-color: #ffffff; text-align: center">
+        <tr>
+            <td style="padding-top: 10px"><h3>{% trans %}emails.input_farm.farm{% endtrans %}</h3></td>
+            <td style="padding-top: 10px"><h3>{% trans %}emails.input_farm.chick_number{% endtrans %}</h3></td>
+            <td style="padding-top: 10px"><h3>{% trans %}emails.input_farm.delivery_date{% endtrans %}</h3></td>
+        </tr>
+        <tr>
+            <td><b>{{ inputFarm.chicksFarm.name }}</b></td>
+            <td><b>{{ inputFarm.chickNumber }}</b></td>
+            <td><b>{{ inputFarm.eggInput.inputDate|date_modify('+21 days')|format_date('full') }}</b></td>
+        </tr>
+    </table>
+    <hr/>
+    <table class="content" align="center" cellpadding="0" cellspacing="0" border="0"
+           style="background-color: #ffffff; text-align: center">
+        <tr>
+            <td>
+                <table class="content" align="center" cellpadding="0" cellspacing="0" border="0"
+                       style="background-color: #ffffff; text-align: center">
+                    <tr>
+                        <td style="padding-top: 10px;"><h3>{% trans %}emails.egg_delivery.sales.title{% endtrans %}</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ sales.person }}</b></td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ sales.phoneNumber|number_format(0, '', ' ') }}</b></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 10px"><b>{{ sales.email }}</b></td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table class="content" align="center" cellpadding="0" cellspacing="0" border="0"
+                       style="background-color: #d3d3d3; text-align: center">
+                    <tr>
+                        <td style="padding-top: 10px">
+                            <h3>{% trans %}emails.egg_delivery.hatchery.title{% endtrans %}</h3></td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ hatchery.person }}</b></td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ hatchery.phoneNumber|number_format(0, '', ' ') }}</b></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 10px"><b>{{ hatchery.email }}</b></td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table class="content" align="center" cellpadding="0" cellspacing="0" border="0"
+                       style="background-color: #ffffff; text-align: center">
+                    <tr>
+                        <td style="padding-top: 10px">
+                            <h3>{% trans %}emails.egg_delivery.accounting.title{% endtrans %}</h3></td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ accounting.person }}</b></td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ accounting.phoneNumber|number_format(0, '', ' ') }}</b></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 10px"><b>{{ accounting.email }}</b></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br/>
+</div>
+</body>
+</html>
