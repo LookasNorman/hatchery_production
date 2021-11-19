@@ -980,6 +980,12 @@ emails:
     header: Planowana dostawa piskląt
     transport:
       title: Transport
+  vaccination_reminder:
+    chick: Ilość piskląt
+    farm: Ferma
+    header: Proszę ustalić / potwierdzić następujące szczepienia
+    input: W nakładu
+    transfer_date: Data przekładu
 hatchers:
   delete:
     confirm: Na pewno chcesz usunąć aparat klujnikowy? Operacja jest nieodwracalna. Bezpowrotnie stracisz dane!!!

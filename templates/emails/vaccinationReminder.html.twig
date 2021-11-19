@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>ZWD Malec</title>
+    <style type="text/css">
+        body {
+            margin: 10px;
+            padding: 10px;
+            min-width: 100% !important;
+            background-color: #FFFFFF;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1 style="text-align: center">{% trans %}emails.vaccination_reminder.header{% endtrans %}</h1>
+    {% for input in inputs %}
+        <h3>
+            {% trans %}emails.vaccination_reminder.input{% endtrans %}: {{ input.name }}
+            {% trans %}emails.vaccination_reminder.transfer_date{% endtrans %}: {{ input.inputDate|date_modify('+18 days')|date('Y-m-d') }}
+        </h3>
+        <table class="content" align="center" cellpadding="0" cellspacing="0" border="1"
+               style="background-color: #ffffff; text-align: center">
+            <tr>
+                <td style="padding-top: 10px"><h3>{% trans %}emails.vaccination_reminder.farm{% endtrans %}</h3></td>
+                <td style="padding-top: 10px"><h3>{% trans %}emails.vaccination_reminder.chick{% endtrans %}</h3></td>
+            </tr>
+            {% for farm in input.inputsFarms %}
+                <tr>
+                    <td style="padding-bottom: 10px">{{ farm.chicksFarm.name }}</td>
+                    <td style="padding-bottom: 10px">{{ farm.chickNumber }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <hr/>
+    {% endfor %}
+</div>
+</body>
+</html>

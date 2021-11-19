@@ -14,6 +14,16 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class InputsRepository extends ServiceEntityRepository
 {
+    public function vaccinationReminder($date, $end)
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.inputDate between :date and :end')
+            ->setParameters(['date' => $date, 'end' => $end])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function inputsReminder()
     {
         return $this->createQueryBuilder('i')
