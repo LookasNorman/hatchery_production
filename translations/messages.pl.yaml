@@ -643,10 +643,21 @@ eggs_inputs:
       footer:
         add: Dodaj
     table:
-      id: Indeks
+      age: Wiek stada
+      badge:
+        fertilization: Zapłodnienie
+        hatchability:
+          Wylęgowość
       chick: Ilość piskląt
       deliveries: Wykaz dostaw
+      delivery:
+        breeder: Hodowca
+        herd: Stado
+        delivery_date: Data dostawy
+        laying_date: Data zniesienia
+        eggs_number: Ilość jaj
       chicks_recipient: Odbiorca piskląt
+      id: Indeks
       lighting:
         title: Świetlenie
         eggs_number: Ilość świetlona
@@ -665,15 +676,6 @@ eggs_inputs:
         cull_chicks: Wybrakowane
         chicks: Pisklęta
         unhatched: Niewyklute
-      delivery:
-        breeder: Hodowca
-        herd: Stado
-        delivery_date: Data dostawy
-        laying_date: Data zniesienia
-        eggs_number: Ilość jaj
-      badge:
-        fertilization: Zapłodnienie
-        hatchability: Wylęgowość
     title: Szczegóły nakładu
   show_customer_delivery:
     table:

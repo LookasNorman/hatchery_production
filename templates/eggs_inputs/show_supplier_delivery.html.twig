@@ -1,8 +1,8 @@
 {% block body %}
     {% include 'layout/tables/thead.html.twig' %}
     <tr>
-        <th rowspan="2" class="align-middle">{% trans %}eggs_inputs.show.table.id{% endtrans %}</th>
         <th rowspan="2" class="align-middle">{% trans %}eggs_inputs.table_list.table_deliveries.herd{% endtrans %}</th>
+        <th rowspan="2" class="align-middle">{% trans %}eggs_inputs.show.table.age{% endtrans %}</th>
         <th rowspan="2"
             class="text-center align-middle">{% trans %}eggs_inputs.table_list.table_deliveries.eggs_number{% endtrans %}</th>
         <th colspan="5"
@@ -28,16 +28,15 @@
     {% include 'layout/tables/tbody.html.twig' %}
 
     {% for herdEgg in herdsEggs %}
+        {% set dateDifference = date(eggs_input.inputDate).diff(date(herdEgg.herd.hatchingDate)) %}
+        {% set age = dateDifference.days / 7 %}
         <tr>
-            <td class="align-middle">
-                <div class="d-grid gap-2">
-                </div>
-            </td>
             <td class="align-middle">
                 <a href="{{ path('herds_show', {'id': herdEgg.herd.id }) }}">
                     {{ herdEgg.herd.name }}
                 </a>
             </td>
+            <td class="text-center align-middle">{{ age|round(0, 'ceil') }}</td>
             <td class="text-center align-middle">
                 {{ herdEgg.inputEggs }}
             </td>
