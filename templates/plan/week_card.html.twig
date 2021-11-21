@@ -9,7 +9,7 @@
 
 <div class="card border-primary m-2 d-print-inline">
     <div class="card-header">
-        {{ week.week }}
+        <a href="{{ path('plan_week', {'week': week.week}) }}">{{ week.week }}</a>
     </div>
     <div class="card-body">
         <div class="row">

@@ -1412,6 +1412,8 @@ menu:
 plan:
   index:
     title: Plan dostaw jaj i wybierań piskląt
+  week:
+    title: Plan dostaw i nakładów jaj
 plan_breeder:
   hatching_date:
     age: Tygodni

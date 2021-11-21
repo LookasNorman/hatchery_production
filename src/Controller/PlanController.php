@@ -2,17 +2,25 @@
 
 namespace App\Controller;
 
+use App\Entity\Delivery;
 use App\Entity\Herds;
+use App\Entity\InputDelivery;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanDeliveryEgg;
+use App\Entity\SellingEgg;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/plan")
+ * @IsGranted("ROLE_USER")
+ */
 class PlanController extends AbstractController
 {
     /**
-     * @Route("/plan", name="plan")
+     * @Route("/", name="plan")
      */
     public function index(): Response
     {
@@ -30,6 +38,28 @@ class PlanController extends AbstractController
 
         return $this->render('plan/index.html.twig', [
             'weeks' => $weeks
+        ]);
+    }
+
+    /**
+     * @Route("/week/{week}", name="plan_week")
+     */
+    public function week($week)
+    {
+        $date = new \DateTime('midnight');
+        $date->setISODate('2021', $week);
+        $eggStock = $this->getEggStock();
+        $plans = [];
+        for($i=1; $i <=7; $i++){
+            $day = clone $date;
+            $eggDelivery = $this->getEggDeliveryInDay($day);
+            $chickInputs = $this->getChickDeliveryInDay($day);
+            array_push($plans, ['day' => $day, 'stocks' => $eggStock, 'deliveries' => $eggDelivery, 'chicks' => $chickInputs]);
+            $date->modify('+1 day');
+            $eggStock = [];
+        }
+        return $this->render('plan/week.html.twig', [
+            'plans' => $plans
         ]);
     }
 
@@ -63,6 +93,56 @@ class PlanController extends AbstractController
             'weeksPlans' => $weeksPlans,
             'herd' => $herd
         ]);
+    }
+
+    public function getChickDeliveryInDay($date)
+    {
+        $start = clone $date;
+        $start->modify('-1 second');
+        $end = clone $date;
+        $end->modify('+1 day -1 second');
+        $chickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
+        return $plans = $chickRepository->planInputBetweenDateForPlan($start, $end);
+    }
+
+    public function getEggDeliveryInDay($date)
+    {
+        $start = clone $date;
+        $start->modify('-1 second');
+        $end = clone $date;
+        $end->modify('+1 day -1 second');
+        $deliveryRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
+        return $plans = $deliveryRepository->planBetweenDateForPlan($start, $end);
+    }
+
+    public function eggsOnWarehouse($deliveries)
+    {
+        $inputDeliveryRepository = $this->getDoctrine()->getRepository(InputDelivery::class);
+        $sellingEggDelivery = $this->getDoctrine()->getRepository(SellingEgg::class);
+
+        $eggsDeliveries = [];
+        foreach ($deliveries as $delivery) {
+            $eggsInProduction = $inputDeliveryRepository->eggsFromDelivery($delivery);
+            $eggsSelled = $sellingEggDelivery->eggsFromDelivery($delivery);
+
+            $inputsDeliveries = $delivery->getEggsNumber() - $eggsInProduction - $eggsSelled;
+            if ($inputsDeliveries > 0) {
+                array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$inputsDeliveries]);
+            } elseif (is_null($inputsDeliveries)) {
+                array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$delivery->getEggsNumber()]);
+            }
+        }
+
+        return $eggsDeliveries;
+    }
+
+    public function getEggStock()
+    {
+        $deliveryRepository = $this->getDoctrine()->getRepository(Delivery::class);
+        $deliveries = $deliveryRepository->findBy([], ['deliveryDate' => 'desc']);
+        $eggsDeliveries = $this->eggsOnWarehouse($deliveries);
+
+        return $eggsDeliveries;
     }
 
     public function eggsInDeliveries($deliveries)

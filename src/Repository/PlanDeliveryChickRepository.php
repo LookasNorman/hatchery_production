@@ -34,6 +34,19 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+   public function planInputBetweenDateForPlan($start, $end)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.deliveryDate', 'p.chickNumber', 'cf.name', 'p.id', 'c.name as customer')
+            ->join('p.chickFarm', 'cf')
+            ->join('cf.customer', 'c')
+            ->andWhere('p.inputDate BETWEEN :start AND :end')
+            ->setParameters(['start' => $start, 'end' => $end])
+            ->orderBy('p.inputDate', 'asc')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function planBetweenDate($start, $end)
     {
         return $this->createQueryBuilder('p')
