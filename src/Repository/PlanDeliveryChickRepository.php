@@ -21,34 +21,25 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
         parent::__construct($registry, PlanDeliveryChick::class);
     }
 
-    public function planBetweenDate($start, $end)
+    public function planBetweenDateForPlan($start, $end)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.inputDate BETWEEN :start AND :end')
+            ->select('p.deliveryDate', 'p.chickNumber', 'cf.name', 'p.id', 'c.name as customer')
+            ->join('p.chickFarm', 'cf')
+            ->join('cf.customer', 'c')
+            ->andWhere('p.deliveryDate BETWEEN :start AND :end')
             ->setParameters(['start' => $start, 'end' => $end])
             ->orderBy('p.inputDate', 'asc')
             ->getQuery()
             ->getResult();
     }
 
-    public function planFromDate($date)
+    public function planBetweenDate($start, $end)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.inputDate >= :date')
-            ->setParameters(['date' => $date])
+            ->andWhere('p.inputDate BETWEEN :start AND :end')
+            ->setParameters(['start' => $start, 'end' => $end])
             ->orderBy('p.inputDate', 'asc')
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function dateDelivery($date, $dateEnd)
-    {
-        return $this->createQueryBuilder('p')
-            ->select('p.inputDate')
-            ->andWhere('p.inputDate BETWEEN :date AND :dateEnd')
-            ->setParameters(['date' => $date, 'dateEnd' => $dateEnd])
-            ->groupBy('p.inputDate')
-            ->orderBy('p.inputDate')
             ->getQuery()
             ->getResult();
     }

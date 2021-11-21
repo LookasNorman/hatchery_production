@@ -1,0 +1,31 @@
+<style>
+    .card {
+        max-width: 500px;
+        min-width: 500px;
+        padding: 6px 6px;
+    }
+</style>
+
+
+<div class="card border-primary m-2 d-print-inline">
+    <div class="card-header">
+        {{ week.week }}
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            {% for chickPlan in week.plans %}
+                <dd class="col-sm-6">
+                    <a href="{{ path('plan_delivery_chick_show', {'id': chickPlan.id}) }}">{{ chickPlan.name }}</a>
+                    <p class="form-text">{{ chickPlan.customer }}</p>
+                </dd>
+                <dt class="col-sm-6 text-end">
+                    <dl class="row">
+                        <dd class="col-sm-6">{{ chickPlan.deliveryDate|date('Y-m-d') }}</dd>
+                        <dt class="col-sm-6">{{ chickPlan.chickNumber }}</dt>
+                    </dl>
+                </dt>
+                <hr/>
+            {% endfor %}
+        </dl>
+    </div>
+</div>
