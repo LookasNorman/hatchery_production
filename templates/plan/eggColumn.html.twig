@@ -1,0 +1,15 @@
+<dl class="row">
+    {% for eggPlan in week.plans.egg %}
+        <dd class="col-sm-5">
+            <a href="{{ path('plan_delivery_chick_show', {'id': eggPlan.id}) }}">{{ eggPlan.name }}</a>
+        </dd>
+        <dt class="col-sm-7 text-end">
+            <dl class="row">
+                <dd class="col-sm-7">{{ eggPlan.deliveryDate|date('Y-m-d') }}</dd>
+                <dt class="col-sm-5">{{ eggPlan.eggsNumber }}</dt>
+            </dl>
+        </dt>
+        <hr/>
+
+    {% endfor %}
+</dl>

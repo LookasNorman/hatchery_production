@@ -1,0 +1,54 @@
+<dl class="row">
+    {% for chickPlan in week.plans.chick %}
+        <dd class="col-sm-5">
+            <a href="{{ path('plan_delivery_chick_show', {'id': chickPlan.id}) }}">{{ chickPlan.name }}</a>
+            <p class="form-text">{{ chickPlan.customer }}</p>
+        </dd>
+        <dt class="col-sm-7 text-end">
+            <dl class="row">
+                <dd class="col-sm-7"><a type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                        data-bs-target="#p{{ chickPlan.id }}Modal">{{ chickPlan.deliveryDate|date('Y-m-d') }}</a>
+                </dd>
+                <dt class="col-sm-5">{{ chickPlan.chickNumber }}</dt>
+            </dl>
+        </dt>
+        <hr/>
+
+        <!-- Modal -->
+        <div class="modal fade" id="p{{ chickPlan.id }}Modal" tabindex="-1"
+             aria-labelledby="p{{ chickPlan.id }}ModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="p{{ chickPlan.id }}ModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post"
+                              action="{{ path('plan_delivery_chick_edit', {'id': chickPlan.id}) }}">
+                            <div>
+                                <label for="plan_chick_delivery_date_deliveryDate" class="required">Data
+                                    dostawy</label>
+                                <input type="datetime-local"
+                                       id="plan_chick_delivery_date_deliveryDate"
+                                       name="plan_chick_delivery_date[deliveryDate]"
+                                       required="required"
+                                       class="form-control"
+                                       value="{{ chickPlan.deliveryDate|date('Y-m-d\\TH:i') }}"/>
+                            </div>
+                            <input type="hidden"
+                                   id="plan_chick_delivery_date__token"
+                                   name="plan_chick_delivery_date[_token]"
+                                   value="edit_date_{{ chickPlan.id }}"/>
+                            <button class="btn btn-success m-2">Zapisz</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</dl>
