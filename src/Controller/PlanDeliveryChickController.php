@@ -7,6 +7,7 @@ use App\Entity\ContactInfo;
 use App\Entity\Customer;
 use App\Entity\PlanDeliveryChick;
 use App\Form\BetweenDateType;
+use App\Form\Plan\PlanChickDeliveryDateType;
 use App\Form\PlanDeliveryChickType;
 use App\Repository\PlanDeliveryChickRepository;
 use App\Repository\PlanIndicatorsRepository;
@@ -46,7 +47,7 @@ class PlanDeliveryChickController extends AbstractController
         $form->handleRequest($request);
         $date = new \DateTime('midnight');
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $startDate = $form->get('startDate')->getData()->modify('-21 days');
             $endDate = $form->get('endDate')->getData()->modify('-20 days');
             return $this->render('plan_delivery_chick/index.html.twig', [
@@ -69,10 +70,10 @@ class PlanDeliveryChickController extends AbstractController
      * @Route("/weekFarm/{date}/{farm}", name="plan_week_farm")
      */
     public function weekCustomer(
-        ChicksRecipient $farm,
-        $date,
+        ChicksRecipient             $farm,
+                                    $date,
         PlanDeliveryChickRepository $planDeliveryChickRepository,
-        PlanIndicatorsRepository $planIndicatorsRepository
+        PlanIndicatorsRepository    $planIndicatorsRepository
     )
     {
         $date = new \DateTime($date);
@@ -160,12 +161,34 @@ class PlanDeliveryChickController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/edit_delivery_date", name="plan_delivery_chick_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function editDeliveryDate(Request $request, PlanDeliveryChick $planDeliveryChick): Response
+    {
+        if ('edit_date_' . $planDeliveryChick->getId() === $request->request->get('plan_chick_delivery_date')['_token']) {
+            $deliveryDate = new \DateTime($request->request->get('plan_chick_delivery_date')['deliveryDate']);
+            $planDeliveryChick->setDeliveryDate($deliveryDate);
+            $inputDate = clone $planDeliveryChick->getDeliveryDate();
+            $lightingDate = clone $planDeliveryChick->getDeliveryDate();
+            $transferDate = clone $planDeliveryChick->getDeliveryDate();
+            $planDeliveryChick->setInputDate($inputDate->sub(new \DateInterval('P21DT5H')));
+            $planDeliveryChick->setLightingDate($lightingDate->sub(new \DateInterval('P6DT21H')));
+            $planDeliveryChick->setTransferDate($transferDate->sub(new \DateInterval('P2DT17H')));
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('plan');
+        }
+    }
+
+
+    /**
      * @Route("/{id}", name="plan_delivery_chick_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, PlanDeliveryChick $planDeliveryChick): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$planDeliveryChick->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $planDeliveryChick->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($planDeliveryChick);
             $entityManager->flush();
@@ -212,7 +235,7 @@ class PlanDeliveryChickController extends AbstractController
         $planChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
         $farms = $farmRepository->findBy(['customer' => $customer], ['name' => 'ASC']);
         $plans = [];
-        foreach ($farms as $farm){
+        foreach ($farms as $farm) {
             $farmPlans = $planChickRepository->findBy(['chickFarm' => $farm], ['inputDate' => 'ASC']);
             array_push($plans, ['farm' => $farm, 'farmPlans' => $farmPlans]);
         }
