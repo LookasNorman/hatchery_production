@@ -111,28 +111,19 @@
                        data-bs-toggle="dropdown">{% trans %}menu.menu_top.plans.title{% endtrans %}</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item"
-                               href="{{ path('plan_detail') }}">test - plan</a>
+                               href="{{ path('inputs_farm_delivery_plan_index') }}">{% trans %}menu.menu_top.plans.plan_inputs_delivery.index{% endtrans %}</a>
                         </li>
                         <li><a class="dropdown-item"
-                               href="{{ path('inputs_farm_delivery_plan_index') }}">{% trans %}menu.menu_top.plan_inputs_delivery.index{% endtrans %}</a>
+                               href="{{ path('plan_indicators_index') }}">{% trans %}menu.menu_top.plans.plan_indicator.index{% endtrans %}</a>
                         </li>
                         <li><a class="dropdown-item"
-                               href="{{ path('plan_indicators_index') }}">{% trans %}menu.menu_top.plan_indicator.index{% endtrans %}</a>
+                               href="{{ path('plan_hatching_date') }}">{% trans %}menu.menu_top.plans.plan_hatching.index{% endtrans %}</a>
                         </li>
                         <li><a class="dropdown-item"
-                               href="{{ path('plan_hatching_date') }}">{% trans %}menu.menu_top.plan_hatching.index{% endtrans %}</a>
+                               href="{{ path('plan_delivery_chick_index') }}">{% trans %}menu.menu_top.plans.plan_delivery_chick.index{% endtrans %}</a>
                         </li>
                         <li><a class="dropdown-item"
-                               href="{{ path('plan_year_plan') }}">{% trans %}menu.menu_top.plan_week.index{% endtrans %}</a>
-                        </li>
-                        <li><a class="dropdown-item"
-                               href="{{ path('plan_week') }}">{% trans %}menu.menu_top.plan_details.index{% endtrans %}</a>
-                        </li>
-                        <li><a class="dropdown-item"
-                               href="{{ path('plan_delivery_chick_index') }}">{% trans %}menu.menu_top.plan_delivery_chick.index{% endtrans %}</a>
-                        </li>
-                        <li><a class="dropdown-item"
-                               href="{{ path('plan_delivery_egg_index') }}">{% trans %}menu.menu_top.plan_delivery_egg.index{% endtrans %}</a>
+                               href="{{ path('plan_delivery_egg_index') }}">{% trans %}menu.menu_top.plans.plan_delivery_egg.index{% endtrans %}</a>
                         </li>
                     </ul>
                 </li>

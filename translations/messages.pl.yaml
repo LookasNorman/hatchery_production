@@ -1389,21 +1389,17 @@ menu:
     login: Zaloguj
     main_page:
       index: Strona główna
-    plan_delivery_chick:
-      index: Zamówienia - planowane
-    plan_delivery_egg:
-      index: Dostawy jaj - planowane
-    plan_details:
-      index: Plan na 3 tygodnie
-    plan_indicator:
-      index: Wskaźniki do planów
-    plan_inputs_delivery:
-      index: Dodaj planowane dostawy
-    plan_hatching:
-      index: Plan wg wieku
-    plan_week:
-      index: Plan tygodniowy
     plans:
+      plan_delivery_chick:
+        index: Zamówienia - planowane
+      plan_delivery_egg:
+        index: Dostawy jaj - planowane
+      plan_indicator:
+        index: Wskaźniki do planów
+      plan_inputs_delivery:
+        index: Dodaj planowane dostawy
+      plan_hatching:
+        index: Plan wg wieku
       title: Plany
     production:
       index: Produkcja

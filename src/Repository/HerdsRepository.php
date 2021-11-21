@@ -46,16 +46,4 @@ class HerdsRepository extends ServiceEntityRepository
         ;
     }
 
-    public function getHerdInPlanBreed($breed, $now)
-    {
-        return $this->createQueryBuilder('h')
-            ->join('h.planDeliveryEggs', 'p')
-            ->andWhere('h.breed = :breed')
-            ->andWhere('p.deliveryDate > :date')
-            ->setParameters(['breed' => $breed, 'date' => $now])
-            ->groupBy('h')
-            ->getQuery()
-            ->getResult();
-    }
-
 }
