@@ -20,14 +20,14 @@
         <div class="card-group">
             <div class="card m-2 shadow-lg p-1 mb-5 bg-body rounded">
                 <div class="card-body">
-                    <nav aria-label="breadcrumb" class="d-print-none">
-                        <ol class="breadcrumb">
-                            {% for year in yearLink %}
-                                <li class="breadcrumb-item"><a href="{{ path('plan_year_plan', {'yearN': year}) }}">{{ year }}</a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                    </nav>
+{#                    <nav aria-label="breadcrumb" class="d-print-none">#}
+{#                        <ol class="breadcrumb">#}
+{#                            {% for year in yearLink %}#}
+{#                                <li class="breadcrumb-item"><a href="{{ path('plan_year_plan', {'yearN': year}) }}">{{ year }}</a>#}
+{#                                </li>#}
+{#                            {% endfor %}#}
+{#                        </ol>#}
+{#                    </nav>#}
                     {% if is_granted('ROLE_MANAGER') %}
                         {{ include('layout/buttons/new.html.twig',
                             { pathLink: path('plan_delivery_chick_new'), text: 'plan_delivery_chick.index.button.new' }) }}
