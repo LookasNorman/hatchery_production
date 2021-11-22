@@ -32,8 +32,10 @@ class HerdsController extends AbstractController
      */
     public function index(HerdsRepository $herdsRepository): Response
     {
+        $now = new \DateTime();
         return $this->render('herds/index.html.twig', [
             'herds' => $herdsRepository->findBy([] , ['active' => 'DESC', 'name' => 'ASC']),
+            'now' => $now,
         ]);
     }
 

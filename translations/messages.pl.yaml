@@ -1077,6 +1077,7 @@ herds:
     table:
       actions: Akcje
       active: Aktywne
+      age: Wiek
       badge:
         edit: Edycja
         plan: Wygeneruj plan dostaw
@@ -1089,7 +1090,9 @@ herds:
       id: Indeks
       lighting: Korekta świetlenia
       name: Nazwa
+      next_hatching_date: Data następnego wstawienia (46 tyg)
       no_found: Brak stad
+      slaughter: Data ubicia (62 tyg)
     title: Lista stad
   new:
     title: Dodawanie nowego stada
