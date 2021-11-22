@@ -40,11 +40,11 @@
             <td class="text-center align-middle">
                 {{ herdEgg.inputEggs }}
             </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td class="text-center">{{ herdEgg.lighting.lightingDate|date('Y-m-d') }}</td>
+            <td class="text-end">{{ herdEgg.lighting.lightingEggs }}</td>
+            <td class="text-end">{{ herdEgg.lighting.wasteEggs }}</td>
+            <td class="text-end">{{ herdEgg.lighting.wasteLighting }}</td>
+            <td class="text-center">{{ herdEgg.lighting.fertilization|number_format(1, ',', ' ') }}</td>
             <td></td>
             <td></td>
             <td></td>

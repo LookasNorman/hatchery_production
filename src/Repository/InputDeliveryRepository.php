@@ -70,6 +70,21 @@ class InputDeliveryRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function herdLightingEggsInInput($herd, $input)
+    {
+        return $this->createQueryBuilder('id')
+            ->select('l.lightingDate', 'SUM(l.wasteLighting) as wasteLighting', 'SUM(l.lightingEggs) as lightingEggs', 'SUM(l.wasteEggs) as wasteEggs')
+            ->addSelect('(1 - SUM(l.wasteEggs) / SUM(l.lightingEggs)) * 100 as fertilization')
+            ->join('id.delivery', 'd')
+            ->leftJoin('id.lighting', 'l')
+            ->andWhere('d.herd = :herd')
+            ->andWhere('id.input = :input')
+            ->groupBy('l.lightingDate')
+            ->setParameters(['input' => $input, 'herd' => $herd])
+            ->getQuery()
+            ->getSingleResult();
+    }
+
     public function herdDelivery($herd)
     {
         return $this->createQueryBuilder('id')

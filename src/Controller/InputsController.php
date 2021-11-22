@@ -143,16 +143,26 @@ class InputsController extends AbstractController
         return $inputEggs;
     }
 
+    public function herdLightingEggsInInput($herd, $input)
+    {
+        $inputDeliveryRepository = $this->getDoctrine()->getRepository(InputDelivery::class);
+        $lightingEggs = $inputDeliveryRepository->herdLightingEggsInInput($herd, $input);
+
+        return $lightingEggs;
+    }
+
     public function herdInInputData($input)
     {
         $herds = $this->herdInInput($input);
         $herdData = [];
         foreach ($herds as $herd) {
             $inputEggs = $this->herdInputEggsInInput($herd, $input);
+            $lighting = $this->herdLightingEggsInInput($herd, $input);
+//            dd($lighting);
             array_push($herdData, [
                 'herd' => $herd,
                 'inputEggs' => $inputEggs,
-                'eggsNumber' => 5,
+                'lighting' => $lighting,
             ]);
         }
         return $herdData;
