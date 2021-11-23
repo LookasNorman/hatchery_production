@@ -432,6 +432,7 @@ class PlanController extends AbstractController
             $year->modify('1st January ' . $yearN);
         } else {
             $year = new \DateTime();
+            $year->modify('1st January');
         }
         $breeds = $this->getBreed();
 
