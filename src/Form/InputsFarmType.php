@@ -38,10 +38,13 @@ class InputsFarmType extends AbstractType
             ->add('chicksFarm', EntityType::class, [
                 'label' => 'inputs_farm.form.label.chick_farm',
                 'class' => ChicksRecipient::class,
-                'choice_label' => 'name',
+                'choice_label' => function (ChicksRecipient $chicksRecipient) {
+                    return $chicksRecipient->getCustomer()->getName() . ' - ' . $chicksRecipient->getName();
+                },
                 'query_builder' => function (EntityRepository $entityRepository) {
                     return $entityRepository->createQueryBuilder('cr')
-                        ->orderBy('cr.name', 'ASC');
+                        ->join('cr.customer', 'c')
+                        ->orderBy('c.name', 'ASC');
                 },
                 'placeholder' => 'inputs_farm.form.placeholder.chicks_farm',
                 'attr' => [
