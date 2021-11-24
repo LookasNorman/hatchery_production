@@ -62,11 +62,17 @@ class ChickIntegrationController extends AbstractController
     {
         $form = $this->createForm(ChickIntegrationChooseType::class);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            return $this->redirectToRoute('chick_integration_monthly_plan', [
+            if ($form->get('monthly')->isClicked()) {
+                return $this->redirectToRoute('chick_integration_monthly_plan', [
+                    'id' => $form->get('chickIntegration')->getData()->getId()
+                ]);
+            }
+            return $this->redirectToRoute('chick_integration_weekly_plan', [
                 'id' => $form->get('chickIntegration')->getData()->getId()
             ]);
+
         }
         return $this->render('chick_integration/choose_integration.html.twig', [
             'form' => $form->createView()
@@ -115,7 +121,7 @@ class ChickIntegrationController extends AbstractController
      */
     public function delete(Request $request, ChickIntegration $chickIntegration): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$chickIntegration->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $chickIntegration->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($chickIntegration);
             $entityManager->flush();
@@ -127,12 +133,26 @@ class ChickIntegrationController extends AbstractController
     /**
      * @Route("/{id}/monthly_plan", name="chick_integration_monthly_plan", methods={"GET"})
      */
-    public function showMonthlyPlan(ChickIntegration $chickIntegration, PlanDeliveryChickRepository $planDeliveryChickRepository)
+    public function showMonthlyPlan(ChickIntegration $chickIntegration, PlanDeliveryChickRepository $planDeliveryChickRepository): Response
     {
         $plans = $planDeliveryChickRepository->monthlyIntegrationPlan($chickIntegration);
-        return $this->render('chick_integration/monthly_plan.html.twig', [
+        return $this->render('chick_integration/plan.html.twig', [
             'plans' => $plans,
-            'integration' => $chickIntegration
+            'integration' => $chickIntegration,
+            'monthly' => true
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/weekly_plan", name="chick_integration_weekly_plan", methods={"GET"})
+     */
+    public function showWeeklyPlan(ChickIntegration $chickIntegration, PlanDeliveryChickRepository $planDeliveryChickRepository): Response
+    {
+        $plans = $planDeliveryChickRepository->weeklyIntegrationPlan($chickIntegration);
+        return $this->render('chick_integration/plan.html.twig', [
+            'plans' => $plans,
+            'integration' => $chickIntegration,
+            'monthly' => false
         ]);
     }
 }

@@ -92,7 +92,9 @@ chick_integration:
   choose_integration:
     form:
       button:
+        monthly: Miesięczny
         save: Wybierz
+        weekly: Tygodniowy
       label:
         chick_integration: Nazwa integracji
       placeholder:
@@ -120,15 +122,21 @@ chick_integration:
       name: Nazwa integracji
       no_found: Brak integracji
     title: Integracje odbiorców piskląt
-  monthly_plan:
-    table:
-      chicks: Ilość piskląt
-      month: Miesiąc / rok
-    title: Plan miesięczny
   new:
     button:
       back: Lista integracji
     title: Dodawanie nowej integracji
+  plan:
+    button:
+      month: Miesięczny
+      week: Tygodniowy
+    table:
+      chicks: Ilość piskląt
+      month: Miesiąc / rok
+      week: Tydzień / rok
+    title:
+      month: Plan miesięczny
+      week: Plan tygodniowy
   show:
     accordion:
       customers: Odbiorcy piskląt
@@ -1420,8 +1428,8 @@ menu:
         index: Wskaźniki do planów
       plan_inputs_delivery:
         index: Dodaj planowane dostawy
-      plan_integration_monthly:
-        index: Plan miesięczny - integracja
+      plan_integration:
+        index: Plan piskląt - integracja
       plan_hatching:
         index: Plan wg wieku
       plan_week:

@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 600px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <div class="row">
+            {% if monthly %}
+                <h1 class="col-sm-9">
+                    {% trans %}chick_integration.plan.title.month{% endtrans %}
+                </h1>
+                <div class="col-sm-3">
+                    <a class="btn btn-success rounded-3 m-2 p-2"
+                       href="{{ path('chick_integration_weekly_plan', {'id': integration.id}) }}">
+                        {% trans %}chick_integration.plan.button.week{% endtrans %}
+                    </a>
+                </div>
+            {% else %}
+                <h1 class="col-sm-9">{% trans %}chick_integration.plan.title.week{% endtrans %}</h1>
+                <div class="col-sm-3">
+                    <a class="btn btn-success rounded-3 m-2 p-2"
+                       href="{{ path('chick_integration_monthly_plan', {'id': integration.id}) }}">
+                        {% trans %}chick_integration.plan.button.month{% endtrans %}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <h2>{{ integration.name }}</h2>
+        <table class="table table-sm table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th>
+                    {% if monthly %}
+                        {% trans %}chick_integration.plan.table.month{% endtrans %}
+                    {% else %}
+                        {% trans %}chick_integration.plan.table.week{% endtrans %}
+                    {% endif %}
+                </th>
+                <th>{% trans %}chick_integration.plan.table.chicks{% endtrans %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for plan in plans %}
+                <tr>
+                    <td>
+                        {% if monthly %}
+                            {{ plan.month|slice(4, 2) }} / {{ plan.month|slice(0, 4) }}
+                        {% else %}
+                            {{ plan.week|slice(4, 2) }} / {{ plan.week|slice(0, 4) }}
+                        {% endif %}
+                    </td>
+                    <td class="text-end">{{ plan.chickNumber|number_format(0, ',', ' ') }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">{% trans %}chick_integration.index.table.no_found{% endtrans %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
