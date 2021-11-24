@@ -39,7 +39,7 @@ class DefaultController extends AbstractController
     public function indexPdf(Pdf $pdf, ChicksRecipientRepository $chicksRecipientRepository)
     {
         $html = $this->renderView('chicks_recipient/index.html.twig', array(
-            'chicks_recipients' => $chicksRecipientRepository->findBy([], ['name' => 'ASC'])
+            'chicks_recipients' => $chicksRecipientRepository->chickRecipientsWithPlan()
         ));
 
         return new PdfResponse(
