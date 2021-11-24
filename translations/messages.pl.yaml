@@ -89,6 +89,16 @@ car:
     registration_number: Numer rejestracyjny
     title: Szczegóły pojazdu
 chick_integration:
+  choose_integration:
+    form:
+      button:
+        save: Wybierz
+      label:
+        chick_integration: Nazwa integracji
+      placeholder:
+        chick_integration: Wybierz integrację z listy
+    header: Karta wyboru integracji
+    title: Wybierz integrację do planu
   delete:
     button:
       delete: Usuń
@@ -110,6 +120,11 @@ chick_integration:
       name: Nazwa integracji
       no_found: Brak integracji
     title: Integracje odbiorców piskląt
+  monthly_plan:
+    table:
+      chicks: Ilość piskląt
+      month: Miesiąc / rok
+    title: Plan miesięczny
   new:
     button:
       back: Lista integracji
@@ -121,6 +136,8 @@ chick_integration:
     button:
       back: Lista integracji
       edit: Edytuj
+      plan:
+        monthly: Plan mieś.
     header: Karta szczegółów
     name: Nazwa integracji
     title: Szczegóły integracji
@@ -1392,21 +1409,23 @@ menu:
     login: Zaloguj
     main_page:
       index: Strona główna
-    plan_delivery_chick:
-      index: Zamówienia - planowane
-    plan_delivery_egg:
-      index: Dostawy jaj - planowane
-    plan_details:
-      index: Plan na 3 tygodnie
-    plan_indicator:
-      index: Wskaźniki do planów
-    plan_inputs_delivery:
-      index: Dodaj planowane dostawy
-    plan_hatching:
-      index: Plan wg wieku
-    plan_week:
-      index: Plan tygodniowy
     plans:
+      plan_delivery_chick:
+        index: Zamówienia - planowane
+      plan_delivery_egg:
+        index: Dostawy jaj - planowane
+      plan_details:
+        index: Plan na 3 tygodnie
+      plan_indicator:
+        index: Wskaźniki do planów
+      plan_inputs_delivery:
+        index: Dodaj planowane dostawy
+      plan_integration_monthly:
+        index: Plan miesięczny - integracja
+      plan_hatching:
+        index: Plan wg wieku
+      plan_week:
+        index: Plan tygodniowy
       title: Plany
     production:
       index: Produkcja

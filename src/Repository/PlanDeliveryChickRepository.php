@@ -21,6 +21,30 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
         parent::__construct($registry, PlanDeliveryChick::class);
     }
 
+    public function monthlyIntegrationPlan($integration)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('YEARMONTH(p.deliveryDate) as month', 'SUM(p.chickNumber) as chickNumber')
+            ->join('p.chickFarm', 'cf')
+            ->join('cf.customer', 'c')
+            ->andWhere('c.chickIntegration = :integration')
+            ->setParameters(['integration' => $integration])
+            ->orderBy('month', 'asc')
+            ->groupBy('month')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+//->select('YEARWEEK(p.inputDate, 1) as weekYear', 'SUM(p.chickNumber) as chickNumber')
+//->join('p.breed', 'b')
+//->andWhere('b = :breed')
+//->andWhere('p.inputDate > :date')
+//->setParameters(['breed' => $breed, 'date' => $now])
+//->groupBy('weekYear')
+//->orderBy('weekYear', 'asc')
+
+
     public function planBetweenDate($start, $end)
     {
         return $this->createQueryBuilder('p')

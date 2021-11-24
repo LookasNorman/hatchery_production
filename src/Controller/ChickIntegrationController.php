@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\ChickIntegration;
 use App\Entity\ChicksRecipient;
 use App\Entity\Customer;
+use App\Form\ChickIntegrationChooseType;
 use App\Form\ChickIntegrationType;
 use App\Repository\ChickIntegrationRepository;
+use App\Repository\PlanDeliveryChickRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,6 +52,24 @@ class ChickIntegrationController extends AbstractController
         return $this->render('chick_integration/new.html.twig', [
             'chick_integration' => $chickIntegration,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/choose_integration", name="chick_integration_choose_integration", methods={"GET", "POST"})
+     */
+    public function chooseIntegration(Request $request)
+    {
+        $form = $this->createForm(ChickIntegrationChooseType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+
+            return $this->redirectToRoute('chick_integration_monthly_plan', [
+                'id' => $form->get('chickIntegration')->getData()->getId()
+            ]);
+        }
+        return $this->render('chick_integration/choose_integration.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
@@ -102,5 +122,17 @@ class ChickIntegrationController extends AbstractController
         }
 
         return $this->redirectToRoute('chick_integration_index');
+    }
+
+    /**
+     * @Route("/{id}/monthly_plan", name="chick_integration_monthly_plan", methods={"GET"})
+     */
+    public function showMonthlyPlan(ChickIntegration $chickIntegration, PlanDeliveryChickRepository $planDeliveryChickRepository)
+    {
+        $plans = $planDeliveryChickRepository->monthlyIntegrationPlan($chickIntegration);
+        return $this->render('chick_integration/monthly_plan.html.twig', [
+            'plans' => $plans,
+            'integration' => $chickIntegration
+        ]);
     }
 }

@@ -21,8 +21,8 @@
             {% trans %}chick_integration.show.header{% endtrans %}
             {% include 'layout/cards/cbody.html.twig' %}
             <dl class="row">
-                <dd class="col-sm-9">{% trans %}chick_integration.show.name{% endtrans %}:</dd>
-                <dt class="col-sm-3">{{ chick_integration.name }}</dt>
+                <dd class="col-sm-6">{% trans %}chick_integration.show.name{% endtrans %}:</dd>
+                <dt class="col-sm-6 text-end">{{ chick_integration.name }}</dt>
             </dl>
             {% include 'layout/cards/cfooter.html.twig' %}
             {% if is_granted('ROLE_ADMIN') %}
@@ -32,6 +32,8 @@
                 {{ include('layout/buttons/edit.html.twig',
                     {pathLink: path('chick_integration_edit', {'id': chick_integration.id}), text: 'chick_integration.show.button.edit'}) }}
             {% endif %}
+            {{ include('layout/buttons/back.html.twig',
+                {pathLink: path('chick_integration_monthly_plan', {'id': chick_integration.id}), text: 'chick_integration.show.button.plan.monthly'}) }}
             {% include 'layout/cards/cend.html.twig' %}
         </div>
         {{ include('layout/buttons/back.html.twig', { pathLink: path('chick_integration_index'), text: 'chick_integration.show.button.back' }) }}
