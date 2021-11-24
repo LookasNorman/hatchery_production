@@ -99,7 +99,7 @@ class CustomerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('customer_index');
+            return $this->redirectToRoute('customer_show', ['id' => $customer->getId()]);
         }
 
         return $this->render('customer/edit.html.twig', [
