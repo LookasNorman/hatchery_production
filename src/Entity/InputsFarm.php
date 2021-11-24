@@ -53,11 +53,17 @@ class InputsFarm
      */
     private $transportLists;
 
+    /**
+     * @ORM\OneToMany(targetEntity=TransportInputsFarm::class, mappedBy="farm")
+     */
+    private $transportInputsFarms;
+
     public function __construct()
     {
         $this->inputsFarmDeliveryPlans = new ArrayCollection();
         $this->transportLists = new ArrayCollection();
         $this->transfers = new ArrayCollection();
+        $this->transportInputsFarms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -183,6 +189,36 @@ class InputsFarm
     {
         if ($this->transportLists->removeElement($transportList)) {
             $transportList->removeFarm($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TransportInputsFarm[]
+     */
+    public function getTransportInputsFarms(): Collection
+    {
+        return $this->transportInputsFarms;
+    }
+
+    public function addTransportInputsFarm(TransportInputsFarm $transportInputsFarm): self
+    {
+        if (!$this->transportInputsFarms->contains($transportInputsFarm)) {
+            $this->transportInputsFarms[] = $transportInputsFarm;
+            $transportInputsFarm->setFarm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransportInputsFarm(TransportInputsFarm $transportInputsFarm): self
+    {
+        if ($this->transportInputsFarms->removeElement($transportInputsFarm)) {
+            // set the owning side to null (unless already changed)
+            if ($transportInputsFarm->getFarm() === $this) {
+                $transportInputsFarm->setFarm(null);
+            }
         }
 
         return $this;

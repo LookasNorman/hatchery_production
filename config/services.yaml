@@ -6,6 +6,7 @@
 parameters:
     app.smstoken: '%env(SMS_TOKEN)%'
     app.mapskey: '%env(MAPS_API)%'
+    app.mapsfullkey: '%env(MAPS_FULL_API)%'
 services:
     # default configuration for services in *this* file
     _defaults:

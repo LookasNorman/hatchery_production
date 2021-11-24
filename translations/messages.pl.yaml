@@ -1906,7 +1906,8 @@ transport_list:
       chicks: Ilość piskląt
       date: Data
       departure_hour: Godzina wyjazdu
-      distance: Kilometry
+      distance: Trasa
+      distanceHatchery: Odległość
       driver: Kierowca
       farm: Hodowca
       no_found: Brak tras

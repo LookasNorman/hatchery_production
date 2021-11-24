@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ContactInfo;
+use App\Entity\TransportInputsFarm;
 use App\Entity\TransportList;
 use App\Form\TransportListEditType;
 use App\Form\TransportListType;
@@ -10,6 +11,7 @@ use App\Repository\TransportListRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -61,6 +63,58 @@ class TransportListController extends AbstractController
         return $email;
     }
 
+    public function googleDistanceMatrix($farms)
+    {
+        $apiKey = $this->getParameter('app.mapsfullkey');
+        $destination = null;
+        $origins = '05-530+Dębówka+1a';
+        foreach ($farms as $key => $farm){
+            if($key != 0){
+                $destination .= '%7C';
+            }
+            $destination .= $farm->getChicksFarm()->getPostcode();
+            $destination .= '+';
+            $destination .= $farm->getChicksFarm()->getCity();
+            $destination .= '+';
+            $destination .= $farm->getChicksFarm()->getStreet();
+            $destination .= '+';
+            $destination .= $farm->getChicksFarm()->getStreetNumber();
+        }
+        $client = HttpClient::create();
+        $response = $client->request('GET',
+            'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' . $origins. '&destinations= ' . $destination . '&departure_time=now&key=' . $apiKey);
+        $content = $response->toArray();
+        return $content;
+    }
+
+    public function googleDirectionsMatrix($farms)
+    {
+        $apiKey = $this->getParameter('app.mapsfullkey');
+        $destination = null;
+        $origins = '05-530+Dębówka+1a';
+        foreach ($farms as $key => $farm){
+            if($key != 0){
+                $destination .= '%7C';
+            }
+            $destination .= $farm->getChicksFarm()->getPostcode();
+            $destination .= '+';
+            $destination .= $farm->getChicksFarm()->getCity();
+            $destination .= '+';
+            $destination .= $farm->getChicksFarm()->getStreet();
+            $destination .= '+';
+            $destination .= $farm->getChicksFarm()->getStreetNumber();
+        }
+        $client = HttpClient::create();
+        $response = $client->request('GET',
+            'https://maps.googleapis.com/maps/api/directions/json?origin=' . $origins .
+            '&destination=' . $origins .
+            '&waypoints=' . $destination .
+            '&key=' . $apiKey);
+        $content = $response->toArray();
+        return $content;
+    }
+
+
     /**
      * @Route("/new", name="transport_list_new", methods={"GET","POST"})
      * @IsGranted("ROLE_TRANSPORT")
@@ -73,14 +127,42 @@ class TransportListController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($transportList);
 
-            foreach ($transportList->getFarm() as $transport) {
-                $email = $this->sendEmail($transport, $transportList->getDriver(), $transportList->getArrivalHourToFarm(), $transportList->getCar());
+            $distanceMatrix = $this->googleDistanceMatrix($transportList->getFarm());
+            $directionsMatrix = $this->googleDirectionsMatrix($transportList->getFarm());
+            $transportListDistance = 0;
+            foreach ($directionsMatrix['routes'][0]['legs'] as $leg){
+                $transportListDistance = $transportListDistance + round($leg['distance']['value'] / 1000, 0);
+            }
+            $transportList->setDistance($transportListDistance);
+
+            $entityManager->persist($transportList);
+            foreach ($transportList->getFarm() as $key => $transport) {
+                $distanceMatrixPoint = $distanceMatrix['rows'][0]['elements'][$key];
+                $distanceFromHatchery = round($distanceMatrixPoint['distance']['value'] / 1000, 0);
+                if($key === 0){
+                    $arrivalTime = clone $transportList->getDepartureHour();
+                }
+
+                $time = $directionsMatrix['routes'][0]['legs'][$key]['duration']['value'];
+                $distance = round($directionsMatrix['routes'][0]['legs'][$key]['distance']['value'] / 1000, 0);
+                $arrivalTime->modify('+' . $time . ' seconds');
+                $time = clone $arrivalTime;
+                $transportInputFarm = new TransportInputsFarm();
+                $transportInputFarm->setFarm($transport);
+                $transportInputFarm->setTransportList($transportList);
+
+                $transportInputFarm->setArrivalTime($time);
+                $transportInputFarm->setDistance($distance);
+                $transportInputFarm->setDistanceFromHatchery($distanceFromHatchery);
+                $entityManager->persist($transportInputFarm);
+                $email = $this->sendEmail($transport, $transportList->getDriver(), $time, $transportList->getCar());
+                $arrivalTime->modify('+1 hour');
                 if ($email) {
                     $mailer->send($email);
                 }
             }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('transport_list_index');

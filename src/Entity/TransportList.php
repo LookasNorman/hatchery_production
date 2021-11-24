@@ -44,11 +44,6 @@ class TransportList
     private $departureHour;
 
     /**
-     * @ORM\Column(type="time")
-     */
-    private $arrivalHourToFarm;
-
-    /**
      * @ORM\ManyToMany(targetEntity=InputsFarm::class, inversedBy="transportLists")
      * @Assert\Count(
      *     min=1
@@ -56,10 +51,16 @@ class TransportList
      */
     private $farm;
 
+    /**
+     * @ORM\OneToMany(targetEntity=TransportInputsFarm::class, mappedBy="transportList")
+     */
+    private $transportInputsFarms;
+
     public function __construct()
     {
         $this->driver = new ArrayCollection();
         $this->farm = new ArrayCollection();
+        $this->transportInputsFarms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,18 +128,6 @@ class TransportList
         return $this;
     }
 
-    public function getArrivalHourToFarm(): ?\DateTimeInterface
-    {
-        return $this->arrivalHourToFarm;
-    }
-
-    public function setArrivalHourToFarm(\DateTimeInterface $arrivalHourToFarm): self
-    {
-        $this->arrivalHourToFarm = $arrivalHourToFarm;
-
-        return $this;
-    }
-
     /**
      * @return Collection|InputsFarm[]
      */
@@ -159,6 +148,36 @@ class TransportList
     public function removeFarm(InputsFarm $farm): self
     {
         $this->farm->removeElement($farm);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TransportInputsFarm[]
+     */
+    public function getTransportInputsFarms(): Collection
+    {
+        return $this->transportInputsFarms;
+    }
+
+    public function addTransportInputsFarm(TransportInputsFarm $transportInputsFarm): self
+    {
+        if (!$this->transportInputsFarms->contains($transportInputsFarm)) {
+            $this->transportInputsFarms[] = $transportInputsFarm;
+            $transportInputsFarm->setTransportList($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransportInputsFarm(TransportInputsFarm $transportInputsFarm): self
+    {
+        if ($this->transportInputsFarms->removeElement($transportInputsFarm)) {
+            // set the owning side to null (unless already changed)
+            if ($transportInputsFarm->getTransportList() === $this) {
+                $transportInputsFarm->setTransportList(null);
+            }
+        }
 
         return $this;
     }

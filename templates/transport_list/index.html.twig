@@ -29,6 +29,7 @@
             <th>{% trans %}transport_list.index.table.farm{% endtrans %}</th>
             <th>{% trans %}transport_list.index.table.address{% endtrans %}</th>
             <th>{% trans %}transport_list.index.table.phone_number{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.distanceHatchery{% endtrans %}</th>
             <th>{% trans %}transport_list.index.table.distance{% endtrans %}</th>
             <th>{% trans %}transport_list.index.table.driver{% endtrans %}</th>
             <th>{% trans %}transport_list.index.table.departure_hour{% endtrans %}</th>
@@ -40,24 +41,25 @@
         {% include 'layout/tables/tbody.html.twig' %}
         {% for transport_list in transport_lists %}
             {% set row = transport_list.farm|length %}
-            {% for farm in transport_list.farm %}
+            {% for farmInputs in transport_list.transportInputsFarms %}
                 {% if loop.first %}
                     <tr>
                         <td rowspan="{{ row }}">
-                            {{ farm.eggInput.inputDate|date_modify('+21 day')|format_datetime('full', 'none', locale='pl') }}
+                            {{ farmInputs.farm.eggInput.inputDate|date_modify('+21 day')|format_datetime('full', 'none', locale='pl') }}
                         </td>
                         <td>
-                            {{ farm.chicksFarm.name }}<br/>
+                            {{ farmInputs.farm.chicksFarm.name }}<br/>
                         </td>
                         <td>
-                                {{ farm.chicksFarm.postcode }}
-                                {{ farm.chicksFarm.city }}
-                                {{ farm.chicksFarm.street }}
-                                {{ farm.chicksFarm.streetNumber }}<br/>
+                            {{ farmInputs.farm.chicksFarm.postcode }}
+                            {{ farmInputs.farm.chicksFarm.city }}
+                            {{ farmInputs.farm.chicksFarm.street }}
+                            {{ farmInputs.farm.chicksFarm.streetNumber }}<br/>
                         </td>
                         <td>
-                                {{ farm.chicksFarm.phoneNumber }}<br/>
+                            {{ farmInputs.farm.chicksFarm.phoneNumber }}<br/>
                         </td>
+                        <td>{{ farmInputs.distance }}</td>
                         <td rowspan="{{ row }}">{{ transport_list.distance }}</td>
                         <td rowspan="{{ row }}">
                             {% for driver in transport_list.driver %}
@@ -65,10 +67,10 @@
                             {% endfor %}
                         </td>
                         <td rowspan="{{ row }}">{{ transport_list.departureHour ? transport_list.departureHour|date('H:i') : '' }}</td>
-                        <td rowspan="{{ row }}">{{ transport_list.arrivalHourToFarm ? transport_list.arrivalHourToFarm|date('H:i') : '' }}</td>
+                        <td>{{ farmInputs.arrivalTime ? farmInputs.arrivalTime|date('H:i') : '' }}</td>
                         <td rowspan="{{ row }}">{{ transport_list.car.name }}</td>
                         <td>
-                                {{ farm.chickNumber }}<br/>
+                            {{ farmInputs.farm.chickNumber }}<br/>
                         </td>
                         <td rowspan="{{ row }}" class="d-print-none">
                             {{ include('layout/buttons/list_show.html.twig',
@@ -83,19 +85,21 @@
                 {% if not loop.first %}
                     <tr>
                         <td>
-                                {{ farm.chicksFarm.name }}<br/>
+                            {{ farmInputs.farm.chicksFarm.name }}<br/>
                         </td>
                         <td>
-                                {{ farm.chicksFarm.postcode }}
-                                {{ farm.chicksFarm.city }}
-                                {{ farm.chicksFarm.street }}
-                                {{ farm.chicksFarm.streetNumber }}<br/>
+                            {{ farmInputs.farm.chicksFarm.postcode }}
+                            {{ farmInputs.farm.chicksFarm.city }}
+                            {{ farmInputs.farm.chicksFarm.street }}
+                            {{ farmInputs.farm.chicksFarm.streetNumber }}<br/>
                         </td>
                         <td>
-                                {{ farm.chicksFarm.phoneNumber }}<br/>
+                            {{ farmInputs.farm.chicksFarm.phoneNumber }}<br/>
                         </td>
+                        <td>{{ farmInputs.distance }}</td>
+                        <td>{{ farmInputs.arrivalTime ? farmInputs.arrivalTime|date('H:i') : '' }}</td>
                         <td>
-                                {{ farm.chickNumber }}<br/>
+                            {{ farmInputs.farm.chickNumber }}<br/>
                         </td>
                     </tr>
                 {% endif %}

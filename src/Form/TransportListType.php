@@ -39,21 +39,8 @@ class TransportListType extends AbstractType
                 'label' => 'transport_list.form.label.input',
                 'placeholder' => 'transport_list.form.placeholder.input'
             ])
-            ->add('distance', IntegerType::class, [
-                'label' => 'transport_list.form.label.distance',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
             ->add('departureHour', TimeType::class,[
                 'label' => 'transport_list.form.label.departure_hour',
-                'attr' => [
-                    'class' => 'form-control'
-                ],
-                'widget' => 'single_text'
-            ])
-            ->add('arrivalHourToFarm', TimeType::class,[
-                'label' => 'transport_list.form.label.arrival_hour',
                 'attr' => [
                     'class' => 'form-control'
                 ],

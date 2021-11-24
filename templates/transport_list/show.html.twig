@@ -28,9 +28,9 @@
             <dl class="row">
                 <dd class="col-sm-5">{% trans %}transport_list.show.address{% endtrans %}</dd>
                 <dt class="col-sm-7 text-end">
-                    {% for farm in transport_list.farm %}
-                    {{ farm.chicksFarm.city }}<br/>
-                    {{ farm.chicksFarm.street }} {{ farm.chicksFarm.streetNumber }}
+                    {% for farmInputs in transport_list.transportInputsFarms %}
+                    {{ farmInputs.farm.chicksFarm.city }}<br/>
+                    {{ farmInputs.farm.chicksFarm.street }} {{ farmInputs.farm.chicksFarm.streetNumber }}
                     {% endfor %}
                 </dt>
 {#                <dd class="col-sm-5">{% trans %}transport_list.show.phone_number{% endtrans %}</dd>#}
@@ -40,7 +40,7 @@
                 <dd class="col-sm-5">{% trans %}transport_list.show.departure_hour{% endtrans %}</dd>
                 <dt class="col-sm-7 text-end">{{ transport_list.departureHour ? transport_list.departureHour|date('H:i') : '' }}</dt>
                 <dd class="col-sm-5">{% trans %}transport_list.show.arrival_hour{% endtrans %}</dd>
-                <dt class="col-sm-7 text-end">{{ transport_list.arrivalHourToFarm ? transport_list.arrivalHourToFarm|date('H:i') : '' }}</dt>
+                <dt class="col-sm-7 text-end"></dt>
                 <dd class="col-sm-5">{% trans %}transport_list.show.chicks{% endtrans %}</dd>
                 <dt class="col-sm-7 text-end">
                     {% for farm in transport_list.farm %}
