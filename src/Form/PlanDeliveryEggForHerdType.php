@@ -32,7 +32,8 @@ final class PlanDeliveryEggForHerdType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'class' => 'form-check'
-                ]
+                ],
+                'label' => 'plan_delivery_egg_for_herd.form.label.day'
             ])
             ;
     }

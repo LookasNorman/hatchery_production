@@ -1558,13 +1558,15 @@ plan_delivery_egg:
     title: Szczegóły planu
 plan_delivery_egg_for_herd:
   form:
-    monday: Poniedziałek
-    tuesday: Wtorek
-    wednesday: Środa
-    thursday: Czwartek
     friday: Piątek
+    label:
+      day: Dni dostawy
+    monday: Poniedziałek
     saturday: Sobota
     sunday: Niedziela
+    thursday: Czwartek
+    tuesday: Wtorek
+    wednesday: Środa
 plan_detail:
   index:
     table:
