@@ -24,38 +24,39 @@
     {% for eggs_delivery in eggs_deliveries %}
         <tr>
             <td class="d-print-none">
-                {% if eggs_delivery.delivery.partIndex %}
-                    {{ eggs_delivery.delivery.partIndex }}
+                {% if eggs_delivery.partIndex %}
+                    {{ eggs_delivery.partIndex }}
                 {% else %}
                     {% if is_granted('ROLE_MANAGER') %}
                         {{ include('layout/buttons/list_actions.html.twig',
-                            {pathLink: path('eggs_delivery_add', {'id': eggs_delivery.delivery.id}), text: 'eggs_delivery.index.table.badge.add_part_index' }) }}
+                            {pathLink: path('eggs_delivery_add', {'id': eggs_delivery.id}), text: 'eggs_delivery.index.table.badge.add_part_index' }) }}
                     {% else %}
                         ------
                     {% endif %}
                 {% endif %}
             </td>
-            <td class="text-center">{{ eggs_delivery.delivery.herd.breeder.name }}</td>
-            <td class="text-center">{{ eggs_delivery.delivery.herd.name }}</td>
-            <td class="text-center">{{ eggs_delivery.delivery.deliveryDate ? eggs_delivery.delivery.deliveryDate|date('Y-m-d') : '' }}</td>
-            <td class="text-end">{{ eggs_delivery.delivery.eggsNumber|number_format(0, ',', ' ') }}</td>
-            <td class="text-end">{{ eggs_delivery.eggs|number_format(0, ',', ' ') }}
+            <td class="text-center">{{ eggs_delivery.breeder }}</td>
+            <td class="text-center">{{ eggs_delivery.herd }}</td>
+            <td class="text-center">{{ eggs_delivery.deliveryDate ? eggs_delivery.deliveryDate|date('Y-m-d') : '' }}</td>
+            <td class="text-end">{{ eggs_delivery.eggsNumber|number_format(0, ',', ' ') }}</td>
+            {% set stock =  eggs_delivery.eggsStock - eggs_delivery.selledEgg %}
+            <td class="text-end">{{ stock|number_format(0, ',', ' ') }}
                 {% if is_granted('ROLE_ADMIN') %}
-                    / {{ eggs_delivery.delivery.eggsOnWarehouse|number_format(0, ',', ' ') }}
+                    / {{ eggs_delivery.eggsOnWarehouse|number_format(0, ',', ' ') }}
                 {% endif %}
             </td>
-            <td class="text-center">{{ eggs_delivery.delivery.firstLayingDate ? eggs_delivery.delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
-            <td class="text-center">{{ eggs_delivery.delivery.lastLayingDate ? eggs_delivery.delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
+            <td class="text-center">{{ eggs_delivery.firstLayingDate ? eggs_delivery.firstLayingDate|date('Y-m-d') : '' }}</td>
+            <td class="text-center">{{ eggs_delivery.lastLayingDate ? eggs_delivery.lastLayingDate|date('Y-m-d') : '' }}</td>
             <td class="text-center d-print-none">
                 <span class="btn-group">
                     {{ include('layout/buttons/list_show.html.twig',
-                        {pathLink: path('eggs_delivery_show', {'id': eggs_delivery.delivery.id})}) }}
+                        {pathLink: path('eggs_delivery_show', {'id': eggs_delivery.id})}) }}
                     {% if is_granted('ROLE_PRODUCTION') %}
                         {{ include('layout/buttons/list_edit.html.twig',
-                            {pathLink: path('eggs_delivery_edit', {'id': eggs_delivery.delivery.id})}) }}
+                            {pathLink: path('eggs_delivery_edit', {'id': eggs_delivery.id})}) }}
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
-                        {{ include('eggs_delivery/_delete_trash_form.html.twig', {'id': eggs_delivery.delivery.id}) }}
+                        {{ include('eggs_delivery/_delete_trash_form.html.twig', {'id': eggs_delivery.id}) }}
                     {% endif %}
                     </span>
             </td>

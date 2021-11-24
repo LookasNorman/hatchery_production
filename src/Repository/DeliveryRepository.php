@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Delivery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,6 +19,24 @@ class DeliveryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Delivery::class);
+    }
+
+    public function deliveryIndex()
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d.deliveryDate', 'd.firstLayingDate', 'd.lastLayingDate', 'd.partIndex', 'd.id', 'd.eggsOnWarehouse', 'd.eggsNumber')
+            ->addSelect('d.eggsNumber - sum(COALESCE(id.eggsNumber,0)) as eggsStock')
+            ->addSelect('(SELECT sum(COALESCE(se.eggsNumber,0))
+            FROM App:SellingEgg se
+            WHERE d.id = se.delivery) AS selledEgg')
+            ->addSelect('h.name as herd', 'b.name as breeder')
+            ->join('d.herd', 'h')
+            ->join('h.breeder', 'b')
+            ->leftJoin('d.inputDeliveries', 'id')
+            ->orderBy('d.deliveryDate', 'desc')
+            ->groupBy('d')
+            ->getQuery()
+            ->getResult();
     }
 
     public function herdDelivery($herd)
@@ -67,8 +86,7 @@ class DeliveryRepository extends ServiceEntityRepository
             ->andWhere('ed.herd = :herd')
             ->setParameters(['herd' => $herd])
             ->getQuery()
-            ->getSingleScalarResult()
-            ;
+            ->getSingleScalarResult();
     }
 
     public function eggsBreedDelivered($breed)
@@ -79,8 +97,7 @@ class DeliveryRepository extends ServiceEntityRepository
             ->andWhere('h.breed = :breed')
             ->setParameters(['breed' => $breed])
             ->getQuery()
-            ->getSingleScalarResult()
-            ;
+            ->getSingleScalarResult();
     }
 
     public function eggsDelivered()
@@ -88,8 +105,7 @@ class DeliveryRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('ed')
             ->select('SUM(ed.eggsNumber) as eggsInWarehouse')
             ->getQuery()
-            ->getSingleScalarResult()
-            ;
+            ->getSingleScalarResult();
     }
 
     public function eggsInWarehouse()
@@ -98,8 +114,7 @@ class DeliveryRepository extends ServiceEntityRepository
             ->select('SUM(ed.eggsOnWarehouse) as eggsInWarehouse')
             ->andWhere('ed.eggsOnWarehouse > 0')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function deliveryOnWarehouse()
@@ -112,8 +127,7 @@ class DeliveryRepository extends ServiceEntityRepository
             ->addOrderBy('h.name')
             ->addOrderBy('ed.deliveryDate')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     /*

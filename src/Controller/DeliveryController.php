@@ -33,41 +33,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class DeliveryController extends AbstractController
 {
-    public function eggsOnWarehouse($deliveries)
+    public function eggsWarehouse($deliveries): array
     {
-        $inputDeliveryRepository = $this->getDoctrine()->getRepository(InputDelivery::class);
-        $sellingEggDelivery = $this->getDoctrine()->getRepository(SellingEgg::class);
-
         $eggsDeliveries = [];
         foreach ($deliveries as $delivery) {
-            $eggsInProduction = $inputDeliveryRepository->eggsFromDelivery($delivery);
-            $eggsSelled = $sellingEggDelivery->eggsFromDelivery($delivery);
-
-            $inputsDeliveries = $delivery->getEggsNumber() - $eggsInProduction - $eggsSelled;
-            if ($inputsDeliveries > 0) {
-                array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$inputsDeliveries]);
-            } elseif (is_null($inputsDeliveries)) {
-                array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$delivery->getEggsNumber()]);
-            }
-        }
-
-        return $eggsDeliveries;
-    }
-
-    public function eggsWarehouse($deliveries)
-    {
-        $inputDeliveryRepository = $this->getDoctrine()->getRepository(InputDelivery::class);
-        $sellingEggDelivery = $this->getDoctrine()->getRepository(SellingEgg::class);
-        $eggsDeliveries = [];
-        foreach ($deliveries as $delivery) {
-            $eggsInProduction = $inputDeliveryRepository->eggsFromDelivery($delivery);
-            $eggsSelled = $sellingEggDelivery->eggsFromDelivery($delivery);
-
-            $inputsDeliveries = $delivery->getEggsNumber() - $eggsInProduction - $eggsSelled;
-            if (is_null($inputsDeliveries)) {
-                array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$delivery->getEggsNumber()]);
-            } else {
-                array_push($eggsDeliveries, ['delivery' => $delivery, 'eggs' => (int)$inputsDeliveries]);
+            if ($delivery['eggsStock'] - $delivery['selledEgg'] > 0) {
+                array_push($eggsDeliveries, $delivery);
             }
         }
 
@@ -83,8 +54,8 @@ class DeliveryController extends AbstractController
         SellingEggRepository    $sellingEggRepository
     ): Response
     {
-        $deliveries = $eggsDeliveryRepository->findBy([], ['deliveryDate' => 'desc']);
-        $eggsDeliveries = $this->eggsOnWarehouse($deliveries);
+        $deliveries = $eggsDeliveryRepository->deliveryIndex();
+        $eggsDeliveries = $this->eggsWarehouse($deliveries);
         $eggsInWarehouse = $eggsDeliveryRepository->eggsDelivered() - $inputDeliveryRepository->eggsProduction() - $sellingEggRepository->sellingEggs();
 
         return $this->render('eggs_delivery/index.html.twig', [
@@ -102,12 +73,12 @@ class DeliveryController extends AbstractController
         SellingEggRepository    $sellingEggRepository
     ): Response
     {
-        $deliveries = $eggsDeliveryRepository->findAll();
-        $eggsDeliveries = $this->eggsWarehouse($deliveries);
+        $deliveries = $eggsDeliveryRepository->deliveryIndex();
         $eggsInWarehouse = $eggsDeliveryRepository->eggsDelivered() - $inputDeliveryRepository->eggsProduction() - $sellingEggRepository->sellingEggs();
+//dd($deliveries);
 
         return $this->render('eggs_delivery/index.html.twig', [
-            'eggs_deliveries' => $eggsDeliveries,
+            'eggs_deliveries' => $deliveries,
             'eggs_in_warehouse' => $eggsInWarehouse
         ]);
     }
