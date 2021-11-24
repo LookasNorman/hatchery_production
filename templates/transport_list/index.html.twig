@@ -20,7 +20,7 @@
             {% trans %}transport_list.index.title{% endtrans %}
         </h1>
         {% if is_granted("ROLE_MANAGER") %}
-            {{ include('layout/buttons/new.html.twig', {pathLink: path('transport_list_new'), text: 'transport_list.index.button.new' }) }}
+            {{ include('layout/buttons/new.html.twig', {pathLink: path('transport_list_choose_input'), text: 'transport_list.index.button.new' }) }}
         {% endif %}
         {% include 'layout/tables/thead.html.twig' %}
         <thead>

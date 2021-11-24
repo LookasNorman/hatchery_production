@@ -37,7 +37,7 @@
             <td>{{ farm.chicksFarm.name }}</td>
             <td>
                 {% for driv in driver %}
-                {{ driv.firstname }} {{ driv.lastname }} {{ driv.phoneNumber }}
+                {{ driv.firstname }} {{ driv.lastname }} {{ driv.phoneNumber }}<br/>
             {% endfor %}
             </td>
             <td>{{ arrivalHour|format_datetime("none", "short") }}</td>

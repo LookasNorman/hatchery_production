@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\ContactInfo;
+use App\Entity\Inputs;
+use App\Entity\InputsFarm;
 use App\Entity\TransportInputsFarm;
 use App\Entity\TransportList;
+use App\Form\ChooseInputType;
 use App\Form\TransportListEditType;
 use App\Form\TransportListType;
+use App\Repository\InputsRepository;
 use App\Repository\TransportListRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -114,23 +118,49 @@ class TransportListController extends AbstractController
         return $content;
     }
 
-
     /**
-     * @Route("/new", name="transport_list_new", methods={"GET","POST"})
+     * @Route("/choose_input", name="transport_list_choose_input", methods={"GET","POST"})
      * @IsGranted("ROLE_TRANSPORT")
      */
-    public function new(Request $request, MailerInterface $mailer): Response
+    public function chooseInput(Request $request, InputsRepository $inputsRepository)
+    {
+        $form = $this->createForm(ChooseInputType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+
+            return $this->redirectToRoute('transport_list_new', [
+                'input' => $form->get('input')->getData()->getId()
+            ]);
+        }
+        return $this->render('transport_list/input_choose.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/new/{input}", name="transport_list_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_TRANSPORT")
+     */
+    public function new(Inputs $input, Request $request, MailerInterface $mailer): Response
     {
         $transportList = new TransportList();
-        $form = $this->createForm(TransportListType::class, $transportList);
+        $form = $this->createForm(TransportListType::class, $transportList, [
+            'input' => $input
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-
             $distanceMatrix = $this->googleDistanceMatrix($transportList->getFarm());
             $directionsMatrix = $this->googleDirectionsMatrix($transportList->getFarm());
             $transportListDistance = 0;
+            if($directionsMatrix['status'] != 'OK')
+            {
+                return $this->render('transport_list/no_address.html.twig', [
+                    'farms' => $transportList->getFarm()
+                ]);
+            }
+
             foreach ($directionsMatrix['routes'][0]['legs'] as $leg){
                 $transportListDistance = $transportListDistance + round($leg['distance']['value'] / 1000, 0);
             }

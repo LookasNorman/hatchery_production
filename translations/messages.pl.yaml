@@ -1913,6 +1913,10 @@ transport_list:
       no_found: Brak tras
       phone_number: Telefon
     title: Lista tras
+  input_choose:
+    new:
+      header: Karta wybierania nakładu
+      title: Wybierz nakład do wywiezienia
   new:
     button:
       back: Lista transportów

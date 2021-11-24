@@ -22,22 +22,25 @@ class TransportListType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $input = $options['input'];
         $builder
-            ->add('input', EntityType::class, [
-                'class' => Inputs::class,
-                'choice_label' => function(Inputs $inputs){
-                return $inputs->getName() . ' - ' . $inputs->getSelectionDate()->format('Y-m-d');
+            ->add('farm', EntityType::class, [
+                'class' => InputsFarm::class,
+                'choice_label' => function(InputsFarm $inputsFarm){
+                    return $inputsFarm->getChicksFarm()->getCustomer()->getName() . ' - ' . $inputsFarm->getChicksFarm()->getName();
                 },
-                'query_builder' => function(EntityRepository $entityRepository) {
-                    return $entityRepository->createQueryBuilder('i')
-                        ->orderBy('i.inputDate', 'DESC');
+                'query_builder' => function(EntityRepository $entityRepository) use($input){
+                return $entityRepository->createQueryBuilder('if')
+                    ->andWhere('if.eggInput = :input')
+                    ->setParameters(['input' => $input]);
                 },
-                'mapped' => false,
+                'label' => 'transport_list.form.label.farm',
+                'placeholder' => 'transport_list.form.placeholder.farm',
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
-                    'class' => 'form-select'
-                ],
-                'label' => 'transport_list.form.label.input',
-                'placeholder' => 'transport_list.form.placeholder.input'
+                    'class' => 'form-check-input'
+                ]
             ])
             ->add('departureHour', TimeType::class,[
                 'label' => 'transport_list.form.label.departure_hour',
@@ -71,34 +74,13 @@ class TransportListType extends AbstractType
                 ]
             ])
         ;
-
-        $builder->get('input')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) {
-                $form = $event->getForm();
-
-                $form->getParent()->add('farm', EntityType::class, [
-                    'choices' => $form->getData()->getInputsFarms(),
-                    'class' => InputsFarm::class,
-                    'choice_label' => function(InputsFarm $inputsFarm){
-                        return $inputsFarm->getChicksFarm()->getCustomer()->getName() . ' - ' . $inputsFarm->getChicksFarm()->getName();
-                    },
-                    'label' => 'transport_list.form.label.farm',
-                    'placeholder' => 'transport_list.form.placeholder.farm',
-                    'multiple' => true,
-                    'expanded' => true,
-                    'attr' => [
-                        'class' => 'form-check'
-                    ]
-                ]);
-            }
-        );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => TransportList::class,
+            'input' => null
         ]);
     }
 }

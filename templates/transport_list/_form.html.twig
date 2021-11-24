@@ -1,11 +1,23 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_label(form.farm) }}
+{% for farm in form.farm %}
+    <div class="form-check">
+        {{ form_widget(farm) }}
+        <label class="form-check-label">
+            {{ form_label(farm) }}
+        </label>
+    </div>
+{% endfor %}
+{{ form_label(form.driver) }}
+{% for driver in form.driver %}
+    <div class="form-check">
+        {{ form_widget(driver) }}
+        <label class="form-check-label">
+            {{ form_label(driver) }}
+        </label>
+    </div>
+{% endfor %}
+{{ form_widget(form) }}
+
 {{ include('layout/buttons/create.html.twig', {text: 'transport_list.form.button.save'}) }}
 {{ form_end(form) }}
-<script>
-    let breeder = $('#transport_list_input')
-    let herds = $('#transport_list_input_farm')
-    breeder.change(function () {
-        herds.closest('div').remove()
-    })
-</script>

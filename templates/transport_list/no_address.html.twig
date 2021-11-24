@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>{% trans %}transport_list.show.title{% endtrans %}</h1>
+        <div class="d-flex justify-content-center card-group">
+            {% include 'layout/cards/chead.html.twig' %}
+            {% include 'layout/cards/cbody.html.twig' %}
+            {% for farm in farms %}
+            <h4>
+                <a class="text-white" href="{{ path('chicks_recipient_edit', {'id': farm.chicksFarm.id}) }}">{{ farm.chicksFarm.name }}</a>
+            </h4>
+                <dl class="row">
+                    <dd class="col-sm-6">{% trans %}chicks_recipient.show.address{% endtrans %}:</dd>
+                    <dt class="col-sm-6 text-end">{{ farm.chicksFarm.postcode }} {{ farm.chicksFarm.city }}</dt>
+                    <dd class="col-sm-6">{% trans %}chicks_recipient.show.street{% endtrans %}</dd>
+                    <dt class="col-sm-6 text-end">{{ farm.chicksFarm.street }} {{ farm.chicksFarm.streetNumber }}</dt>
+                </dl>
+                <hr />
+            {% endfor %}
+            {% include 'layout/cards/cfooter.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

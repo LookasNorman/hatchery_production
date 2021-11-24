@@ -24,12 +24,14 @@ class TransportList
 
     /**
      * @ORM\ManyToMany(targetEntity=Driver::class, inversedBy="transportLists")
+     * @Assert\NotNull()
      */
     private $driver;
 
     /**
      * @ORM\ManyToOne(targetEntity=Car::class, inversedBy="transportLists")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $car;
 
@@ -40,6 +42,7 @@ class TransportList
 
     /**
      * @ORM\Column(type="time")
+     * @Assert\NotBlank()
      */
     private $departureHour;
 

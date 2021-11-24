@@ -44,10 +44,10 @@
             </dl>
             <hr/>
             <dl class="row">
-                <dt class="col-sm-5">{% trans %}chicks_recipient.show.address{% endtrans %}:</dt>
-                <dd class="col-sm-7">{{ chicks_recipient.postcode }} {{ chicks_recipient.city }}</dd>
-                <dt class="col-sm-5">{% trans %}chicks_recipient.show.street{% endtrans %}:</dt>
-                <dd class="col-sm-7">{{ chicks_recipient.street }} {{ chicks_recipient.streetNumber }}</dd>
+                <dd class="col-sm-5">{% trans %}chicks_recipient.show.address{% endtrans %}:</dd>
+                <dt class="col-sm-7">{{ chicks_recipient.postcode }} {{ chicks_recipient.city }}</dt>
+                <dd class="col-sm-5">{% trans %}chicks_recipient.show.street{% endtrans %}:</dd>
+                <dt class="col-sm-7">{{ chicks_recipient.street }} {{ chicks_recipient.streetNumber }}</dt>
             </dl>
             {% include 'layout/cards/cfooter.html.twig' %}
             {% if is_granted('ROLE_ADMIN') %}
