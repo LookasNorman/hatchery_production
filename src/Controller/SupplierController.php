@@ -56,9 +56,11 @@ class SupplierController extends AbstractController
      */
     public function show(Supplier $eggSupplier): Response
     {
+        $now = new \DateTime();
         return $this->render('egg_supplier/show.html.twig', [
             'egg_supplier' => $eggSupplier,
             'maps_api' => $this->getParameter('app.mapskey'),
+            'now' => $now,
         ]);
     }
 

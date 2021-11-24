@@ -22,7 +22,15 @@
             <td>{{ herd.name }}</td>
             {% set dateDifference = date(now).diff(date(herd.hatchingDate)) %}
             {% set age = dateDifference.days / 7 %}
-            <td class="text-center">{{ age|round(0, 'ceil') }}</td>
+            <td class="text-center">
+                {% if herd.active %}
+                    {{ age|round(0, 'ceil') }}
+                {% elseif herd.hatchingDate < now %}
+                    {% if herd.hatchingDate|date_modify("+24 week") > now %}
+                        {{ age|round(0, 'ceil') }}
+                    {% endif %}
+                {% endif %}
+            </td>
             <td class="text-center">{{ herd.hatchingDate ? herd.hatchingDate|date('Y-m-d') : '' }}</td>
             <td class="text-end">{{ herd.hensNumber }}</td>
             {% if is_granted('ROLE_ADMIN') %}
