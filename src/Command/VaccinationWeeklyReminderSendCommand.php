@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Mailer\MailerInterface;
 
-class VaccinationReminderSendCommand extends Command
+class VaccinationWeeklyReminderSendCommand extends Command
 {
     protected static $defaultName = 'app:vaccination-reminder:send';
     protected static $defaultDescription = 'Vaccination reminder';

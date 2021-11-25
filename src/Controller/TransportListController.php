@@ -7,11 +7,15 @@ use App\Entity\Inputs;
 use App\Entity\InputsFarm;
 use App\Entity\TransportInputsFarm;
 use App\Entity\TransportList;
+use App\Form\BetweenDateType;
 use App\Form\ChooseInputType;
 use App\Form\TransportListEditType;
 use App\Form\TransportListType;
 use App\Repository\InputsRepository;
+use App\Repository\TransportInputsFarmRepository;
 use App\Repository\TransportListRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,12 +32,30 @@ use Symfony\Component\Routing\Annotation\Route;
 class TransportListController extends AbstractController
 {
     /**
-     * @Route("/", name="transport_list_index", methods={"GET"})
+     * @Route("/", name="transport_list_index", methods={"GET", "POST"})
      */
-    public function index(TransportListRepository $transportListRepository): Response
+    public function index(Request $request, TransportListRepository $transportListRepository): Response
     {
+        $form = $this->createForm(BetweenDateType::class);
+        $form->handleRequest($request);
+        $week = null;
+        if ($form->isSubmitted() && $form->isValid()) {
+            $date = $form->get('startDate')->getData();
+            $start = clone $date;
+            $start->modify('-21 days');
+            $week = $date->format('W');
+            $end = $form->get('endDate')->getData()->modify('-20 days');
+            return $this->render('transport_list/index.html.twig', [
+                'transport_lists' => $transportListRepository->transportList($start, $end),
+                'form' => $form->createView(),
+                'week' => $week
+            ]);
+        }
+
         return $this->render('transport_list/index.html.twig', [
             'transport_lists' => $transportListRepository->findAll(),
+            'form' => $form->createView(),
+            'week' => $week
         ]);
     }
 
@@ -72,8 +94,8 @@ class TransportListController extends AbstractController
         $apiKey = $this->getParameter('app.mapsfullkey');
         $destination = null;
         $origins = '05-530+Dębówka+1a';
-        foreach ($farms as $key => $farm){
-            if($key != 0){
+        foreach ($farms as $key => $farm) {
+            if ($key != 0) {
                 $destination .= '%7C';
             }
             $destination .= $farm->getChicksFarm()->getPostcode();
@@ -86,7 +108,7 @@ class TransportListController extends AbstractController
         }
         $client = HttpClient::create();
         $response = $client->request('GET',
-            'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' . $origins. '&destinations= ' . $destination . '&departure_time=now&key=' . $apiKey);
+            'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' . $origins . '&destinations= ' . $destination . '&departure_time=now&key=' . $apiKey);
         $content = $response->toArray();
         return $content;
     }
@@ -96,8 +118,8 @@ class TransportListController extends AbstractController
         $apiKey = $this->getParameter('app.mapsfullkey');
         $destination = null;
         $origins = '05-530+Dębówka+1a';
-        foreach ($farms as $key => $farm){
-            if($key != 0){
+        foreach ($farms as $key => $farm) {
+            if ($key != 0) {
                 $destination .= '%7C';
             }
             $destination .= $farm->getChicksFarm()->getPostcode();
@@ -126,7 +148,7 @@ class TransportListController extends AbstractController
     {
         $form = $this->createForm(ChooseInputType::class);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             return $this->redirectToRoute('transport_list_new', [
                 'input' => $form->get('input')->getData()->getId()
@@ -154,14 +176,13 @@ class TransportListController extends AbstractController
             $distanceMatrix = $this->googleDistanceMatrix($transportList->getFarm());
             $directionsMatrix = $this->googleDirectionsMatrix($transportList->getFarm());
             $transportListDistance = 0;
-            if($directionsMatrix['status'] != 'OK')
-            {
+            if ($directionsMatrix['status'] != 'OK') {
                 return $this->render('transport_list/no_address.html.twig', [
                     'farms' => $transportList->getFarm()
                 ]);
             }
 
-            foreach ($directionsMatrix['routes'][0]['legs'] as $leg){
+            foreach ($directionsMatrix['routes'][0]['legs'] as $leg) {
                 $transportListDistance = $transportListDistance + round($leg['distance']['value'] / 1000, 0);
             }
             $transportList->setDistance($transportListDistance);
@@ -170,11 +191,11 @@ class TransportListController extends AbstractController
             foreach ($transportList->getFarm() as $key => $transport) {
                 $distanceMatrixPoint = $distanceMatrix['rows'][0]['elements'][$key];
                 $distanceFromHatchery = round($distanceMatrixPoint['distance']['value'] / 1000, 0);
-                if($key === 0){
+                if ($key === 0) {
                     $arrivalTime = clone $transportList->getDepartureHour();
                 }
 
-                $time = $directionsMatrix['routes'][0]['legs'][$key]['duration']['value'];
+                $time = $directionsMatrix['routes'][0]['legs'][$key]['duration']['value'] * 1.4;
                 $distance = round($directionsMatrix['routes'][0]['legs'][$key]['distance']['value'] / 1000, 0);
                 $arrivalTime->modify('+' . $time . ' seconds');
                 $time = clone $arrivalTime;
@@ -249,5 +270,26 @@ class TransportListController extends AbstractController
         }
 
         return $this->redirectToRoute('transport_list_index');
+    }
+
+    /**
+     * @Route("/protocol_pdf/{farm}", name="transport_list_protocol", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function transportProtocolPdf(InputsFarm $farm, Pdf $pdf, TransportInputsFarmRepository $transportRepository)
+    {
+        $transport = $transportRepository->findOneBy(['farm' => $farm]);
+        $html = $this->renderView('pdf/protocol.html.twig', [
+            'farm' => $farm,
+            'transport' => $transport,
+        ]);
+        $filename = $farm->getChicksFarm()->getCustomer()->getName()
+            . ' - ' . $farm->getChicksFarm()->getName()
+            . ' - ' . $farm->getEggInput()->getInputDate()->modify('+21 day')->format('Y-m-d')
+            . '.pdf';
+        return new PdfResponse(
+            $pdf->getOutputFromHtml($html),
+            $filename
+        );
     }
 }

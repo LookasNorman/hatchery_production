@@ -7,7 +7,7 @@
         background: white;
     }
     h1 {
-        font-size: 14pt;
+        font-size: 12pt;
     }
     table {
         font-size: 10pt;
@@ -17,4 +17,5 @@
         text-decoration: underline;
         color: #06c;
     }
+
 }

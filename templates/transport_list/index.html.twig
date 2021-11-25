@@ -16,8 +16,31 @@
     </style>
 
     <div class="example-wrapper">
+        <div class="card m-2 shadow-lg p-1 mb-5 bg-body rounded d-print-none">
+            <div class="card-body">
+                <div class="accordion accordion-flush" id="accordionFlushPlanChick">
+                    <div class="accordion-item">
+                        <h4 class="accordion-header" id="flush-headingDate">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDate" aria-expanded="false" aria-controls="flush-collapseDate">
+                                {% trans %}plan_delivery_chick.index.accordion.plan.date{% endtrans %}
+                            </button>
+                        </h4>
+                        <div id="flush-collapseDate" class="accordion-collapse collapse" aria-labelledby="flush-headingDate" data-bs-parent="#accordionFlushPlanChick">
+                            <div class="accordion-body">
+                                {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <h1>
             {% trans %}transport_list.index.title{% endtrans %}
+            {% if week %}
+                Tydzień {{ week }}
+            {% endif %}
         </h1>
         {% if is_granted("ROLE_MANAGER") %}
             {{ include('layout/buttons/new.html.twig', {pathLink: path('transport_list_choose_input'), text: 'transport_list.index.button.new' }) }}
@@ -48,7 +71,11 @@
                             {{ farmInputs.farm.eggInput.inputDate|date_modify('+21 day')|format_datetime('full', 'none', locale='pl') }}
                         </td>
                         <td>
-                            {{ farmInputs.farm.chicksFarm.name }}<br/>
+                            {% if farmInputs.farm.chicksFarm.customer.name != farmInputs.farm.chicksFarm.name %}
+                                {{ farmInputs.farm.chicksFarm.customer.name }}<br/>
+                            {% endif %}
+                            {{ farmInputs.farm.chicksFarm.name }}
+                            <a href="{{ path('transport_list_protocol', {'farm': farmInputs.farm.id}) }}"><i class="far fa-file-pdf d-print-none"></i></a>
                         </td>
                         <td>
                             {{ farmInputs.farm.chicksFarm.postcode }}
@@ -85,7 +112,11 @@
                 {% if not loop.first %}
                     <tr>
                         <td>
-                            {{ farmInputs.farm.chicksFarm.name }}<br/>
+                            {% if farmInputs.farm.chicksFarm.customer.name != farmInputs.farm.chicksFarm.name %}
+                                {{ farmInputs.farm.chicksFarm.customer.name }}<br/>
+                            {% endif %}
+                            {{ farmInputs.farm.chicksFarm.name }}
+                            <a href="{{ path('transport_list_protocol', {'farm': farmInputs.farm.id}) }}"><i class="far fa-file-pdf d-print-none"></i></a>
                         </td>
                         <td>
                             {{ farmInputs.farm.chicksFarm.postcode }}

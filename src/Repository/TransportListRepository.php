@@ -19,32 +19,15 @@ class TransportListRepository extends ServiceEntityRepository
         parent::__construct($registry, TransportList::class);
     }
 
-    // /**
-    //  * @return TransportList[] Returns an array of TransportList objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function transportList($start, $end)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('tl')
+            ->join('tl.farm', 'f')
+            ->join('f.eggInput', 'i')
+            ->andWhere('i.inputDate BETWEEN :start AND :end')
+            ->setParameters(['start' => $start, 'end' => $end])
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?TransportList
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

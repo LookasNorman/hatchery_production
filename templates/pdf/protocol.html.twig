@@ -1,0 +1,268 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .page {
+            height: 350mm;
+            size: A4;
+            margin: 10mm 10mm 10mm 10mm;
+            font-size: 14pt;
+        }
+
+        .horizontal-line {
+            width: 100%;
+            height: 25px;
+        }
+
+        .vertical-line {
+            position: absolute;
+            width: 25px;
+            height: 100%;
+            right: 100px;
+        }
+
+        .help {
+            font-size: 10pt;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: auto;
+            font-size: 10pt;
+        }
+
+        .certificate {
+            float: right;
+            margin-top: 20px;
+            margin-right: 200px;
+            font-size: 16pt;
+            font-weight: bold;
+        }
+
+        .title {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 60px;
+            font-size: 18pt;
+            font-weight: bold;
+            text-align: center;
+            width: 50%;
+        }
+
+        .list-title {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10px;
+            font-size: 18pt;
+            font-weight: bold;
+            text-align: center;
+            width: 50%;
+        }
+
+        .farm {
+            float: left;
+            width: 90mm;
+            margin-top: 10px;
+            margin-left: 80px;
+        }
+
+        .customer {
+            float: left;
+            width: 90mm;
+            margin-top: 10px;
+            margin-left: 60px;
+        }
+
+        .chick {
+            float: none;
+            width: 100mm;
+            margin-top: 140px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .list {
+            float: none;
+            width: 180mm;
+            margin-top: 10px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .table-list {
+            font-size: 14pt;
+            float: none;
+            width: 210mm;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+
+        .table-list2 {
+            font-size: 14pt;
+            float: none;
+            width: 210mm;
+            margin-top: 50px;
+            margin-left: 20px;
+        }
+
+        .data {
+            text-align: end;
+            font-weight: bold;
+        }
+
+        tr td {
+            height: 40px;
+        }
+
+        .img {
+            position: absolute;
+            top: 70px;
+            right: 80px;
+        }
+
+    </style>
+    <div class="page">
+        <div class="vertical-line bg-danger"></div>
+        <img class="img" src="{{ absolute_url('/img/logo.png') }}" alt="logo"/>
+        <h4 class="text-center text-bold">Drobiarstwo Działy Specjalne dr inż. Lidia Malec</h4>
+        <h4 class="text-center text-bold">05-530 Góra Kalwaria, Dębówka 1A</h4>
+        <div class="horizontal-line bg-danger"></div>
+        <div class="certificate">QS 4953113161514</div>
+        <div class="certificate">IKB VET 8881647</div>
+        <h4 class="title">Protokół przewozu piskląt</h4>
+        <div class="farm border border-primary border-2 rounded-3 p-2">
+            Ferma - numer QS<br/>
+            Ferma - VVVO</br>
+            Pisklęta z certyfikatem QS
+        </div>
+        <div class="customer border border-primary border-2 rounded-3 p-2">
+            Odbiorca piskląt
+            <span class="data">{{ farm.chicksFarm.name }}</span>
+            <br/>
+            Odbiorca piskląt - VVVO</br>
+            Odbiorca piskląt - QS
+        </div>
+        <div class="chick border border-primary border-2 rounded-3 p-2">
+            Odbiorca piskląt
+            <span class="data">{{ farm.chicksFarm.name }}</span>
+            <br/>
+            Odbiorca piskląt - VVVO</br>
+            Odbiorca piskląt - QS
+        </div>
+        <div class="list-title">Transport</div>
+        {% set date = farm.eggInput.inputDate|date_modify('+21 day') %}
+        {% set time1 = transport.transportList.departureHour|date_modify('-90 minute') %}
+        <div class="list">
+            Data i godzina podstawienia samochodu
+            <span class="data">{{ date|date('Y-m-d') }} {{ time1|date('H:i') }}</span>
+            <br/>
+            Czas załadunku w ZWD<br/>
+            Godzina wyjazdu z ZWD
+            <span class="data"></span>
+            <br/>
+            Godzina załadunku piskląt w pojemniki
+            <span class="data"></span>
+        </div>
+        <div class="list-title">Środek transportu</div>
+        <div class="list">
+            Marka i nr rejestracyjny
+            <span class="data">{{ transport.transportList.car.name }} {{ transport.transportList.car.registrationNumber }}</span>
+            <br/>
+            Nazwisko kierowcy
+            <span class="data">
+                {% for driver in transport.transportList.driver %}
+                    {{ driver.firstname }} {{ driver.lastname }}
+                {% endfor %}
+            </span>
+            <br/>
+            Data i godzina dezynfekcji samochodu<br/>
+            Środek dezynfekcyjny
+        </div>
+        <div class="list-title">Pisklęta</div>
+        <div class="list">
+            Przygotowała zmiana<br/>
+            Brakowanie<br/>
+            Pisklęta wydał/a
+        </div>
+        <div class="list-title">Odbiór na fermie</div>
+        <div class="table-list border border-primary border-2 rounded-3 p-2">
+            <table class="table table-bordered example-wrapper">
+                <tbody>
+                <tr>
+                    <td>Data i godzina przyjazdu na fermę</td>
+                </tr>
+                <tr>
+                    <td>Czas rozładunku</td>
+                </tr>
+                <tr>
+                    <td>Ilość padłych piskląt w transporcie</td>
+                </tr>
+                <tr>
+                    <td>Temperatura w samochodzie i na zewnątrz</td>
+                </tr>
+                <tr>
+                    <td>Uwagi odbiorcy</td>
+                </tr>
+                <tr>
+                    <td>Temperatura ściółki w kurniku<br/><span class="help">Pomiaru dokonuje kierowca z ZWD</span></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <p style="page-break-after: always"></p>
+        <div class="vertical-line bg-danger"></div>
+        <h4 class="text-center text-bold">Drobiarstwo Działy Specjalne dr inż. Lidia Malec</h4>
+        <h4 class="text-center text-bold">05-530 Góra Kalwaria, Dębówka 1A</h4>
+        <div class="horizontal-line bg-danger"></div>
+
+        <div class="table-list2 border border-primary border-2 rounded-3 p-2">
+            <table class="table table-bordered example-wrapper">
+                <thead class="table-light">
+                <tr>
+                    <th>Kolor pokryw</th>
+                    <th>Nr. M.</th>
+                    <th>Waga piskląt</th>
+                    <th>Ilość piskląt</th>
+                    <th>Numer kurnika</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in 0..9 %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="list-title">Oświadczenie</div>
+        <div class="list border border-primary border-2 rounded-3 p-2">
+            <ol>
+                <li>Pomieszczenia, urządzenia oraz wyposażenie ZWD, w tym pojemniki na pisklęta i wózki transportowe są
+                    myte
+                    i dezynfekowane
+                    wg. obowiązującego harmonogramu.
+                </li>
+                <li>Środki myjące: Chloro K2 Plus, Focid Plus, Chlorocip K1, Focid</li>
+                <li>Środki dezynfekujące: Oxim, Viropol, Virkon</li>
+            </ol>
+        </div>
+        <div class="footer align-items-center justify-content-center">
+            <div class="text-center">Polska 05-530 Góra Kalwaria Dębówka 1A</div>
+            <div class="text-center">tel. +48 22 726 86 93 zwdmalec@zwdmalec.pl www.zwdmalec.pl</div>
+        </div>
+    </div>
+{% endblock %}

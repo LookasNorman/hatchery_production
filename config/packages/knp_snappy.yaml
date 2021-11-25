@@ -3,7 +3,13 @@ knp_snappy:
     enabled:    true
     binary:    /usr/bin/wkhtmltopdf
     #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\"" for Windows users
-    options:    []
+    options:
+      no-outline: true
+      page-size: A4
+      encoding: UTF-8
+      disable-smart-shrinking: true
+      images: true
+      enable-external-links: true
   image:
     enabled:    true
     binary:     /var/wkhtmltoimage #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\"" for Windows users
