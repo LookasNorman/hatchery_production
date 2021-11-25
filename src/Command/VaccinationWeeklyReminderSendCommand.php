@@ -45,20 +45,16 @@ class VaccinationReminderSendCommand extends Command
         $io->progressAdvance();
         $date = new \DateTime('midnight');
         $day = $date->format('D');
-        if ($day === 'Thu' or $day === 'Fri') {
-            $date->modify('-14 days');
-        } else {
-            $date->modify('-15 days');
+        if ($day === 'Mon') {
+            $date->modify('-16 days');
         }
         $end = clone $date;
-        $end->modify('+1 days');
+        $end->modify('+7 days');
         $inputs = $this->inputsRepository->vaccinationReminder($date, $end);
 
         if (count($inputs) > 0) {
             $email = (new TemplatedEmail())
-                ->to('kkrakowiak@zwdmalec.pl')
-                ->addTo('rgolec@zwdmalec.pl')
-                ->addTo('sbiesalski@zwdmalec.pl')
+                ->to('sbiesalski@zwdmalec.pl')
                 ->addBcc('lkonieczny@zwdmalec.pl')
                 ->subject('Ustalić szczepienie')
                 ->htmlTemplate('emails/vaccinationReminder.html.twig')
