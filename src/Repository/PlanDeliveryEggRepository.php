@@ -128,7 +128,7 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
     public function planInputsInWeekHerd($breed, $date, $dateEnd)
     {
         return $this->createQueryBuilder('p')
-            ->select('WEEK(p.deliveryDate) as yearWeek', 'SUM(p.eggsNumber) as eggs', 'h.name')
+            ->select('YEARWEEK(p.deliveryDate) as yearWeek', 'SUM(p.eggsNumber) as eggs', 'h.name')
             ->innerJoin('p.herd', 'h')
             ->innerJoin('h.breed', 'b')
             ->andWhere('b = :breed')

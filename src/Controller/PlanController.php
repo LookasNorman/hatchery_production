@@ -350,7 +350,7 @@ class PlanController extends AbstractController
             }
             $weekEggs = 0;
             foreach ($eggsPlans as $eggPlan) {
-                if ($eggPlan['yearWeek'] == $i) {
+                if ($eggPlan['yearWeek'] == $year->format('Y') . sprintf("%02d", $i)) {
                     $weekEggs = $weekEggs + $eggPlan['eggs'];
                     array_push($weekEggsArray, $eggPlan);
                 }

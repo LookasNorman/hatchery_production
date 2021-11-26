@@ -4,6 +4,9 @@
             <div class="card border-info">
                 <div class="card-body">
                     {% set selectionWeek = key + 3 %}
+                    {% if selectionWeek > 52 %}
+                    {% set selectionWeek = selectionWeek - 52 %}
+                    {% endif %}
                     <div class="container">
                         <div class="row justify-content-between">
                         <div class="col-6">
