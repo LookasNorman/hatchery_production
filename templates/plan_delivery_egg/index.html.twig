@@ -39,12 +39,17 @@
                     <td>{{ plan_delivery_egg.eggsNumber|number_format(0, ',', ' ') }}</td>
                     <td>{{ plan_delivery_egg.deliveryDate ? plan_delivery_egg.deliveryDate|date('Y-m-d') : '' }}</td>
                     <td>
-                        {{ include('layout/buttons/list_show.html.twig',
-                            {pathLink: path('plan_delivery_egg_show', {'id': plan_delivery_egg.id})}) }}
-                        {% if is_granted('ROLE_MANAGER') %}
-                            {{ include('layout/buttons/list_edit.html.twig',
-                                {pathLink: path('plan_delivery_egg_edit', {'id': plan_delivery_egg.id})}) }}
-                        {% endif %}
+                        <span class="btn-group">
+                            {{ include('layout/buttons/list_show.html.twig',
+                                {pathLink: path('plan_delivery_egg_show', {'id': plan_delivery_egg.id})}) }}
+                            {% if is_granted('ROLE_MANAGER') %}
+                                {{ include('layout/buttons/list_edit.html.twig',
+                                    {pathLink: path('plan_delivery_egg_edit', {'id': plan_delivery_egg.id})}) }}
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                {{ include('plan_delivery_egg/_delete_trash_form.html.twig', {'id': plan_delivery_egg.id}) }}
+                            {% endif %}
+                        </span>
                     </td>
                 </tr>
             {% else %}

@@ -1,13 +1,15 @@
 {{ form_start(form) }}
-{{ form_label(form.day) }}
-{% for day in form.day %}
-    <div class="form-check">
-        {{ form_widget(day) }}
-        <label class="form-check-label">
-            {{ form_label(day) }}
-        </label>
-    </div>
-{% endfor %}
+{% if form.day is defined %}
+    {{ form_label(form.day) }}
+    {% for day in form.day %}
+        <div class="form-check">
+            {{ form_widget(day) }}
+            <label class="form-check-label">
+                {{ form_label(day) }}
+            </label>
+        </div>
+    {% endfor %}
+{% endif %}
 
     {{ form_widget(form) }}
 {{ include('layout/buttons/create.html.twig', {text: 'plan_delivery_egg.form.button.save'}) }}
