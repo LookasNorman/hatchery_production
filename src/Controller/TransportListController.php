@@ -272,6 +272,13 @@ class TransportListController extends AbstractController
         return $this->redirectToRoute('transport_list_index');
     }
 
+    public function fileName($string)
+    {
+        $pl = ['ą', 'ć', 'ę', 'ł', 'ó', 'ś', 'ź', 'ż', 'Ą', 'Ć', 'Ę', 'Ł', 'Ó', 'Ś', 'Ź', 'Ż'];
+        $en = ['a', 'c', 'e', 'l', 'o', 's', 'z', 'z', 'A', 'C', 'E', 'L', 'O', 'S', 'Z', 'Z'];
+        return $enString = str_replace($pl, $en, $string);
+    }
+
     /**
      * @Route("/protocol_pdf/{farm}", name="transport_list_protocol", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
@@ -283,8 +290,11 @@ class TransportListController extends AbstractController
             'farm' => $farm,
             'transport' => $transport,
         ]);
-        $filename = $farm->getChicksFarm()->getCustomer()->getName()
-            . ' - ' . $farm->getChicksFarm()->getName()
+        $customerName = $this->fileName($farm->getChicksFarm()->getCustomer()->getName());
+        $farmName = $this->fileName($farm->getChicksFarm()->getName());
+
+        $filename = $customerName
+            . ' - ' . $farmName
             . ' - ' . $farm->getEggInput()->getInputDate()->modify('+21 day')->format('Y-m-d')
             . '.pdf';
         return new PdfResponse(
