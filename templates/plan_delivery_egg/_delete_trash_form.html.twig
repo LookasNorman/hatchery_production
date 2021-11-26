@@ -1,5 +1,5 @@
-<form method="post" action="{{ path('plan_delivery_egg_delete', {'id': plan_delivery_egg.id}) }}"
+<form method="post" action="{{ path('plan_delivery_egg_delete', {'id': plan.id}) }}"
       onsubmit="return confirm('{% trans %}plan_delivery_egg.delete.confirm{% endtrans %}');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ plan_delivery_egg.id) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ plan.id) }}">
     <button class="btn"><i class="fa fa-trash"></i></button>
 </form>

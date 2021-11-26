@@ -8,6 +8,7 @@ use App\Entity\PlanDeliveryEgg;
 use App\Form\PlanDeliveryEggForHerdType;
 use App\Form\PlanDeliveryEggType;
 use App\Repository\PlanDeliveryEggRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,12 +24,19 @@ class PlanDeliveryEggController extends AbstractController
     /**
      * @Route("/", name="plan_delivery_egg_index", methods={"GET"})
      */
-    public function index(PlanDeliveryEggRepository $planDeliveryEggRepository): Response
+    public function index(PlanDeliveryEggRepository $planDeliveryEggRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $date = new \DateTime('midnight');
-        return $this->render('plan_delivery_egg/index.html.twig', [
-            'plan_delivery_eggs' => $planDeliveryEggRepository->planDeliveryFromDate($date),
-        ]);
+        $query = $planDeliveryEggRepository->planDeliveryFromDate($date);
+
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            30 /*limit per page*/
+        );
+
+        // parameters to template
+        return $this->render('plan_delivery_egg/index.html.twig', ['pagination' => $pagination]);
     }
 
     public function getBreedStandard($breed)

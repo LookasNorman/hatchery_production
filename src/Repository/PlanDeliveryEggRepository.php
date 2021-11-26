@@ -31,7 +31,6 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
             ->addOrderBy('b.name', 'asc')
             ->addOrderBy('h.name', 'asc')
             ->getQuery()
-            ->getResult()
             ;
     }
 
