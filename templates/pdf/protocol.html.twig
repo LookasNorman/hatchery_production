@@ -11,7 +11,7 @@
             height: 350mm;
             size: A4;
             margin: 10mm 10mm 10mm 10mm;
-            font-size: 14pt;
+            font-size: 12pt;
         }
 
         .horizontal-line {
@@ -42,7 +42,7 @@
             float: right;
             margin-top: 20px;
             margin-right: 200px;
-            font-size: 16pt;
+            font-size: 14pt;
             font-weight: bold;
         }
 
@@ -50,7 +50,7 @@
             margin-left: auto;
             margin-right: auto;
             margin-top: 60px;
-            font-size: 18pt;
+            font-size: 16pt;
             font-weight: bold;
             text-align: center;
             width: 50%;
@@ -60,7 +60,7 @@
             margin-left: auto;
             margin-right: auto;
             margin-top: 10px;
-            font-size: 18pt;
+            font-size: 16pt;
             font-weight: bold;
             text-align: center;
             width: 50%;
@@ -97,7 +97,7 @@
         }
 
         .table-list {
-            font-size: 14pt;
+            font-size: 12pt;
             float: none;
             width: 210mm;
             margin-top: 10px;
@@ -105,7 +105,7 @@
         }
 
         .table-list2 {
-            font-size: 14pt;
+            font-size: 12pt;
             float: none;
             width: 210mm;
             margin-top: 50px;
@@ -150,11 +150,11 @@
             Odbiorca piskląt - QS
         </div>
         <div class="chick border border-primary border-2 rounded-3 p-2">
-            Odbiorca piskląt
-            <span class="data">{{ farm.chicksFarm.name }}</span>
-            <br/>
-            Odbiorca piskląt - VVVO</br>
-            Odbiorca piskląt - QS
+            Rasa<br/>
+            Wiek stada</br>
+            Ilość piskląt<br/>
+            Nakład
+            <span class="data">{{ farm.eggInput.name }}</span>
         </div>
         <div class="list-title">Transport</div>
         {% set date = farm.eggInput.inputDate|date_modify('+21 day') %}
@@ -215,7 +215,15 @@
                 </tr>
                 </tbody>
             </table>
-
+        </div>
+        <div class="table-list">
+            <table class="table table-bordered example-wrapper">
+                <tr>
+                    <td><br/><span class="help">Podpis zootechnika ZWD</span></td>
+                    <td><br/><span class="help">Podpis kierowcy</span></td>
+                    <td><br/><span class="help">Podpis odbiorcy</span></td>
+                </tr>
+            </table>
         </div>
         <p style="page-break-after: always"></p>
         <div class="vertical-line bg-danger"></div>
@@ -228,7 +236,7 @@
                 <thead class="table-light">
                 <tr>
                     <th>Kolor pokryw</th>
-                    <th>Nr. M.</th>
+                    <th>Nr stada</th>
                     <th>Waga piskląt</th>
                     <th>Ilość piskląt</th>
                     <th>Numer kurnika</th>
