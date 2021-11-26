@@ -22,6 +22,7 @@ class PlanDeliveryEggRepository extends ServiceEntityRepository
     public function planDeliveryFromDate($date)
     {
         return $this->createQueryBuilder('p')
+            ->select('p.deliveryDate', 'p.eggsNumber', 'p.id', 'h.name as herd', 'h.id as herdId', 'b.name as breeder', 'b.id as breederId')
             ->join('p.herd', 'h')
             ->join('h.breeder', 'b')
             ->andWhere('p.deliveryDate >= :date')

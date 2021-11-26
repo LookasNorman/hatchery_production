@@ -34,8 +34,8 @@
             {% for plan_delivery_egg in plan_delivery_eggs %}
                 <tr>
                     <td>{{ plan_delivery_egg.id }}</td>
-                    <td>{{ plan_delivery_egg.herd.name }}</td>
-                    <td>{{ plan_delivery_egg.herd.breeder.name }}</td>
+                    <td>{{ plan_delivery_egg.herd }}</td>
+                    <td>{{ plan_delivery_egg.breeder }}</td>
                     <td>{{ plan_delivery_egg.eggsNumber|number_format(0, ',', ' ') }}</td>
                     <td>{{ plan_delivery_egg.deliveryDate ? plan_delivery_egg.deliveryDate|date('Y-m-d') : '' }}</td>
                     <td>
