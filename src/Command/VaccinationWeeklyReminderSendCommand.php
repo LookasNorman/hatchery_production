@@ -15,8 +15,8 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class VaccinationWeeklyReminderSendCommand extends Command
 {
-    protected static $defaultName = 'app:vaccination-reminder:send';
-    protected static $defaultDescription = 'Vaccination reminder';
+    protected static $defaultName = 'app:vaccination-weekly-reminder:send';
+    protected static $defaultDescription = 'Vaccination weekly reminder';
     private $inputsRepository;
     private $contactInfoRepository;
     private $mailer;

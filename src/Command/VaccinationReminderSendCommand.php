@@ -54,11 +54,11 @@ class VaccinationReminderSendCommand extends Command
         $end->modify('+1 days');
         $inputs = $this->inputsRepository->vaccinationReminder($date, $end);
 
-        if (count($inputs) > 0) {
+        if (count($inputs) == 0) {
             $email = (new TemplatedEmail())
-                ->to('kkrakowiak@zwdmalec.pl')
-                ->addTo('rgolec@zwdmalec.pl')
-                ->addTo('sbiesalski@zwdmalec.pl')
+//                ->to('kkrakowiak@zwdmalec.pl')
+//                ->addTo('rgolec@zwdmalec.pl')
+//                ->addTo('sbiesalski@zwdmalec.pl')
                 ->addBcc('lkonieczny@zwdmalec.pl')
                 ->subject('Ustalić szczepienie')
                 ->htmlTemplate('emails/vaccinationReminder.html.twig')
