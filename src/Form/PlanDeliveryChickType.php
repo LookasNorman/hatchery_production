@@ -43,18 +43,21 @@ class PlanDeliveryChickType extends AbstractType
             ])
             ->add('chickFarm', EntityType::class, [
                 'class' => ChicksRecipient::class,
-                'choice_label' => 'name',
+                'choice_label' => function (ChicksRecipient $chicksRecipient) {
+                    return $chicksRecipient->getCustomer()->getName() . ' - ' . $chicksRecipient->getName();
+                },
                 'label' => 'plan_delivery_chick.form.label.chick_farm',
                 'query_builder' => function (EntityRepository $entityRepository) {
                     return $entityRepository->createQueryBuilder('cr')
-                        ->orderBy('cr.name', 'ASC');
+                        ->join('cr.customer', 'c')
+                        ->orderBy('c.name', 'ASC')
+                        ->addOrderBy('cr.name', 'ASC');
                 },
                 'placeholder' => 'plan_delivery_chick.form.placeholder.chick_farm',
                 'attr' => [
                     'class' => 'form-select'
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

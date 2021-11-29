@@ -263,7 +263,7 @@ class PlanController extends AbstractController
     public function weekChicksPlanBreed($year, $breed)
     {
         $planDeliveryChickRepository = $this->getDoctrine()->getRepository(PlanDeliveryChick::class);
-        $now = new \DateTime('midnight');
+        $now = new \DateTime('midnight - 21day');
         if ($year < $now) {
             $firstWeekStart = $now;
             if ($firstWeekStart->format('l') != 'Monday') {
@@ -292,7 +292,7 @@ class PlanController extends AbstractController
     {
         $planDeliveryEggRepository = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class);
         $now = new \DateTime();
-        $now->modify('midnight -1 second');
+        $now->modify('midnight -1 second -21 day');
         if ($year < $now) {
             $firstWeekStart = $now;
             if ($firstWeekStart->format('l') != 'Monday') {
@@ -320,7 +320,7 @@ class PlanController extends AbstractController
 
     public function sortPlansByWeek($year, $breed)
     {
-        $now = new \DateTime('midnight');
+        $now = new \DateTime('midnight - 21 day');
         if ($year < $now) {
             $firstWeekStart = $now;
             if ($firstWeekStart->format('l') != 'Monday') {
