@@ -268,11 +268,12 @@ chicks_recipient:
       title: Ferma
     street: Ulica
     table:
-      inputs: Nakład
       chicks: Pisklęta
-      deliveries: Dostawy
       chicks_plan: Planowane
       chicks_real: Rzeczywiste
+      deliveries: Dostawy
+      delivery_date: Data wylęgu
+      inputs: Nakład
     title: Ferma odbiorcy piskląt
 contact_info:
   delete:

@@ -3,6 +3,9 @@
     <th rowspan="2" class="align-middle">
         {% trans %}chicks_recipient.show.table.inputs{% endtrans %}
     </th>
+    <th rowspan="2" class="align-middle">
+        {% trans %}chicks_recipient.show.table.delivery_date{% endtrans %}
+    </th>
     <th colspan="2" class="text-center align-middle">
         {% trans %}chicks_recipient.show.table.chicks{% endtrans %}
     </th>
@@ -19,20 +22,19 @@
     </th>
 </tr>
 {% include 'layout/tables/tbody.html.twig' %}
-    {% if inputsDetail.inputsFarms is defined %}
-        {% for detail in inputsDetail.inputsFarms %}
+    {% if farm_inputs is defined %}
+        {% for input in farm_inputs %}
             <tr>
                 <td class="align-middle">
-                    <a href="{{ path('eggs_inputs_show', {'id': detail.eggInput.id}) }}">
-                        {{ detail.eggInput.name }}
+                    <a href="{{ path('eggs_inputs_show', {'id': input.id}) }}">
+                        {{ input.name }}
                     </a>
                 </td>
-                <td class="text-center align-middle">{{ detail.chickNumber }}</td>
+                <td class="text-center align-middle">{{ input.inputDate|date_modify('+21 day')|date('Y-m-d') }}</td>
+                <td class="text-center align-middle">{{ input.chickNumber }}</td>
                 <td class="text-center align-middle">
-
                 </td>
                 <td>
-                    {% include('eggs_delivery/inputs_delivery.html.twig') %}
                 </td>
             </tr>
         {% endfor %}

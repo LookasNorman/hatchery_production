@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ChicksRecipient;
 use App\Entity\Customer;
+use App\Entity\Inputs;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanIndicators;
 use App\Form\ChicksRecipientType;
@@ -78,6 +79,12 @@ class ChicksRecipientController extends AbstractController
         ]);
     }
 
+    public function farmInputs($farm)
+    {
+        $inputRepository = $this->getDoctrine()->getRepository(Inputs::class);
+        return $farmInputs = $inputRepository->farmInputs($farm);
+    }
+
     /**
      * @Route("/{id}", name="chicks_recipient_show", methods={"GET"})
      */
@@ -87,12 +94,14 @@ class ChicksRecipientController extends AbstractController
         $planDelivery = $planDeliveryChickRepository->findBy(['chickFarm' => $chicksRecipient], ['inputDate' => 'ASC']);
         $planIndicatorsRepository = $this->getDoctrine()->getRepository(PlanIndicators::class);
         $planIndicators = $planIndicatorsRepository->findOneBy([]);
+        $farmInputs = $this->farmInputs($chicksRecipient);
 
         return $this->render('chicks_recipient/show.html.twig', [
             'chicks_recipient' => $chicksRecipient,
             'plan_delivery_chicks' => $planDelivery,
             'plan_indicators' => $planIndicators,
-            'maps_api' => $this->getParameter('app.mapskey')
+            'maps_api' => $this->getParameter('app.mapskey'),
+            'farm_inputs' => $farmInputs,
         ]);
     }
 

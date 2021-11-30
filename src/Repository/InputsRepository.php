@@ -14,6 +14,19 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class InputsRepository extends ServiceEntityRepository
 {
+    public function farmInputs($farm)
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.id', 'i.name', 'if.chickNumber', 'i.inputDate')
+            ->join('i.inputsFarms', 'if')
+            ->andWhere('if.chicksFarm = :farm')
+            ->setParameters(['farm' => $farm])
+            ->addOrderBy('i.inputDate', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function customerInputs($customer)
     {
         return $this->createQueryBuilder('i')
