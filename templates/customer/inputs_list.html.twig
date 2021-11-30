@@ -1,0 +1,45 @@
+{% include 'layout/tables/thead.html.twig' %}
+<tr>
+    <th rowspan="2" class="align-middle">
+        {% trans %}customer.show.table.inputs{% endtrans %}
+    </th>
+    <th rowspan="2" class="align-middle">
+        {% trans %}customer.show.table.delivery_date{% endtrans %}
+    </th>
+    <th colspan="2" class="text-center align-middle">
+        {% trans %}customer.show.table.chicks{% endtrans %}
+    </th>
+    <th rowspan="2" class="text-center align-middle">
+        {% trans %}customer.show.table.deliveries{% endtrans %}
+    </th>
+</tr>
+<tr>
+    <th class="text-center">
+        {% trans %}customer.show.table.chicks_plan{% endtrans %}
+    </th>
+    <th class="text-center">
+        {% trans %}customer.show.table.chicks_real{% endtrans %}
+    </th>
+</tr>
+{% include 'layout/tables/tbody.html.twig' %}
+    {% if customer_inputs is defined %}
+        {% for customer_input in customer_inputs %}
+            <tr>
+                <td class="align-middle">
+                    <a href="{{ path('eggs_inputs_show', {'id': customer_input.id}) }}">
+                        {{ customer_input.name }}
+                    </a>
+                </td>
+                <td class="text-center align-middle">{{ customer_input.inputDate|date_modify('+21 day')|date('Y-m-d') }}</td>
+                <td class="text-center align-middle">{{ customer_input.chickNumber }}</td>
+                <td class="text-center align-middle">
+
+                </td>
+                <td>
+
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+{% include 'layout/tables/tfooter.html.twig' %}
+{% include 'layout/tables/tend.html.twig' %}

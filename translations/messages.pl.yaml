@@ -381,6 +381,13 @@ customer:
     header: Dane odbiorcy
     phone_number: Numer telefonu
     street: Ulica
+    table:
+      chicks: Pisklęta
+      chicks_plan: Planowane
+      chicks_real: Dtarczone
+      deliveries: Dostawy jaj
+      delivery_date: Data wylęgu
+      inputs: Nakład
     title: Szczegóły odbiorcy
 customer_phone:
   delete:

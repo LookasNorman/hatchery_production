@@ -14,6 +14,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class InputsRepository extends ServiceEntityRepository
 {
+    public function customerInputs($customer)
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.id', 'i.name', 'if.chickNumber', 'i.inputDate')
+            ->join('i.inputsFarms', 'if')
+            ->join('if.chicksFarm', 'cf')
+            ->andWhere('cf.customer = :customer')
+            ->setParameters(['customer' => $customer])
+            ->addOrderBy('i.inputDate', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function vaccinationReminder($date, $end)
     {
         return $this->createQueryBuilder('i')

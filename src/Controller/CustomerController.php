@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
+use App\Entity\Inputs;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanIndicators;
 use App\Form\CustomerType;
@@ -71,6 +72,12 @@ class CustomerController extends AbstractController
         return $planIndicators;
     }
 
+    public function customerInputs($customer)
+    {
+        $inputRepository = $this->getDoctrine()->getRepository(Inputs::class);
+        return $inputs = $inputRepository->customerInputs($customer);
+    }
+
     /**
      * @Route("/{id}", name="customer_show", methods={"GET"})
      */
@@ -78,12 +85,14 @@ class CustomerController extends AbstractController
     {
         $planDelivery = $this->customerPlanDelivery($customer);
         $planIndicators = $this->planIndicators();
+        $customerInputs = $this->customerInputs($customer);
 
         return $this->render('customer/show.html.twig', [
             'customer' => $customer,
             'plan_delivery_chicks' => $planDelivery,
             'plan_indicators' => $planIndicators,
             'maps_api' => $this->getParameter('app.mapskey'),
+            'customer_inputs' => $customerInputs,
         ]);
     }
 
