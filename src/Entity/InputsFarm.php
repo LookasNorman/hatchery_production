@@ -44,7 +44,7 @@ class InputsFarm
     private $inputsFarmDeliveryPlans;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Transfers::class, mappedBy="farm")
+     * @ORM\OneToMany(targetEntity=Transfers::class, mappedBy="farm")
      */
     private $transfers;
 
