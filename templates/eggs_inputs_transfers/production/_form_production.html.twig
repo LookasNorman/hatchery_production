@@ -1,4 +1,17 @@
 {{ form_start(form) }}
+{{ form_row(form.transferDate) }}
+{{ form_row(form.transfersEgg) }}
+{{ form_label(form.hatchers) }}
+<div class="row">
+{% for hatcher in form.hatchers %}
+    <div class="form-check col-sm-6">
+        {{ form_widget(hatcher) }}
+        <label class="form-check-label">
+            {{ form_label(hatcher) }}
+        </label>
+    </div>
+{% endfor %}
+</div>
 {{ form_widget(form) }}
 {{ include('layout/buttons/create.html.twig', {text: 'eggs_inputs_transfer.form.button.save'}) }}
 {{ form_end(form) }}
