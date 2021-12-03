@@ -19,6 +19,20 @@ class InputsFarmRepository extends ServiceEntityRepository
         parent::__construct($registry, InputsFarm::class);
     }
 
+    public function monthlyDeliveredChick($start, $end)
+    {
+        return $this->createQueryBuilder('if')
+            ->select('YEARMONTH(i.inputDate) as month', 'SUM(if.chickNumber) as chickNumber')
+            ->join('if.eggInput', 'i')
+            ->andWhere('i.inputDate BETWEEN :start AND :end')
+            ->setParameters(['start' => $start->modify('-21 days'), 'end' => $end->modify('-21 days')])
+            ->orderBy('month', 'asc')
+            ->groupBy('month')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function chickInInput($input)
     {
         return $this->createQueryBuilder('if')

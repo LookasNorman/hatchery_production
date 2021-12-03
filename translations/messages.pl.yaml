@@ -1451,6 +1451,9 @@ menu:
       index: Wyjazdy - trasy
     vaccination:
       index: Szczepienia / przekład
+monthly_plan:
+  index:
+    title: Plan dostaw jaj oraz nakładów i dostaw piskląt od dnia
 plan_breeder:
   hatching_date:
     age: Tygodni

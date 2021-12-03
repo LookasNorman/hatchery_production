@@ -21,6 +21,32 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
         parent::__construct($registry, PlanDeliveryChick::class);
     }
 
+    public function planMonthlyInputFarm($start, $end)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('YEARMONTH(p.inputDate) as month', 'SUM(p.chickNumber) as chickNumber')
+            ->join('p.chickFarm', 'f')
+            ->andWhere('p.inputDate BETWEEN :start AND :end')
+            ->setParameters(['start' => $start, 'end' => $end])
+            ->orderBy('month', 'asc')
+            ->groupBy('month')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    public function planMonthlyDeliveryFarm($start, $end)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('YEARMONTH(p.deliveryDate) as month', 'SUM(p.chickNumber) as chickNumber')
+            ->join('p.chickFarm', 'f')
+            ->andWhere('p.deliveryDate BETWEEN :start AND :end')
+            ->setParameters(['start' => $start, 'end' => $end])
+            ->orderBy('month', 'asc')
+            ->groupBy('month')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
     public function monthlyIntegrationPlan($integration)
     {
         return $this->createQueryBuilder('p')
@@ -61,27 +87,27 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function planFromDate($date)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.inputDate >= :date')
-            ->setParameters(['date' => $date])
-            ->orderBy('p.inputDate', 'asc')
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function dateDelivery($date, $dateEnd)
-    {
-        return $this->createQueryBuilder('p')
-            ->select('p.inputDate')
-            ->andWhere('p.inputDate BETWEEN :date AND :dateEnd')
-            ->setParameters(['date' => $date, 'dateEnd' => $dateEnd])
-            ->groupBy('p.inputDate')
-            ->orderBy('p.inputDate')
-            ->getQuery()
-            ->getResult();
-    }
+//    public function planFromDate($date)
+//    {
+//        return $this->createQueryBuilder('p')
+//            ->andWhere('p.inputDate >= :date')
+//            ->setParameters(['date' => $date])
+//            ->orderBy('p.inputDate', 'asc')
+//            ->getQuery()
+//            ->getResult();
+//    }
+//
+//    public function dateDelivery($date, $dateEnd)
+//    {
+//        return $this->createQueryBuilder('p')
+//            ->select('p.inputDate')
+//            ->andWhere('p.inputDate BETWEEN :date AND :dateEnd')
+//            ->setParameters(['date' => $date, 'dateEnd' => $dateEnd])
+//            ->groupBy('p.inputDate')
+//            ->orderBy('p.inputDate')
+//            ->getQuery()
+//            ->getResult();
+//    }
 
     public function planCustomerWeek($farm, $date, $dateEnd)
     {
@@ -162,18 +188,18 @@ class PlanDeliveryChickRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function planInputsDetail($start, $end, $breed)
-    {
-        return $this->createQueryBuilder('p')
-            ->addSelect('WEEK(p.inputDate) as week')
-            ->innerJoin('p.breed', 'b')
-            ->andWhere('b = :breed')
-            ->andWhere('p.inputDate BETWEEN :start AND :end')
-            ->setParameters(['start' => $start, 'end' => $end, 'breed' => $breed])
-            ->addOrderBy('p.inputDate', 'asc')
-            ->getQuery()
-            ->getResult();
-    }
+//    public function planInputsDetail($start, $end, $breed)
+//    {
+//        return $this->createQueryBuilder('p')
+//            ->addSelect('WEEK(p.inputDate) as week')
+//            ->innerJoin('p.breed', 'b')
+//            ->andWhere('b = :breed')
+//            ->andWhere('p.inputDate BETWEEN :start AND :end')
+//            ->setParameters(['start' => $start, 'end' => $end, 'breed' => $breed])
+//            ->addOrderBy('p.inputDate', 'asc')
+//            ->getQuery()
+//            ->getResult();
+//    }
 
     public function planInputsInDay($start, $end, $breed)
     {
