@@ -26,28 +26,32 @@
             {% endfor %}
             {% include 'layout/cards/cbody.html.twig' %}
             <dl class="row">
-                <dd class="col-sm-5">{% trans %}transport_list.show.address{% endtrans %}</dd>
-                <dt class="col-sm-7 text-end">
-                    {% for farmInputs in transport_list.transportInputsFarms %}
-                    {{ farmInputs.farm.chicksFarm.city }}<br/>
-                    {{ farmInputs.farm.chicksFarm.street }} {{ farmInputs.farm.chicksFarm.streetNumber }}
-                    {% endfor %}
-                </dt>
-{#                <dd class="col-sm-5">{% trans %}transport_list.show.phone_number{% endtrans %}</dd>#}
-{#                <dt class="col-sm-7 text-end">{{ transport_list.farm.chicksFarm.phoneNumber }}</dt>#}
                 <dd class="col-sm-5">{% trans %}transport_list.show.distance{% endtrans %}</dd>
                 <dt class="col-sm-7 text-end">{{ transport_list.distance }}</dt>
                 <dd class="col-sm-5">{% trans %}transport_list.show.departure_hour{% endtrans %}</dd>
                 <dt class="col-sm-7 text-end">{{ transport_list.departureHour ? transport_list.departureHour|date('H:i') : '' }}</dt>
-                <dd class="col-sm-5">{% trans %}transport_list.show.arrival_hour{% endtrans %}</dd>
-                <dt class="col-sm-7 text-end"></dt>
-                <dd class="col-sm-5">{% trans %}transport_list.show.chicks{% endtrans %}</dd>
-                <dt class="col-sm-7 text-end">
-                    {% for farm in transport_list.farm %}
-                    {{ farm.chickNumber }}<br/>
-                    {% endfor %}
-                </dt>
             </dl>
+            <hr/>
+            {% for farmInputs in transport_list.transportInputsFarms %}
+                <h5>{{ farmInputs.farm.chicksFarm.customer.name }} {{ farmInputs.farm.chicksFarm.name }}</h5>
+                <dl class="row">
+                    <dd class="col-sm-5">{% trans %}transport_list.show.address{% endtrans %}</dd>
+                    <dt class="col-sm-7 text-end">
+                        {{ farmInputs.farm.chicksFarm.city }}<br/>
+                        {{ farmInputs.farm.chicksFarm.street }} {{ farmInputs.farm.chicksFarm.streetNumber }}
+                    </dt>
+                    <dd class="col-sm-5">{% trans %}transport_list.show.distance{% endtrans %}</dd>
+                    <dt class="col-sm-7 text-end">{{ farmInputs.distance }}</dt>
+                    <dd class="col-sm-5">{% trans %}transport_list.show.distance_hatchery{% endtrans %}</dd>
+                    <dt class="col-sm-7 text-end">{{ farmInputs.distanceFromHatchery }}</dt>
+                    <dd class="col-sm-5">{% trans %}transport_list.show.arrival_hour{% endtrans %}</dd>
+                    <dt class="col-sm-7 text-end">{{ farmInputs.arrivalTime|date('H:i') }}</dt>
+                    <dd class="col-sm-5">{% trans %}transport_list.show.chicks{% endtrans %}</dd>
+                    <dt class="col-sm-7 text-end">{{ farmInputs.farm.chickNumber }}</dt>
+
+                </dl>
+                <hr/>
+            {% endfor %}
             {% include 'layout/cards/cfooter.html.twig' %}
             {% if is_granted('ROLE_ADMIN') %}
                 {{ include('transport_list/_delete_form.html.twig') }}

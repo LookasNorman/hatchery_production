@@ -1950,6 +1950,7 @@ transport_list:
       distanceHatchery: Odległość
       driver: Kierowca
       farm: Hodowca
+      farm_name: Ferma
       no_found: Brak tras
       phone_number: Telefon
     title: Lista tras
@@ -1970,7 +1971,8 @@ transport_list:
       edit: Edytuj
     chicks: Ilość piskląt
     departure_hour: Wyjazd
-    distance: Kilometry
+    distance: Kilometry - trasa
+    distance_hatchery: Kilometry wylęgarnia
     phone_number: Telefon
     title: Szczegóły wyjazdu
 vaccination:

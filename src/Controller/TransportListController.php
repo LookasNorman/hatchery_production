@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\SendSMS;
 
 /**
  * @Route("/transport_list")
@@ -69,7 +70,7 @@ class TransportListController extends AbstractController
         $date->modify('+ 21 days');
 
         $email = (new TemplatedEmail())
-            ->to($transport->getEmail())
+//            ->to($transport->getEmail())
             ->addBcc('lkonieczny@zwdmalec.pl')
             ->subject('Planowana dostawa piskląt ' . $date->format('Y-m-d'))
             ->htmlTemplate('emails/transportList.html.twig')
@@ -163,7 +164,7 @@ class TransportListController extends AbstractController
      * @Route("/new/{input}", name="transport_list_new", methods={"GET","POST"})
      * @IsGranted("ROLE_TRANSPORT")
      */
-    public function new(Inputs $input, Request $request, MailerInterface $mailer): Response
+    public function new(Inputs $input, Request $request, MailerInterface $mailer, SendSMS $sendSMS): Response
     {
         $transportList = new TransportList();
         $form = $this->createForm(TransportListType::class, $transportList, [
@@ -195,14 +196,13 @@ class TransportListController extends AbstractController
                     $arrivalTime = clone $transportList->getDepartureHour();
                 }
 
-                $time = $directionsMatrix['routes'][0]['legs'][$key]['duration']['value'] * 1.4;
+                $time = round($directionsMatrix['routes'][0]['legs'][$key]['duration']['value'] * 1.4, 0);
                 $distance = round($directionsMatrix['routes'][0]['legs'][$key]['distance']['value'] / 1000, 0);
                 $arrivalTime->modify('+' . $time . ' seconds');
                 $time = clone $arrivalTime;
                 $transportInputFarm = new TransportInputsFarm();
                 $transportInputFarm->setFarm($transport);
                 $transportInputFarm->setTransportList($transportList);
-
                 $transportInputFarm->setArrivalTime($time);
                 $transportInputFarm->setDistance($distance);
                 $transportInputFarm->setDistanceFromHatchery($distanceFromHatchery);
@@ -212,8 +212,9 @@ class TransportListController extends AbstractController
                 if ($email) {
                     $mailer->send($email);
                 }
+                $smsMessage = $this->sms($input, $transportList, $time, $transport);
+//                $sendSMS->singleSMS('+48662049921', $smsMessage);
             }
-
             $entityManager->flush();
 
             return $this->redirectToRoute('transport_list_index');
@@ -223,6 +224,22 @@ class TransportListController extends AbstractController
             'transport_list' => $transportList,
             'form' => $form->createView(),
         ]);
+    }
+
+    public function sms($input, $transportList, $time, $transport)
+    {
+        $driverMsg = null;
+        $count = count($transportList->getDriver());
+        foreach ($transportList->getDriver() as $driver) {
+            $driverMsg .= $driver->getLastname() . ' - ' . $driver->getPhoneNumber();
+            if (--$count > 0) {
+                $driverMsg .= ', ';
+            }
+        }
+        return 'W dniu ' .
+            $input->getInputDate()->modify('+21 day')->format('Y-m-d') .
+            ' o godzinie ' . $time->format('H:i') . ' planujemy dostawę ' .
+            $transport->getChickNumber() . ' piskląt. Kierowca ' . $driverMsg . '.';
     }
 
     /**

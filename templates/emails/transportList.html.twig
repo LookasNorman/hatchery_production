@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>A Simple Responsive HTML Email</title>
+    <title>Transport</title>
     <style type="text/css">
         body {
             margin: 10px;
@@ -26,7 +26,6 @@
            style="background-color: #ffffff; text-align: center">
         <tr>
             <th>{% trans %}transport_list.index.table.date{% endtrans %}</th>
-            <th>{% trans %}transport_list.index.table.farm{% endtrans %}</th>
             <th>{% trans %}transport_list.index.table.driver{% endtrans %}</th>
             <th>{% trans %}transport_list.index.table.arrival_hour{% endtrans %}</th>
             <th>{% trans %}transport_list.index.table.car{% endtrans %}</th>
@@ -34,7 +33,6 @@
         </tr>
         <tr>
             <td>{{ farm.eggInput.inputDate|date_modify('+21 days')|date("Y-m-d") }}</td>
-            <td>{{ farm.chicksFarm.name }}</td>
             <td>
                 {% for driv in driver %}
                 {{ driv.firstname }} {{ driv.lastname }} {{ driv.phoneNumber }}<br/>
@@ -43,6 +41,22 @@
             <td>{{ arrivalHour|format_datetime("none", "short") }}</td>
             <td>{{ car.name }}</td>
             <td>{{ farm.chickNumber }}</td>
+        </tr>
+        <tr>
+            <th rowspan="2">{% trans %}transport_list.index.table.farm{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.farm_name{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.address{% endtrans %}</th>
+            <th>{% trans %}transport_list.index.table.phone_number{% endtrans %}</th>
+        </tr>
+        <tr>
+            <td>{{ farm.chicksFarm.name }}</td>
+            <td>
+                {{ farm.chicksFarm.postCode }}
+                {{ farm.chicksFarm.city }}<br/>
+                {{ farm.chicksFarm.street }}
+                {{ farm.chicksFarm.streetNumber }}
+            </td>
+            <td>{{ farm.chicksFarm.phoneNumber }}</td>
         </tr>
     </table>
     <hr/>
