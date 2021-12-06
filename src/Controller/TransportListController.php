@@ -247,19 +247,23 @@ class TransportListController extends AbstractController
      */
     public function show(TransportList $transportList): Response
     {
+        $input = $transportList->getFarm()[0]->getEggInput();
         return $this->render('transport_list/show.html.twig', [
             'transport_list' => $transportList,
-            'maps_api' => $this->getParameter('app.mapskey')
+            'maps_api' => $this->getParameter('app.mapskey'),
+            'input' => $input
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="transport_list_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit/{input}", name="transport_list_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_TRANSPORT")
      */
-    public function edit(Request $request, TransportList $transportList): Response
+    public function edit(Request $request, Inputs $input, TransportList $transportList): Response
     {
-        $form = $this->createForm(TransportListEditType::class, $transportList);
+        $form = $this->createForm(TransportListEditType::class, $transportList, [
+            'input' => $input
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

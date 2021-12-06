@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Car;
 use App\Entity\Driver;
 use App\Entity\Inputs;
+use App\Entity\InputsFarm;
 use App\Entity\TransportList;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -18,7 +19,26 @@ class TransportListEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $input = $options['input'];
         $builder
+            ->add('farm', EntityType::class, [
+                'class' => InputsFarm::class,
+                'choice_label' => function(InputsFarm $inputsFarm){
+                    return $inputsFarm->getChicksFarm()->getCustomer()->getName() . ' - ' . $inputsFarm->getChicksFarm()->getName();
+                },
+                'query_builder' => function(EntityRepository $entityRepository) use($input){
+                    return $entityRepository->createQueryBuilder('if')
+                        ->andWhere('if.eggInput = :input')
+                        ->setParameters(['input' => $input]);
+                },
+                'label' => 'transport_list.form.label.farm',
+                'placeholder' => 'transport_list.form.placeholder.farm',
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'form-check-input'
+                ]
+            ])
             ->add('departureHour', TimeType::class,[
                 'label' => 'transport_list.form.label.departure_hour',
                 'attr' => [
@@ -57,6 +77,7 @@ class TransportListEditType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => TransportList::class,
+            'input' => null,
         ]);
     }
 }

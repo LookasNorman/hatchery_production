@@ -1,3 +1,8 @@
+app:
+  button:
+    delete: Usuń
+    save: Zapisz
+    update: Zaktualizuj
 between_date:
   form:
     label:
@@ -1909,6 +1914,12 @@ user:
     phone_number: Numer telefonu
     roles: Uprawnienia
     title: Karta użytkownika
+transport_inputs_list:
+  delete:
+    confirm: 'Jesteś pewien, że chcesz usunąć trasę z listy? Operacja jest nieodwracalna!!! Bezpowrotnie stracisz dane!!!'
+  edit:
+    header: Karta edycji
+    title: Edycja szczegółów trasy
 transport_list:
   delete:
     button:

@@ -102,10 +102,6 @@
                         <td rowspan="{{ row }}" class="d-print-none">
                             {{ include('layout/buttons/list_show.html.twig',
                                 {pathLink: path('transport_list_show', {'id': transport_list.id})}) }}
-                            {% if is_granted('ROLE_MANAGER') %}
-                                {{ include('layout/buttons/list_edit.html.twig',
-                                    {pathLink: path('transport_list_edit', {'id': transport_list.id})}) }}
-                            {% endif %}
                         </td>
                     </tr>
                 {% endif %}
