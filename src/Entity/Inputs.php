@@ -102,7 +102,7 @@ class Inputs
     {
         return $this->inputDate;
     }
-    
+
     public function setInputDate(\DateTimeInterface $inputDate): self
     {
         $this->inputDate = $inputDate->sub(new \DateInterval('P21DT5H'));

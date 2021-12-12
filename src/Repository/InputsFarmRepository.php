@@ -22,10 +22,10 @@ class InputsFarmRepository extends ServiceEntityRepository
     public function monthlyDeliveredChick($start, $end)
     {
         return $this->createQueryBuilder('if')
-            ->select('YEARMONTH(i.inputDate) as month', 'SUM(if.chickNumber) as chickNumber')
+            ->select('YEARMONTH(i.selectionDate) as month', 'SUM(if.chickNumber) as chickNumber')
             ->join('if.eggInput', 'i')
-            ->andWhere('i.inputDate BETWEEN :start AND :end')
-            ->setParameters(['start' => $start->modify('-21 days'), 'end' => $end->modify('-21 days')])
+            ->andWhere('i.selectionDate BETWEEN :start AND :end')
+            ->setParameters(['start' => $start, 'end' => $end])
             ->orderBy('month', 'asc')
             ->groupBy('month')
             ->getQuery()

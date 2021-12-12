@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Delivery;
 use App\Entity\InputsFarm;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanDeliveryEgg;
@@ -52,6 +53,7 @@ class MonthlyPlanController extends AbstractController
             $planDeliveryChickData = [];
             $planEggData = [];
             $deliveredChickData = [];
+            $deliveredEggData = [];
             $month = $start->format('Y') . sprintf("%02d", $i);
             foreach ($data['planInputChicks'] as $planInputChick){
                 if($planInputChick['month'] == $month){
@@ -73,11 +75,17 @@ class MonthlyPlanController extends AbstractController
                     $deliveredChickData = $deliveredChick;
                 }
             }
+            foreach ($data['deliveredEgg'] as $deliveredEgg){
+                if($deliveredEgg['month'] == $month){
+                    $deliveredEggData = $deliveredEgg;
+                }
+            }
             $sortedData[$month] = [
                 'planInputChick' => $planInputChickData,
                 'planDeliveryChick' => $planDeliveryChickData,
                 'planEgg' => $planEggData,
-                'deliveredChick' => $deliveredChickData
+                'deliveredChick' => $deliveredChickData,
+                'deliveredEgg' => $deliveredEggData
             ];
         }
         return $sortedData;
@@ -86,30 +94,41 @@ class MonthlyPlanController extends AbstractController
     public function monthlyData($startDate): array
     {
         $now = new \DateTime('midnight');
-        if($startDate->format('M') < $now->format('M') AND $startDate->format('Y') == $now->format('Y')){
+        if($startDate < $now){
             $start = clone $now;
         } else {
             $start = clone $startDate;
         }
         $end = clone $start;
         $end->modify('1st January next year -1 second');
-
+//dd($startDate);
         $planInputChicks = $this->monthlyPlanInputChicks($start, $end);
         $planDeliveryChicks = $this->monthlyPlanDeliveryChicks($start, $end);
         $planEgg = $this->monthlyPlanEgg($start, $end);
-        $deliveredChick = $this->monthlyDeliveredChick($start, $end);
+        $deliveredChick = $this->monthlyDeliveredChick(clone $startDate, clone $now);
+        $deliveredEgg = $this->monthlyDeliveredEgg(clone $startDate, clone $now);
 
         return [
             'planInputChicks' => $planInputChicks,
             'planDeliveryChicks' => $planDeliveryChicks,
             'planEgg' => $planEgg,
-            'deliveredChick' => $deliveredChick
+            'deliveredChick' => $deliveredChick,
+            'deliveredEgg' => $deliveredEgg,
         ];
+    }
+
+    public function monthlyDeliveredEgg($start, $end)
+    {
+        return $this->getDoctrine()->getRepository(Delivery::class)->monthlyDeliveredEgg($start, $end);
     }
 
     public function monthlyDeliveredChick($start, $end)
     {
-        return $this->getDoctrine()->getRepository(InputsFarm::class)->monthlyDeliveredChick($start, $end);
+//        dump($start);
+//        dd($end);
+        $data = $this->getDoctrine()->getRepository(InputsFarm::class)->monthlyDeliveredChick($start, $end);
+//        dd($data);
+        return $data;
     }
 
     public function monthlyPlanEgg($start, $end)

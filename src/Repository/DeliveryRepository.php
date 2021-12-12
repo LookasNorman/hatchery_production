@@ -21,6 +21,19 @@ class DeliveryRepository extends ServiceEntityRepository
         parent::__construct($registry, Delivery::class);
     }
 
+    public function monthlyDeliveredEgg($start, $end)
+    {
+        return $this->createQueryBuilder('d')
+            ->select('YEARMONTH(d.deliveryDate) as month', 'SUM(d.eggsNumber) as eggNumber')
+            ->andWhere('d.deliveryDate BETWEEN :start AND :end')
+            ->setParameters(['start' => $start, 'end' => $end])
+            ->orderBy('month', 'asc')
+            ->groupBy('month')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function deliveryIndex()
     {
         return $this->createQueryBuilder('d')
