@@ -67,6 +67,11 @@ class Inputs
      */
     private $transfers;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $selectionDate;
+
     public function __construct()
     {
         $this->inputsFarms = new ArrayCollection();
@@ -97,12 +102,7 @@ class Inputs
     {
         return $this->inputDate;
     }
-
-    public function getSelectionDate()
-    {
-        return $this->inputDate->add(new \DateInterval('P21DT5H'));
-    }
-
+    
     public function setInputDate(\DateTimeInterface $inputDate): self
     {
         $this->inputDate = $inputDate->sub(new \DateInterval('P21DT5H'));
@@ -256,6 +256,18 @@ class Inputs
                 $transfer->setInput(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSelectionDate(): ?\DateTimeInterface
+    {
+        return $this->selectionDate;
+    }
+
+    public function setSelectionDate(?\DateTimeInterface $selectionDate): self
+    {
+        $this->selectionDate = $selectionDate;
 
         return $this;
     }
