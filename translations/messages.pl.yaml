@@ -1458,6 +1458,8 @@ menu:
         index: Plan piskląt - integracja
       plan_hatching:
         index: Plan wg wieku
+      plan_monthly:
+        index: Plan miesięczny
       plan_week:
         index: Plan tygodniowy
       title: Plany
