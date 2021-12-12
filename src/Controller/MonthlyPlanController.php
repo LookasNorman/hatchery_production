@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Delivery;
+use App\Entity\InputDelivery;
 use App\Entity\InputsFarm;
 use App\Entity\PlanDeliveryChick;
 use App\Entity\PlanDeliveryEgg;
+use App\Entity\SellingEgg;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,19 +30,29 @@ class MonthlyPlanController extends AbstractController
         } else {
             $startMonth->modify('1st January ' . $yearN);
         }
-//dd($startMonth);
         $monthlyData = $this->monthlyData($startMonth);
         $monthlySortedData = $this->monthlySortedData($startMonth, $monthlyData);
-//        dd($monthlyData);
+
         return $this->render('monthly_plan/index.html.twig', [
             'links' => $links,
             'start_date' => $startMonth,
-            'monthlyData' => $monthlySortedData
+            'monthlyData' => $monthlySortedData,
         ]);
+    }
+
+    public function previousPlanEggAndChick($date)
+    {
+        $date->modify('-1 second');
+        $now = new \DateTime('midnight');
+        $eggs = $this->getDoctrine()->getRepository(PlanDeliveryEgg::class)->eggBetweenDate($now, $date);
+        $chicks = $this->getDoctrine()->getRepository(PlanDeliveryChick::class)->chickBetweenDate($now, $date);
+        $eggsOnStock = $this->eggsOnStock();
+        return $eggsOnStock + $eggs - $chicks / 0.8;
     }
 
     public function monthlySortedData($startDate, $data)
     {
+        $eggsOnStock = $this->eggsOnStock();
         $now = new \DateTime('midnight');
         if($startDate->format('M') < $now->format('M') AND $startDate->format('Y') == $now->format('Y')){
             $start = clone $now;
@@ -54,6 +66,7 @@ class MonthlyPlanController extends AbstractController
             $planEggData = [];
             $deliveredChickData = [];
             $deliveredEggData = [];
+            $eggsOnStockData = [];
             $month = $start->format('Y') . sprintf("%02d", $i);
             foreach ($data['planInputChicks'] as $planInputChick){
                 if($planInputChick['month'] == $month){
@@ -80,12 +93,29 @@ class MonthlyPlanController extends AbstractController
                     $deliveredEggData = $deliveredEgg;
                 }
             }
+            if($start->format('Y') == $now->format('Y')) {
+                if ((int)$now->format('m') <= $i) {
+                    $eggsOnStockData = ['month' => $month, 'eggsNumber' => $eggsOnStock];
+                    $eggsOnStock = $eggsOnStock + $planEggData['eggs'] - $planInputChickData['chickNumber'] / 0.8;
+                }
+            } else {
+                if($i == 1) {
+                    $eggsOnStock = $this->previousPlanEggAndChick(clone $start);
+                    $eggsOnStockData = ['month' => $month, 'eggsNumber' => $eggsOnStock];
+                    $eggsOnStock = $eggsOnStock + $planEggData['eggs'] - $planInputChickData['chickNumber'] / 0.8;
+                }
+                else {
+                    $eggsOnStockData = ['month' => $month, 'eggsNumber' => $eggsOnStock];
+                    $eggsOnStock = $eggsOnStock + $planEggData['eggs'] - $planInputChickData['chickNumber'] / 0.8;
+                }
+            }
             $sortedData[$month] = [
                 'planInputChick' => $planInputChickData,
                 'planDeliveryChick' => $planDeliveryChickData,
                 'planEgg' => $planEggData,
                 'deliveredChick' => $deliveredChickData,
-                'deliveredEgg' => $deliveredEggData
+                'deliveredEgg' => $deliveredEggData,
+                'eggsOnStock' => $eggsOnStockData,
             ];
         }
         return $sortedData;
@@ -101,7 +131,7 @@ class MonthlyPlanController extends AbstractController
         }
         $end = clone $start;
         $end->modify('1st January next year -1 second');
-//dd($startDate);
+
         $planInputChicks = $this->monthlyPlanInputChicks($start, $end);
         $planDeliveryChicks = $this->monthlyPlanDeliveryChicks($start, $end);
         $planEgg = $this->monthlyPlanEgg($start, $end);
@@ -117,6 +147,14 @@ class MonthlyPlanController extends AbstractController
         ];
     }
 
+    public function eggsOnStock()
+    {
+        $deliveredEggs = $this->getDoctrine()->getRepository(Delivery::class)->eggsDelivered();
+        $sellingEggs = $this->getDoctrine()->getRepository(SellingEgg::class)->sellingEggs();
+        $inputEggs = $this->getDoctrine()->getRepository(InputDelivery::class)->eggsProduction();
+        return $eggsOnStock = $deliveredEggs - $sellingEggs - $inputEggs;
+    }
+
     public function monthlyDeliveredEgg($start, $end)
     {
         return $this->getDoctrine()->getRepository(Delivery::class)->monthlyDeliveredEgg($start, $end);
@@ -124,11 +162,7 @@ class MonthlyPlanController extends AbstractController
 
     public function monthlyDeliveredChick($start, $end)
     {
-//        dump($start);
-//        dd($end);
-        $data = $this->getDoctrine()->getRepository(InputsFarm::class)->monthlyDeliveredChick($start, $end);
-//        dd($data);
-        return $data;
+        return $this->getDoctrine()->getRepository(InputsFarm::class)->monthlyDeliveredChick($start, $end);
     }
 
     public function monthlyPlanEgg($start, $end)

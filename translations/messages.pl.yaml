@@ -1,3 +1,15 @@
+'01': styczeń
+'02': luty
+'03': marzec
+'04': kwiecień
+'05': maj
+'06': czerwiec
+'07': lipiec
+'08': sierpień
+'09': wrzesień
+'10': październik
+'11': listopad
+'12': grudzień
 app:
   button:
     delete: Usuń
@@ -310,6 +322,7 @@ contact_info:
       department: Dział
       email: Email
       id: Lp.
+      no_found: Brak zapisów
       person: Imię i nazwisko
       phone_number: Numer telefonu
     title: Lista danych kontaktowych

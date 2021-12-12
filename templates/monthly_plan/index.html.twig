@@ -1,49 +1,85 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 1920px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-<div class="example-wrapper">
-    <div class="btn-group" role="group" aria-label="Basic example">
-        {% for link in links %}
-            <a type="button" href="{{ path('monthly_plan', {'yearN': link}) }}" class="btn btn-primary m-2">{{ link }}</a>
-        {% endfor %}
-    </div>
-    <h1>{% trans %}monthly_plan.index.title{% endtrans%}: {{ start_date|date('Y-m-d') }}</h1>
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
 
-    <div class="conteiner">
-        <div class="row">
-            <div class="col-sm-3 border border-primary rounded-3 p-2 m-2" id="month">
+    <div class="example-wrapper">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            {% for link in links %}
+                <a type="button" href="{{ path('monthly_plan', {'yearN': link}) }}"
+                   class="btn btn-primary m-2">{{ link }}</a>
+            {% endfor %}
+        </div>
+        <h1>{% trans %}monthly_plan.index.title{% endtrans %}: {{ start_date|date('Y-m-d') }}</h1>
+
+        <div class="conteiner">
+            <div class="row">
+                <div class="col-sm-3 border border-primary rounded-3 p-2 m-2" id="month">
                     {% for key, month in monthlyData %}
                         <div class="card border-success mb-3 col-sm-12">
-                            <div class="card-header bg-transparent border-success">{{ key }}</div>
+                            <div class="card-header bg-transparent border-success">{{ key|slice(4,2)|trans }} {{ key|slice(0,4) }}</div>
                             <div class="card-body">
                                 <dl class="row">
+                                    {% set endEggsStock = 0 %}
+                                    {% if month.eggsOnStock %}
+                                        {% set endEggsStock = month.eggsOnStock.eggsNumber %}
+                                    {% endif %}
+                                    {% if month.planEgg %}
+                                        {% set endEggsStock = endEggsStock + month.planEgg.eggs %}
+                                    {% endif %}
+                                    {% if month.planInputChick %}
+                                        {% set endEggsStock = endEggsStock - month.planInputChick.chickNumber / 0.8 %}
+                                    {% endif %}
                                     <dt class="col-sm-12">Pisklęta</dt>
-                                    <dd class="col-sm-6">Planowane nakłady</dd>
-                                    <dt class="col-sm-6 text-end">{{ month.planInputChick ? month.planInputChick.chickNumber : '' }}</dt>
-                                    <dd class="col-sm-6">Planowane wybierania</dd>
-                                    <dt class="col-sm-6 text-end">{{ month.planDeliveryChick ? month.planDeliveryChick.chickNumber : '' }}</dt>
-                                    <dd class="col-sm-6">Wybrane</dd>
-                                    <dt class="col-sm-6 text-end">{{ month.deliveredChick ? month.deliveredChick.chickNumber : '' }}</dt>
+                                    {% if month.planInputChick %}
+                                        <dd class="col-sm-6">Planowane nakłady</dd>
+                                        {% if endEggsStock < 0 %}
+                                            <dt class="col-sm-6 text-end text-danger">{{ month.planInputChick ? month.planInputChick.chickNumber : '' }}</dt>
+                                        {% else %}
+                                            <dt class="col-sm-6 text-end">{{ month.planInputChick ? month.planInputChick.chickNumber : '' }}</dt>
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if month.planDeliveryChick %}
+                                        <dd class="col-sm-6">Planowane wybierania</dd>
+                                        <dt class="col-sm-6 text-end">{{ month.planDeliveryChick ? month.planDeliveryChick.chickNumber : '' }}</dt>
+                                    {% endif %}
+                                    {% if month.deliveredChick %}
+                                        <dd class="col-sm-6">Wybrane</dd>
+                                        <dt class="col-sm-6 text-end">{{ month.deliveredChick ? month.deliveredChick.chickNumber : '' }}</dt>
+                                    {% endif %}
                                     <dt class="col-sm-12">Jaja</dt>
-                                    <dd class="col-sm-6">Planowane dostawy</dd>
-                                    <dt class="col-sm-6 text-end">{{ month.planEgg ? month.planEgg.eggs : '' }}</dt>
-                                    <dd class="col-sm-6">Dostarczone</dd>
-                                    <dt class="col-sm-6 text-end">{{ month.deliveredEgg ? month.deliveredEgg.eggNumber : '' }}</dt>
-                                    <dd class="col-sm-6">Stan</dd>
-                                    <dt class="col-sm-6 text-end"></dt>
+                                    {% if month.planEgg %}
+                                        <dd class="col-sm-6">Planowane dostawy</dd>
+                                        <dt class="col-sm-6 text-end">{{ month.planEgg ? month.planEgg.eggs : '' }}</dt>
+                                    {% endif %}
+                                    {% if month.deliveredEgg %}
+                                        <dd class="col-sm-6">Dostarczone</dd>
+                                        <dt class="col-sm-6 text-end">{{ month.deliveredEgg ? month.deliveredEgg.eggNumber : '' }}</dt>
+                                    {% endif %}
+                                    {% if month.eggsOnStock %}
+                                        <dd class="col-sm-6">Stan</dd>
+                                        <dt class="col-sm-6 text-end">{{ month.eggsOnStock ? month.eggsOnStock.eggsNumber : '' }}</dt>
+                                    {% endif %}
                                 </dl>
                             </div>
                             <div class="card-footer bg-transparent border-success"></div>
                         </div>
                     {% endfor %}
+                </div>
+                <div class="col-sm-8 border border-primary rounded-3 p-2 m-2" id="week">Tydzień</div>
             </div>
-            <div class="col-sm-8 border border-primary rounded-3 p-2 m-2" id="week">Tydzień</div>
         </div>
     </div>
-</div>
 {% endblock %}
