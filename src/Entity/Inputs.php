@@ -72,6 +72,11 @@ class Inputs
      */
     private $selectionDate;
 
+    /**
+     * @ORM\OneToMany(targetEntity=TransportList::class, mappedBy="input")
+     */
+    private $transportLists;
+
     public function __construct()
     {
         $this->inputsFarms = new ArrayCollection();
@@ -79,6 +84,7 @@ class Inputs
         $this->planInputs = new ArrayCollection();
         $this->inputDeliveries = new ArrayCollection();
         $this->transfers = new ArrayCollection();
+        $this->transportLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -268,6 +274,36 @@ class Inputs
     public function setSelectionDate(?\DateTimeInterface $inputDate): self
     {
         $this->selectionDate = $inputDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TransportList[]
+     */
+    public function getTransportLists(): Collection
+    {
+        return $this->transportLists;
+    }
+
+    public function addTransportList(TransportList $transportList): self
+    {
+        if (!$this->transportLists->contains($transportList)) {
+            $this->transportLists[] = $transportList;
+            $transportList->setInput($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransportList(TransportList $transportList): self
+    {
+        if ($this->transportLists->removeElement($transportList)) {
+            // set the owning side to null (unless already changed)
+            if ($transportList->getInput() === $this) {
+                $transportList->setInput(null);
+            }
+        }
 
         return $this;
     }

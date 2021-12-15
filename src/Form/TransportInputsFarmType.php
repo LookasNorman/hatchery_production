@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\InputsFarm;
 use App\Entity\TransportInputsFarm;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -13,24 +16,23 @@ class TransportInputsFarmType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $input = $options['input'];
         $builder
-            ->add('distance', IntegerType::class, [
+            ->add('farm', EntityType::class, [
+                'class' => InputsFarm::class,
+                'choice_label' => function(InputsFarm $inputsFarm){
+                    return $inputsFarm->getChicksFarm()->getCustomer()->getName() . ' - ' . $inputsFarm->getChicksFarm()->getName();
+                },
+                'query_builder' => function(EntityRepository $entityRepository) use($input){
+                    return $entityRepository->createQueryBuilder('if')
+                        ->andWhere('if.eggInput = :input')
+                        ->setParameters(['input' => $input]);
+                },
+                'label' => 'transport_list.form.label.farm',
+                'placeholder' => 'transport_list.form.placeholder.farm',
                 'attr' => [
-                    'class' => 'form-control'
-                ],
-                'label' => 'transport_list.show.distance'
-            ])->add('distanceFromHatchery', IntegerType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
-                'label' => 'transport_list.show.distance_hatchery'
-            ])
-            ->add('arrivalTime', TimeType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
-                'label' => 'transport_list.form.label.arrival_hour',
-                'widget' => 'single_text'
+                    'class' => 'form-select'
+                ]
             ])
         ;
     }
@@ -39,6 +41,7 @@ class TransportInputsFarmType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => TransportInputsFarm::class,
+            'input' => null,
         ]);
     }
 }

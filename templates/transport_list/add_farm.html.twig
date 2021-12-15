@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 1920px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>{% trans %}transport_list.add_farm.title{% endtrans %}</h1>
+        <div class="d-flex justify-content-center card-group">
+            {% include 'layout/cards/chead.html.twig' %}
+            <i class="fa fa-info"></i>
+            {% trans %}transport_list.add_farm.route.header{% endtrans %}
+            {% include 'layout/cards/cbody.html.twig' %}
+            <dl class="row">
+                <dd class="col-sm-6">{% trans %}transport_list.add_farm.route.date{% endtrans %}</dd>
+                <dt class="col-sm-6 text-end">{{ transport_list.input.selectionDate|date('Y-m-d') }}</dt>
+                <dd class="col-sm-6">{% trans %}transport_list.add_farm.route.time{% endtrans %}</dd>
+                <dt class="col-sm-6 text-end">{{ transport_list.departureHour|date('H:i') }}</dt>
+                <dd class="col-sm-6">{% trans %}transport_list.add_farm.route.driver{% endtrans %}</dd>
+                <dt class="col-sm-6 text-end">
+                    {% for driver in transport_list.driver %}
+                        {{ driver.lastname }}<br/>
+                    {% endfor %}
+                </dt>
+                <dd class="col-sm-6">{% trans %}transport_list.add_farm.route.car{% endtrans %}</dd>
+                <dt class="col-sm-6 text-end">{{ transport_list.car.name }}</dt>
+                {% if farms is defined %}
+                    <hr/>
+                    <h5 class="col-sm-12 bg-white text-black p-2">{% trans %}transport_list.add_farm.route.farm.title{% endtrans %}</h5>
+                    {% for farm in farms %}
+                        <dd class="col-sm-6">{% trans %}transport_list.add_farm.route.farm.customer{% endtrans %}</dd>
+                        <dt class="col-sm-6 text-end">{{ farm.farm.chicksFarm.customer.name }}</dt>
+                        <dd class="col-sm-6">{% trans %}transport_list.add_farm.route.farm.name{% endtrans %}</dd>
+                        <dt class="col-sm-6 text-end">{{ farm.farm.chicksFarm.name }}</dt>
+                        <dd class="col-sm-6">{% trans %}transport_list.add_farm.route.farm.distance_hatchery{% endtrans %}</dd>
+                        <dt class="col-sm-6 text-end">{{ farm.distanceFromHatchery }} {% trans %}transport_list.add_farm.route.farm.distance_unit{% endtrans %}</dt>
+                        <dd class="col-sm-6">{% trans %}transport_list.add_farm.route.farm.chick_number{% endtrans %}</dd>
+                        <dt class="col-sm-6 text-end">{{ farm.farm.chickNumber }}</dt>
+                        <hr/>
+                    {% endfor %}
+                {% endif %}
+            </dl>
+            {% include 'layout/cards/cfooter.html.twig' %}
+            <a class="btn btn-success"
+               href="{{ path('transport_list_generate', {id: transport_list.id}) }}">Generate</a>
+            {% include 'layout/cards/cend.html.twig' %}
+            {% if form is defined %}
+                {% include 'layout/cards/chead.html.twig' %}
+                <i class="fa fa-plus"></i>
+                {% trans %}transport_list.add_farm.new.header{% endtrans %}
+                {% include 'layout/cards/cbody.html.twig' %}
+                {{ include('transport_list/_form_farm.html.twig') }}
+                {% include 'layout/cards/cfooter.html.twig' %}
+                {% include 'layout/cards/cend.html.twig' %}
+            {% endif %}
+        </div>
+        {{ include('layout/buttons/back.html.twig', {pathLink: path('transport_list_index'), text: 'transport_list.new.button.back'}) }}
+    </div>
+{% endblock %}

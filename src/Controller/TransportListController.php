@@ -9,7 +9,9 @@ use App\Entity\TransportInputsFarm;
 use App\Entity\TransportList;
 use App\Form\BetweenDateType;
 use App\Form\ChooseInputType;
+use App\Form\TransportInputsFarmType;
 use App\Form\TransportListEditType;
+use App\Form\TransportListMultiType;
 use App\Form\TransportListType;
 use App\Repository\InputsRepository;
 use App\Repository\TransportInputsFarmRepository;
@@ -54,7 +56,7 @@ class TransportListController extends AbstractController
         }
 
         return $this->render('transport_list/index.html.twig', [
-            'transport_lists' => $transportListRepository->findAll(),
+            'transport_lists' => $transportListRepository->findBy([], ['id' => 'desc']),
             'form' => $form->createView(),
             'week' => $week
         ]);
@@ -164,7 +166,135 @@ class TransportListController extends AbstractController
      * @Route("/new/{input}", name="transport_list_new", methods={"GET","POST"})
      * @IsGranted("ROLE_TRANSPORT")
      */
-    public function new(Inputs $input, Request $request, MailerInterface $mailer, SendSMS $sendSMS): Response
+    public function new(Inputs $input, Request $request): Response
+    {
+        $transportList = new TransportList();
+        $transportList->setInput($input);
+        $form = $this->createForm(TransportListMultiType::class, $transportList, [
+            'input' => $input
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($transportList);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('transport_list_add_farm', [
+                'id' => $transportList->getId()
+            ]);
+        }
+        return $this->render('transport_list/new_multi.html.twig', [
+            'transport_list' => $transportList,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/add/{id}", name="transport_list_add_farm", methods={"GET", "POST"})
+     * @IsGranted("ROLE_TRANSPORT")
+     */
+    public function addFarm(TransportList $transportList, Request $request)
+    {
+        $transportInputsFarm = new TransportInputsFarm();
+        $input = $transportList->getInput();
+        $form = $this->createForm(TransportInputsFarmType::class, $transportInputsFarm, [
+            'input' => $input
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $distanceFromHatchery = $this->googleDistance($transportInputsFarm->getFarm());
+            $distanceHatchery = (int)$distanceFromHatchery['rows'][0]['elements'][0]['distance']['value'] / 1000;
+            $transportInputsFarm->setDistanceFromHatchery($distanceHatchery);
+            $transportInputsFarm->setTransportList($transportList);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($transportInputsFarm);
+            $transportList->addFarm($transportInputsFarm->getFarm());
+            $entityManager->flush();
+
+            return $this->redirectToRoute('transport_list_add_farm', [
+                'id' => $transportList->getId()
+            ]);
+        }
+        $farms = $this->getDoctrine()->getRepository(TransportInputsFarm::class)->findBy(['transportList' => $transportList]);
+        return $this->render('transport_list/add_farm.html.twig', [
+            'transport_list' => $transportList,
+            'form' => $form->createView(),
+            'farms' => $farms,
+        ]);
+    }
+
+    /**
+     * @Route("/generate/{id}", name="transport_list_generate", methods={"GET"})
+     * @IsGranted("ROLE_TRANSPORT")
+     */
+    public function generateDistance(TransportList $transportList)
+    {
+        $farms = $this->getDoctrine()->getRepository(TransportInputsFarm::class)->findBy(['transportList' => $transportList]);
+        $transportList = $this->addDirectionMatrix($transportList);
+        return $this->render('transport_list/add_farm.html.twig', [
+            'transport_list' => $transportList,
+            'farms' => $farms,
+        ]);
+    }
+
+    public function addDirectionMatrix(TransportList $transportList)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $directionsMatrix = $this->googleDirectionsMatrix($transportList->getFarm());
+        if ($directionsMatrix['status'] != 'OK') {
+            return $this->render('transport_list/no_address.html.twig', [
+                'farms' => $transportList->getFarm()
+            ]);
+        }
+        $transportListDistance = 0;
+        foreach ($directionsMatrix['routes'][0]['legs'] as $leg) {
+            $transportListDistance = $transportListDistance + round($leg['distance']['value'] / 1000, 0);
+        }
+        $transportList->setDistance($transportListDistance);
+        $entityManager->persist($transportList);
+        foreach ($transportList->getFarm() as $key => $transport) {
+            $distanceMatrix = $this->googleDistanceMatrix($transportList->getFarm());
+            if ($key === 0) {
+                $arrivalTime = clone $transportList->getDepartureHour();
+            }
+
+            $time = round($directionsMatrix['routes'][0]['legs'][$key]['duration']['value'] * 1.4, 0);
+            $distance = round($directionsMatrix['routes'][0]['legs'][$key]['distance']['value'] / 1000, 0);
+            $arrivalTime->modify('+' . $time . ' seconds');
+            $time = clone $arrivalTime;
+            $transportInputFarm = $this->getDoctrine()->getRepository(TransportInputsFarm::class)->findOneBy(['farm' => $transport]);
+            $transportInputFarm->setArrivalTime($time);
+            $transportInputFarm->setDistance($distance);
+            $entityManager->persist($transportInputFarm);
+        }
+        $entityManager->flush();
+        return $transportList;
+    }
+
+    public function googleDistance($farm): array
+    {
+        $apiKey = $this->getParameter('app.mapsfullkey');
+        $destination = null;
+        $origins = '05-530+Dębówka+1a';
+        $destination .= $farm->getChicksFarm()->getPostcode();
+        $destination .= '+';
+        $destination .= $farm->getChicksFarm()->getCity();
+        $destination .= '+';
+        $destination .= $farm->getChicksFarm()->getStreet();
+        $destination .= '+';
+        $destination .= $farm->getChicksFarm()->getStreetNumber();
+        $client = HttpClient::create();
+        $response = $client->request('GET',
+            'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' . $origins . '&destinations= ' . $destination . '&departure_time=now&key=' . $apiKey);
+        $content = $response->toArray();
+        return $content;
+    }
+
+    /**
+     * @Route("/news/{input}", name="transport_list_news", methods={"GET","POST"})
+     * @IsGranted("ROLE_TRANSPORT")
+     */
+    public function news(Inputs $input, Request $request, MailerInterface $mailer, SendSMS $sendSMS): Response
     {
         $transportList = new TransportList();
         $form = $this->createForm(TransportListType::class, $transportList, [
@@ -269,7 +399,9 @@ class TransportListController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('transport_list_index');
+            return $this->redirectToRoute('transport_list_add_farm', [
+                'id' => $transportList->getId()
+            ]);
         }
 
         return $this->render('transport_list/edit.html.twig', [

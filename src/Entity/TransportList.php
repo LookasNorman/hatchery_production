@@ -36,7 +36,7 @@ class TransportList
     private $car;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $distance;
 
@@ -48,9 +48,6 @@ class TransportList
 
     /**
      * @ORM\ManyToMany(targetEntity=InputsFarm::class, inversedBy="transportLists")
-     * @Assert\Count(
-     *     min=1
-     * )
      */
     private $farm;
 
@@ -58,6 +55,12 @@ class TransportList
      * @ORM\OneToMany(targetEntity=TransportInputsFarm::class, mappedBy="transportList")
      */
     private $transportInputsFarms;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Inputs::class, inversedBy="transportLists")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $input;
 
     public function __construct()
     {
@@ -181,6 +184,18 @@ class TransportList
                 $transportInputsFarm->setTransportList(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInput(): ?Inputs
+    {
+        return $this->input;
+    }
+
+    public function setInput(?Inputs $input): self
+    {
+        $this->input = $input;
 
         return $this;
     }

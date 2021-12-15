@@ -1936,6 +1936,23 @@ transport_inputs_list:
     header: Karta edycji
     title: Edycja szczegółów trasy
 transport_list:
+  add_farm:
+    new:
+      header: Dodawanie fermy
+    route:
+      car: Samochód
+      date: Data
+      driver: Kierowca
+      farm:
+        chick_number: Ilość piskląt
+        customer: Hodowca
+        distance_hatchery: Dystans od wylęgarnii
+        distance_unit: km
+        name: Nazwa fermy
+        title: Wykaz ferm
+      header: Szczegóły trasy
+      time: Wyjazd
+    title: Dodawanie hodowcy do trasy
   delete:
     button:
       delete: Usuń

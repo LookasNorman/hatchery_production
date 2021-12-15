@@ -1,0 +1,14 @@
+{{ form_start(form) }}
+{{ form_label(form.driver) }}
+{% for driver in form.driver %}
+    <div class="form-check">
+        {{ form_widget(driver) }}
+        <label class="form-check-label">
+            {{ form_label(driver) }}
+        </label>
+    </div>
+{% endfor %}
+{{ form_widget(form) }}
+
+{{ include('layout/buttons/create.html.twig', {text: 'transport_list.form.button.save'}) }}
+{{ form_end(form) }}
