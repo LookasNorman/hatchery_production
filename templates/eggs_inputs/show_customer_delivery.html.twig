@@ -7,6 +7,9 @@
         <th class="text-center align-middle">
             {% trans %}eggs_inputs.show.table.chick{% endtrans %}
         </th>
+        <th class="text-center align-middle">
+            {% trans %}app.table.actions{% endtrans %}
+        </th>
     </tr>
     {% include 'layout/tables/tbody.html.twig' %}
     {% for farm in farms %}
@@ -19,6 +22,11 @@
                 </div>
             </td>
             <td class="text-center align-middle">{{ farm.chickNumber|number_format(0, ',', ' ') }}
+            </td>
+            <td class="text-center align-middle">
+                <a class="btn" href="{{ path('inputs_farm_edit', {'id': farm.id}) }}">
+                    <i class="fa fa-pencil"></i>
+                </a>
             </td>
         </tr>
     {% endfor %}

@@ -16,6 +16,8 @@ app:
     delete: Usuń
     save: Zapisz
     update: Zaktualizuj
+  table:
+    actions: Akcje
 between_date:
   form:
     label:

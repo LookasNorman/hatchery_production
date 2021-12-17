@@ -124,7 +124,9 @@ class InputsFarmController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('inputs_farm_index');
+            return $this->redirectToRoute('eggs_inputs_show', [
+                'id' => $inputsFarm->getEggInput()->getId(),
+            ]);
         }
 
         return $this->render('inputs_farm/edit.html.twig', [
