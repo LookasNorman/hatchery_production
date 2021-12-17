@@ -12,6 +12,7 @@
 '12': grudzień
 app:
   button:
+    back: Wróć
     delete: Usuń
     save: Zapisz
     update: Zaktualizuj

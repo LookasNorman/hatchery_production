@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\TransportInputsFarm;
+use App\Form\TransportInputsFarmTimeType;
 use App\Form\TransportInputsFarmType;
 use App\Repository\TransportInputsFarmRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -24,7 +25,10 @@ class TransportInputsFarmController extends AbstractController
      */
     public function edit(Request $request, TransportInputsFarm $transportInputsFarm): Response
     {
-        $form = $this->createForm(TransportInputsFarmType::class, $transportInputsFarm);
+        $input = $transportInputsFarm->getFarm()->getEggInput();
+        $form = $this->createForm(TransportInputsFarmTimeType::class, $transportInputsFarm, [
+            'input' => $input
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -22,7 +22,7 @@
             <i class="fa fa-pencil"></i>
             {% trans %}transport_list.edit.header{% endtrans %}
             {% include 'layout/cards/cbody.html.twig' %}
-            {{ include('transport_list/_form.html.twig', {'button_label': 'Update'}) }}
+            {{ include('transport_list/_form_multi.html.twig', {'button_label': 'Update'}) }}
             {% include 'layout/cards/cfooter.html.twig' %}
             {% if is_granted("ROLE_ADMIN") %}
                 {{ include('transport_list/_delete_form.html.twig') }}

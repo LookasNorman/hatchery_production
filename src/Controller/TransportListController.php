@@ -391,7 +391,7 @@ class TransportListController extends AbstractController
      */
     public function edit(Request $request, Inputs $input, TransportList $transportList): Response
     {
-        $form = $this->createForm(TransportListEditType::class, $transportList, [
+        $form = $this->createForm(TransportListMultiType::class, $transportList, [
             'input' => $input
         ]);
         $form->handleRequest($request);
