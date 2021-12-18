@@ -49,6 +49,7 @@ class InputsController extends AbstractController
     /**
      * @Route("/new", name="eggs_inputs_new", methods={"GET","POST"})
      * @IsGranted("ROLE_MANAGER")
+     * @throws \Exception
      */
     public function new(Request $request): Response
     {
@@ -57,6 +58,8 @@ class InputsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $selectionDate = new DateTime($request->request->get('inputs')['inputDate']);
+            $eggsInput->setSelectionDate($selectionDate);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($eggsInput);
             $entityManager->flush();

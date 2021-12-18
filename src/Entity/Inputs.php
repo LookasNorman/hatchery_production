@@ -271,9 +271,9 @@ class Inputs
         return $this->selectionDate;
     }
 
-    public function setSelectionDate(?\DateTimeInterface $inputDate): self
+    public function setSelectionDate(?\DateTimeInterface $selectionDate): self
     {
-        $this->selectionDate = $inputDate;
+        $this->selectionDate = $selectionDate;
 
         return $this;
     }
