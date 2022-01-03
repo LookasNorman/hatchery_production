@@ -19,6 +19,18 @@ class InputDeliveryRepository extends ServiceEntityRepository
         parent::__construct($registry, InputDelivery::class);
     }
 
+    public function inputHerd($input, $herd)
+    {
+        return $this->createQueryBuilder('id')
+            ->join('id.delivery', 'd')
+            ->where('d.herd = :herd')
+            ->andWhere('id.input = :input')
+            ->setParameters(['herd' => $herd, 'input' => $input])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function eggsProduction()
     {
         return $this->createQueryBuilder('id')

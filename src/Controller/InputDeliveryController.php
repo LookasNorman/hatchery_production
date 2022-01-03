@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Delivery;
 use App\Entity\Herds;
 use App\Entity\InputDelivery;
+use App\Entity\Inputs;
 use App\Form\InputDeliveryType;
 use App\Repository\InputDeliveryRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -26,6 +27,16 @@ class InputDeliveryController extends AbstractController
     {
         return $this->render('input_delivery/index.html.twig', [
             'input_deliveries' => $inputDeliveryRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/herd/{inputs}/{herds}", name="input_delivery_herd", methods={"GET"})
+     */
+    public function herd(Inputs $inputs, Herds $herds, InputDeliveryRepository $inputDeliveryRepository): Response
+    {
+        return $this->render('input_delivery/index.html.twig', [
+            'input_deliveries' => $inputDeliveryRepository->inputHerd($inputs, $herds),
         ]);
     }
 

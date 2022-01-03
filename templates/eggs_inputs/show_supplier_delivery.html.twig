@@ -11,6 +11,7 @@
             class="text-center align-middle bg-light text-black">{% trans %}eggs_inputs.show.table.transfer.title{% endtrans %}</th>
         <th colspan="4"
             class="text-center align-middle">{% trans %}eggs_inputs.show.table.selection.title{% endtrans %}</th>
+        <th rowspan="2" class="text-center align-middle">{% trans %}eggs_inputs.show.table.action{% endtrans %}</th>
     </tr>
     <tr>
         <th class="text-center align-middle">{% trans %}eggs_inputs.show.table.lighting.date{% endtrans %}</th>
@@ -51,6 +52,7 @@
             <td></td>
             <td></td>
             <td></td>
+            <td><a class="btn" href="{{ path('input_delivery_herd', {'herds': herdEgg.herd.id, 'inputs': eggs_input.id}) }}"><i class="fa fa-search"></i></a> </td>
         </tr>
 
     {% endfor %}

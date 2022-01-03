@@ -697,6 +697,7 @@ eggs_inputs:
       footer:
         add: Dodaj
     table:
+      action: Akcje
       age: Wiek stada
       badge:
         fertilization: Zapłodnienie
